@@ -1,50 +1,85 @@
-% Web-SNP portal
+% SNP Web-portal
 % D. Tosoni, D. Sicignani, U. Buonadonna
-% 2014
+% Biomedical Informatics, 2014
 
 # Project description
 
-## Context
-*Single-nucleotide polymorphism*: a DNA sequence variation occurring when a Single Nucleotide — A, T, C or G — in the genome (or other shared sequence) differs between members of a biological species or paired chromosomes.
+## Medical background
+###**Single-Nucleotide Polymorphism**
 
-immagine
+DNA sequence variation occurring when a Single Nucleotide — A, T, C or G — in the genome (or other shared sequence) differs between members of a biological species or paired chromosomes.
+
+\begin{center}
+	\includegraphics[width=0.3\textwidth]{./Dna-SNP.png}
+\end{center}
+
+<!--
+![Alt text](./Dna-SNP.png)
+-->
 
 ## Goal
-Allow a user to store and retrieve its genomics variation sequencings.
+<!--
+\begin{tabular}{c @{\hspace{1em}} c}
+\includegraphics[width=5cm]{./Dna-SNP.png} &
+saddsasadasddsaas\\
+\end{tabular}
+-->
 
-immagine
+\begin{center}
+	\includegraphics[width=0.3\textwidth]{./imagesCAAF6KCZ.jpg}
+\end{center}
+
+Allow users to store and query Single Nucleotide Polymorphism genomics variants.
 
 ## How to reach it?
-Realization of **Web Portal** to store and query Single Nucleotide Polymorphism genomics variants.
+Realization of a **Web Portal**.
+\vspace{7 mm}
 
-Functionalities:
-
-Super User
+###**Functionalities**
+\vspace{3 mm}
+*Super User:*
 
 - create a "family" with one or more members
 - authorize users
-- modify inserted attributes
+- modify inserted values
 
-Authorized User
+\vspace{2 mm}
+*Authorized User:*
 
 - search for a patient, gene, mutation, ...
 
-# Architecture of the project
+# Project Structure
 ## Database:
 
 immagine relazioni
 
-## Front-end:
-Portal
+## Application logic:
 
-# Query
+query
 
-## lista query
+## Website (User Interface):
 
-# Architettura software
+Enables users to:
 
-## Software usati:
-
-- MongoDB
-- Javascript
+- quello che permette di fare il sito web
 - ...
+
+# Use case
+
+## Use case diagram:
+
+diagramma
+
+# Software architecture
+
+## To realize the project we will use:
+
+\hspace*{5 mm}
+\includegraphics[width=2cm]{./database.png}
+\hspace{25 mm} Database: **MongoDB**
+
+\vspace{5mm}
+
+\hspace*{5 mm}
+\includegraphics[width=4cm]{./website.png}
+\hspace{5 mm} Website: **Javascript**
