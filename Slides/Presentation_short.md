@@ -51,7 +51,10 @@ Realization of a **Web Portal**.
 # Project Structure
 ## Database:
 
-immagine relazioni
+###
+\begin{center}
+	\includegraphics[width=0.8\textwidth]{./Diagramma_Database.png}
+\end{center}
 
 ## Application logic:
 
@@ -59,27 +62,60 @@ query
 
 ## Website (User Interface):
 
-Enables users to:
+\vspace{5mm}
 
-- quello che permette di fare il sito web
-- ...
+Enables to load and retrieve data via user-friendly UI
 
-# Use case
+\vspace{3mm}
 
-## Use case diagram:
+\begin{center}
+	\includegraphics[width=0.8\textwidth]{./User_PC.png}
+\end{center}
 
-diagramma
+# Use cases
+
+## Use case diagram: Super User authorizes an User
+
+###
+\begin{center}
+	\includegraphics[width=0.8\textwidth]{./Presentation_short_SSD_1.png}
+\end{center}
+
+## Use case diagram: Super User creates/populates a family
+
+###
+\begin{center}
+	\includegraphics[width=0.55\textwidth]{./Presentation_short_SSD_2.png}
+\end{center}
+
+## Use case diagram: Super User loads data
+
+###
+\begin{center}
+	\includegraphics[width=0.8\textwidth]{./Presentation_short_SSD_3.png}
+\end{center}
+
+## Use case diagram: Authorized User executes a query
+
+###
+\begin{center}
+	\includegraphics[width=0.75\textwidth]{./Presentation_short_SSD_4.png}
+\end{center}
 
 # Software architecture
 
 ## To realize the project we will use:
 
+###
 \hspace*{5 mm}
 \includegraphics[width=2cm]{./database.png}
 \hspace{25 mm} Database: **MongoDB**
 
 \vspace{5mm}
 
+###
 \hspace*{5 mm}
 \includegraphics[width=4cm]{./website.png}
 \hspace{5 mm} Website: **Javascript**
+
+<!-- pandoc -t beamer --slide-level 2 -V theme:CambridgeUS -s Presentation_short.md -o Presentation_short.pdf -->
