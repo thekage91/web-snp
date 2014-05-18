@@ -1,0 +1,215 @@
+\documentclass[ignorenonframetext,]{beamer}
+\usetheme{CambridgeUS}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifxetex
+  \usepackage{fontspec,xltxtra,xunicode}
+  \defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
+\else
+  \ifluatex
+    \usepackage{fontspec}
+    \defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
+  \else
+    \usepackage[utf8]{inputenc}
+  \fi
+\fi
+% Comment these out if you don't want a slide with just the
+% part/section/subsection/subsubsection title:
+\AtBeginPart{\frame{\partpage}}
+\AtBeginSection{\frame{\sectionpage}}
+\AtBeginSubsection{\frame{\subsectionpage}}
+\AtBeginSubsubsection{\frame{\subsubsectionpage}}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\setcounter{secnumdepth}{0}
+
+\title{SNP Web-portal}
+\author{D. Tosoni, D. Sicignani, U. Buonadonna}
+\date{Biomedical Informatics, 2014}
+
+\begin{document}
+\frame{\titlepage}
+
+\section{Project description}
+
+\begin{frame}\frametitle{Medical background}
+
+\begin{block}{\textbf{Single-Nucleotide Polymorphism}}
+
+DNA sequence variation occurring when a Single Nucleotide --- A, T, C or
+G --- in the genome (or other shared sequence) differs between members
+of a biological species or paired chromosomes.
+
+\begin{center}
+    \includegraphics[width=0.3\textwidth]{./Dna-SNP.png}
+\end{center}
+
+\end{block}
+
+\end{frame}
+
+\begin{frame}\frametitle{Goal}
+
+\begin{center}
+    \includegraphics[width=0.3\textwidth]{./imagesCAAF6KCZ.jpg}
+\end{center}
+
+Allow users to store and query Single Nucleotide Polymorphism genomics
+variants.
+
+\end{frame}
+
+\begin{frame}\frametitle{How to reach it?}
+
+Realization of a \textbf{Web Portal}.
+\vspace{7 mm}
+
+\begin{block}{\textbf{Functionalities}}
+
+\vspace{3 mm}
+
+\emph{Super User:}
+
+\begin{itemize}
+\item
+  create a ``family'' with one or more members
+\item
+  authorize users
+\item
+  modify inserted values
+\end{itemize}
+\vspace{2 mm}
+
+\emph{Authorized User:}
+
+\begin{itemize}
+\item
+  search for a patient, gene, mutation, \ldots{}
+\end{itemize}
+\end{block}
+
+\end{frame}
+
+\section{Project Structure}
+
+\begin{frame}\frametitle{Database:}
+
+\begin{block}{}
+
+\begin{center}
+    \includegraphics[width=0.8\textwidth]{./Diagramma_Database.png}
+\end{center}
+
+\end{block}
+
+\end{frame}
+
+\begin{frame}\frametitle{Application logic:}
+
+query
+
+\end{frame}
+
+\begin{frame}\frametitle{Website (User Interface):}
+
+\vspace{5mm}
+
+Enables to load and retrieve data via user-friendly UI
+
+\vspace{3mm}
+
+\begin{center}
+    \includegraphics[width=0.8\textwidth]{./User_PC.png}
+\end{center}
+
+\end{frame}
+
+\section{Use cases}
+
+\begin{frame}\frametitle{Use case diagram: Super User authorizes an
+User}
+
+\begin{block}{}
+
+\begin{center}
+    \includegraphics[width=0.8\textwidth]{./Presentation_short_SSD_1.png}
+\end{center}
+
+\end{block}
+
+\end{frame}
+
+\begin{frame}\frametitle{Use case diagram: Super User creates/populates
+a family}
+
+\begin{block}{}
+
+\begin{center}
+    \includegraphics[width=0.55\textwidth]{./Presentation_short_SSD_2.png}
+\end{center}
+
+\end{block}
+
+\end{frame}
+
+\begin{frame}\frametitle{Use case diagram: Super User loads data}
+
+\begin{block}{}
+
+\begin{center}
+    \includegraphics[width=0.8\textwidth]{./Presentation_short_SSD_3.png}
+\end{center}
+
+\end{block}
+
+\end{frame}
+
+\begin{frame}\frametitle{Use case diagram: Authorized User executes a
+query}
+
+\begin{block}{}
+
+\begin{center}
+    \includegraphics[width=0.75\textwidth]{./Presentation_short_SSD_4.png}
+\end{center}
+
+\end{block}
+
+\end{frame}
+
+\section{Software architecture}
+
+\begin{frame}\frametitle{To realize the project we will use:}
+
+\begin{block}{}
+
+\hspace*{25 mm}
+
+\includegraphics[width=2cm]{./database.png} \hfill
+\includegraphics[width=2.5cm]{./model2.png}
+\hspace{5 mm}
+
+Database: \textbf{MongoDB} \hfill
+Model: \textbf{NodeJS}
+\vspace{5mm}
+
+\end{block}
+
+\begin{block}{}
+
+\hspace*{25 mm}
+
+\includegraphics[width=4cm]{./website.png} \hfill
+\includegraphics[width=2.5cm]{./framework.jpg}
+\hspace{5 mm}
+
+Website: \textbf{AngularJS} \hfill
+Framework: \textbf{ExpressJS}
+\vspace{5mm}
+
+\end{block}
+
+\end{frame}
+
+\end{document}

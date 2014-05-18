@@ -102,20 +102,28 @@ Enables to load and retrieve data via user-friendly UI
 	\includegraphics[width=0.75\textwidth]{./Presentation_short_SSD_4.png}
 \end{center}
 
-# Software architecture
+# Software architecture and tecnologies
 
 ## To realize the project we will use:
 
 ###
-\hspace*{5 mm}
+\hspace*{25 mm}
 \includegraphics[width=2cm]{./database.png}
-\hspace{25 mm} Database: **MongoDB**
-
+\hfill
+\includegraphics[width=2.5cm]{./model2.png}
+\hspace{5 mm} Database: **MongoDB** 
+\hfill
+Model: **NodeJS**
 \vspace{5mm}
 
 ###
-\hspace*{5 mm}
+\hspace*{25 mm}
 \includegraphics[width=4cm]{./website.png}
-\hspace{5 mm} Website: **Javascript**
+\hfill
+\includegraphics[width=2.5cm]{./framework.jpg}
+\hspace{5 mm} Website: **AngularJS**
+\hfill
+Framework: **ExpressJS** 
+\vspace{5mm}
 
 <!-- pandoc -t beamer --slide-level 2 -V theme:CambridgeUS -s Presentation_short.md -o Presentation_short.pdf -->
