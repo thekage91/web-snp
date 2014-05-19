@@ -56,9 +56,17 @@ Realization of a **Web Portal**.
 	\includegraphics[width=0.8\textwidth]{./Diagramma_Database.png}
 \end{center}
 
-## Application logic:
+## Database - Website interaction:
 
-query
+Occurs through queries that allow searching for:
+
+- patient\'s SNPs 
+- gene\'s SNPs
+- region\'s SNPs
+- all SNPs with certain Mutation, Genotype, Freq alt, ...
+- patients with same SNP or Genotype
+- SNPs within a genomic region
+- specific SNP
 
 ## Website (User Interface):
 
