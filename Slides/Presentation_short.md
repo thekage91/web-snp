@@ -134,4 +134,19 @@ Model: **NodeJS**
 Framework: **ExpressJS** 
 \vspace{5mm}
 
+## To realize the project we will use:
+
+###
+\begin{center}
+	\includegraphics[width=1\textwidth]{./MEANSlide.png}
+\end{center}
+
+# Work breakdown
+
+## Work breakdown:
+
+- **Database**: Damian Tosoni, Ugo Buonadonna
+- **Database - Website interaction**: Ugo Buonadonna, Davide Sicignani
+- **Website**: Damian Tosoni, Davide Sicignani
+
 <!-- pandoc -t beamer --slide-level 2 -V theme:CambridgeUS -s Presentation_short.md -o Presentation_short.pdf -->
