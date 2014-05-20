@@ -115,24 +115,9 @@ Enables to load and retrieve data via user-friendly UI
 ## To realize the project we will use:
 
 ###
-\hspace*{25 mm}
-\includegraphics[width=2cm]{./database.png}
-\hfill
-\includegraphics[width=2.5cm]{./model2.png}
-\hspace{5 mm} Database: **MongoDB** 
-\hfill
-Model: **NodeJS**
-\vspace{5mm}
-
-###
-\hspace*{25 mm}
-\includegraphics[width=4cm]{./website.png}
-\hfill
-\includegraphics[width=2.5cm]{./framework.jpg}
-\hspace{5 mm} Website: **AngularJS**
-\hfill
-Framework: **ExpressJS** 
-\vspace{5mm}
+\begin{center}
+	\includegraphics[width=1\textwidth]{./Softwares.png}
+\end{center}
 
 ## To realize the project we will use:
 
