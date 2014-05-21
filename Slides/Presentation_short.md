@@ -13,23 +13,16 @@ DNA sequence variation occurring when a Single Nucleotide — A, T, C or G — i
 	\includegraphics[width=0.3\textwidth]{./Dna-SNP.png}
 \end{center}
 
-<!--
-![Alt text](./Dna-SNP.png)
--->
-
 ## Goal
-<!--
-\begin{tabular}{c @{\hspace{1em}} c}
-\includegraphics[width=5cm]{./Dna-SNP.png} &
-saddsasadasddsaas\\
-\end{tabular}
--->
 
 \begin{center}
 	\includegraphics[width=0.3\textwidth]{./imagesCAAF6KCZ.jpg}
 \end{center}
 
-Allow users to store and query Single Nucleotide Polymorphism genomics variants.
+Main target: **BIOLOGISTS**
+
+
+Help them in their work of storing and retrieving Single Nucleotide Polymorphism genomics variants.
 
 ## How to reach it?
 Realization of a **Web Portal**.
@@ -72,12 +65,15 @@ Occurs through queries that allow searching for:
 
 \vspace{5mm}
 
-Enables to load and retrieve data via user-friendly UI
+Enables to load and retrieve data via a user interface that:
 
-\vspace{3mm}
+- allows biologists to use service as easily as possible, and...
+- ...speed up their work.
+
+\vspace{1.5mm}
 
 \begin{center}
-	\includegraphics[width=0.8\textwidth]{./User_PC.png}
+	\includegraphics[width=0.5\textwidth]{./User_PC.png}
 \end{center}
 
 # Use cases
