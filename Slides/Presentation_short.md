@@ -10,13 +10,13 @@
 DNA sequence variation occurring when a Single Nucleotide — A, T, C or G — in the genome (or other shared sequence) differs between members of a biological species or paired chromosomes.
 
 \begin{center}
-	\includegraphics[width=0.3\textwidth]{./Dna-SNP.png}
+	\includegraphics[width=0.3\textwidth]{./images/Dna-SNP.png}
 \end{center}
 
 ## Goal
 
 \begin{center}
-	\includegraphics[width=0.3\textwidth]{./imagesCAAF6KCZ.jpg}
+	\includegraphics[width=0.3\textwidth]{./images/imagesCAAF6KCZ.jpg}
 \end{center}
 
 Main target: **BIOLOGISTS**
@@ -46,7 +46,7 @@ Realization of a **Web Portal**.
 
 ###
 \begin{center}
-	\includegraphics[width=0.8\textwidth]{./Diagramma_Database.png}
+	\includegraphics[width=0.8\textwidth]{./images/Diagramma_Database.png}
 \end{center}
 
 ## Database - Website interaction:
@@ -73,7 +73,7 @@ Enables to load and retrieve data via a user interface that:
 \vspace{1.5mm}
 
 \begin{center}
-	\includegraphics[width=0.5\textwidth]{./User_PC.png}
+	\includegraphics[width=0.5\textwidth]{./images/User_PC.png}
 \end{center}
 
 # Use cases
@@ -82,28 +82,28 @@ Enables to load and retrieve data via a user interface that:
 
 ###
 \begin{center}
-	\includegraphics[width=0.8\textwidth]{./Presentation_short_SSD_1.png}
+	\includegraphics[width=0.8\textwidth]{./images/Presentation_short_SSD_1.png}
 \end{center}
 
 ## Use case diagram: Super User creates/populates a family
 
 ###
 \begin{center}
-	\includegraphics[width=0.55\textwidth]{./Presentation_short_SSD_2.png}
+	\includegraphics[width=0.55\textwidth]{./images/Presentation_short_SSD_2.png}
 \end{center}
 
 ## Use case diagram: Super User loads data
 
 ###
 \begin{center}
-	\includegraphics[width=0.8\textwidth]{./Presentation_short_SSD_3.png}
+	\includegraphics[width=0.8\textwidth]{./images/Presentation_short_SSD_3.png}
 \end{center}
 
 ## Use case diagram: Authorized User executes a query
 
 ###
 \begin{center}
-	\includegraphics[width=0.75\textwidth]{./Presentation_short_SSD_4.png}
+	\includegraphics[width=0.75\textwidth]{./images/Presentation_short_SSD_4.png}
 \end{center}
 
 # Software architecture and tecnologies
@@ -112,14 +112,14 @@ Enables to load and retrieve data via a user interface that:
 
 ###
 \begin{center}
-	\includegraphics[width=1\textwidth]{./Softwares.png}
+	\includegraphics[width=1\textwidth]{./images/Softwares.png}
 \end{center}
 
 ## To realize the project we will use:
 
 ###
 \begin{center}
-	\includegraphics[width=1\textwidth]{./MEANSlide.png}
+	\includegraphics[width=1\textwidth]{./images/MEANSlide.png}
 \end{center}
 
 # Task breakdown
