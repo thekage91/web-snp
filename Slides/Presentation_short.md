@@ -126,9 +126,9 @@ Enables to load and retrieve data via user-friendly UI
 	\includegraphics[width=1\textwidth]{./MEANSlide.png}
 \end{center}
 
-# Work breakdown
+# Task breakdown
 
-## Work breakdown:
+## Task breakdown:
 
 - **Database**: Damian Tosoni, Ugo Buonadonna
 - **Database - Website interaction**: Ugo Buonadonna, Davide Sicignani
