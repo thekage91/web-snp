@@ -14,7 +14,7 @@ var mongoose = require('mongoose'),
         type: String,
         required: true,
         validate: [validatePresenceOf, 'CHR cannot be blank']
-    },
+    }, 
     start: {
         type: String,
         required: true,
@@ -34,8 +34,28 @@ var mongoose = require('mongoose'),
         type: String,
         required: true,
         validate: [validatePresenceOf, 'Alt cannot be blank']
-    }
- 
+    },
+    // Here start relations
+    gene: { 
+        type: Schema.Types.ObjectId,
+        ref: 'Gene'
+    },  
+    pathogenicity: { 
+        type: Schema.Types.ObjectId,
+        ref: 'Pathogenicity'
+    },
+    patients: [{ 
+        type: Schema.Types.ObjectId,
+        ref: 'Patient'
+    }],
+    dbSNPs: [{ 
+        type: Schema.Types.ObjectId,
+        ref: 'DbSNP'
+    }],
+    esps: [{ 
+        type: Schema.Types.ObjectId,
+        ref: 'esp'
+    }]
 });
 
 
