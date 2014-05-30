@@ -24,7 +24,14 @@ var mongoose = require('mongoose'),
         type: String,
         required: true,
         validate: [validatePresenceOf, 'ESP6500_EA cannot be blank']
-    }
+    },
+
+    //Relationship
+    variants: [{
+        type: Schema.Type.ObjectId,
+        ref: 'Variant'
+    }]
+    
 });
 
 

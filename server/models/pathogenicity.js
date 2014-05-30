@@ -50,8 +50,13 @@ var mongoose = require('mongoose'),
         type: String,
         required: true,
         validate: [validatePresenceOf, 'SiPhy cannot be blank']
-    }    
-    
+    },
+
+    //Relationship
+    variant: {
+        type: Schema.Type.ObjectId,
+        ref: 'Variant'
+    } 
     
 });
 

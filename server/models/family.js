@@ -9,12 +9,20 @@ var mongoose = require('mongoose'),
     
     
 /* Family schema */
-    var FamilySchema = new Schema({
+var FamilySchema = new Schema({
+    
     name: {
         type: String,
         required: true,
         validate: [validatePresenceOf, 'Name cannot be blank']
-    }
+    },
+
+    //Relationship
+    patiens: [{
+    	type: Schema.Type.ObjectId,
+    	ref: 'Patient'
+    }]
+
 });
 
 

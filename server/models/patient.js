@@ -9,29 +9,21 @@ var mongoose = require('mongoose'),
     
     
 /* PAtient schema */
-    var PatientSchema = new Schema({
+var PatientSchema = new Schema({
+
+	//Relationship
+	variants: [{
+		type: Schema.Type.ObjectId,
+		ref: 'Variant'
+	}],
+
+	family: {
+		type: Schema.Type.ObjectId,
+		ref: 'Family'
+	}
+
 });
 
-
-/**
- * Validations
- */
-// nothing for now
-
-/**
- * Virtuals
- */
-
-// no not-persisted attributes
-/*
- * Pre-save hook
- */
-//still nothing
-
-/**
- * Methods
- */
-// no method required here. Query class
 
 
 mongoose.model('Patient', PatientSchema);

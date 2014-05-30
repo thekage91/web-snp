@@ -55,7 +55,19 @@ var mongoose = require('mongoose'),
         type: String,
         required: true,
         validate: [validatePresenceOf, 'strandBias cannot be blank']
+    },
+
+    //Relationship
+    variant: {
+        type: Schema.Type.ObjectId,
+        ref: 'Variant'
+    },
+
+    sequencing: {
+        type: Schema.Type.ObjectId,
+        ref: 'Sequencing'
     }
+
 });
 
 

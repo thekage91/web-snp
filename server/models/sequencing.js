@@ -40,7 +40,19 @@ var mongoose = require('mongoose'),
         type: String,
         required: true,
         validate: [validatePresenceOf, 'referenceGenome cannot be blank']
+    },
+
+    //Relatinship
+    variants: [{
+        type: Schema.Type.ObjectId,
+        ref: 'Variant'
+    }],
+
+    sequencing: {
+        type: Schema.Type.ObjectId,
+        ref: 'VariantDetail'
     }
+
 });
 
 

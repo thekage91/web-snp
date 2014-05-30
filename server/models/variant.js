@@ -9,7 +9,7 @@ var mongoose = require('mongoose'),
     
     
 /* Variant schema */
-    var VariantSchema = new Schema({
+var VariantSchema = new Schema({
     chr: {
         type: String,
         required: true,
@@ -35,27 +35,44 @@ var mongoose = require('mongoose'),
         required: true,
         validate: [validatePresenceOf, 'Alt cannot be blank']
     },
+
+
     // Here start relations
     gene: { 
         type: Schema.Types.ObjectId,
         ref: 'Gene'
     },  
+    
     pathogenicity: { 
         type: Schema.Types.ObjectId,
         ref: 'Pathogenicity'
     },
+    
     patients: [{ 
         type: Schema.Types.ObjectId,
         ref: 'Patient'
     }],
+    
     dbSNPs: [{ 
         type: Schema.Types.ObjectId,
         ref: 'DbSNP'
     }],
+    
     esps: [{ 
         type: Schema.Types.ObjectId,
         ref: 'esp'
+    }],
+
+    sequencing: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Sequencing'
+    }],
+
+    variantDetail: [{
+        type: Schema.Types.ObjectId,
+        ref: 'VariantDetail'
     }]
+
 });
 
 
