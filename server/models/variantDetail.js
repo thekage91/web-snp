@@ -55,10 +55,10 @@ var mongoose = require('mongoose'),
         type: String,
         required: true,
         validate: [validatePresenceOf, 'strandBias cannot be blank']
-    },
+    }
 
     //Relationship
-    variant: {
+    /*variant: {
         type: Schema.Type.ObjectId,
         ref: 'Variant'
     },
@@ -66,7 +66,7 @@ var mongoose = require('mongoose'),
     sequencing: {
         type: Schema.Type.ObjectId,
         ref: 'Sequencing'
-    }
+    }*/
 
 });
 

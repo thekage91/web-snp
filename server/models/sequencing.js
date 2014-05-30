@@ -41,18 +41,59 @@ var mongoose = require('mongoose'),
         required: true,
         validate: [validatePresenceOf, 'referenceGenome cannot be blank']
     },
-
+    
+    detail :{ 
+        qual: {
+            type: String,
+            required: true,
+            validate: [validatePresenceOf, 'qual cannot be blank']
+        },
+        genotype: {
+            type: String,
+            required: true,
+            validate: [validatePresenceOf, 'genotype cannot be blank']
+        },
+        genotypeQuality: {
+            type: String,
+            required: true,
+            validate: [validatePresenceOf, 'genotypeQuality cannot be blank']
+        },
+        readsDepth: {
+            type: String,
+            required: true,
+            validate: [validatePresenceOf, 'readsDepth cannot be blank']
+        },
+        ref: {
+            type: String,
+            required: true,
+            validate: [validatePresenceOf, 'ref cannot be blank']
+        },
+        altFilterReads: {
+            type: String,
+            required: true,
+            validate: [validatePresenceOf, 'readsDepth cannot be blank']
+        },
+        genotypeLikelihood: {
+            type: String,
+            required: true,
+            validate: [validatePresenceOf, 'genotypeLikelihood cannot be blank']
+        },
+        haplotypeScore: {
+            type: String,
+            required: true,
+            validate: [validatePresenceOf, 'haplotypeScore cannot be blank']
+        },
+        strandBias: {
+            type: String,
+            required: true,
+            validate: [validatePresenceOf, 'strandBias cannot be blank']
+        }
+    },
     //Relatinship
     variants: [{
         type: Schema.Type.ObjectId,
         ref: 'Variant'
-    }],
-
-    sequencing: {
-        type: Schema.Type.ObjectId,
-        ref: 'VariantDetail'
-    }
-
+    }]
 });
 
 

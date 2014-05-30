@@ -66,11 +66,6 @@ var VariantSchema = new Schema({
     sequencing: [{
         type: Schema.Types.ObjectId,
         ref: 'Sequencing'
-    }],
-
-    variantDetail: [{
-        type: Schema.Types.ObjectId,
-        ref: 'VariantDetail'
     }]
 
 });
