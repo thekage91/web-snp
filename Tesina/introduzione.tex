@@ -12,16 +12,18 @@ In the following part, we will see objects that form our database model.
 To realize an object using mongoose, we need to follow a specific syntax. \\* First of all, you must place all model files related to the diagrams of the model in a specific folder within the project. Each of these files must be placed in a specific folder within the project /server/models/.//
 At the beginning of each file, we need to inform the database of the fact that any values ​​passed to the builders of the models, which are not present in the schema should not be persisted. We do this by defining a string \mbox{}\verb@ 'use strict'@\\.
 then you must specify the modules dependencies required to create the schema. In our case, we must satisfy the dependency on the modules (bold type) 'mongoose' and 'crypto (a module for encrypting information.) //*   We do this through the following code: 
-\begin{verbatim}      
+
+
+\begin{lstlisting}      
 var mongoose = require('mongoose'),
 Schema = mongoose.Schema,
 crypto = require('crypto');
-\end{verbatim}
+\end{lstlisting}
 
-At this point you switch to define the schema itself, which consists of all the necessary components for the definition of the object in question, with the attributes and relationships. //*
-The syntax for doing this is explicated in the example, where it is supposed to want to model a user with an attribute 'name' of type string: 
+At this point you switch to define the schema itself, which consists of all the necessary components for the definition of the object in question, with the attributes and relationships.
+The syntax for doing this is explicated in the example, where it is supposed to want to model a user with an attribute \textbf{name} of type string: 
 
-\begin {verbatim} 
+\begin{lstlisting} 
 
 UserSchema = new Schema ({
   / / attribute
@@ -37,27 +39,34 @@ UserSchema = new Schema ({
    ref: 'Patient'
    }]
      ); 
-\ end {verbatim}
+\end{lstlisting}
 
 Next, you can define a number of additional features to our model, such as
+
 \begin{itemize}
-\item Validations: functions called to validate a set of attributes or data specified by the programmer
-\item Virtuals: virtual attributes, ie not persisted
-\item Pre-save hooks: functions called at the time immediately before the model is saved to the database
-\item Methods: all methods necessary for the operation of our model. 
+	\item Validations: functions called to validate a set of attributes or data specified by the programmer
+	\item Virtuals: virtual attributes, ie not persisted
+	\item Pre-save hooks: functions called at the time immediately before the model is saved to the 				database
+	\item Methods: all methods necessary for the operation of our model. 
 \end{itemize}
 
 Finally, one must specify the actual name of the model from which the schema specified as previously shown, in addition to its creation proocedere real. We do this through the following code:
-\ begin {verbatim}
-mongoose.model ('User', UserSchema);
-\ end {verbatim}
+\ begin {lstlisting}
+	mongoose.model ('User', UserSchema);
+\ end {lstlisting}
 
 \section{Model Schemas}
+
 \subsection{Family}
 A Family represents a set of one or more patients (modeled in patient schema). It can be created only by an user with admin privileges. This schema allow to group patients with similar genomic mutations as well as real families (father, mother, son /{..} ). \\*
 Here it is the code to implement the family object: 
-@q { server/models/family.js }
-\enph{ATTRIBUTES:}   
+
+\lstinputlisting{family.js}
+
+
+
+
+\emph{ATTRIBUTES}   
 \begin{itemize}
   \item The first item
   \item The second item
