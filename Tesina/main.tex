@@ -1,0 +1,82 @@
+
+\documentclass[openright]{thesisTemplate}
+
+\PassOptionsToPackage{subfigure}{tocloft}
+\usepackage{subcaption}
+\usepackage{wrapfig}
+\usepackage{cite}
+\usepackage[utf8x]{inputenc}
+\usepackage{url}
+
+
+\usepackage{listings}
+\usepackage{color}
+ 
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+ 
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+ 
+\lstset{style=mystyle}
+ 
+
+
+% dati obbligatori, necessari al frontespizio
+
+\titolo{Web-SNP}
+\autore{U. Buonadonna, D. Sicignani, D. Tosoni }
+\annoAccademico{2013/2014}
+
+
+% ----- INIZIO TESI -----
+
+
+\begin{document}
+
+\frontmatter
+\generaFrontespizio
+
+\introduzione{introduzione} % la prende dal file introduzione.tex
+%\generaIndice
+
+% ----- INIZIO CAPITOLI -----
+
+\mainmatter
+
+ciao 
+
+
+%\capitolo{}{}
+
+
+% ----- FINE CAPITOLI -----
+
+% Sviluppi futuri
+
+\backmatter
+%\conclusioni{conclusioni}
+
+\nocite{*}
+
+\end{document}
+
+% ----- FINE TESI -----
