@@ -63,7 +63,7 @@ var VariantSchema = new Schema({
         ref: 'esp'
     }],
 
-    sequencing: [{
+    sequencings: [{
         type: Schema.Types.ObjectId,
         ref: 'Sequencing'
     }]

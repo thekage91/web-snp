@@ -1,5 +1,5 @@
 
-In this chapter, we will explain creation of database, from code point of view and design point of view. As explained in introduction chapter, the impl\\
+In this chapter, we will explain creation of database, from code point of view and design point of view. As explained in introduction chapter, the impl
 lementaion of the database is made using MongoDB, the noSQL DBMS, through mongoose, the JavaScript interface beetween the program and the database.
 \\
 The approach followed by this technique allows a more efficient way of handling those objects. In fact, using mongoose's schemas to define objects of the\\
@@ -20,7 +20,7 @@ Schema = mongoose.Schema,
 crypto = require('crypto');
 \end{lstlisting}
 
-At this point you switch to define the schema itself, which consists of all the necessary components for the definition of the object in question, with the attributes and relationships.
+At this point you switch to define the schema itself, which consists of all the necessary components for the definition of the object in question, with the attributes and relationships. Note that mongo automatically adds an ID fileld for each schema defined, and assigns it following an internal policy.
 The syntax for doing this is explicated in the example, where it is supposed to want to model a user with an attribute \textbf{name} of type string: 
 
 \begin{lstlisting} 
@@ -61,14 +61,44 @@ Finally, one must specify the actual name of the model from which the schema spe
 A Family represents a set of one or more patients (modeled in patient schema). It can be created only by an user with admin privileges. This schema allow to group patients with similar genomic mutations as well as real families (father, mother, son /{..} ). \\*
 Here it is the code to implement the family object: 
 
-\lstinputlisting{family.js}
+\lstinputlisting{../server/models/family.js}
 
-
-
-
-\emph{ATTRIBUTES}   
+\emph{Attributes}   
 \begin{itemize}
-  \item The first item
-  \item The second item
-  \item The third etc \ldots
+  \item \emph{name:} it describes family's name
 \end{itemize}
+
+\emph{Relationships}   
+\begin{itemize}
+  \item \emph{patients:} links family to its members
+\end{itemize}
+
+\subsection{Variants}
+The table variants is what is the key concept that we want to model in our project, namely the real genomic variants; This table will always be accessed in fact during the consultation phase, where the biologist can search or include such variations, which will be stored in the table. The database is connected to almost all the tables, the fact that testifies to the centrality of his role. //*
+To implement that table we use the following code:
+
+\lstinputlisting{../server/models/variant.js}
+ 
+\emph{Attributes}   
+\begin{itemize}
+  \item \emph{chr:} it's a five-characters string that //......NON E FINITO
+  \item \emph{start,end:} integers that describe the coordinate of the mutation within the chromosome; if they match, it means that we are dealing with a point mutation
+   \item \emph{ref:} represents the correct basis, that is what should be  if there were no mutation
+   \item \emph{alt:} represents what we find is actually due to the mutation; one. or - represent a deletion, while a sequence, for example CTTG ..., represents an insertio
+\end{itemize}
+
+\emph{Relationships}   
+\begin{itemize}
+  \item \emph{gene:} links the variant with the gene affected by the change
+  \item \emph{pathogenicity:} describes the variant pathogenicity, that is if the variant cause diseases
+  // DAVIDE DECIDI SE È MEGLIO THAT IS OPPURE WhiCH MEANS. PERCHE IO E DAMIAN SIAMO IN DISACCORD
+  \item \emph{patients:} links patients affected by that varant
+  \item \emph{dbSNPs:} connects the variant to its dbSNPs
+  \item \emph{esps:} BOH
+  \item \emph{sequencings:} all sequencings affected by this variation
+\end{itemize}
+ 
+
+
+
+
