@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.8.16)  1 JUN 2014 00:57
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.8.16)  1 JUN 2014 14:51
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -602,7 +602,7 @@ Package pdftex.def Info: images/uniroma3-logo.pdf used on input line 56.
 
 
 {/usr/local/texlive/2013/texmf-var/fonts/map/pdftex/updmap/pdftex.map} <./image
-s/uniroma3-logo.pdf>] (./introduzione.tex
+s/uniroma3-logo.pdf>] (./chapter-1.tex
 (/usr/local/texlive/2013/texmf-dist/tex/latex/ucs/data/uni-32.def
 File: uni-32.def 2013/05/13 UCS: Unicode data U+2000..U+20FF
 )
@@ -610,58 +610,62 @@ LaTeX Font Info:    Try loading font information for T1+cmtt on input line 13.
 
 (/usr/local/texlive/2013/texmf-dist/tex/latex/base/t1cmtt.fd
 File: t1cmtt.fd 1999/05/25 v2.5h Standard LaTeX font definitions
-) [2
+)
+Underfull \hbox (badness 10000) in paragraph at lines 12--15
+
+ []
+
+[1
+
 
 ]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 47.
-
-(/usr/local/texlive/2013/texmf-dist/tex/latex/base/omscmr.fd
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 49.
+ (/usr/local/texlive/2013/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 47.
- [3] (./family.js
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 49.
+ [2]
+(../server/models/family.js
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <9> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 3.
-
-[4]
+ [3]
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <9> on input line 38.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line 38.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <5> on input line 38.
-)) [5] [1
-
-] (./main.aux) ) 
+) [4] (../server/models/variant.js [5] [6])
+[7]) [8] (./main.aux) ) 
 Here is how much of TeX's memory you used:
- 9604 strings out of 493315
- 138423 string characters out of 6137904
- 275271 words of memory out of 5000000
- 12944 multiletter control sequences out of 15000+600000
- 15505 words of font info for 35 fonts, out of 8000000 for 9000
+ 9614 strings out of 493315
+ 138668 string characters out of 6137904
+ 330304 words of memory out of 5000000
+ 12948 multiletter control sequences out of 15000+600000
+ 16366 words of font info for 36 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
- 45i,12n,45p,459b,1793s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/local/texlive/2013/texmf-dist/fonts/enc/dvips/cm-super/cm
--super-t1.enc}</usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/c
-m/cmsy10.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm
-/cmsy9.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/cm-super/sfbx
-1095.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/cm-super/sfbx12
-00.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/cm-super/sfbx1440
-.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/cm-super/sfbx2488.p
-fb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/cm-super/sfrm0700.pfb
-></usr/local/texlive/2013/texmf-dist/fonts/type1/public/cm-super/sfrm0900.pfb><
-/usr/local/texlive/2013/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb></u
-sr/local/texlive/2013/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr
-/local/texlive/2013/texmf-dist/fonts/type1/public/cm-super/sfrm1440.pfb></usr/l
-ocal/texlive/2013/texmf-dist/fonts/type1/public/cm-super/sfrm1728.pfb></usr/loc
-al/texlive/2013/texmf-dist/fonts/type1/public/cm-super/sfrm2488.pfb></usr/local
-/texlive/2013/texmf-dist/fonts/type1/public/cm-super/sfti1095.pfb></usr/local/t
-exlive/2013/texmf-dist/fonts/type1/public/cm-super/sftt1095.pfb>
-Output written on main.pdf (6 pages, 215886 bytes).
+ 45i,12n,45p,453b,1793s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/local/texlive/2013/texmf-dist/fonts/enc/dvips/cm-s
+uper/cm-super-t1.enc}</usr/local/texlive/2013/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmsy10.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsf
+onts/cm/cmsy9.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/cm-sup
+er/sfbx1095.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/cm-super
+/sfbx1200.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/cm-super/s
+fbx1440.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/cm-super/sfb
+x2074.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/cm-super/sfbx2
+488.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/cm-super/sfrm070
+0.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/cm-super/sfrm0900.
+pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pf
+b></usr/local/texlive/2013/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb>
+</usr/local/texlive/2013/texmf-dist/fonts/type1/public/cm-super/sfrm1440.pfb></
+usr/local/texlive/2013/texmf-dist/fonts/type1/public/cm-super/sfrm1728.pfb></us
+r/local/texlive/2013/texmf-dist/fonts/type1/public/cm-super/sfrm2488.pfb></usr/
+local/texlive/2013/texmf-dist/fonts/type1/public/cm-super/sftt1095.pfb>
+Output written on main.pdf (9 pages, 238593 bytes).
 PDF statistics:
- 96 PDF objects out of 1000 (max. 8388607)
- 69 compressed objects within 1 object stream
+ 107 PDF objects out of 1000 (max. 8388607)
+ 77 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  6 words of extra memory for PDF output out of 10000 (max. 10000000)
 

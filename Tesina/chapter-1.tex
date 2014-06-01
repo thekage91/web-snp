@@ -11,7 +11,9 @@ In the following part, we will see objects that form our database model.
 \section{Mongoose's syntax}
 To realize an object using mongoose, we need to follow a specific syntax. \\* First of all, you must place all model files related to the diagrams of the model in a specific folder within the project. Each of these files must be placed in a specific folder within the project /server/models/.//
 At the beginning of each file, we need to inform the database of the fact that any values ​​passed to the builders of the models, which are not present in the schema should not be persisted. We do this by defining a string \mbox{}\verb@ 'use strict'@\\.
-then you must specify the modules dependencies required to create the schema. In our case, we must satisfy the dependency on the modules (bold type) 'mongoose' and 'crypto (a module for encrypting information.) //*   We do this through the following code: 
+then you must specify the modules dependencies required to create the schema. In our case, we must satisfy the dependency on the modules (bold type) 'mongoose' and 'crypto (a module for encrypting information.) \\*   
+
+We do this through the following code: 
 
 
 \begin{lstlisting}      
@@ -51,51 +53,55 @@ Next, you can define a number of additional features to our model, such as
 \end{itemize}
 
 Finally, one must specify the actual name of the model from which the schema specified as previously shown, in addition to its creation proocedere real. We do this through the following code:
-\ begin {lstlisting}
+
+\begin{lstlisting}
 	mongoose.model ('User', UserSchema);
-\ end {lstlisting}
+\end{lstlisting}
 
 \section{Model Schemas}
 
 \subsection{Family}
-A Family represents a set of one or more patients (modeled in patient schema). It can be created only by an user with admin privileges. This schema allow to group patients with similar genomic mutations as well as real families (father, mother, son /{..} ). \\*
+A Family represents a set of one or more patients (modeled in patient schema). It can be created only by an user with admin privileges. This schema allow to group patients with similar genomic mutations as well as real families (father, mother, son {..} ). \\*
 Here it is the code to implement the family object: 
 
 \lstinputlisting{../server/models/family.js}
 
-\emph{Attributes}   
+\newpage 
+
+\paragraph{Attributes}      
 \begin{itemize}
-  \item \emph{name:} it describes family's name
+ 	\item \textbf{name:} it describes family's name
 \end{itemize}
 
-\emph{Relationships}   
+\paragraph{Relationships}   
 \begin{itemize}
-  \item \emph{patients:} links family to its members
+ 	\item \textbf{patients:} links family to its members
 \end{itemize}
 
 \subsection{Variants}
-The table variants is what is the key concept that we want to model in our project, namely the real genomic variants; This table will always be accessed in fact during the consultation phase, where the biologist can search or include such variations, which will be stored in the table. The database is connected to almost all the tables, the fact that testifies to the centrality of his role. //*
+The table variants is what is the key concept that we want to model in our project, namely the real genomic variants; This table will always be accessed in fact during the consultation phase, where the biologist can search or include such variations, which will be stored in the table. The database is connected to almost all the tables, the fact that testifies to the centrality of his role. \\*\\*
 To implement that table we use the following code:
 
 \lstinputlisting{../server/models/variant.js}
  
-\emph{Attributes}   
+\newpage
+
+\paragraph{Attributes}      
 \begin{itemize}
-  \item \emph{chr:} it's a five-characters string that //......NON E FINITO
-  \item \emph{start,end:} integers that describe the coordinate of the mutation within the chromosome; if they match, it means that we are dealing with a point mutation
-   \item \emph{ref:} represents the correct basis, that is what should be  if there were no mutation
-   \item \emph{alt:} represents what we find is actually due to the mutation; one. or - represent a deletion, while a sequence, for example CTTG ..., represents an insertio
+ 	\item \textbf{chr:}  it's a five-characters string that //......NON E FINITO
+ 	\item \textbf{start,end:} integers that describe the coordinate of the mutation within the chromosome; 			if they match, it means that we are dealing with a point mutation
+	 \item \textbf{ref:} represents the correct basis, that is what should be  if there were no mutation
+   	\item \textbf{alt:} represents what we find is actually due to the mutation; one. or - represent a 				deletion, while a sequence, for example CTTG ..., represents an insertio
 \end{itemize}
 
-\emph{Relationships}   
+\paragraph{Relationships}   
 \begin{itemize}
-  \item \emph{gene:} links the variant with the gene affected by the change
-  \item \emph{pathogenicity:} describes the variant pathogenicity, that is if the variant cause diseases
-  // DAVIDE DECIDI SE È MEGLIO THAT IS OPPURE WhiCH MEANS. PERCHE IO E DAMIAN SIAMO IN DISACCORD
-  \item \emph{patients:} links patients affected by that varant
-  \item \emph{dbSNPs:} connects the variant to its dbSNPs
-  \item \emph{esps:} BOH
-  \item \emph{sequencings:} all sequencings affected by this variation
+	\item \textbf{gene:} links the variant with the gene affected by the change
+	\item \textbf{pathogenicity:} describes the variant pathogenicity, that is if the variant cause diseases
+  	\item \textbf{patients:} links patients affected by that varant
+  	\item \textbf{dbSNPs:} connects the variant to its dbSNPs
+  	\item \textbf{esps:} BOH - YEAH
+  	\item \textbf{sequencings:} all sequencings affected by this variation
 \end{itemize}
  
 
