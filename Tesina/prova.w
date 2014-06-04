@@ -1,0 +1,7 @@
+
+@d {prova} @[
+
+alert("ciao");
+
+@]
+
