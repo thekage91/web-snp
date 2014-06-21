@@ -1,18 +1,3 @@
-\newcommand{\NWtarget}[2]{#2}
-\newcommand{\NWlink}[2]{#2}
-\newcommand{\NWtxtMacroDefBy}{Fragment defined by}
-\newcommand{\NWtxtMacroRefIn}{Fragment referenced in}
-\newcommand{\NWtxtMacroNoRef}{Fragment never referenced}
-\newcommand{\NWtxtDefBy}{Defined by}
-\newcommand{\NWtxtRefIn}{Referenced in}
-\newcommand{\NWtxtNoRef}{Not referenced}
-\newcommand{\NWtxtFileDefBy}{File defined by}
-\newcommand{\NWtxtIdentsUsed}{Uses:}
-\newcommand{\NWtxtIdentsNotUsed}{Never used}
-\newcommand{\NWtxtIdentsDefed}{Defines:}
-\newcommand{\NWsep}{${\diamond}$}
-\newcommand{\NWnotglobal}{(not defined globally)}
-\newcommand{\NWuseHyperlinks}{}
 
 
 
@@ -35,29 +20,21 @@ To realize an object using mongoose, we need to follow a specific syntax.
 \\At the beginning of each file, we have to inform the database that all data passed to builders, but that are not present in the schema that we will define below, must not be stored.
 \\To do this we use the following line of code:
 
-	\vspace{-1ex}
-\begin{list}{}{} \item
-
-                \begin{lstlisting}
-                'use strict';
-                \end{lstlisting}
-        {\NWsep}
-\end{list}
-
+	@[
+		\begin{lstlisting}
+		'use strict';
+		\end{lstlisting}
+	@]
 
 Next, we must specify needed \emph{modules dependencies}. In our project, we have to insert the dependency from mongoose and crypto (a module for encryption of information):
 
-	\vspace{-1ex}
-\begin{list}{}{} \item
-
-                \begin{lstlisting}      
-                var mongoose = require('mongoose'),
-                Schema = mongoose.Schema,
-                crypto = require('crypto');
-                \end{lstlisting}
-        {\NWsep}
-\end{list}
-
+	@[
+		\begin{lstlisting}      
+		var mongoose = require('mongoose'),
+		Schema = mongoose.Schema,
+		crypto = require('crypto');
+		\end{lstlisting}
+	@]
 
 Now we move to define the \emph{schema}, specifying all necessary components (attributes and relationships). Note that MongoDB will automatically add an ID field to each schema and assigns it using an internal policy.
 \\
@@ -65,39 +42,25 @@ Now we move to define the \emph{schema}, specifying all necessary components (at
 
 \newpage
 
-	\begin{flushleft} \small
-\begin{minipage}{\linewidth}\label{scrap1}\raggedright\small
-\NWtarget{nuweb?}{} $\langle\,${\itshape {Example schema}}\nobreak\ {\footnotesize {?}}$\,\rangle\equiv$
-\vspace{-1ex}
-\begin{list}{}{} \item
+	@d {Example schema} @[
+		\begin{lstlisting} 
+		UserSchema = new Schema ({
+		  	/ / attribute
+		  	name: {
+		         		type: String,
+		         		required: true,
+		         		validate: [validatePresenceOf, 'Name can not be blank']
+		     	},
 
-                \begin{lstlisting} 
-                UserSchema = new Schema ({
-                        / / attribute
-                        name: {
-                                        type: String,
-                                        required: true,
-                                        validate: [validatePresenceOf, 'Name can not be blank']
-                        },
+		    	/ / relationship
+		   	patiens: [{
+		   		type: Schema.Type.ObjectId,
+		   		ref: 'Patient'
+		   	}]
+		); 
+		\end{lstlisting}
+	@]
 
-                        / / relationship
-                        patiens: [{
-                                type: Schema.Type.ObjectId,
-                                ref: 'Patient'
-                        }]
-                ); 
-                \end{lstlisting}
-        {\NWsep}
-\end{list}
-\vspace{-1.5ex}
-\footnotesize
-\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item {\NWtxtMacroNoRef}.
-
-\item{}
-\end{list}
-\end{minipage}\vspace{4ex}
-\end{flushleft}
 Next, we can define a number of \emph{additional features} to our model, such as:
 
 \begin{itemize}
@@ -130,25 +93,11 @@ Let us look at the components:
 
 \paragraph{Attributes}      
 
-	\begin{flushleft} \small
-\begin{minipage}{\linewidth}\label{scrap2}\raggedright\small
-\NWtarget{nuweb?}{} $\langle\,${\itshape {Variant's attributes}}\nobreak\ {\footnotesize {?}}$\,\rangle\equiv$
-\vspace{-1ex}
-\begin{list}{}{} \item
+	@d {Variant's attributes} @[
+		\lstinputlisting[firstline = 12, lastline = 37]{../server/models/variant.js}
+	@]
 
-                \lstinputlisting[firstline = 12, lastline = 37]{../server/models/variant.js}
-        {\NWsep}
-\end{list}
-\vspace{-1.5ex}
-\footnotesize
-\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
-\item {\NWtxtMacroNoRef}.
-
-\item{}
-\end{list}
-\end{minipage}\vspace{4ex}
-\end{flushleft}
-
+	@<Variant's attributes@>
 
 \begin{itemize}
 	\item \textbf{chr}: it is a five-character string that ... {Mazza's help needed...}
