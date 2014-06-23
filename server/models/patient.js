@@ -8,7 +8,7 @@ var mongoose = require('mongoose'),
     crypto = require('crypto');
     
     
-/* PAtient schema */
+/* Patient schema */
 var PatientSchema = new Schema({
 
 	//Relationship
