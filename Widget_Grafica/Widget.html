@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+ <head> 
+  <title>Widget</title> 
+  <style>
+    body{
+      margin: 0;
+      overflow: hidden;
+    }
+
+    #stats {  /* Align stats top-left */
+      position: absolute;
+      left: 0px;
+      top: 0px;
+    }
+  </style> 
+  </head>
+  <body>
+  <!-- JavaScript libraries -->
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> 
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/three.js/r67/three.min.js"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/stats.js/r11/Stats.min.js"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.5/dat.gui.min.js"></script>
+  <script src="C:/Users/Damian/Desktop/Esercizi_JavaScript/threejs-crumbs/examples/assets/libs/TrackballControls.js"></script>
+  <script src="C:/Users/Damian/Desktop/Esercizi_JavaScript/threejs-crumbs/examples/assets/libs/tween.min.js"></script>
+  <script src="C:/Users/Damian/Desktop/Esercizi_JavaScript/threejs-crumbs/examples/assets/libs/TrackballControls.js"></script>
+  <script src="C:/Users/Damian/Desktop/Esercizi_JavaScript/threejs-crumbs/examples/assets/libs/OBJLoader.js"></script>
+  <!-- Javascript code that runs our Three.js examples --> 
+  <script>
+    // once everything is loaded, we run our Three.js stuff.
+    $(function () {
+
+      var stats = initStats();
+
+      // create a scene, that will hold all our elements such as objects, cameras and lights.
+      var scene = new THREE.Scene();
+
+      // create a camera, which defines where we're looking at.
+      var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+      // create trackball controls
+      var trackballControls = new THREE.TrackballControls(camera);
+
+      // create a render and set the size
+      var webGLRenderer = new THREE.WebGLRenderer();
+      webGLRenderer.setClearColor(new THREE.Color(0xeeeeee, 1.0));
+      webGLRenderer.setSize(window.innerWidth, window.innerHeight);
+
+      // position and point the camera to the center of the scene
+      camera.position.set(0, 0, 500);
+      camera.lookAt(new THREE.Vector3(0, 0, 0));
+
+
+      // add the output of the renderer to the html element
+      $('body').append(webGLRenderer.domElement);
+
+
+
+      /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+      var basesLength = 50;
+      var basesRadius = 5;
+
+      //Function to create a couple of nitrogenous bases
+      //function createCouple (baseLeft, baseRight) {
+      function createCouple () {
+        //Per test; quando ci saranno i costruttori chiamare i costruttori in base ai parametri
+        var couple = new THREE.Object3D();
+
+        var baseLBaseGeometry = new THREE.CylinderGeometry( basesRadius, basesRadius, basesLength, 32 );
+        var baseLBaseMaterial = new THREE.MeshBasicMaterial( {color: 0x521515} );
+        var baseLBase = new THREE.Mesh(baseLBaseGeometry, baseLBaseMaterial);
+        baseLBase.position.set(0, -basesLength/2, 0);
+        baseLBase.castShadow = true;
+
+        couple.add(baseLBase);
+
+        var baseLBallGeometry = new THREE.SphereGeometry( basesRadius*2, 32, 32 );
+        var baseLBallMaterial = new THREE.MeshBasicMaterial( {color: 0xff0000} );
+        var baseLBall = new THREE.Mesh(baseLBallGeometry, baseLBallMaterial);
+        baseLBall.position.set(0, -basesLength - basesRadius, 0);
+        baseLBall.castShadow = true;
+
+        couple.add(baseLBall);
+
+        var baseRBaseGeometry = new THREE.CylinderGeometry( basesRadius, basesRadius, basesLength, 32 );
+        var baseRBaseMaterial = new THREE.MeshBasicMaterial( {color: 0xffffff} );
+        var baseRBase = new THREE.Mesh(baseRBaseGeometry, baseRBaseMaterial);
+        baseRBase.position.set(0, basesLength/2, 0);
+        baseRBase.castShadow = true;
+
+        couple.add(baseRBase);
+
+        var baseRBallGeometry = new THREE.SphereGeometry( basesRadius*2, 32, 32 );
+        var baseRBallMaterial = new THREE.MeshBasicMaterial( {color: 0x007bff} );
+        var baseRBall = new THREE.Mesh(baseRBallGeometry, baseRBallMaterial);
+        baseRBall.position.set(0, basesLength + basesRadius, 0);
+        baseRBall.castShadow = true;
+
+        couple.add(baseRBall);
+
+        return couple;
+      }
+
+
+      //Function to create the supercoil
+      function createSupercoil(numberOfElements) {  //Per passare le basi delle singole coppie, aggiungere come parametro una lista di liste
+        var supercoil = new THREE.Object3D();
+
+        var previous = createCouple();
+        supercoil.add(previous);
+
+        for (var i = 0; i < numberOfElements - 1; i++) {
+          var currentCouple = createCouple();
+
+          currentCouple.position.x += basesRadius*4;
+          currentCouple.rotation.x = Math.PI*1/6;
+
+          previous.add(currentCouple);
+
+          previous = currentCouple;
+        }
+
+        return supercoil;
+      }
+
+
+
+      var axisHelper = new THREE.AxisHelper(3);
+      scene.add(axisHelper);
+        
+      var DNA = createSupercoil(30);
+
+      scene.add(DNA);
+
+
+
+      /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+      render();
+
+      function render() {
+        stats.update();
+        trackballControls.update();
+
+        // render using requestAnimationFrame
+        requestAnimationFrame(render);
+        webGLRenderer.render(scene, camera);
+      }
+
+      function initStats() {
+        var stats = new Stats();
+        stats.setMode(0); // 0: fps, 1: ms
+        $('body').append(stats.domElement);
+        return stats;
+      }
+    });
+  </script>  
+ </body>
+</html>
