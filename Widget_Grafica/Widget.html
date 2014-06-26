@@ -17,14 +17,17 @@
   </head>
   <body>
   <!-- JavaScript libraries -->
-  <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> 
-  <script src="http://cdnjs.cloudflare.com/ajax/libs/three.js/r67/three.min.js"></script>
-  <script src="http://cdnjs.cloudflare.com/ajax/libs/stats.js/r11/Stats.min.js"></script>
-  <script src="http://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.5/dat.gui.min.js"></script>
-  <script src="C:/Users/Damian/Desktop/Esercizi_JavaScript/threejs-crumbs/examples/assets/libs/TrackballControls.js"></script>
-  <script src="C:/Users/Damian/Desktop/Esercizi_JavaScript/threejs-crumbs/examples/assets/libs/tween.min.js"></script>
-  <script src="C:/Users/Damian/Desktop/Esercizi_JavaScript/threejs-crumbs/examples/assets/libs/TrackballControls.js"></script>
-  <script src="C:/Users/Damian/Desktop/Esercizi_JavaScript/threejs-crumbs/examples/assets/libs/OBJLoader.js"></script>
+  <script src="libs/jquery.min.js"></script> 
+  <script src="libs/three.min.js"></script>
+  <script src="libs/Stats.min.js"></script>
+  <script src="libs/dat.gui.min.js"></script>
+  <script src="libs/TrackballControls.js"></script>
+  <script src="libs/tween.min.js"></script>
+  <script src="libs/OBJLoader.js"></script>
+  <script type="text/javascript" src="libs/helvetiker_regular.typeface.js"></script> 
+  <script type="text/javascript" src="libs/helvetiker_bold.typeface.js"></script> 
+  <script type="text/javascript" src="libs/bitstream_vera_sans_mono_roman.typeface.js"></script>
+  <script src="libs/keyframe.js"></script>
   <!-- Javascript code that runs our Three.js examples --> 
   <script>
     // once everything is loaded, we run our Three.js stuff.
@@ -57,9 +60,13 @@
 
 
       /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      function createMesh(geom, textColor) {
+        var meshMaterial = new THREE.MeshPhongMaterial({specular: 0xffffff, color: textColor, shininess: 100, metal: true});
+        var textMesh = new THREE.Mesh(geom, meshMaterial);
+        textMesh.castShadow = true;
 
-      var basesLength = 50;
-      var basesRadius = 5;
+        return textMesh;
+      }
 
       //Function to create a couple of nitrogenous bases
       //function createCouple (baseLeft, baseRight) {
@@ -67,7 +74,9 @@
         //Per test; quando ci saranno i costruttori chiamare i costruttori in base ai parametri
         var couple = new THREE.Object3D();
 
-        var baseLBaseGeometry = new THREE.CylinderGeometry( basesRadius, basesRadius, basesLength, 32 );
+        //Questo pezzo commentato crea un'elica generica fatta di cilindri
+
+        /*var baseLBaseGeometry = new THREE.CylinderGeometry( basesRadius, basesRadius, basesLength, 32 );
         var baseLBaseMaterial = new THREE.MeshBasicMaterial( {color: 0x521515} );
         var baseLBase = new THREE.Mesh(baseLBaseGeometry, baseLBaseMaterial);
         baseLBase.position.set(0, -basesLength/2, 0);
@@ -97,7 +106,65 @@
         baseRBall.position.set(0, basesLength + basesRadius, 0);
         baseRBall.castShadow = true;
 
+        couple.add(baseRBall);*/
+
+        var baseLBase = createGuanine();
+
+        baseLBase.rotation.z = Math.PI/2;
+
+        baseLBase.position.set(0, -basesLength + basesRadius/2, 0);
+        baseLBase.castShadow = true;
+
+        couple.add(baseLBase);
+
+        var baseLBallGeometry = new THREE.SphereGeometry( basesRadius*2, 32, 32 );
+        var baseLBallMaterial = new THREE.MeshBasicMaterial( {color: 0xff3200} );
+        var baseLBall = new THREE.Mesh(baseLBallGeometry, baseLBallMaterial);
+        baseLBall.position.set(-basesRadius, -basesLength - basesRadius*2 + basesRadius/2, basesRadius);
+        baseLBall.castShadow = true;
+
+        couple.add(baseLBall);
+
+        var baseRBase = createCytosine();
+
+        baseRBase.rotation.z = Math.PI/2;
+
+        baseRBase.position.set(0, 0, 0);
+        baseRBase.castShadow = true;
+
+        couple.add(baseRBase);
+
+        var baseRBallGeometry = new THREE.SphereGeometry( basesRadius*2, 32, 32 );
+        var baseRBallMaterial = new THREE.MeshBasicMaterial( {color: 0x007bff} );
+        var baseRBall = new THREE.Mesh(baseRBallGeometry, baseRBallMaterial);
+        baseRBall.position.set(-basesRadius, basesLength + basesRadius*2, basesRadius);
+        baseRBall.castShadow = true;
+
         couple.add(baseRBall);
+
+        var baseRPlaneGeometry = new THREE.BoxGeometry( basesRadius*8, basesRadius, basesRadius );
+        var baseRPlaneMaterial = new THREE.MeshBasicMaterial( {color: 0x007bff} );
+        var baseRPlane = new THREE.Mesh(baseRPlaneGeometry, baseRPlaneMaterial);
+        baseRPlane.position.set(-basesRadius*4, 0, 0);
+        baseRPlane.castShadow = true;
+
+        baseRBall.add(baseRPlane);
+
+        baseRBall.rotation.y = -Math.PI*1/3;
+        baseRBall.rotation.x = -Math.PI*1/15;
+
+        var baseLPlaneGeometry = new THREE.BoxGeometry( basesRadius*8, basesRadius, basesRadius );
+        var baseLPlaneMaterial = new THREE.MeshBasicMaterial( {color: 0xff3200} );
+        var baseLPlane = new THREE.Mesh(baseLPlaneGeometry, baseLPlaneMaterial);
+        baseLPlane.position.set(-basesRadius*4, 0, 0);
+        baseLPlane.castShadow = true;
+
+        baseLBall.add(baseLPlane);
+
+        baseLBall.rotation.y = Math.PI*1/3;
+        baseLBall.rotation.x = -Math.PI*1/15;
+
+
 
         return couple;
       }
@@ -125,7 +192,187 @@
       }
 
 
+      //Function to create an adenine base
+      function createAdenine() {
+        var shape = new THREE.Shape();
+        shape.moveTo(0, 0);
+        shape.lineTo(0, basesRadius*2);
+        shape.lineTo(basesLength/2, basesRadius*2);
+        shape.arc(0, 0, basesRadius/2, 2*Math.PI, Math.PI, false);
+        shape.lineTo(basesLength - basesRadius, basesRadius*2);
+        shape.moveTo(basesLength - basesRadius, basesRadius);
+        shape.arc(0, 0, basesRadius, -Math.PI/2, Math.PI/2, false);
+        shape.lineTo(0, 0);
 
+        var shapeGeometry = shape.extrude({amount: basesRadius*2, bevelSize: 0, bevelThickness: 0});
+        var shapeMaterial = new THREE.MeshBasicMaterial({color: 0xfc9362, side: THREE.DoubleSide});
+        var shape = new THREE.Mesh(shapeGeometry, shapeMaterial);
+
+        shape.castShadow = true;
+        shape.receiveShadow = true;
+
+        var adenine = new THREE.Object3D();
+        adenine.add(shape);
+
+        //TODO: Mettere bordi neri
+        //shape.wireframe = new THREE.MeshBasicMaterial({color: 0x000000, side: THREE.DoubleSide});
+        //shape.wireframeLinewidth = 50;
+        //shape.wireFrameLineJoin = meshMaterial.wireframeLinejoin;
+        
+        //Add the text "A"
+        var text = createMesh(new THREE.TextGeometry("A", options), 0x396d35);
+        text.position.z = basesRadius*3/2;
+        text.position.y = basesRadius/3;
+        text.position.x = basesLength - basesRadius*3;
+
+        text.castShadow = true;
+        text.receiveShadow = true;
+
+        adenine.add(text);
+
+        return adenine;
+      }
+
+
+      //Function to create a guanine base
+      function createGuanine() {
+        var shape = new THREE.Shape();
+        shape.moveTo(0, 0);
+        shape.lineTo(0, basesRadius*2);
+        shape.lineTo(basesLength/2, basesRadius*2);
+        shape.arc(0, 0, basesRadius/2, 2*Math.PI, Math.PI, false);
+        shape.lineTo(basesLength - basesRadius, basesRadius*2);
+        shape.lineTo(basesLength, basesRadius);
+        shape.lineTo(basesLength - basesRadius, 0);
+        shape.lineTo(0, 0);
+
+        var shapeGeometry = shape.extrude({amount: basesRadius*2, bevelSize: 0, bevelThickness: 0});
+        var shapeMaterial = new THREE.MeshBasicMaterial({color: 0xff0000, side: THREE.DoubleSide});
+        var shape = new THREE.Mesh(shapeGeometry, shapeMaterial);
+
+        shape.castShadow = true;
+        shape.receiveShadow = true;
+
+        var guanine = new THREE.Object3D();
+        guanine.add(shape);
+
+        //TODO: Mettere bordi neri
+        //shape.wireframe = new THREE.MeshBasicMaterial({color: 0x000000, side: THREE.DoubleSide});
+        //shape.wireframeLinewidth = 50;
+        //shape.wireFrameLineJoin = meshMaterial.wireframeLinejoin;
+        
+        //Add the text "G"
+        var text = createMesh(new THREE.TextGeometry("G", options), 0x396d35);
+        text.position.z = basesRadius*3/2;
+        text.position.y = basesRadius/3;
+        text.position.x = basesLength - basesRadius*3;
+
+        text.castShadow = true;
+        text.receiveShadow = true;
+
+        guanine.add(text);
+
+        return guanine;
+      }
+
+
+      //Function to create a cytosine base
+      function createCytosine() {
+        var shape = new THREE.Shape();
+        shape.moveTo(0, basesRadius*2);
+        shape.lineTo(basesRadius, basesRadius);
+        shape.lineTo(0, 0);
+        shape.lineTo(basesLength, 0);
+        shape.lineTo(basesLength, basesRadius*2);
+        shape.lineTo(0, basesRadius*2);
+
+        var shapeGeometry = shape.extrude({amount: basesRadius*2, bevelSize: 0, bevelThickness: 0});
+        var shapeMaterial = new THREE.MeshBasicMaterial({color: 0xdda411, side: THREE.DoubleSide});
+        var shape = new THREE.Mesh(shapeGeometry, shapeMaterial);
+
+        shape.castShadow = true;
+        shape.receiveShadow = true;
+
+        var cytosine = new THREE.Object3D();
+        cytosine.add(shape);
+
+        //TODO: Mettere bordi neri
+        //shape.wireframe = new THREE.MeshBasicMaterial({color: 0x000000, side: THREE.DoubleSide});
+        //shape.wireframeLinewidth = 50;
+        //shape.wireFrameLineJoin = meshMaterial.wireframeLinejoin;
+        
+        //Add the text "C"
+        var text = createMesh(new THREE.TextGeometry("C", options), 0x396d35);
+        text.position.z = basesRadius*3/2;
+        text.position.y = basesRadius/3;
+        text.position.x = basesRadius*2;
+
+        text.castShadow = true;
+        text.receiveShadow = true;
+
+        cytosine.add(text);
+
+        return cytosine;
+      }
+
+
+      //Function to create a thymine base
+      function createThymine() {
+        var shape = new THREE.Shape();
+        shape.moveTo(0, basesRadius);
+        shape.arc(0, 0, basesRadius, Math.PI/2, -Math.PI/2, false);
+        shape.lineTo(basesLength, basesRadius*2);
+        shape.lineTo(basesLength, 0);
+        shape.lineTo(0, 0);
+        
+        var shapeGeometry = shape.extrude({amount: basesRadius*2, bevelSize: 0, bevelThickness: 0});
+        var shapeMaterial = new THREE.MeshBasicMaterial({color: 0xffe900, side: THREE.DoubleSide});
+        var shape = new THREE.Mesh(shapeGeometry, shapeMaterial);
+
+        shape.castShadow = true;
+        shape.receiveShadow = true;
+
+        var thymine = new THREE.Object3D();
+        thymine.add(shape);
+
+        //TODO: Mettere bordi neri
+        //shape.wireframe = new THREE.MeshBasicMaterial({color: 0x000000, side: THREE.DoubleSide});
+        //shape.wireframeLinewidth = 50;
+        //shape.wireFrameLineJoin = meshMaterial.wireframeLinejoin;
+        
+        //Add the text "T"
+        var text = createMesh(new THREE.TextGeometry("T", options), 0x396d35);
+        text.position.z = basesRadius*3/2;
+        text.position.y = basesRadius/3;
+        text.position.x = basesRadius*2;
+
+        text.castShadow = true;
+        text.receiveShadow = true;
+
+        thymine.add(text);
+
+        return thymine;
+      }
+
+
+
+
+      //VARIABLES
+      var basesLength = 50;
+      var basesRadius = 5;
+
+      var options = {
+        size: 7,
+        height: basesRadius*2/3,
+        font: "helvetiker",
+        bevelThickness: 1,
+        bevelSize: 0.5,
+        bevelSegments: 3,
+        bevelEnabled: true,
+        curveSegments: 12,
+        steps: 1
+      };
+      
       var axisHelper = new THREE.AxisHelper(3);
       scene.add(axisHelper);
         
@@ -133,6 +380,16 @@
 
       scene.add(DNA);
 
+      //var temp = createAdenine();
+      var temp = createGuanine();
+      var temp2 = createCytosine();
+      temp2.position.x = basesLength - basesRadius;
+
+      //scene.add(temp);
+      //scene.add(temp2);
+
+      var temp3 = createThymine();
+      //scene.add(temp3);
 
 
       /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
