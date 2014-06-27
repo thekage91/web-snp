@@ -1,6 +1,6 @@
 <div class="page-header" data-ng-controller="HeaderController">
   <div class="logo pull-left">
-    <a class="navbar-brand" ui-sref="home" mean-token="'site-title'">MEAN</a>
+    <a class="navbar-brand" ui-sref="home" mean-token="'site-title'">HOME</a>
   </div>
 
   <div class="left pull-left">
@@ -20,6 +20,8 @@
         </li>
         <li class="divider-vertical"></li>
         <li><a ui-sref='auth.login'>Login</a>
+        <li class="divider-vertical"></li>
+        <li><a ui-sref='auth.prova'>Prova</a> <!-- aggiunto per testare la navigazione -->
         </li>
     </ul>
     <ul class="navbar-nav nav" data-ng-show="global.authenticated">
