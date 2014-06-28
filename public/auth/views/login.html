@@ -1,64 +1,36 @@
-<div data-ng-controller="LoginCtrl">
-    <div class="alert alert-danger animated fadeIn" ng-show="loginerror">{{loginerror}}</div>
+<link href="public/system/assets/css/login.css" rel="stylesheet">
 
-<!--
-    <div id="loginModal" class="modal show" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="text-center">Login</h1>
-                </div>
-                <div class="modal-body">
-                    <form class="form col-md-12 center-block">
-                    <div class="form-group">
-                        <label for="email" class="col-md-4 control-label">Email</label>
-                        <div class="col-md-8">
-                            <input required id="email" type="email" name="email" placeholder="Email" class="form-control" ng-model="user.email"/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="password" class="col-md-4 control-label">Password</label>
-                        <div class="col-md-8">
-                            <input required id="password" type="password" name="password" placeholder="Password" class="form-control" ng-model="user.password"/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-offset-4 col-md-8">
-                            <button type="submit" class="btn btn-primary">Sign in</button>&nbsp;
-                            or&nbsp;<a ui-sref='auth.register' class="show-signup">Sign up</a>
-                        </div>
-                    </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <div class="col-md-12">
-                        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-                    </div>    
-                </div>
+<section class="main content-section">
+    <div class="col-md-6">
+
+        <div data-ng-controller="LoginCtrl">
+            <div class="alert alert-danger animated fadeIn" ng-show="loginerror">{{loginerror}}</div>
+            <div class="header text-center">
+                LOGIN
+                <h1> </h1>
             </div>
+            <form  ng-submit="login()" class="signin form-horizontal">
+                <div class="form-group">
+                    <label for="email" class="col-md-4 control-label">Email</label>
+                    <div class="col-md-8">
+                        <input required id="email" type="email" name="email" placeholder="Email" class="form-control" ng-model="user.email"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password" class="col-md-4 control-label">Password</label>
+                    <div class="col-md-8">
+                        <input required id="password" type="password" name="password" placeholder="Password" class="form-control" ng-model="user.password"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-4 col-md-8">
+                        <button type="submit" class="btn btn-primary">Sign in</button>&nbsp;
+                        or&nbsp;<a ui-sref='auth.register' class="show-signup">Sign up</a>
+                    </div>
+                </div>
+            </form>
         </div>
+
     </div>
+</section>
 
--->
-
-    <form  ng-submit="login()" class="signin form-horizontal">
-        <div class="form-group">
-            <label for="email" class="col-md-4 control-label">Email</label>
-            <div class="col-md-8">
-                <input required id="email" type="email" name="email" placeholder="Email" class="form-control" ng-model="user.email"/>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="password" class="col-md-4 control-label">Password</label>
-            <div class="col-md-8">
-                <input required id="password" type="password" name="password" placeholder="Password" class="form-control" ng-model="user.password"/>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-offset-4 col-md-8">
-                <button type="submit" class="btn btn-primary">Sign in</button>&nbsp;
-                or&nbsp;<a ui-sref='auth.register' class="show-signup">Sign up</a>
-            </div>
-        </div>
-    </form>
-</div>
