@@ -16,6 +16,8 @@
       <div class="pull-right" data-ng-show="global.authenticated" mean-token-editable></div>
     </div>
     <ul class="navbar-nav nav" data-ng-hide="global.authenticated">
+        <li><a ui-sref='aboutUs'>About us</a>
+        <li class="divider-vertical"></li>
         <li><a ui-sref='auth.register'>Register</a>
         </li>
         <li class="divider-vertical"></li>
@@ -25,6 +27,8 @@
         </li>
     </ul>
     <ul class="navbar-nav nav" data-ng-show="global.authenticated">
+        <li><a ui-sref='aboutUs'>About us</a>
+        <li class="divider-vertical"></li>
         <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 {{global.user.name}} <b class="caret"></b>
