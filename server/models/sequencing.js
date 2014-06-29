@@ -9,8 +9,8 @@ var mongoose = require('mongoose'),
     
     
 /* Sequencing schema */
-    var SequencingSchema = new Schema({
-        //patient id date are keys
+var SequencingSchema = new Schema({
+    //patient id and date are keys
     patientId: {
         type: String,
         required: true,
@@ -47,6 +47,11 @@ var mongoose = require('mongoose'),
             type: String,
             required: true,
             validate: [validatePresenceOf, 'qual cannot be blank']
+        },
+        filter: {
+            type: String,
+            required: true,
+            validate: [validatePresenceOf, 'filter cannot be blank']
         },
         genotype: {
             type: String,

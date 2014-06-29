@@ -140,6 +140,8 @@
    \end{list}
 }
 
+
+
 % Bibliografia in ordine alfabetico
 \let \OldBib \bibliography
 \renewcommand{\bibliography}[1]{\newpage \markboth{Bibliografia}{Bibliografia} \OldBib{#1}}

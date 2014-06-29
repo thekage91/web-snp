@@ -9,7 +9,7 @@ var mongoose = require('mongoose'),
     
     
 /* VariantDetail schema */
-    var VariantDetailSchema = new Schema({
+var VariantDetailSchema = new Schema({
     //foreignKey
     qual: {
         type: String,

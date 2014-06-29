@@ -1,5 +1,6 @@
 This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2014.5.18)  27 JUN 2014 18:13
 entering extended mode
+ restricted \write18 enabled.
  %&-line parsing enabled.
 **main.tex
 (./main.tex
@@ -67,27 +68,27 @@ File: mem11.clo 2008/01/30 v0.3 memoir class 11pt size option
 \c@subsubsection=\count88
 \c@paragraph=\count89
 \c@subparagraph=\count90
-\beforechapskip=\skip60
-\midchapskip=\skip61
-\afterchapskip=\skip62
-\chapindent=\skip63
-\bottomsectionskip=\skip64
-\secindent=\skip65
-\beforesecskip=\skip66
-\aftersecskip=\skip67
-\subsecindent=\skip68
-\beforesubsecskip=\skip69
-\aftersubsecskip=\skip70
-\subsubsecindent=\skip71
-\beforesubsubsecskip=\skip72
-\aftersubsubsecskip=\skip73
-\paraindent=\skip74
-\beforeparaskip=\skip75
-\afterparaskip=\skip76
-\subparaindent=\skip77
-\beforesubparaskip=\skip78
-\aftersubparaskip=\skip79
-\pfbreakskip=\skip80
+\beforechapskip=\skip62
+\midchapskip=\skip63
+\afterchapskip=\skip64
+\chapindent=\skip65
+\bottomsectionskip=\skip66
+\secindent=\skip67
+\beforesecskip=\skip68
+\aftersecskip=\skip69
+\subsecindent=\skip70
+\beforesubsecskip=\skip71
+\aftersubsecskip=\skip72
+\subsubsecindent=\skip73
+\beforesubsubsecskip=\skip74
+\aftersubsubsecskip=\skip75
+\paraindent=\skip76
+\beforeparaskip=\skip77
+\afterparaskip=\skip78
+\subparaindent=\skip79
+\beforesubparaskip=\skip80
+\aftersubparaskip=\skip81
+\pfbreakskip=\skip82
 \c@@ppsavesec=\count91
 \c@@ppsaveapp=\count92
 \ragrparindent=\dimen103
@@ -133,8 +134,8 @@ File: mem11.clo 2008/01/30 v0.3 memoir class 11pt size option
 \col@sep=\dimen107
 \extrarowheight=\dimen108
 \NC@list=\toks15
-\extratabsurround=\skip109
-\backup@length=\skip110
+\extratabsurround=\skip111
+\backup@length=\skip112
 \TX@col@width=\dimen109
 \TX@old@table=\dimen110
 \TX@old@col=\dimen111

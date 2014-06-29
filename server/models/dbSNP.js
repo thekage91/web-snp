@@ -9,7 +9,7 @@ var mongoose = require('mongoose'),
     
     
 /* DbSNP schema */
-    var DbSNPSchema = new Schema({
+var DbSNPSchema = new Schema({
     dbSNP: {
         //key
         type: String,

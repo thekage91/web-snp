@@ -9,7 +9,7 @@ var mongoose = require('mongoose'),
     
     
 /* Gene schema */
-    var GeneSchema = new Schema({
+var GeneSchema = new Schema({
     gene: {
         type: String,
         required: true,
