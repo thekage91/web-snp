@@ -3,9 +3,9 @@ body {
     height: 100%;
     font-family: Lora,"Helvetica Neue",Helvetica,Arial,sans-serif;
     color: #fff;
-    background: url(../img/login_background.jpg) no-repeat bottom center scroll;
+    /*background: url(../img/login_background.jpg) no-repeat bottom center scroll;*/
     background-size: 100% auto;
-    background-color: #000;
+    background-color: #ffffff;
 }
 
 .main {
