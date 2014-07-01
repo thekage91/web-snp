@@ -18,6 +18,7 @@ describe('Create and Save a patient' , function(){
             patient2 = new Patient({});
 
             done();
+        });
     });
 
     describe('Save patient' , function(){
@@ -82,6 +83,7 @@ describe('Remove patients' , function(){
             patient2.save();
 
             done();
+        });
     });
 
     describe('Remove patients' , function(){
