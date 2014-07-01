@@ -21,8 +21,8 @@ describe('Create a Variant and Save', function() {
                     ref: 'X3D3R',
                     alt: 'XXCC'
                 });
-
                 done();
+            });
         });
 
         describe('Save a variant', function() {
@@ -179,6 +179,7 @@ describe('Remove Variant' , function(){
             variant.save(done);
             variant1.save(done);
             done();
+        });
     });
 
     describe('Remove specific Variant' , function(){
@@ -224,26 +225,27 @@ describe('Remove Variant' , function(){
 //COMPLETE THIS PART
 describe('Modified Variant' , function(){
     describe('Model Variant:', function() {
-            before(function(done) {
-                variant = new Variant({
-                    type: 'variant@test',
-                    start: '01020',
-                    end: '01040',
-                    ref: 'X3D3R',
-                    alt: 'XXCC'
-                });
+        before(function(done) {
+            variant = new Variant({
+                type: 'variant@test',
+                start: '01020',
+                end: '01040',
+                ref: 'X3D3R',
+                alt: 'XXCC'
+            });
 
-                variant1 = new Variant({
-                    type: 'variant@test',
-                    start: '01020',
-                    end: '01040',
-                    ref: 'X3D3R',
-                    alt: 'XXCC'
-                });
+            variant1 = new Variant({
+                type: 'variant@test',
+                start: '01020',
+                end: '01040',
+                ref: 'X3D3R',
+                alt: 'XXCC'
+            });
 
-                variant.save(done);
-                variant1.save(done);
-                done();
+            variant.save(done);
+            variant1.save(done);
+            done();
+        });
     });
 
     describe('Modified specific variant' , function(){

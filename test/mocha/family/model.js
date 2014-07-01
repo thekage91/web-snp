@@ -16,9 +16,8 @@ describe('Create a Family and Save' , function(){
 			family1 = new Family({name: 'family1@test'});
 			family2 = new Family({name: 'family2@test'});
 
+			done();
 		});
-
-		done();
 	});
 
 	describe('Save Family' , function(){
@@ -55,6 +54,8 @@ describe('Remove Family' , function(){
 			family.save(done);
 			family1.save(done);
 			family2.save(done);
+
+			done();
 		});
 	});
 
@@ -77,15 +78,17 @@ describe('Remove Family' , function(){
 
 describe('Remove all Family' , function(){
 	describe('Model Family' , function(){
-			before(function(done) {
-				family = new Family({name: 'family@test'});
-				family1 = new Family({name: 'family1@test'});
-				family2 = new Family({name: 'family2@test'});
+		before(function(done) {
+			family = new Family({name: 'family@test'});
+			family1 = new Family({name: 'family1@test'});
+			family2 = new Family({name: 'family2@test'});
 
-				family.save(done);
-				family1.save(done);
-				family2.save(done);
-			});
+			family.save(done);
+			family1.save(done);
+			family2.save(done);
+
+			done();
+		});
 	});
 
 	describe('Remove all family' , function(){
