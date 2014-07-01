@@ -156,7 +156,7 @@ describe('Search Variant' , function(){
         done();
     });
 });
-
+}.
 describe('Remove Variant' , function(){
     describe('Model Variant:', function() {
         before(function(done) {
