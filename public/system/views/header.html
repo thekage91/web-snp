@@ -1,8 +1,8 @@
-<link href="public/system/assets/css/header.css" rel="stylesheet">
+<!--<link href="public/system/assets/css/header.css" rel="stylesheet">
 
 <div class="page-header" data-ng-controller="HeaderController">
   <div class="logo pull-left">
-    <a class="navbar-brand home" ui-sref="home" mean-token="'site-title'" data-ng-hide="global.authenticated">HOME</a> <!-- nasconde il pulsante home se l'utente è autenticato -->
+    <a class="navbar-brand home" ui-sref="home" mean-token="'site-title'" data-ng-hide="global.authenticated">HOME</a> <!-- nasconde il pulsante home se l'utente è autenticato 
   </div>
 
   <div class="left pull-left">
@@ -26,7 +26,6 @@
         <li class="divider-vertical"></li>
         <li><a ui-sref='info'>Info</a>
         <li class="divider-vertical"></li>
-        <li><a ui-sref='auth.prova'>Prova</a> <!-- aggiunto per testare la navigazione -->
         </li>
     </ul>
     <ul class="navbar-nav nav" data-ng-show="global.authenticated">
@@ -46,7 +45,53 @@
             </ul>
         </li>
         <li class="divider-vertical"></li>
-        <li><a ui-sref='auth.prova'>Prova</a> <!-- aggiunto per testare la navigazione -->
     </ul>
   </div>
-</div>
+-->
+
+<header class="navbar">
+  <div class="container-fluid expanded-panel">
+    <div class="row">
+      <div id="logo" class="col-xs-12 col-sm-2">
+        <a href="index.html">Web SNP</a>
+      </div>
+      <div id="top-panel" class="col-xs-12 col-sm-10">
+        <div class="row">
+          <div class="col-xs-8 col-sm-4">
+            <a href="#" class="show-sidebar">
+              <i class="fa fa-bars"></i>
+            </a>
+          </div>
+          <div class="col-xs-4 col-sm-8 top-panel-right">
+            <ul class="nav navbar-nav pull-right panel-menu">
+              <li class="hidden-xs">
+                <a href="../login.html" class="modal-link">
+                  <i class="fa fa-bell"></i>
+                  <span>Login</span>
+                </a>
+              </li>
+              <li class="hidden-xs">
+                <a class="ajax-link" href="../register.html">
+                  <i class="fa fa-calendar"></i>
+                  <span>Signi Up</span>
+                </a>
+              </li>
+              <li class="hidden-xs">
+                <a href="aboutUs.html" class="ajax-link">
+                  <i class="fa fa-envelope"></i>
+                  <span>About Us</span>
+                </a>
+              </li>
+              <li class="hidden-xs">
+                <a href="info.html" class="ajax-link">
+                  <i class="fa fa-envelope"></i>
+                  <span>Tutorial</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
