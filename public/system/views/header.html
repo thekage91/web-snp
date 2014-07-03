@@ -1,8 +1,8 @@
-<!--<link href="public/system/assets/css/header.css" rel="stylesheet">
+<link href="public/system/assets/css/header.css" rel="stylesheet">
 
 <div class="page-header" data-ng-controller="HeaderController">
   <div class="logo pull-left">
-    <a class="navbar-brand home" ui-sref="home" mean-token="'site-title'" data-ng-hide="global.authenticated">HOME</a> <!-- nasconde il pulsante home se l'utente è autenticato 
+    <a class="navbar-brand home" ui-sref="home" mean-token="'site-title'" data-ng-hide="global.authenticated">HOME</a> 
   </div>
 
   <div class="left pull-left">
@@ -47,9 +47,8 @@
         <li class="divider-vertical"></li>
     </ul>
   </div>
--->
 
-<header class="navbar">
+<!--<header class="navbar">
   <div class="container-fluid expanded-panel">
     <div class="row">
       <div id="logo" class="col-xs-12 col-sm-2">
@@ -65,25 +64,25 @@
           <div class="col-xs-4 col-sm-8 top-panel-right">
             <ul class="nav navbar-nav pull-right panel-menu">
               <li class="hidden-xs">
-                <a href="../login.html" class="modal-link">
+                <a ui-sref='auth.login' class="ajax-link">
                   <i class="fa fa-bell"></i>
                   <span>Login</span>
                 </a>
               </li>
               <li class="hidden-xs">
-                <a class="ajax-link" href="../register.html">
+                <a class="ajax-link" ui-sref='auth.register'>
                   <i class="fa fa-calendar"></i>
-                  <span>Signi Up</span>
+                  <span>Sign Up</span>
                 </a>
               </li>
               <li class="hidden-xs">
-                <a href="aboutUs.html" class="ajax-link">
+                <a ui-sref='aboutUs' class="ajax-link">
                   <i class="fa fa-envelope"></i>
                   <span>About Us</span>
                 </a>
               </li>
               <li class="hidden-xs">
-                <a href="info.html" class="ajax-link">
+                <a ui-sref='info' class="ajax-link">
                   <i class="fa fa-envelope"></i>
                   <span>Tutorial</span>
                 </a>
@@ -93,5 +92,5 @@
         </div>
       </div>
     </div>
-  </div>
+  </div>-->
 </header>
