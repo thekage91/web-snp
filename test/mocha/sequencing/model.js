@@ -14,12 +14,12 @@
  	describe('Model Sequencing' , function(){
  		before(function(done){
  			sequencing = new Sequencing({
- 				patientId: '3XX33W';
- 				date: '03/12/14';
- 				patientHealthStatus: 'good';
- 				sequencerName: 'testTest';
- 				sequencerModel: 'sequencerTest';
- 				referenceGenome: 'testGenomeReference';
+ 				patientId: '3XX33W',
+ 				date: '03/12/14',
+ 				patientHealthStatus: 'good',
+ 				sequencerName: 'testTest',
+ 				sequencerModel: 'sequencerTest',
+ 				referenceGenome: 'testGenomeReference'
  			});
 
  			done();
@@ -45,4 +45,4 @@
  			});
  		});
  	});
- });
+});

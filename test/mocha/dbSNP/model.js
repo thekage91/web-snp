@@ -71,7 +71,7 @@ describe('Create a DbSNP and Save', function() {
         });
     });
 });
-        }) 
+        }); 
     });
 
 
@@ -125,8 +125,7 @@ describe('Search DbSNP' , function(){
         done();
     });
 });
-        }) 
-    });
+        });
 
 describe('Remove DbSNP' , function(){
     describe('Model DbSNP:', function() {
@@ -174,7 +173,7 @@ describe('Remove DbSNP' , function(){
         });
     });
 });
-
+});
 
 describe('Modified DbSNP' , function(){
     describe('Model DbSNP:', function() {
