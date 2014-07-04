@@ -25,7 +25,8 @@ describe('Create a Variant and Save', function() {
         });
     });
 
-    describe('Save a variant', function() {
+    describe('Save   at require (module.js:373:17)
+ a variant', function() {
         it('should begin without the test variant', function(done) {
             Variant.find({ type: 'variant@test' }, function(err, variants) {
                 variants.should.have.length(0);

@@ -4,9 +4,11 @@
  * Module dependencies.
  */
 var should = require('should'),
-    mongoose = require('mongoose'),
-    DbSNP = mongoose.model('DbSNP');
-
+    mongoose = require('mongoose');
+    
+//    var DbSNP = mongoose.model('DbSNP');
+    
+var DbSNP = require('../../../server/models/dbSNP');
 //Globals
 var dbSNP;
 
