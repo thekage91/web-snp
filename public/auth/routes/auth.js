@@ -37,10 +37,6 @@ angular.module('mean.auth').config(['$stateProvider',
                 url: '/prova',
                 templateUrl: 'public/auth/views/prova.html',
             })
-            .state('auth.dashboard', {
-                url: '/dashboard',
-                templateUrl: 'public/auth/views/dashboard.html',
-            })
             .state('auth.register', {
                 url: '/register',
                 templateUrl: 'public/auth/views/register.html',
