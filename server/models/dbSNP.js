@@ -30,7 +30,7 @@ var mongoose = require('mongoose'),
 
     //Relationship
     variants: [{
-        type: Schema.Type.ObjectId,
+        type: Schema.ObjectId,
         ref: 'Variant'
     }]
 
