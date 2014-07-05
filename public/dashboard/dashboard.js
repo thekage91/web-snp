@@ -1,4 +1,4 @@
 'use strict';
 
-angular.module('mean.dashbaord', []);
+angular.module('mean.dashboard', []);
 
