@@ -22,6 +22,9 @@ angular.module('mean.system').config(['$stateProvider', '$urlRouterProvider',
                 .state('aboutUs', {
                     url: '/aboutUs',
                     templateUrl: 'public/system/views/aboutUs.html'
+                })
+                .state('dashboard',{
+                    templateUrl: 'public/dashboard/views/index.html'
                 });
         }
     ])
