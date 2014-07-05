@@ -31,7 +31,7 @@
 \LoadClass[a4paper,11pt,oneside,italian]{memoir}
 
 % Si utilizza la sillabazione italiana
-\RequirePackage[italian]{babel}
+\RequirePackage[english]{babel}
 % Load graphicx
 \RequirePackage{graphicx}
 % Line spacing
