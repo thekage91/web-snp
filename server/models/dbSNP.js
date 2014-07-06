@@ -58,4 +58,4 @@ var mongoose = require('mongoose'),
 // no method required here. Query class
 
 
-mongoose.model('DbSNP', DbSNPSchema);
+module.exports = mongoose.model('DbSNP', DbSNPSchema);
