@@ -9,7 +9,7 @@
 <div id="wrapper">
 
     <!-- questa deve essere tolta da qui e messa nel template header.html -->
-    <nav class="navbar navbar-default navbar-fixed-top" role="navigation" style="margin-bottom: 0px">
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation" style="margin-bottom: 0px" data-ng-controller="HeaderController">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
                 <span class="sr-only">Toggle navigation</span>
@@ -212,17 +212,17 @@
                 <!-- /.dropdown-alerts -->
             </li>
             <!-- /.dropdown -->
-            <li class="dropdown">
+            <li class="dropdown" data-ng-show="global.authenticated">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                     <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
                 </a>
-                <ul class="dropdown-menu dropdown-user">
+                <ul class="dropdown-menu dropdown-user" >
                     <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
                     </li>
                     <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                     </li>
                     <li class="divider"></li>
-                    <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                    <li><a href="/logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                     </li>
                 </ul>
                 <!-- /.dropdown-user -->
@@ -230,6 +230,11 @@
             <!-- /.dropdown -->
 
             <!-- Elementi che prima stavano nella barra grigia in alto -->
+            <li><a ui-sref='dashboard.home' data-ng-show="global.authenticated">Dashboard</a>
+            <li data-ng-hide="global.authenticated"><a ui-sref='auth.login'><i class="fa fa-sign-in fa-fw"></i> Login</a>
+            <li class="divider-vertical"></li>
+            <li><a ui-sref='auth.register' data-ng-hide="global.authenticated">Register</a>
+            <li class="divider-vertical"></li>
             <li><a ui-sref='info'>Info</a>
             <li class="divider-vertical"></li>
             <li><a ui-sref='aboutUs'>About us</a>
@@ -239,7 +244,7 @@
         <!-- /.navbar-top-links -->
 
         <!-- Left Sidebar -->
-        <div class="navbar-default navbar-static-side " role="navigation" ng-controller="SidebarCtrl">
+        <div class="navbar-default navbar-static-side " role="navigation" ng-controller="SidebarCtrl" data-ng-show="global.authenticated">
             <div class="sidebar-collapse">
                 <ul class="nav" id="side-menu">
                     <li class="sidebar-search">
@@ -340,7 +345,7 @@
 
     <!-- Se si toglie la barra da qui non la visualizza proprio, non eredita la principale... -->
 
-    <div id="page-wrapper" ui-view >
+    <div id="page-wrapper" data-ng-show="global.authenticated" ui-view >
        
     </div>
     <!-- /#page-wrapper -->
