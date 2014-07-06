@@ -11,7 +11,14 @@ angular.module('mean.dashboard').config(['$stateProvider',
 				url: "/dashboard",
 				templateUrl: 'public/dashboard/views/index.html'
             })
-            .state('form_upload', {
+
+            //Per le partial views
+            .state('dashboard.home', {
+                url: '/home',
+                templateUrl: 'public/dashboard/views/partial_views/partial-home.html',
+            })
+
+            .state('dashboard.form_upload', {
             	url: "/form_upload",
             	templateUrl: 'public/dashboard/views/partial_views/form_file_uploader.html'
             });

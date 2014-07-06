@@ -254,9 +254,13 @@
                         <!-- /input-group -->
                     </li>
                     
+                    <li>
+                        <a ui-sref="dashboard.home"><i class="fa fa-table fa-fw"></i>Home</a>
+                    </li>
+
                     <!-- queste due cose puo' farle solo l'admin -->
                     <li>
-                        <a ng-click="setPage('form_upload')"><i class="fa fa-table fa-fw"></i>Upload File</a>
+                        <a ui-sref="dashboard.form_upload"><i class="fa fa-table fa-fw"></i>Upload File</a>
                     </li>
                     <li>
                         <a ><i class="fa fa-edit fa-fw"></i>Authorize User</a>
@@ -333,6 +337,8 @@
         </div>
         <!-- /.navbar-static-side -->
     </nav>
+
+    <!-- Se si toglie la barra da qui non la visualizza proprio, non eredita la principale... -->
 
     <div id="page-wrapper" ui-view >
        
