@@ -1,6 +1,6 @@
 <link href="public/system/assets/css/login.css" rel="stylesheet">
 
-<div class="page-header" data-ng-controller="HeaderController"> <!-- Necessario altrimenti non capisce se l'utente e' loggato o meno -->
+<div class="page-header" data-ng-controller="HeaderController"> 
 
     <section class="main content-section">
 
@@ -14,33 +14,7 @@
             or 
             <a ui-sref='auth.register' role="button" class="btn btn-default" >Sign Up</a> 
             to use this portal...
-        </div>
-        <div class="message-bottom" data-ng-hide="global.authenticated">
-            If you already logged-in, please click
-            <a href="" onClick='location.reload()'> here</a>
-             to reload the page.
-        </div>
-
-
-
-
-        <div class="message-top" data-ng-show="global.authenticated">
-            You are logged in! ;)
-        </div>
-
-        <div class="message-bottom" data-ng-show="global.authenticated">
-            Click
-            <a ui-sref='dashboard.index'> here</a>
-             to go to your dashboard or 
-            <a href="/logout"> here</a>
-             to log-out.
-        </div>
-
-        <!-- Cancellare -->
-        Bisogna trovare un modo per farla ricaricare in automatico dopo il login.
-        <!-- -->
-
+        </div>       
     </section>
-
 </div>
 
