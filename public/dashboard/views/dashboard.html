@@ -258,7 +258,7 @@
                     
                     <!-- queste due cose puo' farle solo l'admin -->
                     <li>
-                        <a ui-sref="form_upload"><i class="fa fa-table fa-fw"></i>Upload File</a>
+                        <a ng-click="setPage('form_upload')"><i class="fa fa-table fa-fw"></i>Upload File</a>
                     </li>
                     <li>
                         <a ><i class="fa fa-edit fa-fw"></i>Authorize User</a>
@@ -336,25 +336,8 @@
         <!-- /.navbar-static-side -->
     </nav>
 
-    <div id="page-wrapper" ng-view >
-        <div class="row">
-            <div class="col-md-12">
-                <h1 class="page-header">Dashboard content</h1>
-            </div>
-            <!-- /.col-lg-12 -->
-        </div>
-        <!-- /.row -->
-        <div class="row">
-            <div class="col-lg-8">
-
-            </div>
-            <!-- /.col-lg-8 -->
-            <div class="col-lg-4">
-
-            </div>
-            <!-- /.col-lg-4 -->
-        </div>
-        <!-- /.row -->
+    <div ui-view >
+       
     </div>
     <!-- /#page-wrapper -->
 </div>
