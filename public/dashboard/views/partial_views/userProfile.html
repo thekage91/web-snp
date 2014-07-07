@@ -1,0 +1,57 @@
+<div class="container">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-lg-9 col-xs-offset-0 col-sm-offset-0 toppad" >     
+          <div>
+            <div class="panel-heading">
+              <h2>{{global.user.name}}</h2>
+            </div>
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=100" class="img-circle"> </div>
+                
+                <div class=" col-md-9 col-lg-9 "> 
+                  <table class="table table-user-information">
+                    <tbody>
+                      <tr>
+                        <td>Username:</td>
+                        <td>{{global.user.username}}</td>
+                      </tr>
+                      <tr>
+                        <td>First Name:</td>
+                        <td>{{global.user.firstName}}</td>
+                      </tr>
+                      <tr>
+                        <td>Last Name:</td>
+                        <td>{{global.user.lastName}}</td>
+                      </tr>
+                   
+                      <tr>
+                      <tr>
+                        <td>Address</td>
+                        <td>{{global.user.address}}</td>
+                      </tr>
+                      <tr>
+                        <td>Email</td>
+                        <td><a href="{{global.user.name}}">{{global.user.email}}</a></td>
+                      </tr>
+                        <td>Phone Number</td>
+                        <td>{{global.user.phone}}
+                        </td>
+                           
+                      </tr>
+                     
+                    </tbody>
+                  </table>
+                  
+                </div>
+              </div>
+            </div>
+            <div class="panel-footer">
+				      <ul class="nav navbar-right">
+            		<li><a ui-sref="dashboard.editProfile"><i class="fa fa-edit"></i>Edit profile</a>
+            	</ul>
+            </div>
+        </div>
+        </div>
+      </div>
+    </div>

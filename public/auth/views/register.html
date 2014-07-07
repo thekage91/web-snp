@@ -13,7 +13,17 @@
                 <div class="header text-left form-signin-heading">Register</div>
                 <div class="form-group">
                     <div class="col-md-10">
-                        <input id="name" type="text" name="name" placeholder="Full name" class="form-control" ng-model="user.name"/>
+                        <input id="username" type="text" name="username" placeholder="Username" class="form-control" ng-model="user.username"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-10">
+                        <input id="firstName" type="text" name="firstName" placeholder="First Name" class="form-control" ng-model="user.firstName"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-10">
+                        <input id="lastName" type="text" name="lastName" placeholder="Last Name" class="form-control" ng-model="user.lastName"/>
                     </div>
                 </div>
                 <div class="form-group">
@@ -23,7 +33,12 @@
                 </div>
                 <div class="form-group">
                     <div class="col-md-10">
-                        <input id="username" type="text" name="username" placeholder="Username" class="form-control" ng-model="user.username"/>
+                        <input id="address" type="text" name="address" placeholder="Address" class="form-control" ng-model="user.address"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-10">
+                        <input id="phone" type="text" name="phone" placeholder="Phone" class="form-control" ng-model="user.phone"/>
                     </div>
                 </div>
                 <div class="form-group">
@@ -33,11 +48,11 @@
                 </div>
                 <div class="form-group">
                     <div class="col-md-10">
-                        <input id="confirmPassword" type="password" name="confirmPassword" placeholder="Password" class="form-control" ng-model="user.confirmPassword"/>
+                        <input id="confirmPassword" type="password" name="confirmPassword" placeholder="Confirm Password" class="form-control" ng-model="user.confirmPassword"/>
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="col-md-7">
+                    <div class="col-md-10">
                         <button type="submit" class="btn btn-primary">Sign up</button>&nbsp;
                         or&nbsp;<a ui-sref='auth.login' class="show-login">Sign in</a>
                     </div>

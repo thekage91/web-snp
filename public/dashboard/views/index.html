@@ -217,7 +217,7 @@
                     <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
                 </a>
                 <ul class="dropdown-menu dropdown-user" >
-                    <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                    <li><a ui-sref="dashboard.userProfile"><i class="fa fa-user fa-fw"></i>Account</a>
                     </li>
                     <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                     </li>
@@ -261,6 +261,9 @@
                     
                     <li>
                         <a ui-sref="dashboard.home"><i class="fa fa-table fa-fw"></i>Home</a>
+                    </li>
+                    <li>
+                        <a ui-sref="dashboard.userProfile"><i class="fa fa-user fa-fw"></i>Account</a>
                     </li>
 
                     <!-- queste due cose puo' farle solo l'admin -->
@@ -345,7 +348,7 @@
 
     <!-- Se si toglie la barra da qui non la visualizza proprio, non eredita la principale... -->
 
-    <div id="page-wrapper" data-ng-show="global.authenticated" ui-view >
+    <div id="page-wrapper" data-ng-controller="HeaderController" data-ng-show="global.authenticated" ui-view >
        
     </div>
     <!-- /#page-wrapper -->
