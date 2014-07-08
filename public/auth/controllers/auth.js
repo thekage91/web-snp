@@ -44,14 +44,12 @@ angular.module('mean.controllers.login', [])
                 $scope.usernameError = null;
                 $scope.registerError = null;
                 $http.post('/register', {
-                    /*
                     email: $scope.user.email,
                     password: $scope.user.password,
                     confirmPassword: $scope.user.confirmPassword,
                     username: $scope.user.username,
                     name: $scope.user.name
-                    */
-
+                    /*
                     username: $scope.user.username,
                     firstName: $scope.user.firstName,
                     lastName: $scope.user.lastName,
@@ -60,6 +58,7 @@ angular.module('mean.controllers.login', [])
                     phone: $scope.user.phone,
                     password: $scope.user.password,
                     confirmPassword: $scope.user.confirmPassword
+                    */
                 })
                     .success(function() {
                         // authentication OK
