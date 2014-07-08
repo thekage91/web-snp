@@ -1,8 +1,29 @@
-<div class="btn-toolbar">
-  <ul class="nav navbar-right">
-    <li><a ui-sref="dashboard.editProfile"><i class="fa fa-edit"></i>New User</a>
-  </ul></div>
-<div class="well">
+
+<!-- TODO: definire un css per section-header -->
+
+<div class="row">
+  <h1 class="section-header">Authorize Users</h1>  
+
+  <hr>
+</div>
+
+<div class="row bot12">
+  <div id="custom-search-input">
+  <h4>Insert valid username</h4>
+  <div class="input-group col-md-4">
+    <input type="search" class="search-query form-control" placeholder="Insert username" />
+    <span class="input-group-btn">
+      <button class="btn btn-danger" type="button">
+        <span class="glyphicon glyphicon-search"></span>
+      </button>
+    </span>
+  </div>
+</div>
+</div>
+
+
+<div class="row">
+  <div class="well">
     <table class="table">
       <thead>
         <tr>
@@ -16,85 +37,71 @@
       <tbody>
         <tr>
           <td><div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=100" class="img-circle"> </div></td>
-          <td>Mark</td>
-          <td>Tompson</td>
-          <td>the_mark7</td>
-          <td>
-              <a href="#"><i class="fa fa-pencil"></i></a>&nbsp
-              <a href="#myModal" role="button" data-toggle="modal"><i class="fa fa-times"></i></a>
-          </td>
-        </tr>
-        <tr>
-          <td><div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=100" class="img-circle"> </div></td>
-          <td>Ashley</td>
-          <td>Jacobs</td>
-          <td>ash11927</td>
-          <td>
-              <a href="#"><i class="fa fa-pencil"></i></a>&nbsp
-              <a href="#myModal" role="button" data-toggle="modal"><i class="fa fa-times"></i></a>
-          </td>
-        </tr>
-        <tr>
-          <td><div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=100" class="img-circle"> </div></td>
-          <td>Audrey</td>
-          <td>Ann</td>
-          <td>audann84</td>
-          <td>
-              <a href="#"><i class="fa fa-pencil"></i></a>&nbsp
-              <a href="#myModal" role="button" data-toggle="modal"><i class="fa fa-times"></i></a>
-          </td>
-        </tr>
-        <tr>
-          <td><div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=100" class="img-circle"> </div></td>
-          <td>John</td>
-          <td>Robinson</td>
-          <td>jr5527</td>
-          <td>
-              <a href="#"><i class="fa fa-pencil"></i></a>&nbsp
-              <a href="#myModal" role="button" data-toggle="modal"><i class="fa fa-times"></i></a>
-          </td>
-        </tr>
-        <tr>
-          <td><div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=100" class="img-circle"> </div></td>
-          <td>Aaron</td>
-          <td>Butler</td>
-          <td>aaron_butler</td>
-          <td>
-              <a href="#"><i class="fa fa-pencil"></i></a>&nbsp
-              <a href="#myModal" role="button" data-toggle="modal"><i class="fa fa-times"></i></a>
-          </td>
-        </tr>
-        <tr>
-          <td><div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=100" class="img-circle"> </div></td>
           <td>Chris</td>
           <td>Albert</td>
           <td>cab79</td>
           <td>
-              <a href="#"><i class="fa fa-pencil"></i></a>&nbsp
-              <a href="#myModal" role="button" data-toggle="modal"><i class="fa fa-times"></i></a>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+            <button type="button" class="btn btn-primary btn-sm" data-ng-hide="user.isLicensed"
+            data-toggle="modal" data-target="#myModalLicensed">
+            <span class="glyphicon glyphicon-star"></span> Authorize
+          </button> 
+          <br/> 
+
+          <!-- Visibile solo se e' autorizzato -->
+          <button data-dz-remove class="btn btn-danger delete btn-sm" data-ng-hide="user.isLicensed"
+          data-toggle="modal" data-target="#myModalDismiss">
+          <i class="glyphicon glyphicon-ban-circle"></i>
+          <span>Dismiss</span>
+        </button>        
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>
 </div>
 
-<div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+<div id="myModalDismiss" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content"></div>
   </div>
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h3 id="myModalLabel">Delete Confirmation</h3>
+        <button type="button" class="close " data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">Dismiss Confirmation</h3>
       </div>
       <div class="modal-body">
-        <p class="error-text">Are you sure you want to delete the user?</p>
+        <p class="error-text">Are you sure you want to dismiss the user?</p>
       </div>
       <div class="modal-footer">
         <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-        <button class="btn btn-danger" data-dismiss="modal">Delete</button>
+        <button class="btn btn-danger" data-dismiss="modal">Dismiss</button>
       </div>
     </div>
   </div>
+</div>
+
+
+<div id="myModalLicensed" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content"></div>
+  </div>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close " data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">Authorize Confirmation</h3>
+      </div>
+      <div class="modal-body">
+        <p class="error-text">Are you sure you want to authorize the user?</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+        <button class="btn btn-danger" data-dismiss="modal">Authorize</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 </div>
