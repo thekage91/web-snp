@@ -7,7 +7,7 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema,
     crypto = require('crypto');
     
-    
+    function validatePresenceOf(x) {return true;}
 /* Esp schema */
     var EspSchema = new Schema({
     ESP6500_ALL: {
@@ -28,7 +28,7 @@ var mongoose = require('mongoose'),
 
     //Relationship
     variants: [{
-        type: Schema.Type.ObjectId,
+        type: Schema.ObjectId,
         ref: 'Variant'
     }]
     
@@ -56,4 +56,4 @@ var mongoose = require('mongoose'),
 // no method required here. Query class
 
 
-mongoose.model('Esp', EspSchema);
+module.exports = mongoose.model('Esp', EspSchema);

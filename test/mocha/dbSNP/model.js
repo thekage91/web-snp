@@ -110,14 +110,14 @@ describe('Finding DbSNP:', function() {
         });
 
         it('should get the element by freqAlt', function(done) {
-            DbSNP.find({start: '01020'}, function(err, dbSNPs) {
+            DbSNP.find({freqAlt: '01020'}, function(err, dbSNPs) {
                 dbSNPs.should.have.length > 0;
                 done();
             });
         });
 
         it('should get the element by freqRef', function(done) {
-            DbSNP.find({end: '011040'}, function(err, dbSNPs) {
+            DbSNP.find({freqRef: '011040'}, function(err, dbSNPs) {
                 dbSNPs.should.have.length > 0;
                 done();
             });
