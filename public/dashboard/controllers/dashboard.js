@@ -1,28 +1,19 @@
 'use strict';
 
-angular.module('mean.controllers.dashboard', [])
+angular.module('mean.dashboard', [])
 
-.controller('SidebarCtrl', function ($scope, $state) {
-
-    $scope.setPage = function (page) {
-        $state.transitionTo(page);
-    }
-})
-
-// The example of the full functionality
-.controller('TestController', function ($scope, $fileUploader) {
-    'use strict';
+.controller('TestController', ['$scope', '$fileUploader' , function ($scope, $fileUploader) {
 
     // create a uploader with options
     var uploader = $scope.uploader = $fileUploader.create({
-        scope: $scope,                          // to automatically update the html. Default: $rootScope
-        url: 'upload.php',
+        scope: $scope,                          
+        url: '/public/uploads',
         formData: [
             { key: 'value' }
         ],
         filters: [
-            function (item) {                    // first user filter
-                console.info('filter1');
+            function (item) {
+                //TODO verificare l'estensione del file
                 return true;
             }
         ]
@@ -99,4 +90,4 @@ angular.module('mean.controllers.dashboard', [])
         console.info('Complete all', items);
     });
 
-});
+}]);
