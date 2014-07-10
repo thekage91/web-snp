@@ -1,0 +1,119 @@
+<div class="row">
+  <h1 class="section-header">Families</h1>  
+
+  <hr>
+</div>
+
+<div>
+    <ul class="nav nav-tabs">
+      <li class="text-left"><a href="#create" data-toggle="tab">Create New</a></li>
+      <li class="text-left"><a href="#all" data-toggle="tab">All</a></li>
+    </ul>
+
+    <div id="myTabContent" class="tab-content">
+      <div class="tab-pane active in" id="create">
+
+        <form id="tab">
+          <label>ID</label>
+          <div class="form-group">
+            <div class="col-md-7">
+              <input id="id" type="text" name="id" placeholder="ID" class="form-control" ng-model="family.id"/>
+            </div>
+          </div>
+          <br>
+          <label>Name</label>
+          <div class="form-group">
+            <div class="col-md-7">
+              <input id="name" type="text" name="name" placeholder="Name" class="form-control" ng-model="family.name"/>
+            </div>
+          </div>
+          <br>
+          <label>Users</label>
+          <div class="form-group">
+            Trovare un modo per far aggiungere utenti...
+          </div>
+        </form>
+      </div>
+
+
+
+      <div class="tab-pane fade" id="all">
+      <div class="row">
+          <div class="well">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Users</th>
+                  <th style="width: 75px;"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1 </div></td>
+                  <td>Prova</td>
+                  <td>Mario, Antonio, Anna</td>
+                  <td>
+                    <button type="button" class="btn btn-primary btn-sm" data-ng-hide="user.isLicensed"
+                    data-toggle="modal" data-target="#myModalLicensed">
+                    <span class="glyphicon glyphicon-edit"></span> Edit
+                    </button> 
+                  <br/> 
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+        </div>
+      </div>
+  </div>
+
+  <div id="myModalLicensed" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content"></div>
+  </div>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close " data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">Edit</h3>
+      </div>
+      <div class="modal-body">
+        <p class="error-text">
+          <div>
+          <ul class="nav nav-tabs">
+            <li class="text-left"><a href="#add" data-toggle="tab">Add user</a></li>
+            <li class="text-left"><a href="#remove" data-toggle="tab">Remove user</a></li>
+          </ul>
+
+          <!-- First sub-tab -->
+          <div id="myTabContent" class="tab-content">
+            <div class="tab-pane active in" id="add">
+
+              <div class="row bot15">
+                      Mostrare utenti della famiglia e, accanto a ciascuno, un pulsante per rimuoverlo
+              </div>
+                  
+            </div>
+            <!-- First sub-tab end -->
+
+            <!-- Second sub-tab -->
+            <div class="tab-pane fade" id="remove">
+
+              <div class="row bot15">
+                      Mostrare tutti gli utenti e, accanto a ciascuno, un pulsante per aggiungerlo alla famiglia. Un search come nell'edit potrebbe essere utile
+              </div>
+
+            </div>
+
+
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+        <button class="btn btn-danger" data-dismiss="modal">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
