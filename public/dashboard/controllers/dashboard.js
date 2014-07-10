@@ -2,7 +2,7 @@
 
 angular.module('mean.dashboard', [])
 
-.controller('TestController', ['$scope', '$fileUploader' , function ($scope, $fileUploader) {
+.controller('TestController', function ($scope, $fileUploader) {
 
     // create a uploader with options
     var uploader = $scope.uploader = $fileUploader.create({
@@ -90,4 +90,4 @@ angular.module('mean.dashboard', [])
         console.info('Complete all', items);
     });
 
-}]);
+});
