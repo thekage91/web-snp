@@ -1,0 +1,282 @@
+<div class="row">
+  <h1 class="section-header">Execute Query</h1>  
+
+  <hr>
+</div>
+
+<ul class="nav nav-tabs">
+      <li class="text-left"><a href="#basic" data-toggle="tab">Basic SNPs Search</a></li>
+      <li class="text-left"><a href="#complex" data-toggle="tab">Complex SNPs Search</a></li>
+      <li class="text-left"><a href="#patients" data-toggle="tab">Patients Search</a></li>
+
+    </ul>
+
+    <!-- First tab -->
+    <div id="myTabContent" class="tab-content">
+      <div class="tab-pane active in" id="basic">
+        <div class="row bot15">
+                <div id="custom-search-input">
+                <h4>Choose what to search and then insert keywords:</h4>
+                <div class="input-group col-md-6">
+                  <div class="input-group">
+                    <div class="input-group-btn search-panel">
+                      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                        <span id="search_concept">Search by...</span> <span class="caret"></span>
+                      </button>
+                      <ul class="dropdown-menu" role="menu">
+                        <li><a href="#contains">Patient</a></li>
+                        <li><a href="#its_equal">Gene</a></li>
+                        <li><a href="#greather_than">Region</a></li>
+                        <li><a href="#less_than">Mutation</a></li>
+                        <li><a href="#less_than">Genotype</a></li>
+                        <li><a href="#less_than">Freq alt</a></li>
+                        <li><a href="#less_than">dbSNP</a></li>
+                      </ul>
+                    </div>
+                    <input type="hidden" name="search_param" value="all" id="search_param">         
+                    <input type="search" class="search-query form-control" placeholder="Type here" />
+                    <span class="input-group-btn">
+                      <button class="btn btn-danger" type="button">
+                        <span class="glyphicon glyphicon-search"></span>
+                      </button>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+        <div class="row">
+          <h4>Results:</h4>
+          <div class="well">
+            <table class="table">
+              <thead>
+                (Vedere quali attributi degli SNP mostrare)
+                <tr>
+                  <th>SNP</th>
+                  <th>Attr1</th>
+                  <th>Attr2</th>
+                  <th>Attr3</th>
+                  <th style="width: 75px;"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>SNP ID 1 </div></td>
+                  <td>ATTR</td>
+                  <td>ATTR</td>
+                  <td>ATTR</td>
+                  <td>
+                    <button type="button" class="btn btn-primary btn-sm" data-ng-hide="user.isLicensed"
+                    data-toggle="modal" data-target="#myModalLicensed">
+                    <span class="glyphicon glyphicon-eye-open"></span> View
+                    </button> 
+                  <br/> 
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+        </div>
+      </div>
+      <!-- First tab end -->
+
+
+
+      <!-- Second tab -->
+      <div class="tab-pane fade" id="complex">
+      <div class="tab-pane active in" id="basic">
+
+        <div>
+          <ul class="nav nav-tabs">
+            <li class="text-left"><a href="#esp" data-toggle="tab">By ESP</a></li>
+            <li class="text-left"><a href="#region" data-toggle="tab">By Region</a></li>
+          </ul>
+
+          <!-- First sub-tab -->
+          <div id="myTabContent" class="tab-content">
+            <div class="tab-pane active in" id="esp">
+
+              <div class="row bot15">
+                      <div id="custom-search-input">
+                      <h4>Insert required fields:</h4>
+                      <div class="input-group col-md-12">
+                        <div class="input-group">
+                          <div class="input-group-btn search-panel">
+                            <input type="text" class="form-control" name="x" placeholder="ESP6500_ALL">
+                          </div>
+                          <div class="input-group-btn search-panel">
+                            <input type="text" class="form-control" name="x" placeholder="ESP6500_AA">
+                          </div>
+                          <div class="input-group-btn search-panel">
+                            <input type="text" class="form-control" name="x" placeholder="ESP6500_EA">
+                          </div>
+                        <span class="input-group-btn">
+                            <button class="btn btn-danger" type="button">
+                              <span class="glyphicon glyphicon-search"></span>
+                            </button>
+                          </span>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                <h4>Results:</h4>
+                <div class="well">
+                  <table class="table">
+                    <thead>
+                      (Vedere quali attributi degli SNP mostrare)
+                      <tr>
+                        <th>SNP</th>
+                        <th>Attr1</th>
+                        <th>Attr2</th>
+                        <th>Attr3</th>
+                        <th style="width: 75px;"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>SNP ID 1 </div></td>
+                        <td>ATTR</td>
+                        <td>ATTR</td>
+                        <td>ATTR</td>
+                        <td>
+                          <button type="button" class="btn btn-primary btn-sm" data-ng-hide="user.isLicensed"
+                          data-toggle="modal" data-target="#myModalLicensed">
+                          <span class="glyphicon glyphicon-eye-open"></span> View
+                          </button> 
+                        <br/> 
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              </div>
+              </div>
+            </div>
+            <!-- First sub-tab end -->
+
+            <!-- Second sub-tab -->
+            <div class="tab-pane fade" id="region">
+            <div class="row bot15">
+                      <div id="custom-search-input">
+                      <h4>Insert required fields:</h4>
+                      <div class="input-group col-md-12">
+                        <div class="input-group">
+                          <div class="input-group-btn search-panel">
+                            <input type="text" class="form-control" name="x" placeholder="chr">
+                          </div>
+                          <div class="input-group-btn search-panel">
+                            <input type="text" class="form-control" name="x" placeholder="start">
+                          </div>
+                          <div class="input-group-btn search-panel">
+                            <input type="text" class="form-control" name="x" placeholder="end">
+                          </div>
+                        <span class="input-group-btn">
+                            <button class="btn btn-danger" type="button">
+                              <span class="glyphicon glyphicon-search"></span>
+                            </button>
+                          </span>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                <h4>Results:</h4>
+                <div class="well">
+                  <table class="table">
+                    <thead>
+                      (Vedere quali attributi degli SNP mostrare)
+                      <tr>
+                        <th>SNP</th>
+                        <th>Attr1</th>
+                        <th>Attr2</th>
+                        <th>Attr3</th>
+                        <th style="width: 75px;"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>SNP ID 2 </div></td>
+                        <td>ATTR</td>
+                        <td>ATTR</td>
+                        <td>ATTR</td>
+                        <td>
+                          <button type="button" class="btn btn-primary btn-sm" data-ng-hide="user.isLicensed"
+                          data-toggle="modal" data-target="#myModalLicensed">
+                          <span class="glyphicon glyphicon-eye-open"></span> View
+                          </button> 
+                        <br/> 
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              </div>
+              </div>
+            </div>
+            <!-- Second sub-tab end -->
+
+        </div>
+      </div>
+      </div>
+      </div>
+      <!-- Second tab end -->
+
+
+
+      <!-- Third tab -->
+      <div class="tab-pane fade" id="patients">
+      <div class="tab-pane active in" id="basic">
+        <div class="row bot15">
+                <div id="custom-search-input">
+                <h4>Insert patient's genotype to search:</h4>
+                <div class="input-group col-md-12">
+                  <div class="input-group">
+                    <div class="input-group-btn search-panel">
+                      <input type="text" class="form-control" name="x" placeholder="Genotype">
+                    </div>
+                  <span class="input-group-btn">
+                      <button class="btn btn-danger" type="button">
+                        <span class="glyphicon glyphicon-search"></span>
+                      </button>
+                    </span>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+        <div class="row">
+          <h4>Results:</h4>
+          <div class="well">
+            <table class="table">
+              <thead>
+                (Vedere quali attributi degli Utenti mostrare)
+                <tr>
+                  <th>User</th>
+                  <th>Attr1</th>
+                  <th>Attr2</th>
+                  <th>Attr3</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>User ID 1 </div></td>
+                  <td>ATTR</td>
+                  <td>ATTR</td>
+                  <td>ATTR</td>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+        </div>
+      </div>
+      </div>
+      <!-- Third tab end -->
+
+  </div>

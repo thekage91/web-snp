@@ -37,7 +37,11 @@ angular.module('mean.dashboard').config(['$stateProvider',
                 url: '/authorizeUser',
                 templateUrl: 'public/dashboard/views/partial_views/authorizeUser.html',
             })
-
+            
+            .state('dashboard.executeQuery', {
+                url: '/executeQuery',
+                templateUrl: 'public/dashboard/views/partial_views/executeQuery.html',
+            })
             ;
     }
 ])
