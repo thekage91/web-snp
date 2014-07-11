@@ -6,38 +6,13 @@
 
 <div>
     <ul class="nav nav-tabs">
-      <li class="text-left"><a href="#create" data-toggle="tab">Create New</a></li>
       <li class="text-left"><a href="#all" data-toggle="tab">All</a></li>
+      <li class="text-left"><a href="#create" data-toggle="tab">Create New</a></li>
     </ul>
 
     <div id="myTabContent" class="tab-content">
-      <div class="tab-pane active in" id="create">
-
-        <form id="tab">
-          <label>ID</label>
-          <div class="form-group">
-            <div class="col-md-7">
-              <input id="id" type="text" name="id" placeholder="ID" class="form-control" ng-model="family.id"/>
-            </div>
-          </div>
-          <br>
-          <label>Name</label>
-          <div class="form-group">
-            <div class="col-md-7">
-              <input id="name" type="text" name="name" placeholder="Name" class="form-control" ng-model="family.name"/>
-            </div>
-          </div>
-          <br>
-          <label>Users</label>
-          <div class="form-group">
-            Trovare un modo per far aggiungere utenti...
-          </div>
-        </form>
-      </div>
-
-
-
-      <div class="tab-pane fade" id="all">
+      
+      <div class="tab-pane active in" id="all">
       <div class="row">
           <div class="well">
             <table class="table">
@@ -66,6 +41,30 @@
         </table>
         </div>
         </div>
+      </div>
+
+      <div class="tab-pane fade" id="create">
+
+        <form id="tab">
+          <label>ID</label>
+          <div class="form-group">
+            <div class="col-md-7">
+              <input id="id" type="text" name="id" placeholder="ID" class="form-control" ng-model="family.id"/>
+            </div>
+          </div>
+          <br>
+          <label>Name</label>
+          <div class="form-group">
+            <div class="col-md-7">
+              <input id="name" type="text" name="name" placeholder="Name" class="form-control" ng-model="family.name"/>
+            </div>
+          </div>
+          <br>
+          <label>Users</label>
+          <div class="form-group">
+            Trovare un modo per far aggiungere utenti...
+          </div>
+        </form>
       </div>
   </div>
 

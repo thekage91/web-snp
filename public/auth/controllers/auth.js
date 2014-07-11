@@ -20,6 +20,9 @@ angular.module('mean.controllers.login', [])
 
                         window.location.replace('./#!/home');
 
+                        window.location.reload();
+
+
                         /*
                         if (response.redirect) {
                             if (window.location.href === response.redirect) {
