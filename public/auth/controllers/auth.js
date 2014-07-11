@@ -18,6 +18,9 @@ angular.module('mean.controllers.login', [])
                         $rootScope.user = response.user;
                         $rootScope.$emit('loggedin');
 
+                        window.location.replace('./#!/home');
+
+                        /*
                         if (response.redirect) {
                             if (window.location.href === response.redirect) {
                                 //This is so an admin user will get full admin page
@@ -27,7 +30,7 @@ angular.module('mean.controllers.login', [])
                             }
                         } else {
                             $location.url('/');
-                        }
+                        }*/
                     })
 
                     .error(function() {
