@@ -7,7 +7,7 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema,
     crypto = require('crypto');
     
-    
+    function validatePresenceOf(x) {return true;}
 /* Variant schema */
 var VariantSchema = new Schema({
     chr: {

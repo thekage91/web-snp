@@ -7,7 +7,7 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema,
     crypto = require('crypto');
     
-    
+    function validatePresenceOf(x) {return true;}
 /* Gene schema */
     var GeneSchema = new Schema({
     gene: {
@@ -33,7 +33,7 @@ var mongoose = require('mongoose'),
 
     // Relationship
     variants: [{
-        type: Schema.Type.ObjectId,
+        type: Schema.ObjectId,
         ref: 'Variant'
     }]
 

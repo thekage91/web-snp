@@ -7,7 +7,7 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema,
     crypto = require('crypto');
     
-    
+    function validatePresenceOf(x) {return true;}
 /* Sequencing schema */
     var SequencingSchema = new Schema({
         //patient id date are keys
@@ -91,7 +91,7 @@ var mongoose = require('mongoose'),
     },
     //Relatinship
     variants: [{
-        type: Schema.Type.ObjectId,
+        type: Schema.ObjectId,
         ref: 'Variant'
     }]
 });

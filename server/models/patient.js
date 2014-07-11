@@ -7,18 +7,18 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema,
     crypto = require('crypto');
     
-    
+    function validatePresenceOf(x) {return true;}
 /* PAtient schema */
 var PatientSchema = new Schema({
 
 	//Relationship
 	variants: [{
-		type: Schema.Type.ObjectId,
+		type: Schema.ObjectId,
 		ref: 'Variant'
 	}],
 
 	family: {
-		type: Schema.Type.ObjectId,
+		type: Schema.ObjectId,
 		ref: 'Family'
 	}
 

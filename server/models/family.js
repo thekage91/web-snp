@@ -7,7 +7,7 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema,
     crypto = require('crypto');
     
-    
+    function validatePresenceOf(x) {return true;}
 /* Family schema */
 var FamilySchema = new Schema({
     
@@ -19,7 +19,7 @@ var FamilySchema = new Schema({
 
     //Relationship
     patiens: [{
-    	type: Schema.Type.ObjectId,
+    	type: Schema.ObjectId,
     	ref: 'Patient'
     }]
 

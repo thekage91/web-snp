@@ -7,7 +7,7 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema,
     crypto = require('crypto');
     
-    
+    function validatePresenceOf(x) {return true;}
 /* VariantDetail schema */
     var VariantDetailSchema = new Schema({
     //foreignKey
@@ -59,12 +59,12 @@ var mongoose = require('mongoose'),
 
     //Relationship
     /*variant: {
-        type: Schema.Type.ObjectId,
+        type: Schema.ObjectId,
         ref: 'Variant'
     },
 
     sequencing: {
-        type: Schema.Type.ObjectId,
+        type: Schema.ObjectId,
         ref: 'Sequencing'
     }*/
 
