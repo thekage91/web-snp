@@ -28,9 +28,9 @@ angular.module('mean.dashboard').config(['$stateProvider',
                 templateUrl: 'public/dashboard/views/partial_views/editProfile.html',
             })
 
-            .state('dashboard.form_upload', {
-            	url: "/form_upload",
-            	templateUrl: 'public/dashboard/views/partial_views/form_upload.html'
+            .state('dashboard.uploadSequencing', {
+            	url: "/uploadSequencing",
+            	templateUrl: 'public/dashboard/views/partial_views/uploadSequencing.html'
             })
             
             .state('dashboard.authorizeUser', {
@@ -48,14 +48,14 @@ angular.module('mean.dashboard').config(['$stateProvider',
                 templateUrl: 'public/dashboard/views/partial_views/families.html',
             })
 
-            .state('dashboard.sequencing', {
-                url: '/sequencing',
-                templateUrl: 'public/dashboard/views/partial_views/sequencing.html',
+            .state('dashboard.sequencingEdit', {
+                url: '/sequencingEdit',
+                templateUrl: 'public/dashboard/views/partial_views/sequencingEdit.html',
             })
 
-            .state('dashboard.parser', {
-                url: '/parser',
-                templateUrl: 'public/dashboard/views/partial_views/parser.html',
+            .state('dashboard.sequencingDetails', {
+                url: '/sequencingDetails',
+                templateUrl: 'public/dashboard/views/partial_views/sequencingDetails.html',
             })
             ;
     }
