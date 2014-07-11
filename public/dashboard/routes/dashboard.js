@@ -30,7 +30,7 @@ angular.module('mean.dashboard').config(['$stateProvider',
 
             .state('dashboard.form_upload', {
             	url: "/form_upload",
-            	templateUrl: 'public/dashboard/views/partial_views/form_file_uploader.html'
+            	templateUrl: 'public/dashboard/views/partial_views/form_upload.html'
             })
             
             .state('dashboard.authorizeUser', {
