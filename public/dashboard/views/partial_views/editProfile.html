@@ -1,83 +1,103 @@
 <div>
     <ul class="nav nav-tabs">
-      <li class="text-left"><a href="#home" data-toggle="tab">Profile</a></li>
-      <li class="text-left"><a href="#profile" data-toggle="tab">Password</a></li>
+      <li class="text-left"><a href="#profile" data-toggle="tab">Profile</a></li>
+      <li class="text-left"><a href="#password" data-toggle="tab">Password</a></li>
     </ul>
 
     <div id="myTabContent" class="tab-content">
-      <div class="tab-pane active in" id="home">
+      <div class="tab-pane active in" id="profile">
 
-        <form id="tab">
-          <label>Username</label>
-          <div class="form-group">
-            <div class="col-md-7">
-              <input id="username" type="text" name="username" placeholder="{{global.user.name}}" class="form-control" ng-model="user.username"/>
+        <h5><span class="fa fa-lightbulb-o"></span>&nbsp;<b>TIP</b>: Click on a value to modify it</h5>
+
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="box">
+              <div class="box-header">
+                
+              <div class="box-content">
+                <table class="table beauty-table table-hover">
+                  <thead>
+                    <tr>
+                      <th class="col-xs-3">&nbsp;</th>
+                      <th>&nbsp;</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Username:</td>
+                      <td><input type="text" value="{{global.user.name}}"></td>
+                    </tr>
+                    <tr>
+                      <td>First Name:</td>
+                      <td><input type="text" value="{{global.user.firstName}}"></td>
+                    </tr>
+                    <tr>
+                      <td>Last Name:</td>
+                      <td><input type="text" value="{{global.user.lastName}}"></td>
+                    </tr>
+                    <tr>
+                      <td>Email:</td>
+                      <td><input type="text" value="{{global.user.email}}"></td>
+                    </tr>
+                    <tr>
+                      <td>Address:</td>
+                      <td><input type="text" value="{{global.user.address}}"></td>
+                    </tr>
+                    <tr>
+                      <td>Phone:</td>
+                      <td><input type="text" value="{{global.user.phone}}"></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
-          <br>
-          <label>First Name</label>
-          <div class="form-group">
-            <div class="col-md-7">
-              <input id="firstName" type="text" name="firstName" placeholder="{{global.user.firstName}}" class="form-control" ng-model="user.firstName"/>
-            </div>
-          </div>
-          <br>
-          <label>Last Name</label>
-          <div class="form-group">
-            <div class="col-md-7">
-              <input id="lastName" type="text" name="lastName" placeholder="{{global.user.lastName}}" class="form-control" ng-model="user.lastName"/>
-            </div>
-          </div>
-          <br>
-          <label>Email</label>
-          <div class="form-group">
-            <div class="col-md-7">
-              <input id="email" type="email" name="email" placeholder="{{global.user.email}}" class="form-control" ng-model="user.email"/>
-            </div>
-          </div>
-          <br>
-          <label>Address</label>
-          <div class="form-group">
-            <div class="col-md-7">
-              <input id="address" type="text" name="address" placeholder="{{global.user.address}}" class="form-control" ng-model="user.address"/>
-            </div>
-          </div>
-          <br>
-          <label>Phone</label>
-          <div class="form-group">
-            <div class="col-md-7">
-              <input id="phone" type="text" name="phone" placeholder="{{global.user.phone}}" class="form-control" ng-model="user.phone"/>
-            </div>
-          </div>
-          <br>
-          <h1> </h1>
-          <div class="form-group">
-            <div class="col-md-7">
-              <button type="submit" class="btn btn-primary">Save</button>
-            </div>
-          </div>
-        </form>
+        </div>
+
+        <button type="button" class="btn btn-primary btn-sm" ui-sref="dashboard.userProfile" style="float: right">
+          <span class="glyphicon glyphicon-floppy-saved"></span> Save
+        </button>
       </div>
-      <div class="tab-pane fade" id="profile">
-      <form id="tab2">
-          <label>New Password</label>
-          <div class="form-group">
-            <div class="col-md-7">
-              <input id="password" type="password" name="password" placeholder="Password" class="form-control" ng-model="user.password"/>
+      </div>
+
+
+      <div class="tab-pane fade" id="password">
+      
+      <h5><span class="fa fa-lightbulb-o"></span>&nbsp;<b>TIP</b>: Click on a value to modify it</h5>
+
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="box">
+              <div class="box-header">
+                
+              <div class="box-content">
+                <table class="table beauty-table table-hover">
+                  <thead>
+                    <tr>
+                      <th class="col-xs-3">&nbsp;</th>
+                      <th>&nbsp;</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>New Password:</td>
+                      <td><input type="text" value="**********"></td>
+                    </tr>
+                    <tr>
+                      <td>Repeat New Password:</td>
+                      <td><input type="text" value="**********"></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
-          <div class="form-group">
-            <div class="col-md-7">
-              <input id="confirmPassword" type="password" name="confirmPassword" placeholder="Password" class="form-control" ng-model="user.confirmPassword"/>
-            </div>
-          </div>
-          <br>
-          <h1> </h1>
-          <div class="form-group">
-            <div class="col-md-7">
-              <button type="submit" class="btn btn-primary">Save</button>
-            </div>
-          </div>
-      </form>
+        </div>
+
+        <button type="button" class="btn btn-primary btn-sm" ui-sref="dashboard.userProfile" style="float: right">
+          <span class="glyphicon glyphicon-floppy-saved"></span> Save
+        </button>
+      </div>
+
       </div>
   </div>

@@ -15,7 +15,7 @@
   -moz-border-radius:5px;
   -webkit-border-radius:5px;
   border-radius:5px;
-  padding:25px;
+  padding:50px;
   text-align:center;
   font:20pt bold,"Vollkorn";color:#bbb
 }
@@ -24,22 +24,76 @@
 }
 </style>
 
-Output Format:
-<select name="format">
-<option value="csv" selected> CSV</option>
-<option value="json"> JSON</option>
-<option value="form"> FORMULAE</option>
-</select><br />
 <!--<input type="radio" name="format" value="csv" checked> CSV<br>
 <input type="radio" name="format" value="json"> JSON<br>
 <input type="radio" name="format" value="form"> FORMULAE<br> -->
 
-<div id="drop">Drop an XLS or XML (2003) file here to see sheet data.</div>
+<div class="row bot15">
+  <div id="custom-search-input">
+  <h4>Drag and drop into the box below your sequencing file to start uploading it:</h4>
+</div>
+</div>
+
+<div id="drop" style="margin-bottom: 30px">Drop an XLS or XML (2003) file here...</div>
+
+<h4>Output Format:</h4>
+<select name="format" style="margin-bottom: 30px">
+<option value="csv" selected> CSV</option>
+<option value="json"> JSON</option>
+<option value="form"> FORMULAE</option>
+</select>
+
 <pre id="out"></pre>
-<br />
+
+<!-- Per progress bar -->
+<script src="public/system/lib/jquery/dist/jquery.js"></script>
+<script src="public/system/lib/jquery-ui/jquery-ui.js"></script>
+<script>
+
+$(function() {
+    var progressTimer,
+      progressbar = $( "#progressbar" ),
+      progressLabel = $( ".progress-label" ),
+      dialog = $( "#dialog" ).dialog({
+        autoOpen: false,
+        closeOnEscape: false,
+        resizable: false,
+        beforeClose: function() {
+          uploadButton.button( "option", {
+            disabled: false,
+          });
+        }
+      }),
+      uploadButton = $( "#uploadButton" )
+        .button()
+        .on( "click", function() {
+          $( this ).button( "option", {
+            disabled: true,
+          });
+          dialog.dialog( "open" );
+        });
+ 
+    progressbar.progressbar({
+      value: false,
+    });
+ 
+  });
+
+</script>
+
+<div id="dialog" title="File Upload">
+  <div class="progress-label">Uploading... Please wait...</div>
+  <div id="progressbar"></div>
+</div>
+<button hidden id="uploadButton">Start Upload</button>
+
+<!-- Fine progress bar -->
+
+
+<br/>
 <!-- uncomment the next line here and in xlsxworker.js for encoding support -->
 <!--<script src="dist/cpexcel.js"></script>-->
-<script src="public/dashboard/views/partial_views/xls.js"></script>
+<script src="public/system/assets/js/xls.js"></script>
 <script>
 var rABS = typeof FileReader !== "undefined" && typeof FileReader.prototype !== "undefined" && typeof FileReader.prototype.readAsBinaryString !== "undefined";
 
@@ -50,18 +104,6 @@ function fixdata(data) {
   return o;
 }
 
-function xlsworker(data, cb) {
-  var worker = new Worker('public/dashboard/views/partial_views/xlsworker.js');
-  worker.onmessage = function(e) {
-    switch(e.data.t) {
-      case 'ready': break;
-      case 'e': console.error(e.data.d); break;
-      case 'xls': cb(JSON.parse(e.data.d)); break;
-    }
-  };
-  var arr = rABS ? data : btoa(fixdata(data));
-  worker.postMessage({d:arr,b:rABS});
-}
 
 function get_radio_value( radioName ) {
   var radios = document.getElementsByName( radioName );
@@ -117,7 +159,6 @@ function b64it() {
 }
 
 function process_wb(wb) {
-  if(use_worker) XLS.SSF.load_table(wb.SSF);
   var output = "";
   switch(get_radio_value("format")) {
     case "json":
@@ -131,6 +172,10 @@ function process_wb(wb) {
   }
   if(out.innerText === undefined) out.textContent = output;
   else out.innerText = output;
+
+  document.getElementById('dialog').style.display = 'none';
+  document.getElementById('ui-id-1').innerHTML = "Done!";
+
   if(typeof console !== 'undefined') console.log("output", new Date());
 }
 
@@ -139,27 +184,29 @@ function handleDrop(e) {
   e.stopPropagation();
   e.preventDefault();
   rABS = false;
-  use_worker = false;
   var files = e.dataTransfer.files;
   var i,f;
+
+  button = document.getElementById('uploadButton');
+  button.click();
+
   for (i = 0, f = files[i]; i != files.length; ++i) {
     var reader = new FileReader();
     var name = f.name;
     reader.onload = function(e) {
-      if(typeof console !== 'undefined') console.log("onload", new Date(), rABS, use_worker);
+
+
+      if(typeof console !== 'undefined') console.log("onload", new Date(), rABS, false);
       var data = e.target.result;
-      if(use_worker) {
-        xlsworker(data, process_wb);
+      
+      var wb;
+      if(rABS) {
+        wb = XLS.read(data, {type: 'binary'});
       } else {
-        var wb;
-        if(rABS) {
-          wb = XLS.read(data, {type: 'binary'});
-        } else {
-          var arr = fixdata(data);
-          wb = XLS.read(btoa(arr), {type: 'base64'});
-        }
-        process_wb(wb);
+        var arr = fixdata(data);
+        wb = XLS.read(btoa(arr), {type: 'base64'});
       }
+      process_wb(wb);
     };
     if(rABS) reader.readAsBinaryString(f);
     else reader.readAsArrayBuffer(f);
