@@ -60,12 +60,12 @@ var VariantSchema = new Schema({
     
     esps: [{ 
         type: Schema.Types.ObjectId,
-        ref: 'esp'
+        ref: 'Esp'
     }],
 
-    sequencing: [{
+    variantDetails: [{
         type: Schema.Types.ObjectId,
-        ref: 'Sequencing'
+        ref: 'VaiantDetail'
     }]
 
 });
