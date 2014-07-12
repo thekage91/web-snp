@@ -57,6 +57,11 @@ angular.module('mean.dashboard').config(['$stateProvider',
                 url: '/sequencingDetails',
                 templateUrl: 'public/dashboard/views/partial_views/sequencingDetails.html',
             })
+
+            .state('dashboard.widget', {
+                url: '/widget',
+                templateUrl: 'public/system/views/Widget_Grafica/Widget.html',
+            })
             ;
     }
 ])

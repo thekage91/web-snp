@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!--<!DOCTYPE html>
 <html>
  <head> 
   <title>Widget</title> 
@@ -14,7 +14,7 @@
       top: 0px;
     }
   </style> 
-  </head>
+  </head> -->
   <body>
   <!-- JavaScript libraries -->
   <script src="libs/jquery.min.js"></script> 
@@ -28,6 +28,12 @@
   <script type="text/javascript" src="libs/helvetiker_bold.typeface.js"></script> 
   <script type="text/javascript" src="libs/bitstream_vera_sans_mono_roman.typeface.js"></script>
   <script src="libs/keyframe.js"></script>
+
+  <script src="adenine.js"></script>
+  <script src="cytosine.js"></script>
+  <script src="thymine.js"></script>
+  <script src="guanine.js"></script>
+
   <!-- Javascript code that runs our Three.js examples --> 
   <script>
     // once everything is loaded, we run our Three.js stuff.
@@ -108,6 +114,9 @@
 
         couple.add(baseRBall);*/
 
+
+
+
         var baseLBase = createGuanine();
 
         baseLBase.rotation.z = Math.PI/2;
@@ -123,7 +132,6 @@
         baseLBall.position.set(-basesRadius, -basesLength - basesRadius*2 + basesRadius/2, basesRadius);
         baseLBall.castShadow = true;
 
-        couple.add(baseLBall);
 
         var baseRBase = createCytosine();
 
@@ -140,18 +148,11 @@
         baseRBall.position.set(-basesRadius, basesLength + basesRadius*2, basesRadius);
         baseRBall.castShadow = true;
 
-        couple.add(baseRBall);
-
         var baseRPlaneGeometry = new THREE.BoxGeometry( basesRadius*8, basesRadius, basesRadius );
         var baseRPlaneMaterial = new THREE.MeshBasicMaterial( {color: 0x007bff} );
         var baseRPlane = new THREE.Mesh(baseRPlaneGeometry, baseRPlaneMaterial);
         baseRPlane.position.set(-basesRadius*4, 0, 0);
         baseRPlane.castShadow = true;
-
-        baseRBall.add(baseRPlane);
-
-        baseRBall.rotation.y = -Math.PI*1/3;
-        baseRBall.rotation.x = -Math.PI*1/15;
 
         var baseLPlaneGeometry = new THREE.BoxGeometry( basesRadius*8, basesRadius, basesRadius );
         var baseLPlaneMaterial = new THREE.MeshBasicMaterial( {color: 0xff3200} );
@@ -159,13 +160,16 @@
         baseLPlane.position.set(-basesRadius*4, 0, 0);
         baseLPlane.castShadow = true;
 
-        baseLBall.add(baseLPlane);
-
         baseLBall.rotation.y = Math.PI*1/3;
         baseLBall.rotation.x = -Math.PI*1/15;
+        baseRBall.rotation.y = -Math.PI*1/3;
+        baseRBall.rotation.x = -Math.PI*1/15;
 
-
-
+        couple.add(baseLBall);
+        couple.add(baseRBall);
+        baseRBall.add(baseRPlane);
+        baseLBall.add(baseLPlane);
+        
         return couple;
       }
 
@@ -413,6 +417,9 @@
         return stats;
       }
     });
-  </script>  
+  </script>
  </body>
+
+<!--
 </html>
+-->
