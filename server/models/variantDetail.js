@@ -92,4 +92,4 @@ var mongoose = require('mongoose'),
 // no method required here. Query class
 
 
-mongoose.model('VariantDetail', VariantDetailSchema);
+module.exports = mongoose.model('VariantDetail', VariantDetailSchema);

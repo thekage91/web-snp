@@ -92,4 +92,4 @@ var VariantSchema = new Schema({
 // no method required here. Query class
 
 
-mongoose.model('Variant', VariantSchema);
+module.exports = mongoose.model('Variant', VariantSchema);

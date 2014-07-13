@@ -1,6 +1,5 @@
 'use strict';
 
-// User routes use dbsnps controller
 var express = require('express'); 
  var mers = require('mers');
  

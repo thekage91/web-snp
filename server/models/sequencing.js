@@ -118,4 +118,4 @@ var mongoose = require('mongoose'),
 // no method required here. Query class
 
 
-mongoose.model('Sequencing', SequencingSchema);
+module.exports = mongoose.model('Sequencing', SequencingSchema);

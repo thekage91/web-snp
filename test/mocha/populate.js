@@ -5,19 +5,24 @@
  */
 
 var should = require('should'),
-        mongoose = require('mongoose');
-var conn = mongoose.connect('mongodb://localhost/mochaTest');
-conn.connection.db.dropDatabase();
+    mongoose = require('mongoose');
+    
+//conn.connection.db.dropDatabase();
 
-var DbSNP = mongoose.model('DbSNP');
-var Esp = mongoose.model('Esp');
-var Family = mongoose.model('Family');
-var Gene = mongoose.model('Gene');
-var Patient = mongoose.model('Patient');
-var Sequencing = mongoose.model('Sequencing');
-var VariantDetail = mongoose.model('VariantDetail');
-var Pathogenicity = mongoose.model('Pathogenicity');
-var Variant = mongoose.model('Variant');
+var request = require('supertest');
+var app = require('../../server');
+var agent = request.agent(app);
+
+var DbSNP = require('../../server/models/dbSNP');
+var Esp = require('../../server/models/esp');
+var Family = require('../../server/models/family');
+var Gene = require('../../server/models/gene');
+var Patient = require('../../server/models/patient');
+var Sequencing = require('../../server/models/sequencing');
+var VariantDetail = require('../../server/models/variantDetail');
+var Pathogenicity = require('../../server/models/pathogenicity');
+var Variant = require('../../server/models/variant');
+
 
 
 var error = function(err, element) {
@@ -91,12 +96,23 @@ var pathogenicity = new Pathogenicity({
     SiPhy: 'testSiPhy'
 });
 
-exports.populate = function() {
+ 
+module.exports.populate = function() {
 
 
     gene.save(error);
-
-    esp.save(error);
+    agent.post('/api/esp').send(esp).end(function(res){
+     if (res.ok) {
+       console.log('yay got ' + JSON.stringify(res.body));
+     } else {
+       console.log('Oh no! error ' + res.text);
+     }
+     
+ console.log("QUA ARRIVA1");
+   });
+   
+//module.exports = populate;
+   /*
     dbSNP.save(error);
 
     family.save(error);
@@ -105,7 +121,7 @@ exports.populate = function() {
     sequencing.save(error);
 
     variant.save(error);
-    pathogenicity.save(error);
+    pathogenicity.save(error);*/
 
 
 };

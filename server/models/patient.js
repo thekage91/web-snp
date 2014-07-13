@@ -26,4 +26,4 @@ var PatientSchema = new Schema({
 
 
 
-mongoose.model('Patient', PatientSchema);
+module.exports = mongoose.model('Patient', PatientSchema);

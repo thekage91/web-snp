@@ -82,4 +82,4 @@ var mongoose = require('mongoose'),
 // no method required here. Query class
 
 
-mongoose.model('Pathogenicity', PathogenicitySchema);
+module.exports = mongoose.model('Pathogenicity', PathogenicitySchema);

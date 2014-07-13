@@ -61,4 +61,4 @@ var mongoose = require('mongoose'),
 // no method required here. Query class
 
 
-mongoose.model('Gene', GeneSchema);
+module.exports = mongoose.model('Gene', GeneSchema);

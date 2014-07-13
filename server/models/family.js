@@ -47,4 +47,4 @@ var FamilySchema = new Schema({
 // no method required here. Query class
 
 
-mongoose.model('Family', FamilySchema);
+module.exports = mongoose.model('Family', FamilySchema);
