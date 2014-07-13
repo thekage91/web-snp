@@ -1,7 +1,7 @@
 <link href="public/system/assets/css/login.css" rel="stylesheet">
 
-<section class="main content-section">
-    <div class="col-md-6">
+<section class="main content-section-register">
+    <div class="col-md-4">
 
         <div data-ng-controller="RegisterCtrl">
             <div ng-repeat="error in registerError">
@@ -9,8 +9,8 @@
             </div>
             <div class="alert alert-danger animated fadeIn" ng-show="usernameError">{{usernameError}}</div>
             
-            <form ng-submit="register()" class="form-signup form-horizontal">
-                <div class="header text-left form-signin-heading">Register</div>
+            <form ng-submit="register()" class="form-horizontal">
+                <div class="text-left"><h1>Register</h1></div>
                 <div class="form-group">
                     <div class="col-md-10">
                         <input id="username" type="text" name="username" placeholder="Username" class="form-control" ng-model="user.username"/>
@@ -62,3 +62,5 @@
 
     </div>
 </section>
+
+<!-- DONE -->

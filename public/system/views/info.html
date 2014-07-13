@@ -1,62 +1,57 @@
-<!-- Funziona (http://kesilconsulting.com/html-video-background-tutorial)/-->
-<!--<link rel="stylesheet" type="text/css" href="/public/dashboard/assets/css/video_background.css">
-
-<video id="video_background" preload="auto" autoplay="true" loop="loop" muted="muted" volume="0"> 
-<source src="/public/system/assets/videos/background.mp4" type="video/mp4"> 
-Video not supported </video> -->
-
-<!--<section data-ng-controller="IndexController">
-    <h1 mean-token="'home-default'">Welcome to the SNP Web Portal! :)</h1>
-</section> -->
-
-
-    <!--<nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
-        <div class="container">
-
-            <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
-                <ul class="nav navbar-nav">
-                    <li class="hidden">
-                        <a href="#page-top"></a>
-                    </li>
-                    <li class="page-scroll">
-                        <a href="#about">About</a>
-                    </li>
-                    <li class="page-scroll">
-                        <a href="#contact">Contact</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav> -->
+<link href="public/system/assets/css/info.css" rel="stylesheet">
 
 <body>
-    <section id="intro" class="container content-section text-center">
-        <div class="row" style="margin-top: -100px">
+    <section id="intro" class="container content-section-info" style="margin-left: 100px">
+        <div class="row text-center" style="margin-top: -100px">
             <div class="col-md-8 col-md-offset-2">
-                <h1 class="brand-heading">SNP Web Portal</h1>
-                <p class="intro-text">Our tools at your service</p>
-                <div class="page-scroll">
-                    <a href="/#!/info#tutorial" class="btn btn-circle text-center">
-                        <i class="fa fa-angle-double-down animated"></i>
-                    </a>
-                    <h3>Start Tutorial</h3>
+                <div class="title">SNP Web Portal</div>
+                <h3 style="margin-bottom: 70px">Our tools at your service</h3>
+                <div class="description">The Web Portal is carried out to <i>help biologists</i> understanding,
+                having an ad-hoc organized database, when a particular <b>SNP</b> (<i>Single Nucleotide Polymorphism</i>) can cause diseases or not.
+                <br>It allows them to store and retrieve SNP genomics variants from a common database.
+                </div>
+            </div>
+        </div>
+
+        <div class="row" style="margin-top: 100px">
+            <div class="col-lg-10 col-lg-offset-1">
+                <div class="subtitle">Functions overview</div>
+                <div class="text" style="margin-top: 30px">Portal main functions are divided into two groups, depending on the privilege
+                level of the user who use the system at the time:<br>
+                <div class="description" style="margin-top: 30px"><b>Super User</b></div><br>
+                The Super User is the user with the highest action privilege, in fact it is in full
+                possession of all the functionalities of the system.<br>
+                As such, it can:<br>
+                • create a “family” with one or more members<br>
+                • authorize users<br>
+                • modify inserted values<br>
+                Basically, it can add, modify and enter the values it wants to. Obviously, the
+                Super User can perform all the activities that Authorized User can do.<br>
+                <div class="description" style="margin-top: 30px"><b>Authorized User</b></div><br>
+                The Authorized User is the one with a lower degree of privilege, so it can not
+                perform all the typical actions of the Super User, such as edit and insert.<br>
+                It only can:
+                • search for a patient<br>
+                • search for a gene<br>
+                • search for a mutation<br>
+                • . . .<br>
+                The authorized user is someone who can query the portal, but who can not modify
+                any values.<br>
+                The distinction between types of users has been designed to provide a control mechanism
+                against unwanted anomalies; in fact, if a biologist is interested in making simple queries
+                to the system, he is able do it in a way that no changes or accidental deletions occurs.
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="tutorial" class="container content-section text-center">
+    <section id="tutorial" class="container content-section-info text-center" style="margin-left: 100px; margin-top: -70px">
         <div class="row">
             <div class="col-lg-10 col-lg-offset-1">
-                <h1>TUTORIAL</h1>
-                Mostrare le funzioni ed i passi per fare le cose (...)
+                <h1 class="text-center"><a ui-sref='tutorial' role="button" class="btn btn-primary btn-lg" data-toggle="modal">START TUTORIAL</a></h1>
             </div>
         </div>
     </section>
 </body>
 
-
-    <!-- Core JavaScript Files -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+<!-- DONE -->

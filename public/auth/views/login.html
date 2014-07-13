@@ -1,13 +1,14 @@
 <link href="public/system/assets/css/login.css" rel="stylesheet">
 
+<body>
 <section class="main content-section">
-    <div class="col-md-6">
+    <div class="col-md-4">
 
         <div data-ng-controller="LoginCtrl">
             <div class="alert alert-danger animated fadeIn" ng-show="loginerror">{{loginerror}}</div>
            
-            <form  ng-submit="login()" class="from-signin form-horizontal">
-                <div class="header text-left form-signin-heading">Login</div>
+            <form  ng-submit="login()" class="form-horizontal content-section-login">
+                <div class="text-left"><h1>Login</h1></div>
                 <div class="form-group">
                     <div class="col-md-10">
                         <input required id="email" type="email" name="email" placeholder="Email" class="form-control" ng-model="user.email"/>
@@ -34,4 +35,7 @@
 
     </div>
 </section>
+</body>
+
+<!-- DONE -->
 
