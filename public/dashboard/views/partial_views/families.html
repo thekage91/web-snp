@@ -20,13 +20,13 @@
                 <tr>
                   <th>ID</th>
                   <th>Name</th>
-                  <th>Users</th>
+                  <th>Members</th>
                   <th style="width: 75px;"></th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td>1 </div></td>
+                  <td>1</td>
                   <td>Prova</td>
                   <td>Mario, Antonio, Anna</td>
                   <td>
@@ -34,85 +34,220 @@
                     data-toggle="modal" data-target="#myModalLicensed">
                     <span class="glyphicon glyphicon-edit"></span> Edit
                     </button> 
-                  <br/> 
-              </td>
-            </tr>
-          </tbody>
-        </table>
+                    <br/> 
+                  </td>
+                </tr>
+                <tr>
+                  <td>(Tutte le famiglie nel db)</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
         </div>
         </div>
       </div>
 
       <div class="tab-pane fade" id="create">
 
+        <h5><span class="fa fa-lightbulb-o"></span>&nbsp;<b>TIP</b>: Click on a value to modify it</h5>
+
         <form id="tab">
-          <label>ID</label>
-          <div class="form-group">
-            <div class="col-md-7">
-              <input id="id" type="text" name="id" placeholder="ID" class="form-control" ng-model="family.id"/>
-            </div>
-          </div>
-          <br>
-          <label>Name</label>
-          <div class="form-group">
-            <div class="col-md-7">
-              <input id="name" type="text" name="name" placeholder="Name" class="form-control" ng-model="family.name"/>
-            </div>
-          </div>
-          <br>
-          <label>Users</label>
-          <div class="form-group">
-            Trovare un modo per far aggiungere utenti...
-          </div>
+          <table class="table beauty-table table-hover">
+                  <thead>
+                    <tr>
+                      <th class="col-xs-3">&nbsp;</th>
+                      <th>&nbsp;</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>ID:</td>
+                      <td><input type="text" placeholder="ID"></td>
+                    </tr>
+                    <tr>
+                      <td>Name:</td>
+                      <td><input type="text" placeholder="Name"></td>
+                    </tr>
+                    <tr>
+                      <td>Members:</td>
+                      <td class="text-center">
+                        <button data-dz-remove class="btn btn-danger delete btn-sm" data-toggle="modal" data-target="#myModalAdd">
+                          <i class="glyphicon glyphicon-user"></i>
+                          <span>Add</span>
+                        </button>        
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>          
         </form>
       </div>
   </div>
 
   <div id="myModalLicensed" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content"></div>
-  </div>
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close " data-dismiss="modal" aria-hidden="true">×</button>
-        <h3 id="myModalLabel">Edit</h3>
-      </div>
-      <div class="modal-body">
-        <p class="error-text">
+    <div class="modal-dialog">
+      <div class="modal-content"></div>
+    </div>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close " data-dismiss="modal" aria-hidden="true">×</button>
+          <h3 id="myModalLabel">Edit</h3>
+        </div>
+        <div class="modal-body">
+          <p class="error-text">
           <div>
-          <ul class="nav nav-tabs">
-            <li class="text-left"><a href="#add" data-toggle="tab">Add user</a></li>
-            <li class="text-left"><a href="#remove" data-toggle="tab">Remove user</a></li>
-          </ul>
 
-          <!-- First sub-tab -->
-          <div id="myTabContent" class="tab-content">
-            <div class="tab-pane active in" id="add">
+            <div id="myTabContent" class="tab-content">
 
-              <div class="row bot15">
-                      Mostrare utenti della famiglia e, accanto a ciascuno, un pulsante per rimuoverlo
-              </div>
-                  
+              <!-- Aggiunta/Rimozione membri -->
+              <div style="margin-left: 15px">
+                <div class="row bot15">
+                  <div id="custom-search-input">
+                    <h4>Insert <i>Username</i>, <i>First Name</i> or <i>Last Name</i> to search:</h4>
+                    <div class="input-group col-md-4">
+                      <input type="search" class="search-query form-control" placeholder="Type here" />
+                      <span class="input-group-btn">
+                        <button class="btn btn-danger" type="button">
+                          <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="row">
+                  <div class="well">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th class="col-lg-3"></th>
+                          <th>First Name</th>
+                          <th>Last Name</th>
+                          <th>Username</th>
+                          <th style="width: 75px;"></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td><div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=100" class="img-circle"> </div></td>
+                          <td>Chris</td>
+                          <td>Albert</td>
+                          <td>cab79</td>
+                          <td>
+                            <button type="button" class="btn btn-primary btn-sm" data-ng-hide="user.isLicensed"
+                            data-toggle="modal" data-target="#myModalLicensed">
+                              <span class="glyphicon glyphicon-plus"></span> Add
+                            </button> 
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>(Tutti i membri della famiglia e poi tuti gli altri membri del db; dopo una ricerca mostra solo i risultati)</td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td>(+ se non fa parte della famiglia, - se fa parte)</td>
+                        </tr>
+                  </tbody>
+                </table>
+                </div>
+                </div>
+              </div>    
+              <!-- Aggiunta/Rimozione membri fine-->
+
             </div>
-            <!-- First sub-tab end -->
-
-            <!-- Second sub-tab -->
-            <div class="tab-pane fade" id="remove">
-
-              <div class="row bot15">
-                      Mostrare tutti gli utenti e, accanto a ciascuno, un pulsante per aggiungerlo alla famiglia. Un search come nell'edit potrebbe essere utile
-              </div>
-
-            </div>
-
-
-        </p>
-      </div>
-      <div class="modal-footer">
-        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-        <button class="btn btn-danger" data-dismiss="modal">OK</button>
+          </div>
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+          <button class="btn btn-danger" data-dismiss="modal">OK</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
+
+
+
+  <div id="myModalAdd" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content"></div>
+    </div>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close " data-dismiss="modal" aria-hidden="true">×</button>
+          <h3 id="myModalLabel">Add</h3>
+        </div>
+        <div class="modal-body">
+          <p class="error-text">
+          <div>
+            <div id="myTabContent" class="tab-content">
+
+              <!-- Aggiunta membri -->
+              <div style="margin-left: 15px">
+                <div class="row bot15">
+                  <div id="custom-search-input">
+                    <h4>Insert <i>Username</i>, <i>First Name</i> or <i>Last Name</i> to search:</h4>
+                    <div class="input-group col-md-4">
+                      <input type="search" class="search-query form-control" placeholder="Type here" />
+                      <span class="input-group-btn">
+                        <button class="btn btn-danger" type="button">
+                          <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="well">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th class="col-lg-3"></th>
+                          <th>First Name</th>
+                          <th>Last Name</th>
+                          <th>Username</th>
+                          <th style="width: 75px;"></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td><div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=100" class="img-circle"> </div></td>
+                          <td>Chris</td>
+                          <td>Albert</td>
+                          <td>cab79</td>
+                          <td>
+                            <button type="button" class="btn btn-primary btn-sm" data-ng-hide="user.isLicensed"
+                            data-toggle="modal" data-target="#myModalLicensed">
+                              <span class="glyphicon glyphicon-plus"></span> Add
+                            </button> 
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>(All'inizio mostra tutti gli utenti esistenti e dopo una ricerca mostra solo i risultati)</td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                        </tr>
+                  </tbody>
+                </table>
+                </div>
+                </div>
+              </div>    
+              <!-- Aggiunta membri fine-->
+         
+            </div>
+          </div>
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+          <button class="btn btn-danger" data-dismiss="modal">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>

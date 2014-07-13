@@ -1,14 +1,7 @@
-<!--<div>
-    <div class="col-md-12">
-            <div ui-view></div>
-    </div>
-</div>-->
-
-
+<link href="public/system/assets/css/dashboard.css" rel="stylesheet">
 
 <div id="wrapper" >
 
-    <!-- questa deve essere tolta da qui e messa nel template header.html -->
     <nav class="navbar navbar-default navbar-fixed-top" role="navigation" style="margin-bottom: 0px" data-ng-controller="HeaderController">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
@@ -41,7 +34,7 @@
                     <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
                 </a>
                 <ul class="dropdown-menu dropdown-user" >
-                    <li><a ui-sref="dashboard.userProfile"><i class="fa fa-user fa-fw"></i>Account</a>
+                    <li><a ui-sref="dashboard.userProfile"><i class="fa fa-user fa-fw"></i>My Profile</a>
                     </li>
                     <li class="divider"></li>
                     <li><a href="/logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
@@ -73,7 +66,7 @@
                         <a ui-sref="dashboard.home"><i class="fa fa-home fa-fw"></i>Home</a>
                     </li>
                     <li>
-                        <a ui-sref="dashboard.userProfile"><i class="fa fa-user fa-fw"></i>Account</a>
+                        <a ui-sref="dashboard.userProfile"><i class="fa fa-user fa-fw"></i>My Profile</a>
                     </li>
 
                     <!-- queste tre cose puo' farle solo l'admin -->
@@ -100,10 +93,8 @@
                     <li>
                         <a ui-sref="dashboard.sequencingEdit"><i class="fa fa-search fa-fw"></i>Sequencing Edit (rimuovere)</a>
                     </li>
+                    <!-- -->
 
-                    <li>
-                        <a ui-sref="dashboard.widget"><i class="fa fa-search fa-fw"></i>What is a SNP?</a>
-                    </li>
 
                 </ul>
                 <!-- /#side-menu -->

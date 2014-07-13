@@ -1,5 +1,4 @@
-
-<!-- TODO: definire un css per section-header -->
+<script type="text/javascript" src="/public/dashboard/assets/js/common_script.js"></script>
 
 <div class="row">
   <h1 class="section-header">Authorize Users</h1>  
@@ -43,18 +42,25 @@
           <td>
             <button type="button" class="btn btn-primary btn-sm" data-ng-hide="user.isLicensed"
             data-toggle="modal" data-target="#myModalLicensed">
-            <span class="glyphicon glyphicon-star"></span> Authorize
-          </button> 
-          <br/> 
+              <span class="glyphicon glyphicon-star"></span> Authorize
+            </button> 
+            <br/> 
 
-          <!-- Visibile solo se e' autorizzato -->
-          <button data-dz-remove class="btn btn-danger delete btn-sm" data-ng-hide="user.isLicensed"
+            <!-- Visibile solo se e' autorizzato -->
+            <button data-dz-remove class="btn btn-danger delete btn-sm" data-ng-hide="user.isLicensed"
           data-toggle="modal" data-target="#myModalDismiss">
-          <i class="glyphicon glyphicon-ban-circle"></i>
-          <span>Dismiss</span>
-        </button>        
-      </td>
-    </tr>
+              <i class="glyphicon glyphicon-ban-circle"></i>
+              <span>Dismiss</span>
+            </button>        
+          </td>
+        </tr>
+        <tr>
+          <td>(Tutti i risultati trovati)</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
   </tbody>
 </table>
 </div>
@@ -105,6 +111,3 @@
 </div>
 
 </div>
-
-
-<script type="text/javascript" src="/public/dashboard/assets/js/common_script.js"></script>
