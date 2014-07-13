@@ -31,9 +31,9 @@ angular.module('mean.system').config(['$stateProvider', '$urlRouterProvider',
                     templateUrl: 'public/system/views/tutorial.html'
                 })
                 .state('widget', {
-                url: '/widget',
-                templateUrl: 'public/system/views/Widget_Grafica/Widget.html',
-            })
+                    url: '/widget',
+                    templateUrl: 'public/system/views/Widget_Grafica/Widget.html',
+                })
                 ;
         }
     ])
