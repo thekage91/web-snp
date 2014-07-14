@@ -1,102 +1,94 @@
+    <script type="text/javascript" src="/public/system/lib/quick-ng-repeat/quick-ng-repeat.js"></script>
+
+
+
 <div class="row">
   <h1 class="section-header">Families</h1>  
 
   <hr>
 </div>
 
-<div ng-controller="AuthorizerUserCtrl">
-    <ul class="nav nav-tabs">
-      <li class="text-left"><a href="#all" data-toggle="tab">All</a></li>
-      <li class="text-left"><a href="#create" data-toggle="tab">Create New</a></li>
-    </ul>
+<div ng-controller="FamilyCtrl">
+  <ul class="nav nav-tabs">
+    <li class="text-left"><a href="#all" data-toggle="tab">All</a></li>
+    <li class="text-left"><a href="#create" data-toggle="tab">Create New</a></li>
+  </ul>
 
-    <div>
-      <li ng-repeate="user in users">
-        {{ user.name }}
-      </li>
-    </div>
+  <div id="myTabContent" class="tab-content">
 
-    <div id="myTabContent" class="tab-content">
-      
-      <div class="tab-pane active in" id="all">
+    <div class="tab-pane active in" id="all">
       <div class="row">
-          <div class="well">
-            <table class="table" ng-table >
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Name</th>
-                  <th>Members</th>
-                  <th style="width: 75px;"></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr ng-repeate="user in users"> 
-                  <td>{{ user.name }}</td>
-                  <td>{{ user.name }}</td>
+        <div class="well">
+          <table class="table" ng-table >
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Members</th>
+                <th style="width: 75px;"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr quick-ng-repeate="family in families" quick-repeate-list="families"> 
+                  <td>{{ family.name }}</td>
                   <td>Mario, Antonio, Anna</td>
                   <td>
                     <button type="button" class="btn btn-primary btn-sm" data-ng-hide="user.isLicensed"
                     data-toggle="modal" data-target="#myModalLicensed">
                     <span class="glyphicon glyphicon-edit"></span> Edit
-                    </button> 
-                    <br/> 
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-        </div>
-        </div>
+                  </button> 
+                </td>
+              </tr>
+              <tr ng-repeate-end />
+          </tbody>
+        </table>
       </div>
-
-      <div class="tab-pane fade" id="create">
-
-        <h5><span class="fa fa-lightbulb-o"></span>&nbsp;<b>TIP</b>: Click on a value to modify it</h5>
-
-        <form id="tab">
-          <table class="table beauty-table table-hover">
-                  <thead>
-                    <tr>
-                      <th class="col-xs-3">&nbsp;</th>
-                      <th>&nbsp;</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>ID:</td>
-                      <td><input type="text" placeholder="ID"></td>
-                    </tr>
-                    <tr>
-                      <td>Name:</td>
-                      <td><input type="text" placeholder="Name"></td>
-                    </tr>
-                    <tr>
-                      <td>Members:</td>
-                      <td class="text-center">
-                        <button data-dz-remove class="btn btn-danger delete btn-sm" data-toggle="modal" data-target="#myModalAdd">
-                          <i class="glyphicon glyphicon-user"></i>
-                          <span>Add</span>
-                        </button>        
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>          
-        </form>
-      </div>
+    </div>
   </div>
 
-  <div id="myModalLicensed" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content"></div>
-    </div>
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close " data-dismiss="modal" aria-hidden="true">×</button>
-          <h3 id="myModalLabel">Edit</h3>
+  <div class="tab-pane fade" id="create">
+
+    <form class="form-horizontal col-md-5 text-ce nter col-md-offset-4">
+      <fieldset>
+
+        <!-- Form Name -->
+        <legend>Create new Family</legend>
+
+        <!-- Text input-->
+        <div class="control-group">
+          <label class="control-label" for="nameFamily">Name</label>
+          <div class="controls">
+            <input id="nameFamily" name="nameFamily" type="text" placeholder="" class="form-control input-xlarge" ng-model="family.name">
+          </div>
         </div>
-        <div class="modal-body">
-          <p class="error-text">
+
+        <!-- Button (Double) -->
+        <div class="control-group">
+          <label class="control-label" for="save_btn"></label>
+          <div class="controls">
+            <button id="save_btn" name="save_btn" class="btn btn-success" ng-click="createFamily(family)">Save</button>
+            <button id="cancel_btn" name="cancel_btn" class="btn btn-danger">Cancel</button>
+          </div>
+        </div>
+
+      </fieldset>
+    </form>
+
+  </div>
+</div>
+
+<div id="myModalLicensed" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content"></div>
+  </div>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close " data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">Edit</h3>
+      </div>
+      <div class="modal-body">
+        <p class="error-text">
           <div>
 
             <div id="myTabContent" class="tab-content">
@@ -138,50 +130,50 @@
                           <td>
                             <button type="button" class="btn btn-primary btn-sm" data-ng-hide="user.isLicensed"
                             data-toggle="modal" data-target="#myModalLicensed">
-                              <span class="glyphicon glyphicon-plus"></span> Add
-                            </button> 
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>(Tutti i membri della famiglia e poi tuti gli altri membri del db; dopo una ricerca mostra solo i risultati)</td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td>(+ se non fa parte della famiglia, - se fa parte)</td>
-                        </tr>
-                  </tbody>
-                </table>
+                            <span class="glyphicon glyphicon-plus"></span> Add
+                          </button> 
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>(Tutti i membri della famiglia e poi tuti gli altri membri del db; dopo una ricerca mostra solo i risultati)</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>(+ se non fa parte della famiglia, - se fa parte)</td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
-                </div>
-              </div>    
-              <!-- Aggiunta/Rimozione membri fine-->
+              </div>
+            </div>    
+            <!-- Aggiunta/Rimozione membri fine-->
 
-            </div>
           </div>
-          </p>
         </div>
-        <div class="modal-footer">
-          <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-          <button class="btn btn-danger" data-dismiss="modal">OK</button>
-        </div>
-      </div>
+      </p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+      <button class="btn btn-danger" data-dismiss="modal">OK</button>
     </div>
   </div>
+</div>
+</div>
 
 
 
-  <div id="myModalAdd" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content"></div>
-    </div>
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close " data-dismiss="modal" aria-hidden="true">×</button>
-          <h3 id="myModalLabel">Add</h3>
-        </div>
-        <div class="modal-body">
-          <p class="error-text">
+<div id="myModalAdd" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content"></div>
+  </div>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close " data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">Add</h3>
+      </div>
+      <div class="modal-body">
+        <p class="error-text">
           <div>
             <div id="myTabContent" class="tab-content">
 
@@ -222,32 +214,32 @@
                           <td>
                             <button type="button" class="btn btn-primary btn-sm" data-ng-hide="user.isLicensed"
                             data-toggle="modal" data-target="#myModalLicensed">
-                              <span class="glyphicon glyphicon-plus"></span> Add
-                            </button> 
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>(All'inizio mostra tutti gli utenti esistenti e dopo una ricerca mostra solo i risultati)</td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                        </tr>
-                  </tbody>
-                </table>
+                            <span class="glyphicon glyphicon-plus"></span> Add
+                          </button> 
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>(All'inizio mostra tutti gli utenti esistenti e dopo una ricerca mostra solo i risultati)</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
-                </div>
-              </div>    
-              <!-- Aggiunta membri fine-->
-         
-            </div>
+              </div>
+            </div>    
+            <!-- Aggiunta membri fine-->
+
           </div>
-          </p>
         </div>
-        <div class="modal-footer">
-          <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-          <button class="btn btn-danger" data-dismiss="modal">OK</button>
-        </div>
-      </div>
+      </p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+      <button class="btn btn-danger" data-dismiss="modal">OK</button>
     </div>
   </div>
+</div>
+</div>

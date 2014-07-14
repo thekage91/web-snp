@@ -151,22 +151,32 @@ angular.module('mean.dashboard', [])
 
 .controller('FamilyCtrl' , ['$scope', '$http' , function($scope , $http){
     
-    $scope.createFamily = function(){
-        $http.post('/api/family' , $scope.formData)
+    $http.get('/api/family')
+        .success(function(data){
+            $scope.families = data.payload;
+            console.log("[DEBUG] Retrive this families " + data);
+        })
+        .error(function(data){
+            console.log("[ERROR] Failed retrieve all users");
+        });
+
+    $scope.createFamily = function(family){
+        $http.post('/api/family' , family)
             .success(function(data){
                 $scope.formData = {};
-                $scope.family = data;
+                $scope.savedFamily = data;
+                console.log("[SUCCESS] Write this data on DB: " + data)
             })
             .error(function(data) {
-                console.log('[ERROR] Failed save family: ' + data);
+                console.log("[ERROR] Failed save family: " + data);
             });
     }
     
-    $scope.removeFamily = function(){
-        $http.post('/api/family' , $scope.formData)
+    $scope.removeFamily = function(id){
+        $http.delete('/api/family' , $scope.formData)
             .success(function(data){
                 $scope.formData = {};
-                $scope.family = data;
+                $scope.removedFamily = data;
             })
             .error(function(data) {
                 console.log('[ERROR] Failed save family: ' + data);
@@ -178,4 +188,19 @@ angular.module('mean.dashboard', [])
 .controller('ExecuteQueryCtrl' , ['$scope' , '$http' , function($scope , $http){
     
 }]);
+
+
+
+
+
+
+////////////////////////////////
+// Create directive
+////////////////////////////////*
+/*
+.directive('families' , function(){
+    return {
+        template: '<tr'
+    }
+});*/
 
