@@ -4,18 +4,24 @@
   <hr>
 </div>
 
-<div>
+<div ng-controller="AuthorizerUserCtrl">
     <ul class="nav nav-tabs">
       <li class="text-left"><a href="#all" data-toggle="tab">All</a></li>
       <li class="text-left"><a href="#create" data-toggle="tab">Create New</a></li>
     </ul>
+
+    <div>
+      <li ng-repeate="user in users">
+        {{ user.name }}
+      </li>
+    </div>
 
     <div id="myTabContent" class="tab-content">
       
       <div class="tab-pane active in" id="all">
       <div class="row">
           <div class="well">
-            <table class="table">
+            <table class="table" ng-table >
               <thead>
                 <tr>
                   <th>ID</th>
@@ -25,9 +31,9 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>Prova</td>
+                <tr ng-repeate="user in users"> 
+                  <td>{{ user.name }}</td>
+                  <td>{{ user.name }}</td>
                   <td>Mario, Antonio, Anna</td>
                   <td>
                     <button type="button" class="btn btn-primary btn-sm" data-ng-hide="user.isLicensed"
@@ -36,12 +42,6 @@
                     </button> 
                     <br/> 
                   </td>
-                </tr>
-                <tr>
-                  <td>(Tutte le famiglie nel db)</td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
                 </tr>
               </tbody>
             </table>
