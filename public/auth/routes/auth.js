@@ -32,6 +32,11 @@ angular.module('mean.auth').config(['$stateProvider',
                     loggedin: checkLoggedOut
                 }
             })
+            //si possono aggiungere stati qui
+            .state('auth.prova', {
+                url: '/prova',
+                templateUrl: 'public/auth/views/prova.html',
+            })
             .state('auth.register', {
                 url: '/register',
                 templateUrl: 'public/auth/views/register.html',

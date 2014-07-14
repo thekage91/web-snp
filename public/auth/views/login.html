@@ -1,24 +1,41 @@
-<div data-ng-controller="LoginCtrl">
-    <div class="alert alert-danger animated fadeIn" ng-show="loginerror">{{loginerror}}</div>
-    <h1>Sign in</h1>
-    <form  ng-submit="login()" class="signin form-horizontal">
-        <div class="form-group">
-            <label for="email" class="col-md-4 control-label">Email</label>
-            <div class="col-md-8">
-                <input required id="email" type="email" name="email" placeholder="Email" class="form-control" ng-model="user.email"/>
-            </div>
+<link href="public/system/assets/css/login.css" rel="stylesheet">
+
+<body>
+<section class="main content-section">
+    <div class="col-md-4">
+
+        <div data-ng-controller="LoginCtrl">
+            <div class="alert alert-danger animated fadeIn" ng-show="loginerror">{{loginerror}}</div>
+           
+            <form  ng-submit="login()" class="form-horizontal content-section-login">
+                <div class="text-left"><h1>Login</h1></div>
+                <div class="form-group">
+                    <div class="col-md-10">
+                        <input required id="email" type="email" name="email" placeholder="Email" class="form-control" ng-model="user.email"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-10">
+                        <input required id="password" type="password" name="password" placeholder="Password" class="form-control" ng-model="user.password"/>
+                    </div>
+                </div>
+                 <div class="form-group">
+                    <div class="col-md-10">
+                        <input type="checkbox" value="remember-me"> Remember me</input>
+                    </div>
+                </div>
+                <div class="form-group" style="margin-bottom: 326px">
+                    <div class="col-md-8">
+                        <button type="submit" class="btn btn-primary">Sign in</button>&nbsp;
+                        or&nbsp;<a ui-sref='auth.register' class="show-signup">Sign up</a>
+                    </div>
+                </div>
+            </form>
         </div>
-        <div class="form-group">
-            <label for="password" class="col-md-4 control-label">Password</label>
-            <div class="col-md-8">
-                <input required id="password" type="password" name="password" placeholder="Password" class="form-control" ng-model="user.password"/>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-offset-4 col-md-8">
-                <button type="submit" class="btn btn-primary">Sign in</button>&nbsp;
-                or&nbsp;<a ui-sref='auth.register' class="show-signup">Sign up</a>
-            </div>
-        </div>
-    </form>
-</div>
+
+    </div>
+</section>
+</body>
+
+<!-- DONE -->
+

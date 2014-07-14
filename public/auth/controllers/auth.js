@@ -17,6 +17,13 @@ angular.module('mean.controllers.login', [])
                         $scope.loginError = 0;
                         $rootScope.user = response.user;
                         $rootScope.$emit('loggedin');
+
+                        window.location.replace('./#!/home');
+
+                        window.location.reload();
+
+
+                        /*
                         if (response.redirect) {
                             if (window.location.href === response.redirect) {
                                 //This is so an admin user will get full admin page
@@ -26,8 +33,9 @@ angular.module('mean.controllers.login', [])
                             }
                         } else {
                             $location.url('/');
-                        }
+                        }*/
                     })
+
                     .error(function() {
                         $scope.loginerror = 'Authentication failed.';
                     });
@@ -47,6 +55,16 @@ angular.module('mean.controllers.login', [])
                     confirmPassword: $scope.user.confirmPassword,
                     username: $scope.user.username,
                     name: $scope.user.name
+                    /*
+                    username: $scope.user.username,
+                    firstName: $scope.user.firstName,
+                    lastName: $scope.user.lastName,
+                    address: $scope.user.address,
+                    email: $scope.user.email,
+                    phone: $scope.user.phone,
+                    password: $scope.user.password,
+                    confirmPassword: $scope.user.confirmPassword
+                    */
                 })
                     .success(function() {
                         // authentication OK

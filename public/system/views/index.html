@@ -1,3 +1,26 @@
-<section data-ng-controller="IndexController">
-    <h1 mean-token="'home-default'">This is the home view</h1>
-</section>
+<link href="public/system/assets/css/login.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="/public/system/assets/css/video_background.css">
+
+<video id="video_background" preload="auto" autoplay="true" loop="loop" muted="muted" volume="0"> 
+<source src="/public/system/assets/videos/background.mp4" type="video/mp4"> 
+Video not supported </video>
+
+<div class="page-header" data-ng-controller="HeaderController"> 
+
+    <section class="main content-section">
+        <div class="row message-top col-xs-9" data-ng-hide="global.authenticated">
+            Welcome to the SNP Web-Portal!
+        </div>
+
+        <div class="row message-bottom col-xs-6" data-ng-hide="global.authenticated">
+            Please 
+            <a ui-sref='auth.login' role="button" class="btn btn-primary">Login</a>
+            or 
+            <a ui-sref='auth.register' role="button" class="btn btn-primary">Sign Up</a> 
+            to use this portal...
+        </div>
+    </section>
+</div>
+
+<!-- DONE -->
+

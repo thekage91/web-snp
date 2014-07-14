@@ -1,0 +1,66 @@
+<div data-ng-controller="RegisterCtrl">
+    <div ng-repeat="error in registerError">
+        <div class="alert alert-danger animated fadeIn">{{error.msg}}</div>
+    </div>
+    <div class="alert alert-danger animated fadeIn" ng-show="usernameError">{{usernameError}}</div>
+
+    <h1>Prova</h1>
+    
+    Provaaaaa
+
+    <div class="container">
+        <h1>Sto nel container</h1>
+
+        Nav bar
+
+        <div class='navbar navbar-inverse'≥
+            <div class='nav-collapse' style="height: auto;">
+                <ul class="nav">
+                    <li class="active"><a href="#">Home</a></li>
+                    <li><a href="#">Pagina Uno</a></li>
+                    <li><a href="#">Page Due</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div id='content' class='row-fluid'>
+            <div class='span9 main'>
+                <h2>Main Content Section - span9</h2>
+            </div>
+            <div class='span3 sidebar'>
+                <h2>Sidebar - span3</h2>
+            </div>
+
+            <!-- Il sistema utilizza un layout a 12 colonne, il che significa che la pagina può essere divisa in 12 colonne di eguale larghezza. Nel codice sopra riportato abbiamo due colonne, rispettivamente di classe .span9 e .span3 indicanti una larghezza pari a 9/12 e 3/12. Il beneficio di usare il sistema a griglie è che lavora con la larghezza di ciascuna colonna relativa alla larghezza dello schermo, pertanto non occorre preoccuparsi di scrivere altre media-queries per far si che il template di adatti alle varie risoluzioni. -->
+
+        </div>
+
+        <ul class="nav nav-tabs nav-stacked">
+            <li><a href='#'>Another Link 1</a></li>
+            <li><a href='#'>Another Link 2</a></li>
+            <li><a href='#'>Another Link 3</a></li>
+        </ul>
+
+        <button type="button" class="btn btn-default btn-lg">
+            <span class="glyphicon glyphicon-star"></span>
+        </button>
+
+
+        <div class="container">
+            <div class="row"> <!-- più righe -->
+                <div class="col-md-6 col-md-offset-3"> <!-- larghezza 6 con offset di 3 a destra e 3 a sinistra (la somma deve fare 12! -->
+                  <h1>Colonna 1</h1>
+                  "Lorem ipsum dolor sit amet, ..."
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4"> <!-- colonna larga 4/12 -->
+                    <h1>Colonna larga 4/12</h1>
+                    <img width="500" src="public/system/assets/img/DNA.jpg" class="img-responsive">
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>

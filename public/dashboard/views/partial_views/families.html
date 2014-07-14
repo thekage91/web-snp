@@ -1,0 +1,318 @@
+<div class="row">
+  <h1 class="section-header">Families</h1>  
+
+  <hr>
+</div>
+
+<script type="text/javascript">
+   function toggle_visibility(id) {
+       var e = document.getElementById(id);
+       if(e.style.display == 'block')
+          e.style.display = 'none';
+       else
+          e.style.display = 'block';
+   }
+
+   function hide(id) {
+       var e = document.getElementById(id);
+       e.style.display = 'none';
+   }
+</script>
+
+<div>
+    <ul  class="nav nav-tabs">
+      <li class="text-left"><a href="#all" data-toggle="tab" onclick="hide('edit'); hide('editNew');">All</a></li>
+      <li class="text-left"><a href="#create" data-toggle="tab" onclick="hide('edit'); hide('editNew');">Create New</a></li>
+    </ul>
+
+    <div id="myTabContent" class="tab-content">
+
+      <!-- Editing tab -->
+      <div id="edit" hidden>
+        <h3>Edit</h3>
+            <!-- Aggiunta/Rimozione membri -->
+              <div>
+                <div class="row bot15">
+                  <div id="custom-search-input">
+                    <h4>Insert <i>Username</i>, <i>First Name</i> or <i>Last Name</i> to search:</h4>
+                    <div class="input-group col-md-4">
+                      <input type="search" class="search-query form-control" placeholder="Type here" />
+                      <span class="input-group-btn">
+                        <button class="btn btn-danger" type="button">
+                          <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="row">
+                  <div class="well">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th class="col-lg-3"></th>
+                          <th>First Name</th>
+                          <th>Last Name</th>
+                          <th>Username</th>
+                          <th style="width: 75px;"></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td><div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=100" class="img-circle"> </div></td>
+                          <td>Chris</td>
+                          <td>Albert</td>
+                          <td>cab79</td>
+                          <td>
+                            <button type="button" class="btn btn-primary btn-sm" data-ng-hide="user.isLicensed">
+                              <span class="glyphicon glyphicon-plus"></span> Add
+                            </button> 
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>(Tutti i membri della famiglia e poi tuti gli altri membri del db; dopo una ricerca mostra solo i risultati)</td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td>(+ se non fa parte della famiglia, - se fa parte)</td>
+                        </tr>
+                  </tbody>
+                </table>
+                </div>
+              <!-- Aggiunta/Rimozione membri fine-->
+
+          <button class="btn" onclick="toggle_visibility('edit'); scroll(0,0)" style="margin-bottom: 100px; float: right">Cancel</button>
+          <button class="btn btn-danger" onclick="toggle_visibility('edit'); scroll(0,0)" style="margin-bottom: 100px; float: right">OK</button>
+      </div>
+    </div>
+  </div>
+      <!-- Editing tab end-->
+
+
+
+      <!-- EditingNew tab -->
+      <div id="editNew" hidden>
+        <h3>Add</h3>
+              <!-- Aggiunta membri -->
+              <div>
+                <div class="row bot15">
+                  <div id="custom-search-input">
+                    <h4>Insert <i>Username</i>, <i>First Name</i> or <i>Last Name</i> to search:</h4>
+                    <div class="input-group col-md-4">
+                      <input type="search" class="search-query form-control" placeholder="Type here" />
+                      <span class="input-group-btn">
+                        <button class="btn btn-danger" type="button">
+                          <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="well">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th class="col-lg-3"></th>
+                          <th>First Name</th>
+                          <th>Last Name</th>
+                          <th>Username</th>
+                          <th style="width: 75px;"></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td><div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=100" class="img-circle"> </div></td>
+                          <td>Chris</td>
+                          <td>Albert</td>
+                          <td>cab79</td>
+                          <td>
+                            <button type="button" class="btn btn-primary btn-sm" data-ng-hide="user.isLicensed"
+                            data-toggle="modal" data-target="#myModalLicensed">
+                              <span class="glyphicon glyphicon-plus"></span> Add
+                            </button> 
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>(All'inizio mostra tutti gli utenti esistenti e dopo una ricerca mostra solo i risultati)</td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                        </tr>
+                  </tbody>
+                </table>
+                </div>
+                </div>
+              <!-- Aggiunta membri fine-->
+          <button class="btn" onclick="toggle_visibility('editNew'); scroll(0,0)" style="margin-bottom: 100px; float: right">Cancel</button>
+          <button class="btn btn-danger" onclick="toggle_visibility('editNew'); scroll(0,0)" style="margin-bottom: 100px; float: right">OK</button>
+          <br>
+        </div>
+      </div>
+      <!-- EditingNew tab end-->
+
+
+
+
+      <div class="tab-pane active in" id="all">
+      <div class="row">
+          <div class="well">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Members</th>
+                  <th style="width: 75px;"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>Prova</td>
+                  <td>Mario, Antonio, Anna</td>
+                  <td>
+                    <button type="button" class="btn btn-primary btn-sm" data-ng-hide="user.isLicensed"
+                    data-toggle="modal" onclick="toggle_visibility('edit');">
+                    <span class="glyphicon glyphicon-edit"></span> Edit
+                    </button> 
+                    <br/> 
+                  </td>
+                </tr>
+                <tr>
+                  <td>(Tutte le famiglie nel db)</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+        </div>
+        </div>
+      </div>
+
+      <div class="tab-pane fade" id="create">
+
+        <h5 id="tip"><span class="fa fa-lightbulb-o"></span>&nbsp;<b>TIP</b>: Click on a value to modify it</h5>
+
+        <form id="tab">
+          <table class="table beauty-table table-hover">
+                  <thead>
+                    <tr>
+                      <th class="col-xs-3">&nbsp;</th>
+                      <th>&nbsp;</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>ID:</td>
+                      <td><input type="text" placeholder="ID"></td>
+                    </tr>
+                    <tr>
+                      <td>Name:</td>
+                      <td><input type="text" placeholder="Name"></td>
+                    </tr>
+                    <tr>
+                      <td>Members:</td>
+                      <td class="text-center">
+                        <button data-dz-remove class="btn btn-danger delete btn-sm" data-toggle="modal" onclick="toggle_visibility('editNew'); hide('tip');">
+                          <i class="glyphicon glyphicon-user"></i>
+                          <span>Add</span>
+                        </button>        
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>          
+        </form>
+
+        <button type="button" class="btn btn-primary btn-sm" style="float: right">
+          <span class="glyphicon glyphicon-floppy-saved"></span> Save
+        </button>
+      </div>
+  </div>
+
+
+  <div id="myModalAdd" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content"></div>
+    </div>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close " data-dismiss="modal" aria-hidden="true">×</button>
+          <h3 id="myModalLabel">Add</h3>
+        </div>
+        <div class="modal-body">
+          <p class="error-text">
+          <div>
+            <div id="myTabContent" class="tab-content">
+
+              <!-- Aggiunta membri -->
+              <div style="margin-left: 15px">
+                <div class="row bot15">
+                  <div id="custom-search-input">
+                    <h4>Insert <i>Username</i>, <i>First Name</i> or <i>Last Name</i> to search:</h4>
+                    <div class="input-group col-md-4">
+                      <input type="search" class="search-query form-control" placeholder="Type here" />
+                      <span class="input-group-btn">
+                        <button class="btn btn-danger" type="button">
+                          <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="well">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th class="col-lg-3"></th>
+                          <th>First Name</th>
+                          <th>Last Name</th>
+                          <th>Username</th>
+                          <th style="width: 75px;"></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td><div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=100" class="img-circle"> </div></td>
+                          <td>Chris</td>
+                          <td>Albert</td>
+                          <td>cab79</td>
+                          <td>
+                            <button type="button" class="btn btn-primary btn-sm" data-ng-hide="user.isLicensed"
+                            data-toggle="modal" data-target="#myModalLicensed">
+                              <span class="glyphicon glyphicon-plus"></span> Add
+                            </button> 
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>(All'inizio mostra tutti gli utenti esistenti e dopo una ricerca mostra solo i risultati)</td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                        </tr>
+                  </tbody>
+                </table>
+                </div>
+                </div>
+              </div>    
+              <!-- Aggiunta membri fine-->
+         
+            </div>
+          </div>
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+          <button class="btn btn-danger" data-dismiss="modal">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>

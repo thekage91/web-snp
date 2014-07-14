@@ -1,0 +1,105 @@
+<div>
+    <ul class="nav nav-tabs">
+      <li class="text-left"><a href="#profile" data-toggle="tab">Profile</a></li>
+      <li class="text-left"><a href="#password" data-toggle="tab">Password</a></li>
+    </ul>
+
+    <div id="myTabContent" class="tab-content">
+      <div class="tab-pane active in" id="profile">
+
+        <h5><span class="fa fa-lightbulb-o"></span>&nbsp;<b>TIP</b>: Click on a value to modify it</h5>
+
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="box">
+              <div class="box-header">
+                
+              <div class="box-content">
+                <table class="table beauty-table table-hover">
+                  <thead>
+                    <tr>
+                      <th class="col-xs-3">&nbsp;</th>
+                      <th>&nbsp;</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Username:</td>
+                      <td><input type="text" value="{{global.user.name}}"></td>
+                    </tr>
+                    <tr>
+                      <td>First Name:</td>
+                      <td><input type="text" value="{{global.user.firstName}}"></td>
+                    </tr>
+                    <tr>
+                      <td>Last Name:</td>
+                      <td><input type="text" value="{{global.user.lastName}}"></td>
+                    </tr>
+                    <tr>
+                      <td>Email:</td>
+                      <td><input type="text" value="{{global.user.email}}"></td>
+                    </tr>
+                    <tr>
+                      <td>Address:</td>
+                      <td><input type="text" value="{{global.user.address}}"></td>
+                    </tr>
+                    <tr>
+                      <td>Phone:</td>
+                      <td><input type="text" value="{{global.user.phone}}"></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button type="button" class="btn btn-primary btn-sm" ui-sref="dashboard.userProfile" style="float: right">
+          <span class="glyphicon glyphicon-floppy-saved"></span> Save
+        </button>
+      </div>
+      </div>
+
+
+      <div class="tab-pane fade" id="password">
+      
+      <h5><span class="fa fa-lightbulb-o"></span>&nbsp;<b>TIP</b>: Click on a value to modify it</h5>
+
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="box">
+              <div class="box-header">
+                
+              <div class="box-content">
+                <table class="table beauty-table table-hover">
+                  <thead>
+                    <tr>
+                      <th class="col-xs-3">&nbsp;</th>
+                      <th>&nbsp;</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>New Password:</td>
+                      <td><input type="text" value="**********"></td>
+                    </tr>
+                    <tr>
+                      <td>Repeat New Password:</td>
+                      <td><input type="text" value="**********"></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button type="button" class="btn btn-primary btn-sm" ui-sref="dashboard.userProfile" style="float: right">
+          <span class="glyphicon glyphicon-floppy-saved"></span> Save
+        </button>
+      </div>
+
+      </div>
+  </div>
+
+<!-- DONE -->

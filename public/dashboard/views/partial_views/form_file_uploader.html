@@ -1,0 +1,68 @@
+<!--<link rel="stylesheet" type="text/css" href="/public/dashboard/assets/css/dropzone/basic.css">
+  <link rel="stylesheet" type="text/css" href="/public/dashboard/assets/css/dropzone/dropzone.css">-->
+
+
+  <script type="text/javascript" src="/public/system/lib/ng-file-upload/angular-file-upload.js"></script>
+
+  <div ng-controller="UploaderCtrl" class="row">
+
+     Single
+    <input ng-file-select type="file" />
+    
+    <table class="table">
+      <thead>
+          <tr>
+              <th width="50%">Name</th>
+              <th ng-show="uploader.isHTML5">Size</th>
+              <th ng-show="uploader.isHTML5">Progress</th>
+              <th>Status</th>
+              <th>Actions</th>
+          </tr>
+      </thead>
+      <tbody>
+          <!-- ngRepeat: item in uploader.queue --><tr ng-repeat="item in uploader.queue" class="ng-scope">
+              <td><strong class="ng-binding">Previously uploaded file</strong></td>
+              <td ng-show="uploader.isHTML5" nowrap="" class="ng-binding">0.95 MB</td>
+              <td ng-show="uploader.isHTML5">
+                  <div class="progress" style="margin-bottom: 0;">
+                      <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }" style="width: 100%;"></div>
+                  </div>
+              </td>
+              <td class="text-center">
+                  <span ng-show="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+                  <span ng-show="item.isCancel" style="display: none;"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                  <span ng-show="item.isError" style="display: none;"><i class="glyphicon glyphicon-remove"></i></span>
+              </td>
+              <td nowrap="">
+                  <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess" disabled="disabled">
+                      <span class="glyphicon glyphicon-upload"></span> Upload
+                  </button>
+                  <button type="button" class="btn btn-warning btn-xs" ng-click="item.cancel()" ng-disabled="!item.isUploading" disabled="disabled">
+                      <span class="glyphicon glyphicon-ban-circle"></span> Cancel
+                  </button>
+                  <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
+                      <span class="glyphicon glyphicon-trash"></span> Remove
+                  </button>
+              </td>
+          </tr>
+      </tbody>
+    </table>
+
+    <div>
+      <p>
+          Queue progress:
+          </p><div class="progress" style="">
+              <div class="progress-bar" role="progressbar" ng-style="{ 'width': uploader.progress + '%' }" style="width: 100%;"></div>
+          </div>
+      <p></p>
+      <button type="button" class="btn btn-success btn-s" ng-click="uploader.uploadAll()" ng-disabled="!uploader.getNotUploadedItems().length" disabled="disabled">
+          <span class="glyphicon glyphicon-upload"></span> Upload all
+      </button>
+      <button type="button" class="btn btn-warning btn-s" ng-click="uploader.cancelAll()" ng-disabled="!uploader.isUploading" disabled="disabled">
+          <span class="glyphicon glyphicon-ban-circle"></span> Cancel all
+      </button>
+      <button type="button" class="btn btn-danger btn-s" ng-click="uploader.clearQueue()" ng-disabled="!uploader.queue.length">
+          <span class="glyphicon glyphicon-trash"></span> Remove all
+      </button>
+    </div>
+  </div>

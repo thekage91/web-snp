@@ -1,0 +1,38 @@
+body {
+    width: 100%;
+    height: 100%;
+    background-color: #f5f5f5;
+    background: url(../img/login_background.jpg) no-repeat bottom center scroll;
+    background-size: 100% auto;
+}
+
+.message-top{
+    font-size: 250%;
+    font-weight: 800;
+    padding-bottom: 15px;
+    color: #ffffff
+}
+
+.message-bottom{
+    font-size: 150%;
+    padding-bottom: 55px;
+    color: #ffffff
+}
+
+.main {
+    font-size: 20px;
+}
+
+.content-section {
+    padding-top: 100px;
+}
+
+.content-section-login {
+    margin-top: -150px;
+    color: #ffffff
+}
+
+.content-section-register {
+    margin-top: -50px;
+    color: #ffffff
+}

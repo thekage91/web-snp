@@ -1,46 +1,66 @@
-<div data-ng-controller="RegisterCtrl">
-    <div ng-repeat="error in registerError">
-        <div class="alert alert-danger animated fadeIn">{{error.msg}}</div>
-    </div>
-    <div class="alert alert-danger animated fadeIn" ng-show="usernameError">{{usernameError}}</div>
+<link href="public/system/assets/css/login.css" rel="stylesheet">
 
-    <h1>Register</h1>
-    <form ng-submit="register()" class="signup form-horizontal">
-        <div class="form-group">
-            <label for="name" class="col-md-4 control-label">Full Name</label>
-            <div class="col-md-8">
-                <input id="name" type="text" name="name" placeholder="Full name" class="form-control" ng-model="user.name"/>
+<section class="main content-section-register">
+    <div class="col-md-4">
+
+        <div data-ng-controller="RegisterCtrl">
+            <div ng-repeat="error in registerError">
+                <div class="alert alert-danger animated fadeIn">{{error.msg}}</div>
             </div>
+            <div class="alert alert-danger animated fadeIn" ng-show="usernameError">{{usernameError}}</div>
+            
+            <form ng-submit="register()" class="form-horizontal">
+                <div class="text-left"><h1>Register</h1></div>
+                <div class="form-group">
+                    <div class="col-md-10">
+                        <input id="username" type="text" name="username" placeholder="Username" class="form-control" ng-model="user.username"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-10">
+                        <input id="firstName" type="text" name="firstName" placeholder="First Name" class="form-control" ng-model="user.firstName"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-10">
+                        <input id="lastName" type="text" name="lastName" placeholder="Last Name" class="form-control" ng-model="user.lastName"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-10">
+                        <input id="email" type="email" name="email" placeholder="Email" class="form-control" ng-model="user.email"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-10">
+                        <input id="address" type="text" name="address" placeholder="Address" class="form-control" ng-model="user.address"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-10">
+                        <input id="phone" type="text" name="phone" placeholder="Phone" class="form-control" ng-model="user.phone"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-10">
+                        <input id="password" type="password" name="password" placeholder="Password" class="form-control" ng-model="user.password"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-10">
+                        <input id="confirmPassword" type="password" name="confirmPassword" placeholder="Confirm Password" class="form-control" ng-model="user.confirmPassword"/>
+                    </div>
+                </div>
+                <div class="form-group" style="margin-bottom: 75px">
+                    <div class="col-md-10">
+                        <button type="submit" class="btn btn-primary">Sign up</button>&nbsp;
+                        or&nbsp;<a ui-sref='auth.login' class="show-login">Sign in</a>
+                    </div>
+                </div>
+            </form>
         </div>
-        <div class="form-group">
-            <label for="email" class="col-md-4 control-label">Email</label>
-            <div class="col-md-8">
-                <input id="email" type="email" name="email" placeholder="Email" class="form-control" ng-model="user.email"/>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="username" class="col-md-4 control-label">Username</label>
-            <div class="col-md-8">
-                <input id="username" type="text" name="username" placeholder="Username" class="form-control" ng-model="user.username"/>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="password" class="col-md-4 control-label">Password</label>
-            <div class="col-md-8">
-                <input id="password" type="password" name="password" placeholder="Password" class="form-control" ng-model="user.password"/>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="confirmPassword" class="col-md-4 control-label">Repeat Password</label>
-            <div class="col-md-8">
-                <input id="confirmPassword" type="password" name="confirmPassword" placeholder="Password" class="form-control" ng-model="user.confirmPassword"/>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-offset-4 col-md-8">
-                <button type="submit" class="btn btn-primary">Sign up</button>&nbsp;
-                or&nbsp;<a ui-sref='auth.login' class="show-login">login</a>
-            </div>
-        </div>
-    </form>
-</div>
+
+    </div>
+</section>
+
+<!-- DONE -->
