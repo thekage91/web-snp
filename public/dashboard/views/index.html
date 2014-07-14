@@ -1,6 +1,6 @@
 <link href="public/system/assets/css/dashboard.css" rel="stylesheet">
 
-<div id="wrapper" >
+<div id="wrapper" class="mainView">
 
     <nav class="navbar navbar-default navbar-fixed-top" role="navigation" style="margin-bottom: 0px" data-ng-controller="HeaderController">
         <div class="navbar-header">
@@ -106,8 +106,9 @@
 
     <!-- Se si toglie la barra da qui non la visualizza proprio, non eredita la principale... -->
 
-    <div id="page-wrapper" data-ng-controller="HeaderController" data-ng-show="global.authenticated" ui-view >
-       
+    <div id="page-wrapper" data-ng-controller="HeaderController" data-ng-show="global.authenticated">
+        <div class="col-lg-9" ui-view>
+        </div>       
     </div>
     <!-- /#page-wrapper -->
 </div>
