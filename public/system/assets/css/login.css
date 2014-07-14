@@ -28,13 +28,11 @@ body {
 }
 
 .content-section-login {
-    padding-top: 90px;
-    padding-bottom: 70px;
+    margin-top: -150px;
     color: #ffffff
 }
 
 .content-section-register {
-    padding-top: 10px;
-    padding-bottom: 70px;
+    margin-top: -50px;
     color: #ffffff
 }

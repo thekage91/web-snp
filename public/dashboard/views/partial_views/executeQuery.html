@@ -4,6 +4,13 @@
   <hr>
 </div>
 
+<script type="text/javascript">
+   function changeLabel(value) {
+       var e = document.getElementById('search_concept');
+       e.innerHTML = value;
+   }
+</script>
+
 <ul class="nav nav-tabs">
       <li class="text-left"><a href="#basic" data-toggle="tab">Basic SNPs Search</a></li>
       <li class="text-left"><a href="#complex" data-toggle="tab">Complex SNPs Search</a></li>
@@ -24,13 +31,13 @@
                         <span id="search_concept">Search by...</span> <span class="caret"></span>
                       </button>
                       <ul class="dropdown-menu" role="menu">
-                        <li><a href="#patient">Patient</a></li>
-                        <li><a href="#gene">Gene</a></li>
-                        <li><a href="#region">Region</a></li>
-                        <li><a href="#mutation">Mutation</a></li>
-                        <li><a href="#genotype">Genotype</a></li>
-                        <li><a href="#freqAlt">Freq alt</a></li>
-                        <li><a href="#dbsnp">dbSNP</a></li>
+                        <li><a href="#patient" onClick="changeLabel('Patient')">Patient</a></li>
+                        <li><a href="#gene" onClick="changeLabel('Gene')">Gene</a></li>
+                        <li><a href="#region" onClick="changeLabel('Region')">Region</a></li>
+                        <li><a href="#mutation" onClick="changeLabel('Mutation')">Mutation</a></li>
+                        <li><a href="#genotype" onClick="changeLabel('Genotype')">Genotype</a></li>
+                        <li><a href="#freqAlt" onClick="changeLabel('Freq alt')">Freq alt</a></li>
+                        <li><a href="#dbsnp" onClick="changeLabel('dbSNP')">dbSNP</a></li>
                       </ul>
                     </div>
                     <input type="hidden" name="search_param" value="all" id="search_param">         
