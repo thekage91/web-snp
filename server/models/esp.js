@@ -9,7 +9,7 @@ var mongoose = require('mongoose'),
     
     function validatePresenceOf(x) {return true;}
 /* Esp schema */
-    var EspSchema = new Schema({
+var EspSchema = new Schema({
     ESP6500_ALL: {
         type: String,
         required: true,

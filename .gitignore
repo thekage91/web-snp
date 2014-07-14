@@ -10,5 +10,5 @@ test/coverage/
 modules/public/
 modules/views/
 /public/build/
-.exe
-.db
+*.exe
+*.db

@@ -9,7 +9,7 @@ var mongoose = require('mongoose'),
     
     function validatePresenceOf(x) {return true;}
 /* Pathogenicity schema */
-    var PathogenicitySchema = new Schema({
+var PathogenicitySchema = new Schema({
     SIFT: {
         type: String,
         required: true,
