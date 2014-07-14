@@ -1,6 +1,3 @@
-    <script type="text/javascript" src="/public/system/lib/quick-ng-repeat/quick-ng-repeat.js"></script>
-
-
 
 <div class="row">
   <h1 class="section-header">Families</h1>  
@@ -29,7 +26,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr quick-ng-repeate="family in families" quick-repeate-list="families"> 
+              <tr ng-repeate="family in families"> 
                   <td>{{ family.name }}</td>
                   <td>Mario, Antonio, Anna</td>
                   <td>
