@@ -272,16 +272,59 @@ angular.module('mean.dashboard', [])
                                    console.log('Got variant: '+ JSON.stringify(data));
                                    $scope.elements = new Array();
                                    $scope.elements = data.payload;
-                                  /* data.payload.forEach( function (payload) { 
-                                   console.log('pushing '+ JSON.stringify(payload));
-                                   $scope.elements.push(data.payload);
-                                   console.log('now: '+ JSON.stringify($scope.elements));
-                                });*/
                                    console.log('dovrei : '+ JSON.stringify($scope.elements));
                             })
                                .error(function(data) {
                                         console.log('[ERROR] Failed retrieving variant with thath field: ');
                                     } );
                 };
-            }]);
+                
+                var getVariantFromDetail = function (variant) {
+                  
+                     $http.get('/api/variant/' + variant)
+                             .success(function (data) {
+                                 data.payload.patients.forEach(getPatientFromVariant);
+                                  })
+                             .error(function(data) {
+                                        console.log('[ERROR] Failed retrieving Variant: '+ variant);
+                                    });          
+                }
+                
+                 var getPatientFromVariant = function (patient) {
+                  
+                     $http.get('/api/patient/' + patient)
+                             .success(function (data) {
+                                $scope.patients.push(data.payload);
+                                console.log('Pushed '+JSON.stringify(data)+' in scope.patients');
+                            })
+                             .error(function(data) {
+                                        console.log('[ERROR] Failed retrieving patient: '+ patient);
+                                    });          
+                }
+                
+                $scope.submitByGenotype = function() {
+                    $http.get('/api/variantdetail/finder/query?genotype=' +
+                               $scope.genotype)
+                       
+                               .success(function(data) {
+                                   $scope.patients = new Array();
+                                   data.payload.forEach(function (element) {
+                                    console.log("ELEMENT = "+JSON.stringify(element));
+                                       getVariantFromDetail(element.variant);
+                                       });
+                                   })
+                               .error(function(data) {
+                                        console.log('[ERROR] Failed retrieving VariantDetail with genotype: '+$scope.genotype);
+                                    });               
+                                   
+                               };
+                
+                
+           
+       
+            
+            }
+        
+            
+            ]);
 

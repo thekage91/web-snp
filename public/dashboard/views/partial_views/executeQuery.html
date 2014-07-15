@@ -248,10 +248,10 @@
                 <div class="input-group col-md-12">
                   <div class="input-group">
                     <div class="input-group-btn search-panel">
-                      <input type="text" class="form-control" name="x" placeholder="Genotype">
+                      <input type="text" ng-model="genotype" class="form-control" name="x" placeholder="Genotype">
                     </div>
                   <span class="input-group-btn">
-                      <button class="btn btn-danger" type="button">
+                      <button class="btn btn-danger" type="button" ng-click="submitByGenotype()">
                         <span class="glyphicon glyphicon-search"></span>
                       </button>
                     </span>
@@ -263,24 +263,25 @@
 
 
         <div class="row">
-          <h4>Results:</h4>
-          <div class="well">
+            <h4>Results:</h4>
+        <h4 ng-hide="patients.length"> No Results! </h4>
+          <div class="well" ng-show="patients && patients.length">
             <table class="table">
               <thead>
-                (Vedere quali attributi degli Utenti mostrare)
                 <tr>
-                  <th>User</th>
-                  <th>Attr1</th>
-                  <th>Attr2</th>
-                  <th>Attr3</th>
+                  <th>Patient ID</th>
+                  <th style="width: 75px;"></th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>User ID 1 </div></td>
-                  <td>ATTR</td>
-                  <td>ATTR</td>
-                  <td>ATTR</td>
+                  <tr ng-repeat="patient in patients"> 
+                  <td>{{patient._id}}</td>
+                  <td>
+                    <button type="button" class="btn btn-primary btn-sm" data-ng-hide="user.isLicensed"
+                    data-toggle="modal" data-target="#myModalLicensed">
+                    <span class="glyphicon glyphicon-eye-open"></span> View
+                    </button> 
+                  <br/> 
               </td>
             </tr>
           </tbody>
