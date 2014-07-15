@@ -119,17 +119,22 @@ angular.module('mean.dashboard', [])
     
     $http.get('/api/users')
         .success(function(data){
-            $scope.users = data;
-            console.log("[DEBUG] Retrive this users " + data);
+            $scope.users = data.payload;
+            console.log("[DEBUG] Retrive this users " + data.payload);
         })
         .error(function(data){
             console.log("[ERROR] Failed retrieve all users");
         });
 
-    $scope.authorizeUser = function(){
-       $http.put('/api/users' , $scope.formData)
+    $scope.authorizeUser = function(item){
+
+        var idSelected = $scope.users.indexOf(item);
+        var newRoles = item.roles
+        newRoles.push('licensed');
+
+       $http.post('/api/users/' + item._id , newRoles)
             .success(function(data){
-                $scope.users = data;
+                $scope.users[idSelected].roles.push('licensed');
                 console.log("[DEBUG] Retrive this users " + data);
             })
             .error(function(data){
@@ -137,10 +142,16 @@ angular.module('mean.dashboard', [])
             });
         };
 
-    $scope.dismissUser = function(){
-        $http.put('/api/users' , $scope.formData)
+    $scope.dismissUser = function(item){
+
+        var rolesToPut = 'licensed';
+        var idSelected = $scope.users.indexOf(item);
+        var newRoles = item.roles;
+        newRoles.splice(rolesToPut , 1);
+
+        $http.put('/api/users/' + item._id , newRoles)
             .success(function(data){
-                $scope.users = data;
+                $scope.users[idSelected].roles.splice(rolesToPut , 1);
                 console.log("[DEBUG] Retrive this users " + data);
             })
             .error(function(data){
