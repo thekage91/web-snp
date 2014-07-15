@@ -60,26 +60,8 @@ var PathogenicitySchema = new Schema({
     
 });
 
-
-/**
- * Validations
- */
-// nothing for now
-
-/**
- * Virtuals
- */
-
-// no not-persisted attributes
-/*
- * Pre-save hook
- */
-//still nothing
-
-/**
- * Methods
- */
-// no method required here. Query class
-
+PathogenicitySchema.statics.query = function query(q) {
+    return this.find(q);
+};
 
 module.exports = mongoose.model('Pathogenicity', PathogenicitySchema);
