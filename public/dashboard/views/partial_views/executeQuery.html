@@ -53,8 +53,9 @@
 
 
         <div class="row">
-          <h4>Results:</h4>
-          <div class="well">
+            <h4>Results:</h4>
+        <h4 ng-hide="elements.length"> No Results! </h4>
+          <div class="well" ng-show="elements && elements.length">
             <table class="table">
               <thead>
                 <tr>
@@ -67,7 +68,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr ng-repeat="el in elements"> 
+                  <tr ng-repeat="el in elements"> 
                   <td>{{el.chr}}</td>
                   <td>{{el.start}}</td>
                   <td>{{el.end}}</td>

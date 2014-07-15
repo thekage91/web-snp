@@ -179,31 +179,78 @@ angular.module('mean.dashboard', [])
 
         .controller('ExecuteQueryCtrl', ['$scope', '$http', function($scope, $http) {
                 var element;
+
+                var successInitialQuery = function(data) {
+                    $scope.elements = new Array();
+                    console.log("QUERY SUCCEDED. RECEIVED:" + JSON.stringify(data));
+                    
+                    data.payload.forEach( function (payload) { 
+                        if(payload.variants) payload.variants.forEach(function(variant) {
+                            
+                            $http.get('/api/variant/' + variant)
+                                .success(function(data) {
+                                    console.log('Got variant');
+                                    $scope.elements.push(data.payload);
+                                })
+                                .error(function() {
+                                    console.log('[ERROR] Failed retrieving variant  ith ID: ' + variant);
+                                });
+                            });
+                        else
+                            $http.get('/api/variant/' + payload.variant)
+                                .success(function(data) {
+                                    console.log('Got variant');
+                                    $scope.elements.push(data.payload);
+                                })
+                                .error(function() {
+                                    console.log('[ERROR] Failed retrieving variant  ith ID: ' + variant);
+                                });
+                    });
+                };
+                           
                 $scope.elValue = function(x) {
                     element = x;
                 };
+
                 $scope.submit = function() {
                     var keyword = $scope.query.keyword;
+
                     switch (element) {
+
                         case 'gene':
-                            $http.get('/api/gene/finder/query?gene=' + keyword)
-                                        .success(function(data) {
-                                            var variant;
-                                            $scope.elements = new Array(); 
-                                            console.log("QUERY SUCCEDED. RECEIVED:" + JSON.stringify(data));
-                                            console.log("variants" + data.payload[0].variants);
-                                             data.payload[0].variants.forEach( function(variant) {
-                                                 console.log("VARIANTE : "+ variant);
-                                            $http.get('/api/variant/' + variant)
-                                                    .success(function (data) { $scope.elements.push(data.payload); })
-                                                    .error(function () { console.log('[ERROR] Failed retrieving variant  ith ID: ' + variant); });
-                                              });
-                                    })
+                        case 'region':
+                        case 'mutation':
+
+                            $http.get('/api/gene/finder/query?' + element + '=' + keyword)
+                                    .success(successInitialQuery)
+                                    .error(function(data) {
+                                        console.log('[ERROR] Failed retrieving gene with ' + element + ' field: ' + keyword);
+                                    });
+                            break;
+
+                        case 'patient':
+                            $http.get('/api/patient/' + keyword)
+                                    .success(successInitialQuery)
                                     .error(function(data) {
                                         console.log('[ERROR] Failed retrieving gene with gene field: ' + keyword);
                                     });
-                        break;
-                                   
+                            break;
+
+                        case 'genotype':
+                            $http.get('/api/variantdetail/finder/query?' + element + '=' + keyword)
+                                    .success(successInitialQuery)
+                                    .error(function(data) {
+                                        console.log('[ERROR] Failed retrieving gene with ' + element + ' field: ' + keyword);
+                                    });
+                            break;
+                        case 'freqAlt':
+                        case 'dbsnp':
+                            $http.get('/api/dbsnp/finder/query?' + element + '=' + keyword)
+                                    .success(successInitialQuery)
+                                    .error(function(data) {
+                                        console.log('[ERROR] Failed retrieving gene with ' + element + ' field: ' + keyword);
+                                    });
+                            break;
                     }
                 };
             }]);
