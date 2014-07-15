@@ -6,72 +6,129 @@
 </div>
 
 <div ng-controller="FamilyCtrl">
-  <ul class="nav nav-tabs">
-    <li class="text-left"><a href="#all" data-toggle="tab">All</a></li>
-    <li class="text-left"><a href="#create" data-toggle="tab">Create New</a></li>
-  </ul>
+      
+      <div class="row bot10" id="operation">
+        <div class="col-md-6">
+          <div class="input-group col-md-8">
+            <input type="search" class="search-query form-control" placeholder="Type here"
+              ng-model="searchFamily" />
+            <span class="input-group-btn">
+              <button class="btn btn-danger" type="button">
+                <span class="glyphicon glyphicon-search"></span>
+              </button>
+            </span>
+          </div>
+        </div>
 
-  <div id="myTabContent" class="tab-content">
+        <div class="controls col-md-offset-3 col-md-3 pull-right">
+          <button type="button" class="btn btn-success btn-sm" 
+                  data-toggle="collapse" data-parent="#operation" href="#formInsert">
+            <span class="glyphicon glyphicon-plus"></span> Add new
+          </button>
 
-    <div class="tab-pane active in" id="all">
+          <button type="button" class="btn btn-primary btn-sm" ng-click="showEditFamily = !showEditFamily">
+            <span class="glyphicon glyphicon-pencil"></span> Edit
+          </button>
+        </div>
+      </div>
+
+      <div id="formInsert" class="top10 bot10 panel-collapse collapse out row col-md-6 col-md-offset-3 text-center"
+        <form class="form-horizontal col-md-5">
+          <fieldset>
+
+            <!-- Form Name -->
+            <legend>Create new Family</legend>
+
+            <!-- Text input-->
+            <div class="control-group">
+              <label class="control-label" for="nameFamily">Name</label>
+              <div class="controls">
+                <input id="nameFamily" name="nameFamily" type="text" placeholder="" class="form-control input-xlarge" ng-model="family.name">
+              </div>
+            </div>
+
+            <!-- Button (Double) -->
+            <div class="control-group top10">
+              <div class="controls">
+                <button id="save_btn" name="save_btn" class="btn btn-success" ng-click="createFamily(family)">Save</button>
+                <button id="cancel_btn" name="cancel_btn" class="btn btn-danger" ng-click="cancel()">Cancel</button>
+              </div>
+            </div>
+
+          </fieldset>
+        </form>
+      </div>
+
       <div class="row">
-        <div class="well">
-          <table class="table" ng-table >
+          <table class="table table-bordered" ng-show="!showEditFamily">
             <thead>
               <tr>
-                <th>ID</th>
                 <th>Name</th>
                 <th>Members</th>
-                <th style="width: 75px;"></th>
               </tr>
             </thead>
             <tbody>
-              <tr ng-repeat="family in families"> 
+              <tr ng-repeat="family in families | filter:searchFamily "> 
                   <td>{{ family.name }}</td>
                   <td>Mario, Antonio, Anna</td>
-                  <td>
-                    <button type="button" class="btn btn-primary btn-sm" data-ng-hide="user.isLicensed"
-                    data-toggle="modal" data-target="#myModalLicensed">
-                    <span class="glyphicon glyphicon-edit"></span> Edit
-                  </button> 
-                </td>
+                  
               </tr>
-              <tr ng-repeat-end />
-          </tbody>
-        </table>
+              <tr>
+              </tr>
+            </tbody>
+          </table>
+
+          <table class="table table-bordered" ng-show="showEditFamily">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Operation</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="family in families | filter:searchFamily "> 
+                  <td>
+                    <div ng-show="!showConfirm">{{ family.name }}</div>
+                    <input id="nameUpdate" name="nameUpdate" type="text" value="{{ family.name }}" class="form-control input-xlarge" ng-model="familyUpdate.name" ng-show="showConfirm">
+                  </td>
+                  <td>
+                    <div class="control-group pull-right" ng-show="!showConfirm">
+                      <div class="controls">
+                        <button type="button" class="btn btn-success btn-sm" ng-click="showConfirm = !showConfirm">
+                          <span class="glyphicon glyphicon-pencil"></span> Edit Name
+                        </button>
+                        <button type="button" class="btn btn-primary btn-sm" >
+                          <span class="glyphicon glyphicon-pencil"></span> Edit Patients
+                        </button>
+                        <button type="button" class="btn btn-danger btn-sm" ng-click="removeFamily(family)">
+                          <span class="glyphicon glyphicon-trash"></span> Remove
+                        </button>
+                      </div>
+                    </div>
+
+                    <div class="control-group pull-right" ng-show="showConfirm">
+                      <div class="controls">
+                        <button type="button" class="btn btn-success btn-sm" ng-click="updateFamily(family)">
+                          <span class="glyphicon glyphicon-pencil" ng-click="updateFamily(family , familyUpdate); showConfirm = false"></span> OK
+                        </button>
+                        <button type="button" class="btn btn-danger btn-sm" ng-click="showConfirm = false">
+                          <span class="glyphicon glyphicon-ban-circle" ></span> Cancel
+                        </button>
+                      </div>
+                    </div>
+                  </td>
+              </tr>
+              <tr>
+              </tr>
+            </tbody>
+          </table>
       </div>
-    </div>
-  </div>
 
-  <div class="tab-pane fade" id="create">
 
-    <form class="form-horizontal col-md-5 text-ce nter col-md-offset-4">
-      <fieldset>
+</div>
 
-        <!-- Form Name -->
-        <legend>Create new Family</legend>
+   
 
-        <!-- Text input-->
-        <div class="control-group">
-          <label class="control-label" for="nameFamily">Name</label>
-          <div class="controls">
-            <input id="nameFamily" name="nameFamily" type="text" placeholder="" class="form-control input-xlarge" ng-model="family.name">
-          </div>
-        </div>
-
-        <!-- Button (Double) -->
-        <div class="control-group">
-          <label class="control-label" for="save_btn"></label>
-          <div class="controls">
-            <button id="save_btn" name="save_btn" class="btn btn-success" ng-click="createFamily(family)">Save</button>
-            <button id="cancel_btn" name="cancel_btn" class="btn btn-danger">Cancel</button>
-          </div>
-        </div>
-
-      </fieldset>
-    </form>
-
-  </div>
 </div>
 
 <div id="myModalLicensed" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

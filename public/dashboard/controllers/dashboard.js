@@ -149,8 +149,9 @@ angular.module('mean.dashboard', [])
         };
 }])
 
-.controller('FamilyCtrl' , ['$scope', '$http' , function($scope , $http){
+.controller('FamilyCtrl' , ['$scope', '$http', function($scope , $http){
     
+
     $http.get('/api/family')
         .success(function(data){
             $scope.families = data.payload;
@@ -161,25 +162,51 @@ angular.module('mean.dashboard', [])
         });
 
     $scope.createFamily = function(family){
+
         $http.post('/api/family' , family)
             .success(function(data){
                 $scope.formData = {};
-                $scope.savedFamily = data;
+                $scope.families.push(data.payload);
+                $scope.family = {};
+                angular.element('#formInsert').collapse('hide');
                 console.log("[SUCCESS] Write this data on DB: " + data)
             })
             .error(function(data) {
                 console.log("[ERROR] Failed save family: " + data);
-            });
+            });      
     }
     
-    $scope.removeFamily = function(id){
-        $http.delete('/api/family' , $scope.formData)
+    $scope.removeFamily = function(item){      
+        var idSelected = $scope.families.indexOf(item);
+        console.log("[DEBUG] I should remove family with id " + item._id);
+
+        $http.delete('/api/family/' + item._id)
             .success(function(data){
                 $scope.formData = {};
-                $scope.removedFamily = data;
+                $scope.families.splice(idSelected , 1);
+                console.log("[SUCCESS] Remove family with id " + item._id);
             })
             .error(function(data) {
-                console.log('[ERROR] Failed save family: ' + data);
+                console.log('[ERROR] Failed remove family: ' + data);
+            });
+    }
+
+    $scope.cancel = function(){
+        $scope.family = {};
+        angular.element('#formInsert').collapse('hide');
+    }
+
+    $scope.updateFamily = function(item , familyUp){
+        var idSelected = $scope.families.indexOf(item);
+
+        $http.put('/api/family/' + item._id , familyUp)
+            .success(function(data){
+                $scope.family_edit = {};
+                //$scope.families[idSelected].name = familyUp;
+                console.log('[SUCCESS] Update name of family with id ' + item._id);
+            })
+            .error(function(data){
+                console.log('[ERROR] Failed update family with id ' + item._id);
             });
     }
     
@@ -190,17 +217,4 @@ angular.module('mean.dashboard', [])
 }]);
 
 
-
-
-
-
-////////////////////////////////
-// Create directive
-////////////////////////////////*
-/*
-.directive('families' , function(){
-    return {
-        template: '<tr'
-    }
-});*/
 
