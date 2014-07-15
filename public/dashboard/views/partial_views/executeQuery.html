@@ -31,16 +31,16 @@
                         <span id="search_concept">Search by...</span> <span class="caret"></span>
                       </button>
                       <ul class="dropdown-menu" role="menu">
-                        <li><a href="#patient" onClick="changeLabel('Patient')">Patient</a></li>
-                        <li><a href="#gene" onClick="changeLabel('Gene')">Gene</a></li>
-                        <li><a href="#region" onClick="changeLabel('Region')">Region</a></li>
-                        <li><a href="#mutation" onClick="changeLabel('Mutation')">Mutation</a></li>
-                        <li><a href="#genotype" onClick="changeLabel('Genotype')">Genotype</a></li>
-                        <li><a href="#freqAlt" onClick="changeLabel('Freq alt')">Freq alt</a></li>
-                        <li><a href="#dbsnp" onClick="changeLabel('dbSNP')">dbSNP</a></li>
+                        <li><a href="#patient" ng-click="elValue('patient')" onClick="changeLabel('Patient')">Patient</a></li>
+                        <li><a href="#gene" ng-click="elValue('gene')" onClick="changeLabel('Gene')">Gene</a></li>                                               
+                        <li><a href="#region" ng-click="elValue('region')" onClick="changeLabel('Region')">Region</a></li>
+                        <li><a href="#mutation"  ng-click="elValue('mutation')" onClick="changeLabel('Mutation')">Mutation</a></li>
+                        <li><a href="#genotype"  ng-click="elValue('genotype')" onClick="changeLabel('Genotype')">Genotype</a></li>
+                        <li><a href="#freqAlt"  ng-click="elValue('freqAlt')" onClick="changeLabel('Freq alt')">Freq alt</a></li>
+                        <li><a href="#dbsnp"  ng-click="elValue('dbsnp')" onClick="changeLabel('dbSNP')">dbSNP</a></li>
                       </ul>
                     <input type="hidden" name="search_param" value="all" id="search_param" />         
-                    <input ng-model="query.keyword" type="search" class="search-query form-control" placeholder="Type here" />                   
+                    <input id = "key" ng-model="query.keyword" type="search" class="search-query form-control" placeholder="Type Here" />                   
                     <span class="input-group-btn">
                       <button class="btn btn-danger" type="button" ng-click="submit()">
                         <span class="glyphicon glyphicon-search"></span>
