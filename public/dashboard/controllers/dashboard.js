@@ -199,9 +199,10 @@ angular.module('mean.dashboard', [])
     $scope.updateFamily = function(item , familyUp){
         var idSelected = $scope.families.indexOf(item);
 
-        $http.put('/api/family/' + item._id , familyUp)
+        $http.post('/api/family/' + item._id , familyUp)
             .success(function(data){
                 $scope.family_edit = {};
+                console.log(JSON.stringify(familyUp));
                 //$scope.families[idSelected].name = familyUp;
                 console.log('[SUCCESS] Update name of family with id ' + item._id);
             })
