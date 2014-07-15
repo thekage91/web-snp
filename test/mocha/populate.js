@@ -26,7 +26,7 @@ var Variant = require('../../server/models/variant');
 
 
 var error = function(err, element) {
-    throw new Error("Error while saving " + element);
+    if(err) throw new Error("Error while saving " + element + ": " + err);
 };
 
 var esp = new Esp({
@@ -77,7 +77,7 @@ var variantDetail = new VariantDetail({
     strandBias: 'teststrandBias'
 });
 var variant = new Variant({
-    type: 'variant@test',
+    chr: 'variant@test',
     start: '01020',
     end: '01040',
     ref: 'X3D3R',
@@ -99,8 +99,36 @@ var pathogenicity = new Pathogenicity({
  
 module.exports.populate = function() {
 
-
+    gene.variants.push(variant._id);
+    dbSNP.variants.push(variant._id);
+    esp.variants.push(variant._id);
+    family.patients.push(patient._id);
+    pathogenicity.variant = variant._id;
+    patient.variants.push(variant._id);
+    patient.family = family._id;
+    sequencing.variant = variant._id;
+    variantDetail.variant = variant._id;
+            
+    variant.gene = gene._id;
+    variant.pathogenicity = pathogenicity._id;
+    variant.patients.push(patient._id);
+    variant.dbSNPs.push(dbSNP._id);
+    variant.esps.push(esp._id);
+    variant.variantDetails.push(variantDetail._id);
+    
     gene.save(error);
+   
+    
+    dbSNP.save(error);
+
+    family.save(error);
+    patient.save(error);
+    variantDetail.save(error);
+    sequencing.save(error);
+    variant.save(error);
+    pathogenicity.save(error);
+    
+    /*app.post('/api/esp');
     agent.post('/api/esp').send(esp).end(function(res){
      if (res.ok) {
        console.log('yay got ' + JSON.stringify(res.body));

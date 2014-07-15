@@ -18,7 +18,7 @@ var FamilySchema = new Schema({
     },
 
     //Relationship
-    patiens: [{
+    patients: [{
     	type: Schema.ObjectId,
     	ref: 'Patient'
     }]

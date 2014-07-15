@@ -19,7 +19,7 @@
     </ul>
 
     <!-- First tab -->
-    <div id="myTabContent" class="tab-content">
+    <div id="myTabContent" class="tab-content" ng-controller="ExecuteQueryCtrl">
       <div class="tab-pane active in" id="basic">
         <div class="row bot15">
                 <div id="custom-search-input" style="margin-top: 30px">
@@ -41,7 +41,7 @@
                       </ul>
                     </div>
                     <input type="hidden" name="search_param" value="all" id="search_param">         
-                    <input type="search" class="search-query form-control" placeholder="Type here" />
+                    <input ng-model="query.keyword" type="search" class="search-query form-control" placeholder="Type here" />
                     <span class="input-group-btn">
                       <button class="btn btn-danger" type="button">
                         <span class="glyphicon glyphicon-search"></span>

@@ -29,7 +29,7 @@ angular.module('mean.dashboard', [])
                         $timeout(function() {
                             $scope.dataUrls[index] = e.target.result;
                         });
-                    }
+                    };
                 }(fileReader, i);
             }
             $scope.progress[i] = -1;
@@ -94,7 +94,7 @@ angular.module('mean.dashboard', [])
                     // Math.min is to fix IE which reports 200% sometimes
                     $scope.progress[index] = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
                 });
-            }
+            };
             fileReader.readAsArrayBuffer($scope.selectedFiles[index]);
         }
     };
@@ -160,7 +160,7 @@ angular.module('mean.dashboard', [])
             .error(function(data) {
                 console.log('[ERROR] Failed save family: ' + data);
             });
-    }
+    };
     
     $scope.removeFamily = function(){
         $http.post('/api/family' , $scope.formData)
@@ -171,11 +171,19 @@ angular.module('mean.dashboard', [])
             .error(function(data) {
                 console.log('[ERROR] Failed save family: ' + data);
             });
-    }
+    };
     
 }])
 
 .controller('ExecuteQueryCtrl' , ['$scope' , '$http' , function($scope , $http){
-    
+    var keyword = $scope.query.keyword;
+    $http.get('/api/variant/'+keyword )
+            .success(function(data){
+                $scope.formData = {};
+                $scope.family = data;
+            })
+            .error(function(data) {
+                console.log('[ERROR] Failed retriveving SNP with ID: ' + keyword);
+            });
 }]);
 

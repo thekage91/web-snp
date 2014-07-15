@@ -24,6 +24,8 @@ var PatientSchema = new Schema({
 
 });
 
-
+PatientSchema.statics.findPatientSNPS = function findPatientSNPS() {
+    return this.find({'title':new RegExp(q.title || term, 'i')});
+};
 
 module.exports = mongoose.model('Patient', PatientSchema);

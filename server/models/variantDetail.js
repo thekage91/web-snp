@@ -36,15 +36,15 @@ var VariantDetailSchema = new Schema({
         required: true,
         validate: [validatePresenceOf, 'ref cannot be blank']
     },
-    altFilterReads: {
+    altFilteredReads: {
         type: String,
         required: true,
-        validate: [validatePresenceOf, 'readsDepth cannot be blank']
+        validate: [validatePresenceOf, 'altFilteredReads cannot be blank']
     },
-    genotypeLikelihood: {
+    genotypesLikelihood: {
         type: String,
         required: true,
-        validate: [validatePresenceOf, 'genotypeLikelihood cannot be blank']
+        validate: [validatePresenceOf, 'genotypesLikelihood cannot be blank']
     },
     haplotypeScore: {
         type: String,

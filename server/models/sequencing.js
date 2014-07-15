@@ -41,7 +41,7 @@ var SequencingSchema = new Schema({
         required: true,
         validate: [validatePresenceOf, 'referenceGenome cannot be blank']
     },
-    
+    /*
     detail :{ 
         qual: {
             type: String,
@@ -93,7 +93,7 @@ var SequencingSchema = new Schema({
             required: true,
             validate: [validatePresenceOf, 'strandBias cannot be blank']
         }
-    },
+    },*/
     //Relatinship
     variants: [{
         type: Schema.ObjectId,

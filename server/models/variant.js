@@ -65,7 +65,7 @@ var VariantSchema = new Schema({
 
     variantDetails: [{
         type: Schema.Types.ObjectId,
-        ref: 'VaiantDetail'
+        ref: 'VariantDetail'
     }]
 
 });
