@@ -187,17 +187,23 @@ angular.module('mean.dashboard', [])
                     switch (element) {
                         case 'gene':
                             $http.get('/api/gene/finder/query?gene=' + keyword)
-                                    .success(function(data) {
-                                        console.log("QUERY SUCCEDED. RECEIVED:" + data);
-                                        for (variant in data.payload.variants)
-                                            $http.get('/api/variant/' + variant._id, data)
-                                                .success($scope.elements.push(data))
-                                                .error(console.log('[ERROR] Failed retriveving SNP with ID: ' + keyword));
+                                        .success(function(data) {
+                                            var variant;
+                                            $scope.elements = new Array(); 
+                                            console.log("QUERY SUCCEDED. RECEIVED:" + JSON.stringify(data));
+                                            console.log("variants" + data.payload[0].variants);
+                                             data.payload[0].variants.forEach( function(variant) {
+                                                 console.log("VARIANTE : "+ variant);
+                                            $http.get('/api/variant/' + variant)
+                                                    .success(function (data) { $scope.elements.push(data.payload); })
+                                                    .error(function () { console.log('[ERROR] Failed retrieving variant  ith ID: ' + variant); });
+                                              });
                                     })
                                     .error(function(data) {
-                                        console.log('[ERROR] Failed retriveving SNP with ID: ' + keyword);
+                                        console.log('[ERROR] Failed retrieving gene with gene field: ' + keyword);
                                     });
-                            break;
+                        break;
+                                   
                     }
                 };
             }]);

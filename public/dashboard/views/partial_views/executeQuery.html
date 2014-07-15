@@ -57,21 +57,22 @@
           <div class="well">
             <table class="table">
               <thead>
-                (Vedere quali attributi degli SNP mostrare)
                 <tr>
-                  <th>SNP ID</th>
                   <th>Chr</th>
                   <th>Start</th>
                   <th>End</th>
+                  <th>Ref</th>
+                  <th>Alt</th>
                   <th style="width: 75px;"></th>
                 </tr>
               </thead>
               <tbody>
                 <tr ng-repeat="el in elements"> 
-                  <td>{{el._id}} </div></td>
                   <td>{{el.chr}}</td>
                   <td>{{el.start}}</td>
                   <td>{{el.end}}</td>
+                  <td>{{el.ref}}</td>
+                  <td>{{el.alt}}</td>
                   <td>
                     <button type="button" class="btn btn-primary btn-sm" data-ng-hide="user.isLicensed"
                     data-toggle="modal" data-target="#myModalLicensed">
