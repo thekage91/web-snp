@@ -42,7 +42,7 @@
                     <input type="hidden" name="search_param" value="all" id="search_param" />         
                     <input id = "key" ng-model="query.keyword" type="search" class="search-query form-control" placeholder="Type Here" />                   
                     <span class="input-group-btn">
-                      <button class="btn btn-danger" type="button" ng-click="submit()">
+                      <button class="btn btn-danger" type="button" ng-click="submitBase()">
                         <span class="glyphicon glyphicon-search"></span>
                       </button>
                     </span>
@@ -111,16 +111,16 @@
                       <div class="input-group col-md-12">
                         <div class="input-group">
                           <div class="input-group-btn search-panel">
-                            <input type="text" class="form-control" name="x" placeholder="ESP6500_ALL">
+                            <input type="text" ng-model="ESP6500_ALL" class="form-control" name="x" placeholder="ESP6500_ALL">
                           </div>
                           <div class="input-group-btn search-panel">
-                            <input type="text" class="form-control" name="x" placeholder="ESP6500_AA">
+                            <input type="text" ng-model="ESP6500_AA" class="form-control" name="x" placeholder="ESP6500_AA">
                           </div>
                           <div class="input-group-btn search-panel">
-                            <input type="text" class="form-control" name="x" placeholder="ESP6500_EA">
+                            <input type="text" ng-model="ESP6500_EA" class="form-control" name="x" placeholder="ESP6500_EA">
                           </div>
                         <span class="input-group-btn">
-                            <button class="btn btn-danger" type="button">
+                            <button class="btn btn-danger" type="button" ng-click="submitByEsp()">
                               <span class="glyphicon glyphicon-search"></span>
                             </button>
                           </span>
@@ -131,37 +131,39 @@
                   </div>
 
                   <div class="row">
-                <h4>Results:</h4>
-                <div class="well">
-                  <table class="table">
-                    <thead>
-                      (Vedere quali attributi degli SNP mostrare)
-                      <tr>
-                        <th>SNP</th>
-                        <th>Attr1</th>
-                        <th>Attr2</th>
-                        <th>Attr3</th>
-                        <th style="width: 75px;"></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>SNP ID 1 </div></td>
-                        <td>ATTR</td>
-                        <td>ATTR</td>
-                        <td>ATTR</td>
-                        <td>
-                          <button type="button" class="btn btn-primary btn-sm" data-ng-hide="user.isLicensed"
-                          data-toggle="modal" data-target="#myModalLicensed">
-                          <span class="glyphicon glyphicon-eye-open"></span> View
-                          </button> 
-                        <br/> 
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-              </div>
-              </div>
+            <h4>Results:</h4>
+        <h4 ng-hide="elements.length"> No Results! </h4>
+          <div class="well" ng-show="elements && elements.length">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Chr</th>
+                  <th>Start</th>
+                  <th>End</th>
+                  <th>Ref</th>
+                  <th>Alt</th>
+                  <th style="width: 75px;"></th>
+                </tr>
+              </thead>
+              <tbody>
+                  <tr ng-repeat="el in elements"> 
+                  <td>{{el.chr}}</td>
+                  <td>{{el.start}}</td>
+                  <td>{{el.end}}</td>
+                  <td>{{el.ref}}</td>
+                  <td>{{el.alt}}</td>
+                  <td>
+                    <button type="button" class="btn btn-primary btn-sm" data-ng-hide="user.isLicensed"
+                    data-toggle="modal" data-target="#myModalLicensed">
+                    <span class="glyphicon glyphicon-eye-open"></span> View
+                    </button> 
+                  <br/> 
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+        </div>
             </div>
             <!-- First sub-tab end -->
 
@@ -173,16 +175,16 @@
                       <div class="input-group col-md-12">
                         <div class="input-group">
                           <div class="input-group-btn search-panel">
-                            <input type="text" class="form-control" name="x" placeholder="chr">
+                            <input type="text" ng-model="chr" class="form-control" name="x" placeholder="chr">
                           </div>
                           <div class="input-group-btn search-panel">
-                            <input type="text" class="form-control" name="x" placeholder="start">
+                            <input type="text" ng-model="start" class="form-control" name="x" placeholder="start">
                           </div>
                           <div class="input-group-btn search-panel">
-                            <input type="text" class="form-control" name="x" placeholder="end">
+                            <input type="text" ng-model="end" class="form-control" name="x" placeholder="end">
                           </div>
                         <span class="input-group-btn">
-                            <button class="btn btn-danger" type="button">
+                            <button class="btn btn-danger" type="button" ng-click="submitByRegion()">
                               <span class="glyphicon glyphicon-search"></span>
                             </button>
                           </span>
@@ -192,38 +194,40 @@
                     </div>
                   </div>
 
-                  <div class="row">
-                <h4>Results:</h4>
-                <div class="well">
-                  <table class="table">
-                    <thead>
-                      (Vedere quali attributi degli SNP mostrare)
-                      <tr>
-                        <th>SNP</th>
-                        <th>Attr1</th>
-                        <th>Attr2</th>
-                        <th>Attr3</th>
-                        <th style="width: 75px;"></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>SNP ID 2 </div></td>
-                        <td>ATTR</td>
-                        <td>ATTR</td>
-                        <td>ATTR</td>
-                        <td>
-                          <button type="button" class="btn btn-primary btn-sm" data-ng-hide="user.isLicensed"
-                          data-toggle="modal" data-target="#myModalLicensed">
-                          <span class="glyphicon glyphicon-eye-open"></span> View
-                          </button> 
-                        <br/> 
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-              </div>
-              </div>
+                   <div class="row">
+            <h4>Results:</h4>
+        <h4 ng-hide="elements.length"> No Results! </h4>
+          <div class="well" ng-show="elements && elements.length">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Chr</th>
+                  <th>Start</th>
+                  <th>End</th>
+                  <th>Ref</th>
+                  <th>Alt</th>
+                  <th style="width: 75px;"></th>
+                </tr>
+              </thead>
+              <tbody>
+                  <tr ng-repeat="el in elements"> 
+                  <td>{{el.chr}}</td>
+                  <td>{{el.start}}</td>
+                  <td>{{el.end}}</td>
+                  <td>{{el.ref}}</td>
+                  <td>{{el.alt}}</td>
+                  <td>
+                    <button type="button" class="btn btn-primary btn-sm" data-ng-hide="user.isLicensed"
+                    data-toggle="modal" data-target="#myModalLicensed">
+                    <span class="glyphicon glyphicon-eye-open"></span> View
+                    </button> 
+                  <br/> 
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+        </div>
             </div>
             <!-- Second sub-tab end -->
 

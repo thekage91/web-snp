@@ -212,7 +212,7 @@ angular.module('mean.dashboard', [])
                     element = x;
                 };
 
-                $scope.submit = function() {
+                $scope.submitBase = function() {
                     var keyword = $scope.query.keyword;
 
                     switch (element) {
@@ -252,6 +252,36 @@ angular.module('mean.dashboard', [])
                                     });
                             break;
                     }
+                };
+                
+                $scope.submitByEsp = function() {
+                    $http.get('/api/esp/finder/query?ESP6500_ALL=' +
+                               $scope.ESP6500_ALL+ '&ESP6500_AA='  +  
+                               $scope.ESP6500_AA + '&ESP6500_EA='  + $scope.ESP6500_EA)
+                               .success(successInitialQuery)
+                               .error(function(data) {
+                                        console.log('[ERROR] Failed retrieving ESP with thath field: ');
+                                    });
+                };
+                
+                $scope.submitByRegion = function() {
+                    $http.get('/api/variant/finder/query?chr=' +
+                               $scope.chr+ '&start='  +  
+                               $scope.start + '&end='  + $scope.end)
+                               .success(function (data) {
+                                   console.log('Got variant: '+ JSON.stringify(data));
+                                   $scope.elements = new Array();
+                                   $scope.elements = data.payload;
+                                  /* data.payload.forEach( function (payload) { 
+                                   console.log('pushing '+ JSON.stringify(payload));
+                                   $scope.elements.push(data.payload);
+                                   console.log('now: '+ JSON.stringify($scope.elements));
+                                });*/
+                                   console.log('dovrei : '+ JSON.stringify($scope.elements));
+                            })
+                               .error(function(data) {
+                                        console.log('[ERROR] Failed retrieving variant with thath field: ');
+                                    } );
                 };
             }]);
 
