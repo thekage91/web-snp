@@ -45,7 +45,7 @@ var family = new Family({name: 'family@test'});
 
 
 var gene = new Gene({
-    gene: 'gene@test',
+    gene: 'gene1',
     region: '01020',
     mutation: '01040',
     annotation: 'annot'
@@ -120,7 +120,7 @@ module.exports.populate = function() {
    
     
     dbSNP.save(error);
-
+    esp.save(error);
     family.save(error);
     patient.save(error);
     variantDetail.save(error);
