@@ -34,7 +34,9 @@ var EspSchema = new Schema({
     
 });
 
-
+EspSchema.statics.query = function query(q) {
+    return this.find(q);
+};
 /**
  * Validations
  */

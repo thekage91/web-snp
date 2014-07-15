@@ -39,11 +39,10 @@
                         <li><a href="#freqAlt" onClick="changeLabel('Freq alt')">Freq alt</a></li>
                         <li><a href="#dbsnp" onClick="changeLabel('dbSNP')">dbSNP</a></li>
                       </ul>
-                    </div>
-                    <input type="hidden" name="search_param" value="all" id="search_param">         
-                    <input ng-model="query.keyword" type="search" class="search-query form-control" placeholder="Type here" />
+                    <input type="hidden" name="search_param" value="all" id="search_param" />         
+                    <input ng-model="query.keyword" type="search" class="search-query form-control" placeholder="Type here" />                   
                     <span class="input-group-btn">
-                      <button class="btn btn-danger" type="button">
+                      <button class="btn btn-danger" type="button" ng-click="submit()">
                         <span class="glyphicon glyphicon-search"></span>
                       </button>
                     </span>
@@ -73,6 +72,7 @@
                   <td>ATTR</td>
                   <td>ATTR</td>
                   <td>ATTR</td>
+                  <td>{{variant}}</td>
                   <td>
                     <button type="button" class="btn btn-primary btn-sm" data-ng-hide="user.isLicensed"
                     data-toggle="modal" data-target="#myModalLicensed">

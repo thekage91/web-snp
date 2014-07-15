@@ -176,14 +176,17 @@ angular.module('mean.dashboard', [])
 }])
 
 .controller('ExecuteQueryCtrl' , ['$scope' , '$http' , function($scope , $http){
+    console.log('NEL CONTROLLER');
+    $scope.submit = function () {
+    console.log('NEL submint');
     var keyword = $scope.query.keyword;
     $http.get('/api/variant/'+keyword )
             .success(function(data){
-                $scope.formData = {};
-                $scope.family = data;
+                $scope.variant = data;
             })
             .error(function(data) {
                 console.log('[ERROR] Failed retriveving SNP with ID: ' + keyword);
             });
+        }
 }]);
 
