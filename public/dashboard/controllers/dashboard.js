@@ -320,10 +320,16 @@ angular.module('mean.dashboard', [])
                                };
                 
                 
-           
+                $scope.clear = function() {
+                    console.log("CLEAR CALLED");
+                    $scope.elements = {};
+                    console.log("ORA ELEMENTI:" + JSON.stringify($scope.elements));
+                }
        
             
             }
+            
+           
         
             
             ]);

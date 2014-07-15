@@ -11,10 +11,10 @@
    }
 </script>
 
-<ul class="nav nav-tabs">
-      <li class="text-left"><a href="#basic" data-toggle="tab">Basic SNPs Search</a></li>
-      <li class="text-left"><a href="#complex" data-toggle="tab">Complex SNPs Search</a></li>
-      <li class="text-left"><a href="#patients" data-toggle="tab">Patients Search</a></li>
+<ul class="nav nav-tabs" ng-controller="ExecuteQueryCtrl">
+      <li class="text-left"><a href="#basic" data-toggle="tab" ng-click="clear()">Basic SNPs Search</a></li>
+      <li class="text-left"><a href="#complex" data-toggle="tab" ng-click="clear()">Complex SNPs Search</a></li>
+      <li class="text-left"><a href="#patients" data-toggle="tab" ng-click="clear()">Patients Search</a></li>
 
     </ul>
 
@@ -39,6 +39,7 @@
                         <li><a href="#freqAlt"  ng-click="elValue('freqAlt')" onClick="changeLabel('Freq alt')">Freq alt</a></li>
                         <li><a href="#dbsnp"  ng-click="elValue('dbsnp')" onClick="changeLabel('dbSNP')">dbSNP</a></li>
                       </ul>
+                    </div>
                     <input type="hidden" name="search_param" value="all" id="search_param" />         
                     <input id = "key" ng-model="query.keyword" type="search" class="search-query form-control" placeholder="Type Here" />                   
                     <span class="input-group-btn">
