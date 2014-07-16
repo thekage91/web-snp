@@ -151,6 +151,8 @@ angular.module('mean.dashboard', [])
 
 .controller('FamilyCtrl' , ['$scope', '$http', function($scope , $http){
     
+    //$scope.inPatients = [{name: "provaIN1"} , {name: "provaIN2"} , {name: "provaIN3"}]
+    //$scope.outPatients = [{name: "provaOUT1"} , {name: "provaOUT2"} , {name: "provaOUT3"}]
 
     $http.get('/api/family')
         .success(function(data){
@@ -208,6 +210,73 @@ angular.module('mean.dashboard', [])
             })
             .error(function(data){
                 console.log('[ERROR] Failed update family with id ' + item._id);
+            });
+    }
+
+    $scope.contains = function(array , item){
+        if(array === undefined ){
+            return false;
+        }
+
+        return array.indexOf(item) > -1;
+    }
+
+    $scope.showPatients = function(family){
+        
+        if(family.patients === undefined){
+            family.patients = [];
+        }
+
+        $scope.inPatients = family.patients;
+        $scope.familySelected = family;
+
+        $http.get('/api/patient')
+            .success(function(data){
+                var allPatients = data.payload;
+                console.log(allPatients);
+                $scope.outPatients = allPatients.filter(function(item){
+                    return !$scope.contains($scope.inPatients , item);
+                });
+            })
+            .error(function(err){
+                console.log("[ERROR] Failed retrieve all patients -->" + err);
+            });
+    }
+
+    $scope.removePatient = function(patient){
+        var idFamily = $scope.familySelected._id;
+        var newPatients = $scope.inPatients;
+
+        newPatients.splice(newPatients.indexOf(patient) , 1);
+        var jsonToSend = {'patiens': newPatients};
+
+        $http.post('/api/family/' + idFamily , jsonToSend)
+            .success(function(data){
+                $scope.inPatients = newPatients;
+                $scope.outPatients.push(patient);
+                console.log("[SUCCESS] Remove patient " + patient._id + " from family " + idFamily);
+            })
+            .error(function(err){
+                console.log("[ERROR] Failed remove patient " + patient._id + " from family " + idFamily);
+            });
+    }
+
+    $scope.addPatient = function(patient){
+        var idFamily = $scope.familySelected._id;
+        var newPatients = $scope.inPatients;
+
+        newPatients.push(patient);
+
+        var jsonToSend = {'patiens': newPatients};
+
+        $http.post('/api/family/' + idFamily , jsonToSend)
+            .success(function(data){
+                $scope.inPatients = newPatients;
+                $scope.outPatients.splice($scope.outPatients.indexOf(patient) , 1);
+                console.log("[SUCCESS] Add patient " + patient._id + " in family " + idFamily);
+            })
+            .error(function(err){
+                console.log("[ERROR] Failed add patient " + patient._id + " in family " + idFamily);
             });
     }
     

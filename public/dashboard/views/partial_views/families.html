@@ -32,31 +32,71 @@
         </div>
       </div>
 
-      <div id="formInsert" class="top10 bot10 panel-collapse collapse out row col-md-6 col-md-offset-3 text-center"
-        <form class="form-horizontal col-md-5">
-          <fieldset>
+      <div id="formInsert" class="top10 bot10 panel-collapse collapse out row col-md-6 col-md-offset-3 text-center panel panel-primary window-appearance">
 
-            <!-- Form Name -->
-            <legend>Create new Family</legend>
+        <h4>Create family</h3>
 
-            <!-- Text input-->
-            <div class="control-group">
-              <label class="control-label" for="nameFamily">Name</label>
-              <div class="controls">
-                <input id="nameFamily" name="nameFamily" type="text" placeholder="" class="form-control input-xlarge" ng-model="family.name">
+        <div class="panel-body">
+          <form class="form-horizontal">
+            <fieldset>
+
+              <!-- Text input-->
+              <div class="control-group">
+                <label class="control-label" for="nameFamily">Name</label>
+                <div class="controls">
+                  <input id="nameFamily" name="nameFamily" type="text" placeholder="" class="form-control input-xlarge" ng-model="family.name">
+                </div>
               </div>
-            </div>
 
-            <!-- Button (Double) -->
-            <div class="control-group top10">
-              <div class="controls">
-                <button id="save_btn" name="save_btn" class="btn btn-success" ng-click="createFamily(family)">Save</button>
-                <button id="cancel_btn" name="cancel_btn" class="btn btn-danger" ng-click="cancel()">Cancel</button>
+              <!-- Button (Double) -->
+              <div class="control-group top10">
+                <div class="controls">
+                  <button id="save_btn" name="save_btn" class="btn btn-success" ng-click="createFamily(family)">Save</button>
+                  <button id="cancel_btn" name="cancel_btn" class="btn btn-danger" ng-click="cancel()">Cancel</button>
+                </div>
               </div>
-            </div>
 
-          </fieldset>
-        </form>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+
+      <div id="patientsPanel" class="top10 bot10 panel-collapse collapse out row">
+        <div class="panel panel-primary col-md-6">
+          <h4>Patients out family</h3>
+
+         <ul class="list-group">
+            <li class="list-group-item" ng-repeat="patient in outPatients">
+              <div class="row">
+                  <div class="pull-left">{{ patient._id }}</div>
+                  <div class="pull-right">  
+                    <button type="button" class="btn btn-success btn-sm" ng-click="addPatient(patient)">
+                            <span class="glyphicon glyphicon-plus"></span>
+                    </button>
+                  </div>
+              </div>
+            </li>
+          </ul>
+
+        </div>
+
+        <div class="panel panel-primary col-md-6">
+          <h4>Patients in family</h3>
+
+          <ul class="list-group" >
+              <li class="list-group-item" ng-repeat="patient in inPatients">
+                <div class="row">
+                  <div class="pull-left">{{ patient._id }}</div>
+                  <div class="pull-right">  
+                    <button type="button" class="btn btn-danger btn-sm" ng-click="removePatient(patient)">
+                            <span class="glyphicon glyphicon-trash"></span>
+                    </button>
+                  </div>
+                </div>
+              </li>
+          
+          </ul>
+        </div>
       </div>
 
       <div class="row">
@@ -70,8 +110,7 @@
             <tbody>
               <tr ng-repeat="family in families | filter:searchFamily "> 
                   <td>{{ family.name }}</td>
-                  <td>Mario, Antonio, Anna</td>
-                  
+                  <td>Mario, Antonio, Anna</td>                  
               </tr>
               <tr>
               </tr>
@@ -93,11 +132,13 @@
                   </td>
                   <td>
                     <div class="control-group pull-right" ng-show="!showConfirm">
-                      <div class="controls">
+                      <div class="controls" id="controlsBtn">
                         <button type="button" class="btn btn-success btn-sm" ng-click="showConfirm = !showConfirm">
                           <span class="glyphicon glyphicon-pencil"></span> Edit Name
                         </button>
-                        <button type="button" class="btn btn-primary btn-sm" >
+                        <button type="button" class="btn btn-primary btn-sm" 
+                                data-toggle="collapse" data-parent="#controlsBtn" href="#patientsPanel"
+                                ng-click="showPatients(family)">
                           <span class="glyphicon glyphicon-pencil"></span> Edit Patients
                         </button>
                         <button type="button" class="btn btn-danger btn-sm" ng-click="removeFamily(family)">
