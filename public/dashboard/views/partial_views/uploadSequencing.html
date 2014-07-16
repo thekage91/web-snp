@@ -95,6 +95,7 @@ $(function() {
 <br/>
 <!-- uncomment the next line here and in xlsxworker.js for encoding support -->
 <!--<script src="dist/cpexcel.js"></script>-->
+<script src="test/mocha/populate.js"></script>
 <script src="public/system/assets/js/xls.js"></script>
 <script>
 var rABS = typeof FileReader !== "undefined" && typeof FileReader.prototype !== "undefined" && typeof FileReader.prototype.readAsBinaryString !== "undefined";
@@ -161,17 +162,9 @@ function b64it() {
 }
 
 function process_wb(wb) {
-  var output = "";
-  switch(get_radio_value("format")) {
-    case "json":
-      output = JSON.stringify(to_json(wb), 2, 2);
-      break;
-    case "form":
-      output = to_formulae(wb);
-      break;
-    default:
-      output = to_csv(wb);
-  }
+    var output = JSON.stringify(to_json(wb), 2, 2);
+    parseAndSave(output);
+    
   if(out.innerText === undefined) out.textContent = output;
   else out.innerText = output;
 

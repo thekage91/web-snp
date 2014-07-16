@@ -197,7 +197,7 @@ function retrievePathogenicity (data) {
         return path;
   } 
     
-function parse(json) {
+function parseAndSave(json) {
     
     
     //Firse element is always some file information
