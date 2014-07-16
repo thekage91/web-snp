@@ -11,6 +11,11 @@ var mongoose = require('mongoose'),
 /* PAtient schema */
 var PatientSchema = new Schema({
 
+        name: {
+        type: String,
+        required: true,
+        validate: [validatePresenceOf, 'Gene cannot be blank']
+         },
 	//Relationship
 	variants: [{
 		type: Schema.ObjectId,

@@ -199,13 +199,16 @@ function retrievePathogenicity (data) {
     
 function parse(json) {
     
+    
     //Firse element is always some file information
     for (var key in json) if (json.hasOwnProperty(key))  break;
-   
+    var patientName = /[^_]*/.exec(key)[0];
+    var patient = new Patient({name: patientName});
     //Iterate on single file elements
     json[key].forEach( function (element) {
         
         //build up model classes
+        
         var variant = new Variant(retrieveFromSchema(element,Variant.schema));
         var detail = new VariantDetail(retrieveVariantDetail(element));
         var gene = new Gene(retrieveFromSchema(element,Gene.schema));
@@ -229,6 +232,8 @@ function parse(json) {
         
         detail.variant = variant;
         
+        patient.variants.push(variant);
+        
         esp.save(error);
         pathogenicity.save(error);
         dbsnp.save(error);
@@ -236,6 +241,7 @@ function parse(json) {
         variant.save(error);
         detail.save(error);
     });
+        patient.save(error);
   }
   
   parse(json);
