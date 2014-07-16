@@ -248,8 +248,8 @@ angular.module('mean.dashboard', [])
         var newPatients = $scope.inPatients;
 
         newPatients.splice(newPatients.indexOf(patient) , 1);
-        var jsonToSend = {'patiens': newPatients};
-
+        var jsonToSend = {'patients': newPatients};
+        
         $http.post('/api/family/' + idFamily , jsonToSend)
             .success(function(data){
                 $scope.inPatients = newPatients;
@@ -259,15 +259,16 @@ angular.module('mean.dashboard', [])
             .error(function(err){
                 console.log("[ERROR] Failed remove patient " + patient._id + " from family " + idFamily);
             });
-    }
+        }
 
     $scope.addPatient = function(patient){
         var idFamily = $scope.familySelected._id;
         var newPatients = $scope.inPatients;
 
-        newPatients.push(patient);
+        newPatients.push(patient._id);
 
-        var jsonToSend = {'patiens': newPatients};
+        var jsonToSend = {'patients': newPatients};
+        console.log('JSON to send' + jsonToSend);
 
         $http.post('/api/family/' + idFamily , jsonToSend)
             .success(function(data){
