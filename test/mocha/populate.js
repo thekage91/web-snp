@@ -27,9 +27,7 @@ var json = require('./JSON.json');
 
 
 
-var error = function(err, element) {
-    if(err) throw new Error("Error while saving " + element + ": " + err);
-};
+
 
 var esp = new Esp({
     ESP6500_ALL: 'esp@test',
@@ -157,30 +155,86 @@ module.exports.populate = function() {
 };
 
 
-function retrieveFromSchema (data,schema) {
+
+//DA QUI INIZIANO LE FUNZIONI PER IL PARSING. LA FUNZIONE È PARSE();
+function camelize (d) {
+    return d.replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, function(match, index) {
+      if (+match === 0) return ""; // or if (/\s+/.test(match)) for white spaces
+      return index == 0 ? match.toLowerCase() : match.toUpperCase();
+    });
+  };
+  
+var error = function(err, element) {
+    if(err) console.log("Error while saving " + element + ": " + err);
+};
+
+function retrieveFromSchema (data,schema,noModify) {
        var res = {};
+       var camelized;
        for( var el in data) {
-           if(schema.paths.hasOwnProperty(el)) {
-               res[el] = data[el];
+           if(!noModify) camelized = camelize(el); else camelized = el;
+           if(schema.paths.hasOwnProperty(camelized)) {
+               res[camelized] = data[el];
                delete data[el];
            }
        }
        return res;
   };
-/*
+
 function retrieveVariantDetail (data) {
-        var detail = retrieveFromSchema(data,VariantDetailSchema);
-        detail.
-  } */
+        var detail = retrieveFromSchema(data,VariantDetail.schema);
+        detail.altFilteredReads = data['Ref,Alt filtered reads'];
+        detail.ref = data['Ref,Alt filtered reads'];
+        return detail;
+  } 
+  
+  
+function retrievePathogenicity (data) {
+        var path = retrieveFromSchema(data,Pathogenicity.schema);
+        path.GERpp = data['GERP++'];
+        path.SIFT = data['SIFT'];
+        path.polyPhen = data['PolyPhen-2'];
+        return path;
+  } 
     
 function parse(json) {
-    //console.log("Questi sono i dati: " + JSON.stringify(json));
+    
+    //Firse element is always some file information
     for (var key in json) if (json.hasOwnProperty(key))  break;
    
+    //Iterate on single file elements
     json[key].forEach( function (element) {
+        
+        //build up model classes
         var variant = new Variant(retrieveFromSchema(element,Variant.schema));
-        variant.save(function (err) { if(err) console.log("ERRORE: "+ err) } );
-        console.log("HO SALVATO: "+ variant);
+        var detail = new VariantDetail(retrieveVariantDetail(element));
+        var gene = new Gene(retrieveFromSchema(element,Gene.schema));
+        var dbsnp = new DbSNP(retrieveFromSchema(element,DbSNP.schema));
+        var pathogenicity = new Pathogenicity(retrievePathogenicity(element));
+        var esp = new Esp(retrieveFromSchema(element,Esp.schema,true));
+        
+        variant.variantDetails.push(detail);
+        variant.gene = gene;
+        variant.dbSNPs.push(dbsnp);
+        variant.pathogenicity = pathogenicity;
+        variant.esps.push(esp);
+        
+        pathogenicity.variant = variant;
+        
+        dbsnp.variants.push(variant);
+        
+        esp.variants.push(variant);
+        
+        gene.variants.push(variant);
+        
+        detail.variant = variant;
+        
+        esp.save(error);
+        pathogenicity.save(error);
+        dbsnp.save(error);
+        gene.save(error);
+        variant.save(error);
+        detail.save(error);
     });
   }
   

@@ -26,7 +26,7 @@ var VariantDetailSchema = new Schema({
         required: true,
         validate: [validatePresenceOf, 'genotypeQuality cannot be blank']
     },
-    readsDepth: {
+    readsDeeph: {
         type: String,
         required: true,
         validate: [validatePresenceOf, 'readsDepth cannot be blank']

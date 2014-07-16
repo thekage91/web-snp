@@ -34,22 +34,22 @@ var PathogenicitySchema = new Schema({
         validate: [validatePresenceOf, 'mutationAssessor cannot be blank']
     },
     
-    GERPpp: {
+    GERpp: {
         type: String,
         required: true,
         validate: [validatePresenceOf, 'GERPpp cannot be blank']
     },
     
-    pyoloP: {
+    phyloP: {
         type: String,
         required: true,
         validate: [validatePresenceOf, 'pyoloP cannot be blank']
     },
     
-    SiPhy: {
+    siPhy: {
         type: String,
         required: true,
-        validate: [validatePresenceOf, 'SiPhy cannot be blank']
+        validate: [validatePresenceOf, 'siPhy cannot be blank']
     },
 
     //Relationship

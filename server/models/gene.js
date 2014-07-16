@@ -10,7 +10,7 @@ var mongoose = require('mongoose'),
     function validatePresenceOf(x) {return true;}
 /* Gene schema */
 var GeneSchema = new Schema({
-    gene: {
+    genes: {
         type: String,
         required: true,
         validate: [validatePresenceOf, 'Gene cannot be blank']
