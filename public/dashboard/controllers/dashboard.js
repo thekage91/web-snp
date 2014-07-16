@@ -292,7 +292,7 @@ angular.module('mean.dashboard', [])
                 
                  var getPatientFromVariant = function (patient) {
                   
-                     $http.get('/api/patient/' + patient)
+                     $http.get('/api/patient/finder/query?name=' + patient)
                              .success(function (data) {
                                 $scope.patients.push(data.payload);
                                 console.log('Pushed '+JSON.stringify(data)+' in scope.patients');
