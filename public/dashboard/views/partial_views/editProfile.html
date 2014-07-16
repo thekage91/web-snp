@@ -1,4 +1,28 @@
+<script type="text/javascript">
+  function fill (){
+    $.get('/api/user/' + document.getElementById('iddi').innerHTML)
+      .success(function(data){
+        var e = document.getElementById('firstNameField');
+        e.value = data.payload.firstName;
+
+        e = document.getElementById('lastNameField');
+        e.value = data.payload.lastName;
+
+        e = document.getElementById('addressField');
+        e.value = data.payload.address;
+
+        e = document.getElementById('emailField');
+        e.value = data.payload.email;
+
+        e = document.getElementById('phoneField');
+        e.value = data.payload.phone;
+      });
+  };
+</script>
+
 <div class="col-lg-11">
+
+<h1 hidden id="iddi">{{global.user._id}}</h1>
 
 <div>
     <ul class="nav nav-tabs">
@@ -15,7 +39,9 @@
           <div class="col-xs-12">
             <div class="box">
               <div class="box-header">
-                
+              
+                              <input type="button" onclick="fill()" value="Fill!"/>
+
               <div class="box-content">
                 <table class="table beauty-table table-hover">
                   <thead>
@@ -31,23 +57,23 @@
                     </tr>
                     <tr>
                       <td>First Name:</td>
-                      <td><input type="text" value="{{global.user.firstName}}"></td>
+                      <td><input id="firstNameField" type="text" value="{{global.user.firstName}}"></td>
                     </tr>
                     <tr>
                       <td>Last Name:</td>
-                      <td><input type="text" value="{{global.user.lastName}}"></td>
+                      <td><input id="lastNameField" type="text" value="{{global.user.lastName}}"></td>
                     </tr>
                     <tr>
                       <td>Email:</td>
-                      <td><input type="text" value="{{global.user.email}}"></td>
+                      <td><input id="emailField" type="text" value="{{global.user.email}}"></td>
                     </tr>
                     <tr>
                       <td>Address:</td>
-                      <td><input type="text" value="{{global.user.address}}"></td>
+                      <td><input id="addressField" type="text" value="{{global.user.address}}"></td>
                     </tr>
                     <tr>
                       <td>Phone:</td>
-                      <td><input type="text" value="{{global.user.phone}}"></td>
+                      <td><input id="phoneField" type="text" value="{{global.user.phone}}"></td>
                     </tr>
                   </tbody>
                 </table>
