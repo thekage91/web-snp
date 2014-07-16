@@ -19,8 +19,8 @@
                     <div class="user-pad">
                         <h3>Welcome back, </h3><h1>{{global.user.name}}</h1>
                         <div style="margin-top: 30px">
-                            <h4 class="white"><i class="fa fa-phone"></i> (Phone)</h4>
-                            <h4 class="white"><i class="fa fa-home"></i> (Address)</h4>
+                            <h4 class="white"><i class="fa fa-phone"></i>{{global.user.phone}}</h4>
+                            <h4 class="white"><i class="fa fa-home"></i>{{global.user.address}}</h4>
                         </div>
                     </div>
                 </div>
@@ -43,6 +43,31 @@
                         <a href="/logout" class="btn btn-danger btn-lg" role="button"><span class="fa fa-sign-out fa-fw"></span> <br/>Logout</a> 
                     </div>
             </div>
+
+            <!--<div class="row" style="margin-top: 50px; margin-left: 10px">
+              <div class="col-md-3 text-center">
+                <a ui-sref="dashboard.uploadSequencing" class="btn btn-primary btn-lg" role="button"><span class="fa fa-upload fa-fw"></span> <br/>Sequencing Upload</a>
+              </div>
+              <div class="col-md-3 text-center" style="margin-left: 20px">
+                <a ui-sref="dashboard.authorizeUser" class="btn btn-primary btn-lg" role="button"><span class="fa fa-edit fa-fw"></span> <br/>Authorize Users</a>
+              </div>
+              <div class="col-md-3 text-center" style="margin-left: -40px">
+                <a ui-sref="dashboard.families" class="btn btn-primary btn-lg" role="button"><span class="fa fa-users fa-fw"></span> <br/>Families</a>
+              </div>
+              <div class="col-md-3 text-center" style="margin-left: -40px">
+                <a ui-sref="dashboard.executeQuery" class="btn btn-primary btn-lg" role="button"><span class="fa fa-search fa-fw"></span> <br/>Execute Query</a>   
+              </div>
+            </div>
+
+            <div class="row" style="margin-top: 50px; margin-left: 10px">
+              <div class="col-md-3 text-center" style="margin-left: -10px">
+                <a ui-sref="dashboard.userProfile" class="btn btn-primary btn-lg" role="button"><span class="fa fa-user fa-fw"></span> <br/>My Profile</a>
+              </div>
+              <div class="col-md-3 text-center" style="margin-left: 20px">
+                <a href="/logout" class="btn btn-danger btn-lg" role="button"><span class="fa fa-sign-out fa-fw"></span> <br/>Logout</a> 
+              </div>
+            </div>-->
+
         </div>
     </div>
 </div>
