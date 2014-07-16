@@ -207,8 +207,7 @@ function parse(json) {
     //Iterate on single file elements
     json[key].forEach( function (element) {
         
-        //build up model classes
-        
+        //build model classes
         var variant = new Variant(retrieveFromSchema(element,Variant.schema));
         var detail = new VariantDetail(retrieveVariantDetail(element));
         var gene = new Gene(retrieveFromSchema(element,Gene.schema));
@@ -216,6 +215,7 @@ function parse(json) {
         var pathogenicity = new Pathogenicity(retrievePathogenicity(element));
         var esp = new Esp(retrieveFromSchema(element,Esp.schema,true));
         
+        //build model relationships
         variant.variantDetails.push(detail);
         variant.gene = gene;
         variant.dbSNPs.push(dbsnp);
@@ -235,6 +235,7 @@ function parse(json) {
         
         patient.variants.push(variant);
         
+        //save model classes
         esp.save(error);
         pathogenicity.save(error);
         dbsnp.save(error);
