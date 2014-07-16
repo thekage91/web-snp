@@ -23,6 +23,8 @@ var VariantDetail = require('../../server/models/variantDetail');
 var Pathogenicity = require('../../server/models/pathogenicity');
 var Variant = require('../../server/models/variant');
 
+var json = require('./JSON.json');
+
 
 
 var error = function(err, element) {
@@ -153,3 +155,34 @@ module.exports.populate = function() {
 
 
 };
+
+
+function retrieveFromSchema (data,schema) {
+       var res = {};
+       for( var el in data) {
+           if(schema.paths.hasOwnProperty(el)) {
+               res[el] = data[el];
+               delete data[el];
+           }
+       }
+       return res;
+  };
+/*
+function retrieveVariantDetail (data) {
+        var detail = retrieveFromSchema(data,VariantDetailSchema);
+        detail.
+  } */
+    
+function parse(json) {
+    //console.log("Questi sono i dati: " + JSON.stringify(json));
+    for (var key in json) if (json.hasOwnProperty(key))  break;
+   
+    json[key].forEach( function (element) {
+        var variant = new Variant(retrieveFromSchema(element,Variant.schema));
+        variant.save(function (err) { if(err) console.log("ERRORE: "+ err) } );
+        console.log("HO SALVATO: "+ variant);
+    });
+  }
+  
+  parse(json);
+
