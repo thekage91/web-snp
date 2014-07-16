@@ -4,7 +4,7 @@ var express = require('express');
  var mers = require('mers');
  
  module.exports = function(app, passport) { 
-    app.use('/api', mers({uri:'mongodb://localhost/rest_example_prod'}).rest());
+    app.use('/api', mers({uri:'mongodb://localhost/mean-dev'}).rest());
  };
     
 /*
