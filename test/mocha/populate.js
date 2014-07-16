@@ -221,6 +221,7 @@ function parse(json) {
         variant.dbSNPs.push(dbsnp);
         variant.pathogenicity = pathogenicity;
         variant.esps.push(esp);
+        variant.patients.push(patient);
         
         pathogenicity.variant = variant;
         
