@@ -279,7 +279,13 @@ angular.module('mean.dashboard', [])
                 console.log("[ERROR] Failed add patient " + patient._id + " in family " + idFamily);
             });
     }
-    
+
+    $scope.finishedOperation = function(){
+        angular.element('#patientsPanel').collapse('hide');
+        angular.element('#edit').style.display = 'block';
+        angular.element('#ok').style.display = 'none';
+
+    }   
 }])
 
 .controller('ExecuteQueryCtrl' , ['$scope' , '$http' , function($scope , $http){

@@ -26,13 +26,18 @@
             <span class="glyphicon glyphicon-plus"></span> Add new
           </button>
 
-          <button type="button" class="btn btn-primary btn-sm" ng-click="showEditFamily = !showEditFamily">
-            <span class="glyphicon glyphicon-pencil"></span> Edit
+          <button id="edit" type="button" class="btn btn-primary btn-sm" ng-click="showEditFamily = !showEditFamily">
+            <span class="glyphicon glyphicon-pencil" ></span> Edit
           </button>
+          <!--<button id="ok" type="button" class="btn btn-primary btn-sm" ng-click="finishedOperation(); showEditFamily = false;"
+                  ng-show="showEditFamily">
+            <span class="glyphicon glyphicon-pencil"></span> OK
+          </button>-->
         </div>
       </div>
 
-      <div id="formInsert" class="top10 bot10 panel-collapse collapse out row col-md-6 col-md-offset-3 text-center panel panel-primary window-appearance">
+      <!-- appearance panel -->
+      <div id="formInsert" class="top10 bot10 panel-collapse collapse out row col-md-6 col-md-offset-3 text-center panel panel-primary appearance">
 
         <h4>Create family</h3>
 
@@ -61,14 +66,14 @@
         </div>
       </div>
 
-      <div id="patientsPanel" class="top10 bot10 panel-collapse collapse out row">
+      <div id="patientsPanel" class="top10 bot10 panel-collapse collapse out row appearance">
         <div class="panel panel-primary col-md-6">
           <h4>Patients out family</h3>
 
          <ul class="list-group">
             <li class="list-group-item" ng-repeat="patient in outPatients">
               <div class="row">
-                  <div class="pull-left">{{ patient._id }}</div>
+                  <div class="pull-left">{{ patient.name }}</div>
                   <div class="pull-right">  
                     <button type="button" class="btn btn-success btn-sm" ng-click="addPatient(patient)">
                             <span class="glyphicon glyphicon-plus"></span>
@@ -86,7 +91,7 @@
           <ul class="list-group" >
               <li class="list-group-item" ng-repeat="patient in inPatients">
                 <div class="row">
-                  <div class="pull-left">{{ patient._id }}</div>
+                  <div class="pull-left">{{ patient.name }}</div>
                   <div class="pull-right">  
                     <button type="button" class="btn btn-danger btn-sm" ng-click="removePatient(patient)">
                             <span class="glyphicon glyphicon-trash"></span>
@@ -99,242 +104,102 @@
         </div>
       </div>
 
+      <div id="showPanel" class="top10 bot10 panel-collapse collapse out row appearance">
+        <div class="panel panel-primary col-md-6 col-md-offset-3">
+          <h4>Patients in family</h3>
+            <table class="table table-bordered col-md-6 col-md-offset-3">
+              <thead>
+                <tr> 
+                  <th>Name</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="patient in inPatients">
+                  <td>{{ patient.name }}</td>
+                </tr>
+              </tbody>
+            </table>
+        </div>
+      </div>
+
+      <!-- -->
+      
       <div class="row">
-          <table class="table table-bordered" ng-show="!showEditFamily">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Members</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr ng-repeat="family in families | filter:searchFamily "> 
-                  <td>{{ family.name }}</td>
-                  <td>Mario, Antonio, Anna</td>                  
-              </tr>
-              <tr>
-              </tr>
-            </tbody>
-          </table>
-
-          <table class="table table-bordered" ng-show="showEditFamily">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Operation</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr ng-repeat="family in families | filter:searchFamily "> 
-                  <td>
-                    <div ng-show="!showConfirm">{{ family.name }}</div>
-                    <input id="nameUpdate" name="nameUpdate" type="text" value="{{ family.name }}" class="form-control input-xlarge" ng-model="familyUpdate.name" ng-show="showConfirm">
-                  </td>
-                  <td>
-                    <div class="control-group pull-right" ng-show="!showConfirm">
-                      <div class="controls" id="controlsBtn">
-                        <button type="button" class="btn btn-success btn-sm" ng-click="showConfirm = !showConfirm">
-                          <span class="glyphicon glyphicon-pencil"></span> Edit Name
-                        </button>
-                        <button type="button" class="btn btn-primary btn-sm" 
-                                data-toggle="collapse" data-parent="#controlsBtn" href="#patientsPanel"
-                                ng-click="showPatients(family)">
-                          <span class="glyphicon glyphicon-pencil"></span> Edit Patients
-                        </button>
-                        <button type="button" class="btn btn-danger btn-sm" ng-click="removeFamily(family)">
-                          <span class="glyphicon glyphicon-trash"></span> Remove
-                        </button>
-                      </div>
-                    </div>
-
-                    <div class="control-group pull-right" ng-show="showConfirm">
-                      <div class="controls">
-                        <button type="button" class="btn btn-success btn-sm" ng-click="updateFamily(family, familyUpdate)">
-                          <span class="glyphicon glyphicon-pencil" ng-click="showConfirm = false"></span> OK
-                        </button>
-                        <button type="button" class="btn btn-danger btn-sm" ng-click="showConfirm = false">
-                          <span class="glyphicon glyphicon-ban-circle" ></span> Cancel
-                        </button>
-                      </div>
-                    </div>
-                  </td>
-              </tr>
-              <tr>
-              </tr>
-            </tbody>
-          </table>
-      </div>
-
-
-</div>
-
-   
-
-</div>
-
-<div id="myModalLicensed" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content"></div>
-  </div>
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close " data-dismiss="modal" aria-hidden="true">×</button>
-        <h3 id="myModalLabel">Edit</h3>
-      </div>
-      <div class="modal-body">
-        <p class="error-text">
           <div>
+            <table class="table table-bordered" ng-show="!showEditFamily">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Members</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="family in families | filter:searchFamily "> 
+                    <td>{{ family.name }}</td>
+                    <td id="parents">
+                      <button type="button" class="btn btn-default btn-sm col-md-3 col-md-offset-4" 
+                              ng-click="showPatients(family)" 
+                              data-toggle="collapse" data-parent="#parents" href="#showPanel">
+                              <span class="glyphicon glyphicon-user"></span> Show Patients
+                      </button>
+                    </td>                  
+                </tr>
+                <tr>
+                </tr>
+              </tbody>
+            </table>
 
-            <div id="myTabContent" class="tab-content">
+            <table class="table table-bordered" ng-show="showEditFamily">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Operation</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="family in families | filter:searchFamily "> 
+                    <td>
+                      <div ng-show="!showConfirm">{{ family.name }}</div>
+                      <input id="nameUpdate" name="nameUpdate" type="text" value="{{ family.name }}" class="form-control input-xlarge" ng-model="familyUpdate.name" ng-show="showConfirm">
+                    </td>
+                    <td>
+                      <div class="control-group pull-right" ng-show="!showConfirm">
+                        <div class="controls" id="controlsBtn">
+                          <button type="button" class="btn btn-success btn-sm" ng-click="showConfirm = !showConfirm">
+                            <span class="glyphicon glyphicon-pencil"></span> Edit Name
+                          </button>
+                          <button type="button" class="btn btn-primary btn-sm" 
+                                  data-toggle="collapse" data-parent="#controlsBtn" href="#patientsPanel"
+                                  ng-click="showPatients(family)">
+                            <span class="glyphicon glyphicon-pencil"></span> Edit Patients
+                          </button>
+                          <button type="button" class="btn btn-danger btn-sm" ng-click="removeFamily(family)">
+                            <span class="glyphicon glyphicon-trash"></span> Remove
+                          </button>
+                        </div>
+                      </div>
 
-              <!-- Aggiunta/Rimozione membri -->
-              <div style="margin-left: 15px">
-                <div class="row bot15">
-                  <div id="custom-search-input">
-                    <h4>Insert <i>Username</i>, <i>First Name</i> or <i>Last Name</i> to search:</h4>
-                    <div class="input-group col-md-4">
-                      <input type="search" class="search-query form-control" placeholder="Type here" />
-                      <span class="input-group-btn">
-                        <button class="btn btn-danger" type="button">
-                          <span class="glyphicon glyphicon-search"></span>
-                        </button>
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                
-                <div class="row">
-                  <div class="well">
-                    <table class="table">
-                      <thead>
-                        <tr>
-                          <th class="col-lg-3"></th>
-                          <th>First Name</th>
-                          <th>Last Name</th>
-                          <th>Username</th>
-                          <th style="width: 75px;"></th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td><div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=100" class="img-circle"> </div></td>
-                          <td>Chris</td>
-                          <td>Albert</td>
-                          <td>cab79</td>
-                          <td>
-                            <button type="button" class="btn btn-primary btn-sm" data-ng-hide="user.isLicensed"
-                            data-toggle="modal" data-target="#myModalLicensed">
-                            <span class="glyphicon glyphicon-plus"></span> Add
-                          </button> 
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>(Tutti i membri della famiglia e poi tuti gli altri membri del db; dopo una ricerca mostra solo i risultati)</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>(+ se non fa parte della famiglia, - se fa parte)</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>    
-            <!-- Aggiunta/Rimozione membri fine-->
-
+                      <div class="control-group pull-right" ng-show="showConfirm">
+                        <div class="controls">
+                          <button type="button" class="btn btn-success btn-sm" ng-click="updateFamily(family, familyUpdate)">
+                            <span class="glyphicon glyphicon-pencil" ng-click="showConfirm = false"></span> OK
+                          </button>
+                          <button type="button" class="btn btn-danger btn-sm" ng-click="showConfirm = false">
+                            <span class="glyphicon glyphicon-ban-circle" ></span> Cancel
+                          </button>
+                        </div>
+                      </div>
+                    </td>
+                </tr>
+                <tr>
+                </tr>
+              </tbody>
+            </table>
           </div>
-        </div>
-      </p>
-    </div>
-    <div class="modal-footer">
-      <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-      <button class="btn btn-danger" data-dismiss="modal">OK</button>
-    </div>
-  </div>
-</div>
-</div>
-
-
-
-<div id="myModalAdd" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content"></div>
-  </div>
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close " data-dismiss="modal" aria-hidden="true">×</button>
-        <h3 id="myModalLabel">Add</h3>
       </div>
-      <div class="modal-body">
-        <p class="error-text">
-          <div>
-            <div id="myTabContent" class="tab-content">
 
-              <!-- Aggiunta membri -->
-              <div style="margin-left: 15px">
-                <div class="row bot15">
-                  <div id="custom-search-input">
-                    <h4>Insert <i>Username</i>, <i>First Name</i> or <i>Last Name</i> to search:</h4>
-                    <div class="input-group col-md-4">
-                      <input type="search" class="search-query form-control" placeholder="Type here" />
-                      <span class="input-group-btn">
-                        <button class="btn btn-danger" type="button">
-                          <span class="glyphicon glyphicon-search"></span>
-                        </button>
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="well">
-                    <table class="table">
-                      <thead>
-                        <tr>
-                          <th class="col-lg-3"></th>
-                          <th>First Name</th>
-                          <th>Last Name</th>
-                          <th>Username</th>
-                          <th style="width: 75px;"></th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td><div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=100" class="img-circle"> </div></td>
-                          <td>Chris</td>
-                          <td>Albert</td>
-                          <td>cab79</td>
-                          <td>
-                            <button type="button" class="btn btn-primary btn-sm" data-ng-hide="user.isLicensed"
-                            data-toggle="modal" data-target="#myModalLicensed">
-                            <span class="glyphicon glyphicon-plus"></span> Add
-                          </button> 
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>(All'inizio mostra tutti gli utenti esistenti e dopo una ricerca mostra solo i risultati)</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>    
-            <!-- Aggiunta membri fine-->
-
-          </div>
-        </div>
-      </p>
-    </div>
-    <div class="modal-footer">
-      <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-      <button class="btn btn-danger" data-dismiss="modal">OK</button>
-    </div>
-  </div>
 </div>
+ 
+</div>
+
 </div>
