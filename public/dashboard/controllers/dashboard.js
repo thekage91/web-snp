@@ -4,10 +4,12 @@
 
 angular.module('mean.dashboard', [])
 
-        .controller('UploaderCtrl', ['$scope', function($scope) {
+        .controller('UploaderCtrl', ['$scope' , '$window' , function($scope, $window) {
+            
+              $scope.saveResult = function(){
+                $scope.jsonUpload = $window.output;
               
-
-
+              };
         }])
 
         .controller('AuthorizerUserCtrl', ['$scope', '$http', function($scope, $http) {
@@ -50,7 +52,7 @@ angular.module('mean.dashboard', [])
                                 console.log("[ERROR] Failed to update  user:" + data);
                             });
                 };
-            }])
+        }])
 
         .controller('FamilyCtrl', ['$scope', '$http', function($scope, $http) {
 
