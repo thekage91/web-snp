@@ -5,7 +5,43 @@
 angular.module('mean.dashboard', [])
 
         .controller('UploaderCtrl', ['$scope' , '$window' , function($scope, $window) {
-            
+              
+              //output e' gia' il json uscito puoi dalla funzione parse
+              var parsingJson = $window.output; 
+
+              // Filtrare tutto, e creare i vari array variants , patient , sequencing ecc ecc
+              // metterli nello scope.. esempio $scope.variants ecc la tabella di crea da sola
+              
+
+              $scope.Table2Json = function() {
+
+                function parseTable(table){
+                  var result = {};
+                  for(var i = 1; table.rows; i++){
+                   result[table.rows[i].cells[0].innerText] = table.rows[i].cells[1].innerText;
+                  }
+                  result_json = JSON.stringify(result);
+                }
+
+                var tableVariant = angular.element('.variant');
+                var tableDbsnp = angular.element('.dbsnp');
+                var tablePatient = angular.element('.patient');
+                var tableEsp = angular.element('.esp');
+                var tableGene = angular.element('.gene');
+                var tablePatho = angular.element('.pathogenicity');
+                var tableSeque = angular.element('.sequencing');
+
+                var jsonVariant = parseTable(tableVariant);
+                var jsonDBsnp = parseTable(tableDbsnp);
+                var jsonPatient = parseTable(tablePatient);
+                var jsonEsp = parseTable(tableEsp);
+                var jsonGene = parseTable(tableGene);
+                var jsonPatho = parseTable(tablePatho);
+                var jsonSeque = parseTable(tableSeque);
+
+                // salvare sul DB richiamando la funzione di ugo
+              }
+
               $scope.saveResult = function(){
                 $scope.jsonUpload = $window.output;
               

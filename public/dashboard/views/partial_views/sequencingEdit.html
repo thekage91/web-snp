@@ -36,7 +36,7 @@
               <div class="box-header">
                 
               <div class="box-content">
-                <table class="table beauty-table table-hover">
+                <table class="table beauty-table table-hover sequencing">
                   <thead>
                     <tr>
                       <th class="col-xs-3">&nbsp;</th>
@@ -44,9 +44,9 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>Date:</td>
-                      <td><input type="text" value="5"></td>
+                    <tr ng-repeat="(key,value) in sequencings">
+                      <td>{{ key }}</td>
+                      <td><input type="text" value="{{ value }}"></td>
                     </tr>
                     <tr>
                       <td>Type:</td>
@@ -128,7 +128,7 @@
               <div class="box-header">
                 
               <div class="box-content">
-                <table class="table beauty-table table-hover">
+                <table class="table beauty-table table-hover variant">
                   <thead>
                     <tr>
                       <th class="col-xs-3">&nbsp;</th>
@@ -136,6 +136,10 @@
                     </tr>
                   </thead>
                   <tbody>
+                    <tr ng-repeat="(key,value) in variant">
+                      <td>{{ key }}</td>
+                      <td><input type="text" value="{{ value }}"></td>
+                    </tr>
                     <tr>
                       <td>chr:</td>
                       <td><input type="text" value="5"></td>
@@ -176,7 +180,7 @@
               <div class="box-header">
                 
               <div class="box-content">
-                <table class="table beauty-table table-hover">
+                <table class="table beauty-table table-hover pathogenicity">
                   <thead>
                     <tr>
                       <th class="col-xs-3">&nbsp;</th>
@@ -184,6 +188,10 @@
                     </tr>
                   </thead>
                   <tbody>
+                    <tr ng-repeat="(key,value) in pathogenicity">
+                      <td>{{ key }}</td>
+                      <td><input type="text" value="{{ value }}"></td>
+                    </tr>
                     <tr>
                       <td>SIFT:</td>
                       <td><input type="text" value="5"></td>
@@ -232,7 +240,7 @@
               <div class="box-header">
                 
               <div class="box-content">
-                <table class="table beauty-table table-hover">
+                <table class="table beauty-table table-hover gene">
                   <thead>
                     <tr>
                       <th class="col-xs-3">&nbsp;</th>
@@ -240,6 +248,10 @@
                     </tr>
                   </thead>
                   <tbody>
+                    <tr ng-repeat="(key,value) in genes">
+                      <td>{{ key }}</td>
+                      <td><input type="text" value="{{ value }}"></td>
+                    </tr>
                     <tr>
                       <td>Gene:</td>
                       <td><input type="text" value="5"></td>
@@ -276,7 +288,7 @@
               <div class="box-header">
                 
               <div class="box-content">
-                <table class="table beauty-table table-hover">
+                <table class="table beauty-table table-hover esp">
                   <thead>
                     <tr>
                       <th class="col-xs-3">&nbsp;</th>
@@ -284,6 +296,10 @@
                     </tr>
                   </thead>
                   <tbody>
+                    <tr ng-repeat="(key,value) in esp">
+                      <td>{{ key }}</td>
+                      <td><input type="text" value="{{ value }}"></td>
+                    </tr>
                     <tr>
                       <td>ESP6500_ALL:</td>
                       <td><input type="text" value="5"></td>
@@ -316,7 +332,7 @@
               <div class="box-header">
                 
               <div class="box-content">
-                <table class="table beauty-table table-hover">
+                <table class="table beauty-table table-hover dbsnp">
                   <thead>
                     <tr>
                       <th class="col-xs-3">&nbsp;</th>
@@ -324,6 +340,10 @@
                     </tr>
                   </thead>
                   <tbody>
+                    <tr ng-repeat="(key,value) in dbsnp">
+                      <td>{{ key }}</td>
+                      <td><input type="text" value="{{ value }}"></td>
+                    </tr>
                     <tr>
                       <td>dbSNP:</td>
                       <td><input type="text" value="5"></td>
@@ -356,8 +376,12 @@
               <div class="box-header">
                 
               <div class="box-content">
-                <table class="table beauty-table table-hover">
+                <table class="table beauty-table table-hover patient">
                   <thead>
+                    <tr ng-repeat="(key,value) in patient">
+                      <td>{{ key }}</td>
+                      <td><input type="text" value="{{ value }}"></td>
+                    </tr>
                     <tr>
                       <th class="col-xs-3">&nbsp;</th>
                       <th>&nbsp;</th>
@@ -388,8 +412,12 @@
               <div class="box-header">
                 
               <div class="box-content">
-                <table class="table beauty-table table-hover">
+                <table class="table beauty-table table-hover family">
                   <thead>
+                    <tr ng-repeat="(key,value) in family">
+                      <td>{{ key }}</td>
+                      <td><input type="text" value="{{ value }}"></td>
+                    </tr>
                     <tr>
                       <th class="col-xs-3">&nbsp;</th>
                       <th>&nbsp;</th>
