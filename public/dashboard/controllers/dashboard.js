@@ -12,7 +12,7 @@ angular.module('mean.dashboard', [])
               // Filtrare tutto, e creare i vari array variants , patient , sequencing ecc ecc
               // metterli nello scope.. esempio $scope.variants ecc la tabella di crea da sola
               
-              var filteredJson = filterOnlyAttributes(parsedJson);
+              var filteredJson = $scope.filtJson;
               $scope.variants = filteredJson.variants;
               $scope.esps = filteredJson.esps;
               $scope.dbsnps= filteredJson.dbsnps;
