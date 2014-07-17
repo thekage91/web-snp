@@ -1,15 +1,14 @@
 <link href="public/system/assets/css/login.css" rel="stylesheet">
 
 <section class="main content-section-register">
-    <div class="col-md-4">
 
-        <div data-ng-controller="RegisterCtrl">
+        <div data-ng-controller="RegisterCtrl" class="row">
             <div ng-repeat="error in registerError">
                 <div class="alert alert-danger animated fadeIn">{{error.msg}}</div>
             </div>
             <div class="alert alert-danger animated fadeIn" ng-show="usernameError">{{usernameError}}</div>
             
-            <form ng-submit="register()" class="form-horizontal">
+            <form ng-submit="register()" class="form-horizontal col-md-4">
                 <div class="text-left"><h1>Register</h1></div>
                 <div class="form-group">
                     <div class="col-md-10">
@@ -51,7 +50,7 @@
                         <input id="confirmPassword" type="password" name="confirmPassword" placeholder="Confirm Password" class="form-control" ng-model="user.confirmPassword"/>
                     </div>
                 </div>
-                <div class="form-group" style="margin-bottom: 75px">
+                <div class="form-group">
                     <div class="col-md-10">
                         <button type="submit" class="btn btn-primary">Sign up</button>&nbsp;
                         or&nbsp;<a ui-sref='auth.login' class="show-login">Sign in</a>
@@ -60,7 +59,4 @@
             </form>
         </div>
 
-    </div>
 </section>
-
-<!-- DONE -->
