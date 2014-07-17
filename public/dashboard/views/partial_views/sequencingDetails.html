@@ -1,7 +1,30 @@
 <link href="public/system/assets/css/dashboard.css" rel="stylesheet">
 
+<script type="text/javascript">
+  function fill (){
+    $.get('/api/user/' + document.getElementById('iddi').innerHTML)
+      .success(function(data){
 
-<div class="row" ng-show="user.isAdmin()">
+        data.payload.roles.forEach(function(entry) {
+            if (data.payload.roles.indexOf("Admin") > -1) {
+                var e = document.getElementById('title');
+                e.visibility = "visible";
+
+                e = document.getElementById('main');
+                e.visibility = "visible";
+            } 
+            ;        
+        });
+        
+
+      });
+  };
+</script>
+
+<h1 hidden id="iddi">{{global.user._id}}</h1>
+
+<div hidden id="title" class="row">
+<!--<div class="row" ng-show="user.isAdmin()">-->
   <h1 class="section-header">Sequencing details</h1> 
 
   <button type="button" class="btn btn-primary btn-sm" ui-sref="dashboard.sequencingEdit" style="float: right">
@@ -12,7 +35,8 @@
 
 </div>
 
-<div class"box" ng-controller="UploaderCtrl" ng-show="user.isAdmin()">
+<div hidden id="title" class"box" ng-controller="UploaderCtrl">
+<!--<div class"box" ng-controller="UploaderCtrl" ng-show="user.isAdmin()">-->
 
     <ul class="nav nav-tabs">
       <li class="text-left"><a href="#sequencing" data-toggle="tab">Sequencing</a></li>
