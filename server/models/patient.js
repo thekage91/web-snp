@@ -14,7 +14,7 @@ var PatientSchema = new Schema({
         name: {
         type: String,
         required: true,
-        validate: [validatePresenceOf, 'Gene cannot be blank']
+        validate: [validatePresenceOf, 'Name cannot be blank']
          },
 	//Relationship
 	variants: [{

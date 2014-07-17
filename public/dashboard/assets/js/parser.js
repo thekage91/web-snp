@@ -146,4 +146,85 @@ function saveFromParse (data) {
             break;
         }
     };
+    
+    
+
+function filterFromAttributes(data, paths) {
+    var res = new Array();
+    var partial = {};
+    if(paths.length==1) console.log('data =  '+JSON.stringify(data) + " length = " + data.length);
+    
+    //patient non ha un array
+    if(!data.length)
+        {
+        res = {};
+        for (var property in data) {
+            console.log("property = "+ property);
+            
+            if ( paths.indexOf(property) !== -1) {
+                res[property] = data[property];
+                
+            }
+        }
+    }
+    //itero per ogni elemento dell'array
+    for (var i = 0; i < data.length; i++) {
+    var currentModelElement = data[i]; 
+    partial = {};
+    //console.log('elemento corrente: '+JSON.stringify(currentModelElement));
+    
+        //itero per ogni attributo     
+        for (var property in currentModelElement) {
+            if ( paths.indexOf(property) !== -1) {
+                partial[property] = new Array();
+                // console.log('if vero per proprieta: '+property);
+                partial[property] = currentModelElement[property];
+            }
+        }
+    res.push(partial);
+    //console.log('fuori dal for. res=  '+JSON.stringify(res));
+    }
+    return res;
+}
+;
+
+function filterOnlyAttributes(data) {
+    var attr = new Array();
+    var res = {};
+    for(element in data) {
+    switch (element) {
+        case 'variants':
+            attr = ['chr', 'start', 'end', 'ref', 'alt'];
+
+            break
+        case 'pathogenicities':
+            attr = ['SIFT', 'polyPhen', 'mutationTaster', 'mutationAssessor', 'GERpp', 'phyloP', 'siPhy'];
+            break;
+
+        case 'details':
+            attr = ['qual', 'filter', 'genotype', 'genotypeQuality', 'readsDeeph', 'ref', 'altFilteredReads',
+                'genotypesLikelihood', 'haplotypeScore', 'strandBias'];
+
+            break;
+        case 'dbsnps':
+            attr = ['dbSNP', 'freqAlt', 'freqRef'];
+            break;
+        case 'esps':
+            attr = ['ESP6500_ALL', 'ESP6500_AA', 'ESP6500_EA'];
+            break;
+        case 'genes':
+            attr = ['genes', 'region', 'mutation', 'annotation'];
+            break;
+        case 'patient':
+            attr = ['name'];
+            break;
+        default:
+            console.log("ERROR: while parsing data. Not recognized object: " + element);
+            break;
+    }
+    res[element] = filterFromAttributes(data[element], attr);
+    }
+    return res;
+
+}
 }
