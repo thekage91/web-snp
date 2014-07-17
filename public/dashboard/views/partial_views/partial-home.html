@@ -1,8 +1,4 @@
-<link rel="stylesheet" type="text/css" href="/public/dashboard/assets/css/dropzone/basic.css">
-<link rel="stylesheet" type="text/css" href="/public/dashboard/assets/css/dropzone/dropzone.css">
-<link href="public/system/assets/css/home.css" rel="stylesheet">
-
-<div class="col-lg-11" style="width: 100%">
+<!--<link href="public/system/assets/css/home.css" rel="stylesheet">-->
 
 <div class="row">
   <h1 class="section-header">Home</h1>  
@@ -10,48 +6,45 @@
   <hr>
 </div>
 
-<div class="container">
 
-    <div class="row user-menu-container square">
-        <div class="col-md-8 user-details">
-            <div class="row coralbg white" style="margin-left: 30px">
-                <div class="col-md-6 no-pad">
-                    <div class="user-pad">
-                        <h3>Welcome back, </h3><h1>{{global.user.username}}</h1>
-                        <div style="margin-top: 30px">
-                            <h4 class="white"><i class="fa fa-phone"></i>{{global.user.phone}}</h4>
-                            <h4 class="white"><i class="fa fa-home"></i>{{global.user.address}}</h4>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 no-pad">
-                    <div class="user-image">
-                        <img src="https://farm7.staticflickr.com/6163/6195546981_200e87ddaf_b.jpg" class="img-responsive thumbnail">
-                        (Prendere immagine dal db)
+<div class="row user-menu-container square">
+    <div class="col-md-12 user-details">
+        <div class="row coralbg white">
+            <div class="col-md-6 no-pad">
+                <div class="user-pad">
+                    <h3>Welcome back, </h3><h1>{{global.user.username}}</h1>
+                    <div>
+                        <h4 class="white"><i class="fa fa-phone"></i>{{global.user.phone}}</h4>
+                        <h4 class="white"><i class="fa fa-home"></i>{{global.user.address}}</h4>
                     </div>
                 </div>
             </div>
-
-            <div class="row overview" style="margin-top: 70px" >
-                    <h4><span class="fa fa-lightbulb-o"></span>&nbsp;<b>TIP</b>: Click on a button in the sidebar to start.</h4>
+            <div class="col-lg-6 no-pad">
+                <div class="user-image">
+                    <img src="https://farm7.staticflickr.com/6163/6195546981_200e87ddaf_b.jpg" class="img-responsive thumbnail">
+                    (Prendere immagine dal db)
+                </div>
             </div>
-
-            <!--<div class="row overview" style="margin-top: 30px; margin-left: 30px" >
-                    <h2 style="margin-bottom: 25px">Quick Shortcuts</h2>
-                    <div class="row">
-                        <a ui-sref="dashboard.uploadSequencing" class="btn btn-primary btn-lg" role="button"><span class="fa fa-upload fa-fw"></span> <br/>Sequencing Upload</a>
-                        <a ui-sref="dashboard.authorizeUser" class="btn btn-primary btn-lg" role="button"><span class="fa fa-edit fa-fw"></span> <br/>Authorize Users</a>
-                        <a ui-sref="dashboard.families" class="btn btn-primary btn-lg" role="button"><span class="fa fa-users fa-fw"></span> <br/>Families</a>
-                        <a ui-sref="dashboard.executeQuery" class="btn btn-primary btn-lg" role="button"><span class="fa fa-search fa-fw"></span> <br/>Execute Query</a>    
-                        <a ui-sref="dashboard.userProfile" class="btn btn-primary btn-lg" role="button"><span class="fa fa-user fa-fw"></span> <br/>My Profile</a>
-                        <a href="/logout" class="btn btn-danger btn-lg" role="button"><span class="fa fa-sign-out fa-fw"></span> <br/>Logout</a> 
-                    </div>
-            </div>-->
-
         </div>
+
+        <div class="row overview"  >
+                <h4><span class="fa fa-lightbulb-o"></span>&nbsp;<b>TIP</b>: Click on a button in the sidebar to start.</h4>
+        </div>
+
+        <!--<div class="row overview" style="margin-top: 30px; margin-left: 30px" >
+                <h2 style="margin-bottom: 25px">Quick Shortcuts</h2>
+                <div class="row">
+                    <a ui-sref="dashboard.uploadSequencing" class="btn btn-primary btn-lg" role="button"><span class="fa fa-upload fa-fw"></span> <br/>Sequencing Upload</a>
+                    <a ui-sref="dashboard.authorizeUser" class="btn btn-primary btn-lg" role="button"><span class="fa fa-edit fa-fw"></span> <br/>Authorize Users</a>
+                    <a ui-sref="dashboard.families" class="btn btn-primary btn-lg" role="button"><span class="fa fa-users fa-fw"></span> <br/>Families</a>
+                    <a ui-sref="dashboard.executeQuery" class="btn btn-primary btn-lg" role="button"><span class="fa fa-search fa-fw"></span> <br/>Execute Query</a>    
+                    <a ui-sref="dashboard.userProfile" class="btn btn-primary btn-lg" role="button"><span class="fa fa-user fa-fw"></span> <br/>My Profile</a>
+                    <a href="/logout" class="btn btn-danger btn-lg" role="button"><span class="fa fa-sign-out fa-fw"></span> <br/>Logout</a> 
+                </div>
+        </div>-->
+
     </div>
 </div>
 
 <!-- DONE -->
 
-</div>
