@@ -262,10 +262,49 @@ function parse(json) {
         
     });
         result.patient = patient;
-         console.log(result);
-        return JSON.parse(JSON.stringify(result));
+        return result;
         
   }
-  
-  console.log(JSON.stringify(parse(json)));
 
+function saveForEachElement(element,model) {
+        var temp;
+        for(var i=0; i < element.length; i++) {
+                    temp = new model(element[i]);
+                    temp.save(error);
+           };
+}
+
+function saveFromParse (data) {
+    
+        for(element in data) {
+        
+        switch (element) {
+            case 'variants':
+                saveForEachElement(data[element],Variant);
+            break
+            case 'details':
+                saveForEachElement(data[element],VariantDetail);
+            break;
+            case 'pathogenicities':
+                saveForEachElement(data[element],Pathogenicity);
+            break;
+            case 'dbsnps':
+                saveForEachElement(data[element],DbSNP);
+            break;
+            case 'esps':
+                saveForEachElement(data[element],Esp);
+            break;
+            case 'genes':
+                saveForEachElement(data[element],Gene);
+            break;
+            case 'patient':
+                (new Patient (data[element])).save(error);
+            break;
+            default:
+            console.log("ERROR: while parsing data. Not recognized object: " + element);
+            break;
+        }
+    };
+}
+
+saveFromParse(parse(json));
