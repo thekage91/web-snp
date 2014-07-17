@@ -160,7 +160,7 @@
                 <tr ng-repeat="family in families | filter:searchFamily "> 
                     <td>
                       <div ng-show="!showConfirm">{{ family.name }}</div>
-                      <input id="nameUpdate" name="nameUpdate" type="text" value="{{ family.name }}" class="form-control input-xlarge" ng-model="familyUpdate.name" ng-show="showConfirm">
+                      <input id="nameUpdate" name="nameUpdate" type="text" value="{{ family.name }}" class="form-control input-xlarge" ng-model="familyUpdate.name" ng-show="showConfirmation(showConfirm)">
                     </td>
                     <td>
                       <div class="control-group pull-right" ng-show="!showConfirm">
@@ -179,7 +179,7 @@
                         </div>
                       </div>
 
-                      <div class="control-group pull-right" ng-show="showConfirm">
+                      <div class="control-group pull-right" ng-show="showConfirmation(showConfirm)">
                         <div class="controls">
                           <button type="button" class="btn btn-success btn-sm" ng-click="updateFamily(family, familyUpdate)">
                             <span class="glyphicon glyphicon-pencil" ng-click="showConfirm = false"></span> OK
