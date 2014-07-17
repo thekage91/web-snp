@@ -148,13 +148,13 @@ angular.module('mean.dashboard', [])
         angular.element('#formInsert').collapse('hide');
     }
 
-    $scope.showConfirmation = function(show){
-        return show;
+    $scope.show = false;
+    $scope.showConfirmation = function(setShow){
+        return $scope.show = setShow;
     }
 
     $scope.updateFamily = function(item , familyUp){
-        //$scope.showConfirmation(false);
-        angular.element('#controls').style.display = 'none';
+        $scope.showConfirmation(false);
         var idSelected = $scope.families.indexOf(item);
 
         $http.post('/api/family/' + item._id , familyUp)
@@ -236,14 +236,18 @@ angular.module('mean.dashboard', [])
                 console.log("[ERROR] Failed add patient " + patient._id + " in family " + idFamily);
             });
     }
+  
+    $scope.showEdit = false;
+    $scope.showEditFamilies = function(showEditFamily){
+        return $scope.showEdit = showEditFamily;
+    }    
 
     $scope.finishedOperation = function(){
+        angular.element('#btn_edit').disabled = true;
         angular.element('#patientsPanel').collapse('hide');
-        angular.element('#edit').style.display = 'block';
-        angular.element('#ok').style.display = 'none';
+    }  
 
-    }   
-}])
+    }])
 
    
         .controller('ExecuteQueryCtrl', ['$scope', '$http', function($scope, $http) {

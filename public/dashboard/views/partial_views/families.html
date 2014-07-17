@@ -20,19 +20,19 @@
           </div>
         </div>
 
-        <div class="controls col-md-offset-3 col-md-3 pull-right">
+        <div class="controls col-md-4 pull-right">
           <button type="button" class="btn btn-success btn-sm" 
                   data-toggle="collapse" data-parent="#operation" href="#formInsert">
             <span class="glyphicon glyphicon-plus"></span> Add new
           </button>
 
-          <button id="edit" type="button" class="btn btn-primary btn-sm" ng-click="showEditFamily = !showEditFamily">
+          <button id="btn_edit" type="button" class="btn btn-primary btn-sm" ng-click="showEditFamily = !showEditFamily" ng-disabled="showEditFamily">
             <span class="glyphicon glyphicon-pencil" ></span> Edit
           </button>
-          <!--<button id="ok" type="button" class="btn btn-primary btn-sm" ng-click="finishedOperation(); showEditFamily = false;"
-                  ng-show="showEditFamily">
-            <span class="glyphicon glyphicon-pencil"></span> OK
-          </button>-->
+          <button id="btn_finish" type="button" class="btn btn-primary btn-sm" ng-click="finishedOperation()"
+                  ng-disabled="!showEditFamily">
+            <span class="glyphicon glyphicon-pencil"></span> Finish
+          </button>
         </div>
       </div>
 
@@ -182,7 +182,7 @@
                       <div class="control-group pull-right" ng-show="showConfirm">
                         <div class="controls">
                           <button type="button" class="btn btn-success btn-sm" ng-click="updateFamily(family, familyUpdate)">
-                            <span class="glyphicon glyphicon-pencil" ng-click="showConfirm = false"></span> OK
+                            <span class="glyphicon glyphicon-pencil"></span> OK
                           </button>
                           <button type="button" class="btn btn-danger btn-sm" ng-click="showConfirm = false">
                             <span class="glyphicon glyphicon-ban-circle" ></span> Cancel
