@@ -158,7 +158,7 @@ function process_wb(wb) {
   switch("json") {
     case "json":
       output = JSON.stringify(to_json(wb), 2, 2);
-      //parseAndSave(output);
+      parse(output);
       break;
     case "form":
       output = to_formulae(wb);
