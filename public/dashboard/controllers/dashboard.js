@@ -7,12 +7,20 @@ angular.module('mean.dashboard', [])
         .controller('UploaderCtrl', ['$scope' , '$window' , function($scope, $window) {
               
               //output e' gia' il json uscito puoi dalla funzione parse
-              var parsingJson = $window.output; 
+              var parsedJson = $window.output; 
 
               // Filtrare tutto, e creare i vari array variants , patient , sequencing ecc ecc
               // metterli nello scope.. esempio $scope.variants ecc la tabella di crea da sola
               
-
+              var filteredJson = filterOnlyAttributes(parsedJson);
+              $scope.variants = filteredJson.variants;
+              $scope.esps = filteredJson.esps;
+              $scope.dbsnps= filteredJson.dbsnps;
+              $scope.pathogenicities = filteredJson.pathogenicities;
+              $scope.variantDetails = filteredJson.details;
+              $scope.genes = filteredJson.genes;
+              $scope.patient = filteredJson.patient;
+              
               $scope.Table2Json = function() {
 
                 function parseTable(table){
