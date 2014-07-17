@@ -197,13 +197,22 @@ function retrievePathogenicity (data) {
         return path;
   } 
     
-function parseAndSave(json) {
+function parse(json) {
     
     
     //Firse element is always some file information
     for (var key in json) if (json.hasOwnProperty(key))  break;
     var patientName = /[^_]*/.exec(key)[0];
     var patient = new Patient({name: patientName});
+    
+    var result = {};
+    result.variants = new Array();
+    result.details = new Array();
+    result.genes = new Array();
+    result.dbsnps = new Array();
+    result.pathogenicities = new Array();
+    result.esps = new Array();
+    
     //Iterate on single file elements
     json[key].forEach( function (element) {
         
@@ -235,16 +244,28 @@ function parseAndSave(json) {
         
         patient.variants.push(variant);
         
+        result.variants.push(variant);
+        result.pathogenicities.push(pathogenicity);
+        result.dbsnps.push(dbsnp);
+        result.esps.push(esp);
+        result.genes.push(gene);
+        result.details.push(detail);
+        
+        
         //save model classes
-        esp.save(error);
+       /* esp.save(error);
         pathogenicity.save(error);
         dbsnp.save(error);
         gene.save(error);
         variant.save(error);
-        detail.save(error);
+        detail.save(error);*/
+        
     });
-        patient.save(error);
+        result.patient = patient;
+         console.log(result);
+        return JSON.parse(JSON.stringify(result));
+        
   }
   
-  parse(json);
+  console.log(JSON.stringify(parse(json)));
 
