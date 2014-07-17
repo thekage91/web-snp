@@ -156,6 +156,11 @@ module.exports = function(app, passport, db) {
 
     app.use('/public', express.static(config.root + '/public'));
     
+    require("angoose").init(app, {
+   'module-dirs':'/models',
+   'mongo-opts': 'localhost:27017/test',
+});
+
     mean.events.on('modulesFound', function() {
 
         for (var name in mean.modules) {

@@ -1,4 +1,4 @@
 'use strict';
 
-angular.module('mean.dashboard', [])
+angular.module('mean.dashboard', [ 'angoose.client'])
 

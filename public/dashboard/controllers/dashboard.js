@@ -4,7 +4,9 @@
 
 angular.module('mean.dashboard', [])
 
-        .controller('UploaderCtrl', ['$scope' , '$window' , function($scope, $window) {
+        .controller('UploaderCtrl', ['$scope' , '$window' ,
+        DbSNP,Esp,Family,Gene,Pathogenicity,Patient,Sequencing,Variant,VariantDetail,
+        function($scope, $window) {
               
               //output e' gia' il json uscito puoi dalla funzione parse
               var parsedJson = $window.output; 
