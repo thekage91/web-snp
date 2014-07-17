@@ -56,188 +56,74 @@ angular.module('mean.dashboard', [])
               };
         }])
 
-       
-.controller('AuthorizerUserCtrl' , ['$scope' ,'$http' , function($scope , $http){
+        .controller('AuthorizerUserCtrl', ['$scope', '$http', function($scope, $http) {
 
-    $scope.formData = {};
-
-    /* Quando LA pagina viene caricata, tutti gli utenti vengono mostrati
-        Questo viene realizzato attraverso una chiamata http all'api definita
-        in /server/route/users.js
-        Che restitusice un json con tutti gli utenti
-    */
-    
-    $http.get('/api/users')
-        .success(function(data){
-            $scope.users = data;
-            console.log("[DEBUG] Retrive this users " + data);
-        })
-        .error(function(data){
-            console.log("[ERROR] Failed retrieve all users");
-        });
-
-    $scope.authorizeUser = function(){
-       $http.put('/api/users' , $scope.formData)
-            .success(function(data){
-                $scope.users = data;
-                console.log("[DEBUG] Retrive this users " + data);
-            })
-            .error(function(data){
-                console.log("[ERROR] Failed to update user:" + data);
-            });
-        };
-
-    $scope.dismissUser = function(){
-        $http.put('/api/users' , $scope.formData)
-            .success(function(data){
-                $scope.users = data;
-                console.log("[DEBUG] Retrive this users " + data);
-            })
-            .error(function(data){
-                console.log("[ERROR] Failed to update  user:" + data);
-            });    
-        };
-}])
-
-.controller('FamilyCtrl' , ['$scope', '$http', function($scope , $http){
-    
-    //$scope.inPatients = [{name: "provaIN1"} , {name: "provaIN2"} , {name: "provaIN3"}]
-    //$scope.outPatients = [{name: "provaOUT1"} , {name: "provaOUT2"} , {name: "provaOUT3"}]
-
-    $http.get('/api/family')
-        .success(function(data){
-            $scope.families = data.payload;
-            console.log("[DEBUG] Retrive this families " + data);
-        })
-        .error(function(data){
-            console.log("[ERROR] Failed retrieve all users");
-        });
-
-    $scope.createFamily = function(family){
-
-        $http.post('/api/family' , family)
-            .success(function(data){
                 $scope.formData = {};
-                $scope.families.push(data.payload);
-                $scope.family = {};
-                angular.element('#formInsert').collapse('hide');
-                console.log("[SUCCESS] Write this data on DB: " + data)
-            })
-            .error(function(data) {
-                console.log("[ERROR] Failed save family: " + data);
-            });      
-    }
-    
-    $scope.removeFamily = function(item){      
-        var idSelected = $scope.families.indexOf(item);
-        console.log("[DEBUG] I should remove family with id " + item._id);
 
-        $http.delete('/api/family/' + item._id)
-            .success(function(data){
-                $scope.formData = {};
-                $scope.families.splice(idSelected , 1);
-                console.log("[SUCCESS] Remove family with id " + item._id);
-            })
-            .error(function(data) {
-                console.log('[ERROR] Failed remove family: ' + data);
-            });
-    }
+                /* Quando LA pagina viene caricata, tutti gli utenti vengono mostrati
+                 Questo viene realizzato attraverso una chiamata http all'api definita
+                 in /server/route/users.js
+                 Che restitusice un json con tutti gli utenti
+                 */
 
-    $scope.cancel = function(){
-        $scope.family = {};
-        angular.element('#formInsert').collapse('hide');
-    }
+                $http.get('/api/users')
+                        .success(function(data) {
+                            $scope.users = data;
+                            console.log("[DEBUG] Retrive this users " + data);
+                        })
+                        .error(function(data) {
+                            console.log("[ERROR] Failed retrieve all users");
+                        });
 
-    $scope.updateFamily = function(item , familyUp){
-        var idSelected = $scope.families.indexOf(item);
+                $scope.authorizeUser = function() {
+                    $http.put('/api/users', $scope.formData)
+                            .success(function(data) {
+                                $scope.users = data;
+                                console.log("[DEBUG] Retrive this users " + data);
+                            })
+                            .error(function(data) {
+                                console.log("[ERROR] Failed to update user:" + data);
+                            });
+                };
 
-        $http.post('/api/family/' + item._id , familyUp)
-            .success(function(data){
-                $scope.family_edit = {};
-                console.log(JSON.stringify(familyUp));
-                //$scope.families[idSelected].name = familyUp;
-                console.log('[SUCCESS] Update name of family with id ' + item._id);
-            })
-            .error(function(data){
-                console.log('[ERROR] Failed update family with id ' + item._id);
-            });
-    }
+                $scope.dismissUser = function() {
+                    $http.put('/api/users', $scope.formData)
+                            .success(function(data) {
+                                $scope.users = data;
+                                console.log("[DEBUG] Retrive this users " + data);
+                            })
+                            .error(function(data) {
+                                console.log("[ERROR] Failed to update  user:" + data);
+                            });
+                };
+        }])
 
-    $scope.contains = function(array , item){
-        if(array === undefined ){
-            return false;
-        }
+        .controller('FamilyCtrl', ['$scope', '$http', function($scope, $http) {
 
-        return array.indexOf(item) > -1;
-    }
+                $scope.createFamily = function() {
+                    $http.post('/api/family', $scope.formData)
+                            .success(function(data) {
+                                $scope.formData = {};
+                                $scope.family = data;
+                            })
+                            .error(function(data) {
+                                console.log('[ERROR] Failed save family: ' + data);
+                            });
+                };
 
-    $scope.showPatients = function(family){
-        
-        if(family.patients === undefined){
-            family.patients = [];
-        }
+                $scope.removeFamily = function() {
+                    $http.post('/api/family', $scope.formData)
+                            .success(function(data) {
+                                $scope.formData = {};
+                                $scope.family = data;
+                            })
+                            .error(function(data) {
+                                console.log('[ERROR] Failed save family: ' + data);
+                            });
+                };
 
-        $scope.inPatients = family.patients;
-        $scope.familySelected = family;
+            }])
 
-        $http.get('/api/patient')
-            .success(function(data){
-                var allPatients = data.payload;
-                console.log(allPatients);
-                $scope.outPatients = allPatients.filter(function(item){
-                    return !$scope.contains($scope.inPatients , item);
-                });
-            })
-            .error(function(err){
-                console.log("[ERROR] Failed retrieve all patients -->" + err);
-            });
-    }
-
-    $scope.removePatient = function(patient){
-        var idFamily = $scope.familySelected._id;
-        var newPatients = $scope.inPatients;
-
-        newPatients.splice(newPatients.indexOf(patient) , 1);
-        var jsonToSend = {'patients': newPatients};
-        
-        $http.post('/api/family/' + idFamily , jsonToSend)
-            .success(function(data){
-                $scope.inPatients = newPatients;
-                $scope.outPatients.push(patient);
-                console.log("[SUCCESS] Remove patient " + patient._id + " from family " + idFamily);
-            })
-            .error(function(err){
-                console.log("[ERROR] Failed remove patient " + patient._id + " from family " + idFamily);
-            });
-        }
-
-    $scope.addPatient = function(patient){
-        var idFamily = $scope.familySelected._id;
-        var newPatients = $scope.inPatients;
-
-        newPatients.push(patient._id);
-
-        var jsonToSend = {'patients': newPatients};
-        console.log('JSON to send' + jsonToSend);
-
-        $http.post('/api/family/' + idFamily , jsonToSend)
-            .success(function(data){
-                $scope.inPatients = newPatients;
-                $scope.outPatients.splice($scope.outPatients.indexOf(patient) , 1);
-                console.log("[SUCCESS] Add patient " + patient._id + " in family " + idFamily);
-            })
-            .error(function(err){
-                console.log("[ERROR] Failed add patient " + patient._id + " in family " + idFamily);
-            });
-    }
-
-    $scope.finishedOperation = function(){
-        angular.element('#patientsPanel').collapse('hide');
-        angular.element('#edit').style.display = 'block';
-        angular.element('#ok').style.display = 'none';
-
-    }   
-}])
         .controller('ExecuteQueryCtrl', ['$scope', '$http', function($scope, $http) {
                 var element;
 
@@ -389,9 +275,106 @@ angular.module('mean.dashboard', [])
        
             
             }
+<<<<<<< HEAD
             
            
         
             
             ]);
+=======
+            fileReader.readAsArrayBuffer($scope.selectedFiles[index]);
+        }
+    };
+
+    $scope.abort = function(index) {
+        $scope.upload[index].abort(); 
+        $scope.upload[index] = null;
+    };
+
+
+}])
+
+.controller('AuthorizerUserCtrl' , ['$scope' ,'$http' , function($scope , $http){
+
+    $scope.formData = {};
+
+    /* Quando LA pagina viene caricata, tutti gli utenti vengono mostrati
+        Questo viene realizzato attraverso una chiamata http all'api definita
+        in /server/route/users.js
+        Che restitusice un json con tutti gli utenti
+    */
+    
+    $http.get('/api/users')
+        .success(function(data){
+            $scope.users = data.payload;
+            console.log("[DEBUG] Retrive this users " + data.payload);
+        })
+        .error(function(data){
+            console.log("[ERROR] Failed retrieve all users");
+        });
+
+    $scope.authorizeUser = function(item){
+
+        var idSelected = $scope.users.indexOf(item);
+        var newRoles = item.roles
+        newRoles.push('licensed');
+
+       $http.post('/api/users/' + item._id , newRoles)
+            .success(function(data){
+                $scope.users[idSelected].roles.push('licensed');
+                console.log("[DEBUG] Retrive this users " + data);
+            })
+            .error(function(data){
+                console.log("[ERROR] Failed to update user:" + data);
+            });
+        };
+
+    $scope.dismissUser = function(item){
+
+        var rolesToPut = 'licensed';
+        var idSelected = $scope.users.indexOf(item);
+        var newRoles = item.roles;
+        newRoles.splice(rolesToPut , 1);
+
+        $http.put('/api/users/' + item._id , newRoles)
+            .success(function(data){
+                $scope.users[idSelected].roles.splice(rolesToPut , 1);
+                console.log("[DEBUG] Retrive this users " + data);
+            })
+            .error(function(data){
+                console.log("[ERROR] Failed to update  user:" + data);
+            });    
+        };
+}])
+
+.controller('FamilyCtrl' , ['$scope', '$http' , function($scope , $http){
+    
+    $scope.createFamily = function(){
+        $http.post('/api/family' , $scope.formData)
+            .success(function(data){
+                $scope.formData = {};
+                $scope.family = data;
+            })
+            .error(function(data) {
+                console.log('[ERROR] Failed save family: ' + data);
+            });
+    }
+    
+    $scope.removeFamily = function(){
+        $http.post('/api/family' , $scope.formData)
+            .success(function(data){
+                $scope.formData = {};
+                $scope.family = data;
+            })
+            .error(function(data) {
+                console.log('[ERROR] Failed save family: ' + data);
+            });
+    }
+    
+}])
+
+.controller('ExecuteQueryCtrl' , ['$scope' , '$http' , function($scope , $http){
+    
+}]);
+>>>>>>> dev/userCtrl
 
