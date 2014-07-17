@@ -15,7 +15,7 @@ User.findOne({ 'name': 'root' }, 'name occupation', function (err, user) {
         var admin = new User ( { name : 'root' ,
                          email : 'root@root.com',
                          username : 'root',
-                         roles: ['Admin'],
+                         roles: ['admin'],
                          password: 'rootadminasd'
                           });
         admin.save( function (err) { console.log("internal error") }); 
