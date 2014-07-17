@@ -1,5 +1,11 @@
-<div class="col-lg-11" ng-show="user.isAdmin()">
+<<<<<<< HEAD
+=======
+<link rel="stylesheet" type="text/css" href="/public/dashboard/assets/css/dropzone/basic.css">
+<link rel="stylesheet" type="text/css" href="/public/dashboard/assets/css/dropzone/dropzone.css">
 
+<div class="col-lg-11" data-ng-show="user.isAdmin">
+
+>>>>>>> dev/bootAdmin
 <div class="row">
   <h1 class="section-header">Sequencing Upload</h1>  
 

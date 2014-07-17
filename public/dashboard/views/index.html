@@ -1,3 +1,62 @@
+<script type="text/javascript">
+  function fill (){
+    $.get('/api/user/' + document.getElementById('iddi').innerHTML)
+      .success(function(data){
+
+        data.payload.roles.forEach(function(entry) {
+            if (data.payload.roles.indexOf("Admin") > -1) {
+                var e = document.getElementById('home');
+                e.visibility = "visible";
+
+                e = document.getElementById('profile');
+                e.visibility = "visible";
+
+                e = document.getElementById('query');
+                e.visibility = "visible";
+
+                e = document.getElementById('upload');
+                e.visibility = "visible";
+
+                e = document.getElementById('authorize');
+                e.visibility = "visible";
+
+                e = document.getElementById('families');
+                e.visibility = "visible";
+
+                e = document.getElementById('button');
+                e.visibility = "hidden";
+
+            } else if (data.payload.roles.indexOf("Licensed") > -1){
+                var e = document.getElementById('home');
+                e.visibility = "visible";
+
+                e = document.getElementById('profile');
+                e.visibility = "visible";
+
+                e = document.getElementById('query');
+                e.visibility = "visible";
+
+                e = document.getElementById('button');
+                e.visibility = "hidden";
+
+            } else {
+                var e = document.getElementById('home');
+                e.visibility = "visible";
+
+                e = document.getElementById('profile');
+                e.visibility = "visible";
+
+                e = document.getElementById('button');
+                e.visibility = "hidden";
+
+            }
+            ;        
+        });
+        
+
+      });
+  };
+</script>
 
 <div id="wrapper">
  <script src="/angoose/angoose-client.js"></script>
@@ -46,36 +105,47 @@
         <!-- /.navbar-top-links -->
 
         <!-- Left Sidebar -->
+        <h1 hidden id="iddi">{{global.user._id}}</h1>
+        <h1 hidden id="admin"></h1>
+        <h1 hidden id="licensed"></h1>
+
         <div class="navbar-default navbar-static-side " role="navigation" ng-controller="SidebarCtrl" data-ng-show="global.authenticated">
             <div class="sidebar-collapse">
-                <ul class="nav" id="side-menu">                    
+                <ul class="nav" id="side-menu">   
                     <li>
-                        <a ui-sref="dashboard.home"><i class="fa fa-home fa-fw"></i>Home</a>
+                        <a hidden id="home" ui-sref="dashboard.home"><i class="fa fa-home fa-fw"></i>Home</a>
                     </li>
                     
                     <li>
-                        <a ui-sref="dashboard.userProfile"><i class="fa fa-user fa-fw"></i>My Profile</a>
+                        <a hidden id="profile"ui-sref="dashboard.userProfile"><i class="fa fa-user fa-fw"></i>My Profile</a>
                     </li>
 
                     <li>
-                        <a ui-sref="dashboard.executeQuery" data-ng-show="user.isLicensed"><i class="fa fa-search fa-fw"></i>Execute Query</a>
+                        <a hidden id="query" ui-sref="dashboard.executeQuery"><i class="fa fa-search fa-fw"></i>Execute Query</a>
+                        <!--<a ui-sref="dashboard.executeQuery" ng-show="global.isLicensed"><i class="fa fa-search fa-fw"></i>Execute Query</a>-->
+
                     </li>
 
                     <!-- queste tre cose puo' farle solo l'admin -->
                     <li>
-                        <a ui-sref="dashboard.uploadSequencing" data-ng-show="user.isAdmin"><i class="fa fa-upload fa-fw"></i>Sequencing Upload</a>
+                        <a hidden id="upload" ui-sref="dashboard.uploadSequencing"><i class="fa fa-upload fa-fw"></i>Sequencing Upload</a>
+                        <!--<a ui-sref="dashboard.uploadSequencing" ng-show="user.isAdmin"><i class="fa fa-upload fa-fw"></i>Sequencing Upload</a>-->
+
                     </li>
 
                     <li>
-                        <a ui-sref="dashboard.authorizeUser" data-ng-show="user.isAdmin"><i class="fa fa-edit fa-fw"></i>Authorize Users</a>
+                        <a hidden id="authorize" ui-sref="dashboard.authorizeUser"><i class="fa fa-edit fa-fw"></i>Authorize Users</a>
+                        <!--<a ui-sref="dashboard.authorizeUser" ng-show="user.isAdmin()"><i class="fa fa-edit fa-fw"></i>Authorize Users</a>-->
                     </li>
 
                     <li>
-                        <a ui-sref="dashboard.families" data-ng-show="user.isAdmin"><i class="fa fa-users fa-fw"></i>Families</a>
+                        <a hidden id="families" ui-sref="dashboard.families"><i class="fa fa-users fa-fw"></i>Families</a>
+                        <!--<a ui-sref="dashboard.families" ng-show="user.isAdmin()"><i class="fa fa-users fa-fw"></i>Families</a>-->
+
                     </li>
                     <!-- -->
 
-                    <!-- RIMUOVERE!!! CI SI ARRIVERA' DALLE QUERY AL SEQUENZIAMENTO -->
+                    <!-- RIMUOVERE!!! CI SI ARRIVERA' DALLE QUERY AL SEQUENZIAMENTO
                     <li>
                         <a ui-sref="dashboard.sequencingDetails"><i class="fa fa-search fa-fw"></i>Sequencing Details (rimuovere)</a>
                     </li>
@@ -83,7 +153,7 @@
                     <li>
                         <a ui-sref="dashboard.sequencingEdit"><i class="fa fa-search fa-fw"></i>Sequencing Edit (rimuovere)</a>
                     </li>
-                    <!-- -->
+                    -->
 
                 </ul>
                 <!-- /#side-menu -->
@@ -93,7 +163,7 @@
         <!-- /.navbar-static-side -->
     </nav>
 
-    <div id="page-wrapper" data-ng-controller="HeaderController" data-ng-show="global.authenticated">
+    <div id="page-wrapper" data-ng-controller="HeaderController" ng-show="global.authenticated">
         <div ui-view>
         </div>       
     </div>

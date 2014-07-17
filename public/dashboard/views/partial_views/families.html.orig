@@ -1,11 +1,27 @@
 
-<div class="row" ng-show="user.isAdmin()">
+<div class="row">
   <h1 class="section-header">Families</h1>  
 
   <hr>
 </div>
 
-<div ng-controller="FamilyCtrl" ng-show="user.isAdmin()">
+<<<<<<< HEAD
+<div ng-controller="AuthorizerUserCtrl">
+    <ul class="nav nav-tabs">
+      <li class="text-left"><a href="#all" data-toggle="tab">All</a></li>
+      <li class="text-left"><a href="#create" data-toggle="tab">Create New</a></li>
+    </ul>
+
+    <div>
+      <li ng-repeat="user in users">
+        {{ user.name }}
+      </li>
+    </div>
+
+    <div id="myTabContent" class="tab-content">
+=======
+<div ng-controller="FamilyCtrl">
+>>>>>>> dev/familyCtrl
       
       <div class="row bot10" id="operation">
         <div class="col-md-6">
@@ -20,19 +36,19 @@
           </div>
         </div>
 
-        <div class="controls col-md-4 pull-right">
+        <div class="controls col-md-offset-3 col-md-3 pull-right">
           <button type="button" class="btn btn-success btn-sm" 
                   data-toggle="collapse" data-parent="#operation" href="#formInsert">
             <span class="glyphicon glyphicon-plus"></span> Add new
           </button>
 
-          <button id="btn_edit" type="button" class="btn btn-primary btn-sm" ng-click="showEditFamily = !showEditFamily" ng-disabled="showEditFamily">
+          <button id="edit" type="button" class="btn btn-primary btn-sm" ng-click="showEditFamily = !showEditFamily">
             <span class="glyphicon glyphicon-pencil" ></span> Edit
           </button>
-          <button id="btn_finish" type="button" class="btn btn-primary btn-sm" ng-click="finishedOperation()"
-                  ng-disabled="!showEditFamily">
-            <span class="glyphicon glyphicon-pencil"></span> Finish
-          </button>
+          <!--<button id="ok" type="button" class="btn btn-primary btn-sm" ng-click="finishedOperation(); showEditFamily = false;"
+                  ng-show="showEditFamily">
+            <span class="glyphicon glyphicon-pencil"></span> OK
+          </button>-->
         </div>
       </div>
 
@@ -182,7 +198,7 @@
                       <div class="control-group pull-right" ng-show="showConfirm">
                         <div class="controls">
                           <button type="button" class="btn btn-success btn-sm" ng-click="updateFamily(family, familyUpdate)">
-                            <span class="glyphicon glyphicon-pencil"></span> OK
+                            <span class="glyphicon glyphicon-pencil" ng-click="showConfirm = false"></span> OK
                           </button>
                           <button type="button" class="btn btn-danger btn-sm" ng-click="showConfirm = false">
                             <span class="glyphicon glyphicon-ban-circle" ></span> Cancel
