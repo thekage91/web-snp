@@ -8,9 +8,12 @@
     <span class="glyphicon glyphicon-edit"></span> Edit
   </button>
   <hr>
+
+
 </div>
 
 <div class"box" ng-controller="UploaderCtrl">
+
     <ul class="nav nav-tabs">
       <li class="text-left"><a href="#sequencing" data-toggle="tab">Sequencing</a></li>
       <li class="text-left"><a href="#variant" data-toggle="tab">Variant</a></li>
@@ -43,9 +46,9 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr ng-repeate="(key,value) in jsonUpload">
-                      <td>Date:</td>
-                      <td class="text-center">5</td>
+                    <tr ng-repeat="(key,value) in sequencings">
+                      <td>{{ key }}</td>
+                      <td class="text-center">{{ value }}</td>
                     </tr>
                     <tr>
                       <td>Type:</td>
@@ -132,6 +135,10 @@
                     </tr>
                   </thead>
                   <tbody>
+                     <tr ng-repeat="(key,value) in variants">
+                      <td>{{ key }}</td>
+                      <td class="text-center">{{ value }}</td>
+                    </tr>
                     <tr>
                       <td>chr:</td>
                       <td class="text-center">5</td>
@@ -177,6 +184,10 @@
                     </tr>
                   </thead>
                   <tbody>
+                    <tr ng-repeat="(key,value) in pathos">
+                      <td>{{ key }}</td>
+                      <td class="text-center">{{ value }}</td>
+                    </tr>
                     <tr>
                       <td>SIFT:</td>
                       <td class="text-center">5</td>
@@ -230,6 +241,10 @@
                     </tr>
                   </thead>
                   <tbody>
+                    <tr ng-repeat="(key,value) in genes">
+                      <td>{{ key }}</td>
+                      <td class="text-center">{{ value }}</td>
+                    </tr>
                     <tr>
                       <td>Gene:</td>
                       <td class="text-center">5</td>
@@ -265,6 +280,10 @@
               <div class="box-content">
                 <table class="table beauty-table table-hover">
                   <thead>
+                    <tr ng-repeat="(key,value) in esp">
+                      <td>{{ key }}</td>
+                      <td class="text-center">{{ value }}</td>
+                    </tr>
                     <tr>
                       <th class="col-xs-3">&nbsp;</th>
                       <th>&nbsp;</th>
@@ -302,6 +321,10 @@
               <div class="box-content">
                 <table class="table beauty-table table-hover">
                   <thead>
+                    <tr ng-repeat="(key,value) in dbsnp">
+                      <td>{{ key }}</td>
+                      <td class="text-center">{{ value }}</td>
+                    </tr>
                     <tr>
                       <th class="col-xs-3">&nbsp;</th>
                       <th>&nbsp;</th>
@@ -345,6 +368,10 @@
                     </tr>
                   </thead>
                   <tbody>
+                    <tr ng-repeat="(key,value) in patients">
+                      <td>{{ key }}</td>
+                      <td class="text-center">{{ value }}</td>
+                    </tr>
                     <tr>
                       <td>ID:</td>
                       <td class="text-center">5</td>
@@ -374,6 +401,10 @@
                     </tr>
                   </thead>
                   <tbody>
+                    <tr ng-repeat="(key,value) in families">
+                      <td>{{ key }}</td>
+                      <td class="text-center">{{ value }}</td>
+                    </tr>
                     <tr>
                       <td>Name:</td>
                       <td class="text-center">5</td>
@@ -386,7 +417,6 @@
         </div>
       </div>
     </div>
-
 
 
 </div>
@@ -409,8 +439,6 @@ $(document).ready(function() {
     var table = $(this).closest('.box').find('table');
     Table2Json(table);
   });
-  // Add Drag-n-Drop feature
-  WinMove();
 });
 </script>
 
