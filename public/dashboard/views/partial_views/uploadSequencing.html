@@ -1,7 +1,3 @@
-<link rel="stylesheet" type="text/css" href="/public/dashboard/assets/css/dropzone/basic.css">
-<link rel="stylesheet" type="text/css" href="/public/dashboard/assets/css/dropzone/dropzone.css">
-
-
 <div class="row">
   <h1 class="section-header">Sequencing Upload</h1>  
 
@@ -24,28 +20,21 @@
 }
 </style>
 
-<!--<input type="radio" name="format" value="csv" checked> CSV<br>
-<input type="radio" name="format" value="json"> JSON<br>
-<input type="radio" name="format" value="form"> FORMULAE<br> -->
 
-<div class="row bot15">
-  <div id="custom-search-input">
+<div class="row bot15" ng-controller="UploaderCtrl">
   <h4>Drag and drop into the box below your sequencing file to start uploading it:</h4>
+
+  <div id="drop" style="margin-bottom: 30px; margin-top: 30px">Drop an XLS or XML (2003) file here...</div>
+
+  <button id="btn_save" type="button" class="btn btn-success btn-xs" disabled="disabled"
+          ng-click="saveResult()" ui-sref="dashboard.sequencingEdit">
+      <span class="glyphicon glyphicon-upload"></span> Show result
+  </button>
+
 </div>
-</div>
 
-<div id="drop" style="margin-bottom: 30px; margin-top: 30px">Drop an XLS or XML (2003) file here...</div>
+<!--<pre id="out"></pre>-->
 
------- RIMUOVERE ------
-<h4>Output Format:</h4>
-<select name="format" style="margin-bottom: 30px">
-<option value="csv" selected> CSV</option>
-<option value="json"> JSON</option>
-<option value="form"> FORMULAE</option>
-</select>
-
-<pre id="out"></pre>
------------------------
 
 <!-- Per progress bar -->
 <script src="public/system/lib/jquery/dist/jquery.js"></script>
@@ -91,11 +80,13 @@ $(function() {
 
 <!-- Fine progress bar -->
 
+</div>
+
 
 <br/>
 <!-- uncomment the next line here and in xlsxworker.js for encoding support -->
 <!--<script src="dist/cpexcel.js"></script>-->
-<script src="public/dashboard/assets/js/parser.jss"></script>
+<script src="public/dashboard/assets/js/parser.js"></script>
 <script src="public/system/assets/js/xls.js"></script>
 <script>
 var rABS = typeof FileReader !== "undefined" && typeof FileReader.prototype !== "undefined" && typeof FileReader.prototype.readAsBinaryString !== "undefined";
@@ -161,15 +152,26 @@ function b64it() {
   process_wb(wb);
 }
 
+var output;
 function process_wb(wb) {
-    var output = JSON.stringify(to_json(wb), 2, 2);
-    parseAndSave(output);
-    
+  output = "";
+  switch("json") {
+    case "json":
+      output = JSON.stringify(to_json(wb), 2, 2);
+      //parseAndSave(output);
+      break;
+    case "form":
+      output = to_formulae(wb);
+      break;
+    default:
+      output = to_csv(wb);
+  }
   if(out.innerText === undefined) out.textContent = output;
   else out.innerText = output;
 
   document.getElementById('dialog').style.display = 'none';
   document.getElementById('ui-id-1').innerHTML = "Done!";
+  document.getElementById('btn_save').disabled = "enable";
 
   if(typeof console !== 'undefined') console.log("output", new Date());
 }
