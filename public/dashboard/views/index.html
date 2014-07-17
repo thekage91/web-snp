@@ -58,20 +58,20 @@
                     </li>
 
                     <li>
-                        <a ui-sref="dashboard.executeQuery" data-ng-show="user.isLicensed"><i class="fa fa-search fa-fw"></i>Execute Query</a>
+                        <a ui-sref="dashboard.executeQuery" ng-show="global.isLicensed"><i class="fa fa-search fa-fw"></i>Execute Query</a>
                     </li>
 
                     <!-- queste tre cose puo' farle solo l'admin -->
                     <li>
-                        <a ui-sref="dashboard.uploadSequencing" data-ng-show="user.isAdmin"><i class="fa fa-upload fa-fw"></i>Sequencing Upload</a>
+                        <a ui-sref="dashboard.uploadSequencing" ng-show="user.isAdmin"><i class="fa fa-upload fa-fw"></i>Sequencing Upload</a>
                     </li>
 
                     <li>
-                        <a ui-sref="dashboard.authorizeUser" data-ng-show="user.isAdmin"><i class="fa fa-edit fa-fw"></i>Authorize Users</a>
+                        <a ui-sref="dashboard.authorizeUser" ng-show="user.isAdmin()"><i class="fa fa-edit fa-fw"></i>Authorize Users</a>
                     </li>
 
                     <li>
-                        <a ui-sref="dashboard.families" data-ng-show="user.isAdmin"><i class="fa fa-users fa-fw"></i>Families</a>
+                        <a ui-sref="dashboard.families" ng-show="user.isAdmin()"><i class="fa fa-users fa-fw"></i>Families</a>
                     </li>
                     <!-- -->
 
@@ -93,7 +93,7 @@
         <!-- /.navbar-static-side -->
     </nav>
 
-    <div id="page-wrapper" data-ng-controller="HeaderController" data-ng-show="global.authenticated">
+    <div id="page-wrapper" data-ng-controller="HeaderController" ng-show="global.authenticated">
         <div ui-view>
         </div>       
     </div>
