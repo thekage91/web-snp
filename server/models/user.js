@@ -11,6 +11,7 @@ var mongoose = require('mongoose'),
  * Validations
  */
 var validatePresenceOf = function(value) {
+    console.log("value = " + value);
     // If you are authenticating by any of the oauth strategies, don't validate.
     return (this.provider && this.provider !== 'local') || value.length;
 };
@@ -24,11 +25,31 @@ var UserSchema = new Schema({
         required: true,
         validate: [validatePresenceOf, 'Name cannot be blank']
     },
+    firstName: {
+        type: String,
+        required: true,
+        validate: [validatePresenceOf, 'First Name cannot be blank']
+    },
+    lastName: {
+        type: String,
+        required: true,
+        validate: [validatePresenceOf, 'Last Name cannot be blank']
+    },
     email: {
         type: String,
         required: true,
         match: [/.+\@.+\..+/, 'Please enter a valid email'],
         validate: [validatePresenceOf, 'Email cannot be blank']
+    },
+    address: {
+        type: String,
+        required: true,
+        validate: [validatePresenceOf, 'Address Name cannot be blank']
+    },
+    phone: {
+        type: String,
+        required: true,
+        validate: [validatePresenceOf, 'Phone Name cannot be blank']
     },
     username: {
         type: String,

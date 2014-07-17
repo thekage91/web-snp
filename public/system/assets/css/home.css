@@ -1,0 +1,8 @@
+body {
+    width: 50%;
+    height: 100%;
+    background-color: #f8f8f8;
+    background: url(../img/blank.jpg) no-repeat bottom center scroll;
+    background-size: 50% 100%;
+    overflow-x: hidden;
+}

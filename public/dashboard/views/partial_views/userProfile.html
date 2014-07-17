@@ -1,6 +1,7 @@
 <link rel="stylesheet" type="text/css" href="/public/dashboard/assets/css/dropzone/basic.css">
 <link rel="stylesheet" type="text/css" href="/public/dashboard/assets/css/dropzone/dropzone.css">
 
+<div class="col-lg-11">
 
 <div class="row">
   <h1 class="section-header">My profile</h1>  
@@ -8,7 +9,29 @@
   <hr>
 </div>
 
-<div class="container">
+<script type="text/javascript">
+  function fill (){
+    $.get('/api/user/' + document.getElementById('iddi').innerHTML)
+      .success(function(data){
+        var e = document.getElementById('firstNameField');
+        e.innerHTML = data.payload.firstName;
+
+        e = document.getElementById('lastNameField');
+        e.innerHTML = data.payload.lastName;
+
+        e = document.getElementById('addressField');
+        e.innerHTML = data.payload.address;
+
+        e = document.getElementById('emailField');
+        e.innerHTML = data.payload.email;
+
+        e = document.getElementById('phoneField');
+        e.innerHTML = data.payload.phone;
+      });
+  };
+</script>
+
+<div class="container" style="width: 120%">
       <div class="row">
         <div class="col-xs-12 col-sm-12 col-lg-9 col-xs-offset-0 col-sm-offset-0 toppad" >     
           <div>
@@ -17,8 +40,12 @@
             </div>
             <div class="panel-body">
               <div class="row">
-                <div class="col-md-3 col-lg-3" align="center"> <img alt="User Pic" src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=100" class="img-circle"> <br>(Prendere immagine dal db)</br></div>
+                <div class="col-md-3 col-lg-3" align="center"> <img alt="User Pic" src="public/system/assets/img/user.png" class="img-circle img-responsive"> <br></br></div>
                 
+                <input type="button" onclick="fill()" value="Fill!"/>
+
+                <h1 hidden id="iddi">{{global.user._id}}</h1>
+
                 <div class="col-md-9 col-lg-9"> 
                   <table class="table table-user-information">
                     <tbody>
@@ -28,24 +55,24 @@
                       </tr>
                       <tr>
                         <td>First Name:</td>
-                        <td>{{global.user.username}}</td>
+                        <td id="firstNameField">{{global.user.firstName}}</td>
                       </tr>
                       <tr>
                         <td>Last Name:</td>
-                        <td>{{global.user.lastName}}</td>
+                        <td id="lastNameField">{{global.user.lastName}}</td>
                       </tr>
                    
                       <tr>
                       <tr>
                         <td>Address:</td>
-                        <td>{{global.user.address}}</td>
+                        <td id="addressField">{{global.user.address}}</td>
                       </tr>
                       <tr>
                         <td>Email:</td>
-                        <td><a href="{{global.user.name}}">{{global.user.email}}</a></td>
+                        <td id="emailField">{{global.user.email}}</td>
                       </tr>
                         <td>Phone Number:</td>
-                        <td>{{global.user.phone}}
+                        <td id="phoneField">{{global.user.}}
                         </td>
                            
                       </tr>
@@ -67,3 +94,4 @@
     </div>
 
 <!-- DONE -->
+</div>

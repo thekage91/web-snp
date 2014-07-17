@@ -50,7 +50,7 @@ angular.module('mean.controllers.login', [])
                 $scope.usernameError = null;
                 $scope.registerError = null;
                 $http.post('/register', {
-                  /*  email: $scope.user.email,
+                    /*email: $scope.user.email,
                     password: $scope.user.password,
                     confirmPassword: $scope.user.confirmPassword,
                     username: $scope.user.username,
@@ -72,6 +72,10 @@ angular.module('mean.controllers.login', [])
                         $rootScope.user = $scope.user;
                         $rootScope.$emit('loggedin');
                         $location.url('/');
+
+                        window.location.replace('./#!/home');
+
+                        window.location.reload();
                     })
                     .error(function(error) {
                         // Error: authentication failed

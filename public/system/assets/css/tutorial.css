@@ -1,0 +1,31 @@
+body {
+    width: 90%;
+    height: 100%;
+    background-color: #f5f5f5;
+    background: url(../img/info_background.jpg) no-repeat bottom center scroll;
+    background-size: 100% 100%;
+    overflow-x: hidden;
+}
+
+.title {
+    font-size: 300%;
+    font-weight: 800
+}
+
+.subtitle {
+    font-size: 200%;
+    font-weight: 800
+}
+
+.description {
+    font-size: 130%;
+}
+
+.text {
+    font-size: 120%;
+}
+
+.content-section-info {
+    padding-top: 100px;
+    color: #ffffff
+}

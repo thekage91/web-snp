@@ -1,8 +1,7 @@
-<link href="public/system/assets/css/dashboard.css" rel="stylesheet">
 
 <div id="wrapper">
 
-    <nav class="navbar navbar-default navbar-fixed-top" role="navigation" style="margin-bottom: 0px" data-ng-controller="HeaderController">
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation" data-ng-controller="HeaderController">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
                 <span class="sr-only">Toggle navigation</span>
@@ -53,25 +52,28 @@
                     <li>
                         <a ui-sref="dashboard.home"><i class="fa fa-home fa-fw"></i>Home</a>
                     </li>
+                    
                     <li>
                         <a ui-sref="dashboard.userProfile"><i class="fa fa-user fa-fw"></i>My Profile</a>
                     </li>
 
+                    <li>
+                        <a ui-sref="dashboard.executeQuery" data-ng-show="user.isLicensed"><i class="fa fa-search fa-fw"></i>Execute Query</a>
+                    </li>
+
                     <!-- queste tre cose puo' farle solo l'admin -->
                     <li>
-                        <a ui-sref="dashboard.uploadSequencing"><i class="fa fa-upload fa-fw"></i>Sequencing Upload</a>
+                        <a ui-sref="dashboard.uploadSequencing" data-ng-show="user.isAdmin"><i class="fa fa-upload fa-fw"></i>Sequencing Upload</a>
                     </li>
-                    <li>
-                        <a ui-sref="dashboard.authorizeUser"><i class="fa fa-edit fa-fw"></i>Authorize Users</a>
-                    </li>
-                    <li>
-                        <a ui-sref="dashboard.families"><i class="fa fa-users fa-fw"></i>Families</a>
-                    </li>
-                    <!-- -->
 
                     <li>
-                        <a ui-sref="dashboard.executeQuery"><i class="fa fa-search fa-fw"></i>Execute Query</a>
+                        <a ui-sref="dashboard.authorizeUser" data-ng-show="user.isAdmin"><i class="fa fa-edit fa-fw"></i>Authorize Users</a>
                     </li>
+
+                    <li>
+                        <a ui-sref="dashboard.families" data-ng-show="user.isAdmin"><i class="fa fa-users fa-fw"></i>Families</a>
+                    </li>
+                    <!-- -->
 
                     <!-- RIMUOVERE!!! CI SI ARRIVERA' DALLE QUERY AL SEQUENZIAMENTO -->
                     <li>
@@ -82,7 +84,6 @@
                         <a ui-sref="dashboard.sequencingEdit"><i class="fa fa-search fa-fw"></i>Sequencing Edit (rimuovere)</a>
                     </li>
                     <!-- -->
-
 
                 </ul>
                 <!-- /#side-menu -->

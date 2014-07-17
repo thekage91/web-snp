@@ -42,8 +42,8 @@ exports.session = function(req, res) {
  * Create user
  */
 exports.create = function(req, res, next) {
-    console.log("ho ricevuto: "+ JSON.stringify(req.body));
-    req.body.name = req.body.lastName + req.body.firstName;
+    //console.log("ho ricevuto: "+ JSON.stringify(req.body));
+    req.body.name = req.body.firstName + " " + req.body.lastName;
     var user = new User(req.body);
 
     user.provider = 'local';
