@@ -45,8 +45,8 @@
                   </thead>
                   <tbody>
                     <tr ng-repeat="(key,value) in sequencings">
-                      <td>Date:</td>
-                      <td><input type="text" value="5"></td>
+                      <td>{{ key }}</td>
+                      <td><input type="text" value="{{ value }}"></td>
                     </tr>
                     <tr>
                       <td>Type:</td>
@@ -136,6 +136,10 @@
                     </tr>
                   </thead>
                   <tbody>
+                    <tr ng-repeat="(key,value) in variant">
+                      <td>{{ key }}</td>
+                      <td><input type="text" value="{{ value }}"></td>
+                    </tr>
                     <tr>
                       <td>chr:</td>
                       <td><input type="text" value="5"></td>
@@ -184,6 +188,10 @@
                     </tr>
                   </thead>
                   <tbody>
+                    <tr ng-repeat="(key,value) in pathogenicity">
+                      <td>{{ key }}</td>
+                      <td><input type="text" value="{{ value }}"></td>
+                    </tr>
                     <tr>
                       <td>SIFT:</td>
                       <td><input type="text" value="5"></td>
@@ -240,6 +248,10 @@
                     </tr>
                   </thead>
                   <tbody>
+                    <tr ng-repeat="(key,value) in genes">
+                      <td>{{ key }}</td>
+                      <td><input type="text" value="{{ value }}"></td>
+                    </tr>
                     <tr>
                       <td>Gene:</td>
                       <td><input type="text" value="5"></td>
@@ -284,6 +296,10 @@
                     </tr>
                   </thead>
                   <tbody>
+                    <tr ng-repeat="(key,value) in esp">
+                      <td>{{ key }}</td>
+                      <td><input type="text" value="{{ value }}"></td>
+                    </tr>
                     <tr>
                       <td>ESP6500_ALL:</td>
                       <td><input type="text" value="5"></td>
@@ -324,6 +340,10 @@
                     </tr>
                   </thead>
                   <tbody>
+                    <tr ng-repeat="(key,value) in dbsnp">
+                      <td>{{ key }}</td>
+                      <td><input type="text" value="{{ value }}"></td>
+                    </tr>
                     <tr>
                       <td>dbSNP:</td>
                       <td><input type="text" value="5"></td>
@@ -358,6 +378,10 @@
               <div class="box-content">
                 <table class="table beauty-table table-hover patient">
                   <thead>
+                    <tr ng-repeat="(key,value) in patient">
+                      <td>{{ key }}</td>
+                      <td><input type="text" value="{{ value }}"></td>
+                    </tr>
                     <tr>
                       <th class="col-xs-3">&nbsp;</th>
                       <th>&nbsp;</th>
@@ -390,6 +414,10 @@
               <div class="box-content">
                 <table class="table beauty-table table-hover family">
                   <thead>
+                    <tr ng-repeat="(key,value) in family">
+                      <td>{{ key }}</td>
+                      <td><input type="text" value="{{ value }}"></td>
+                    </tr>
                     <tr>
                       <th class="col-xs-3">&nbsp;</th>
                       <th>&nbsp;</th>
