@@ -157,7 +157,7 @@ module.exports = function(app, passport, db) {
     app.use('/public', express.static(config.root + '/public'));
     
     require("angoose").init(app, {
-   'module-dirs':'/models',
+   'module-dirs':'server/models',
    'mongo-opts': 'localhost:27017/test',
 });
 
