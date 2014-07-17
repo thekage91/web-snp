@@ -1,4 +1,25 @@
-<div class="col-lg-11" data-ng-show="user.isLicensed">
+<script type="text/javascript">
+  function fill (){
+    $.get('/api/user/' + document.getElementById('iddi').innerHTML)
+      .success(function(data){
+
+        data.payload.roles.forEach(function(entry) {
+            if (data.payload.roles.indexOf("Licensed") > -1) {
+                var e = document.getElementById('main');
+                e.visibility = "visible";
+            } 
+            ;        
+        });
+        
+
+      });
+  };
+</script>
+
+<div hidden id="main" class="col-lg-11">
+<!--<div class="col-lg-11" ng-show="user.isLicensed">-->
+
+<h1 hidden id="iddi">{{global.user._id}}</h1>
 
 <div class="row">
   <h1 class="section-header">Execute Query</h1>  

@@ -1,7 +1,27 @@
 <script type="text/javascript" src="/public/dashboard/assets/js/common_script.js"></script>
 
-<div class="col-lg-11" ng-show="user.isAdmin()">
+<script type="text/javascript">
+  function fill (){
+    $.get('/api/user/' + document.getElementById('iddi').innerHTML)
+      .success(function(data){
 
+        data.payload.roles.forEach(function(entry) {
+            if (data.payload.roles.indexOf("Admin") > -1) {
+                var e = document.getElementById('main');
+                e.visibility = "visible";
+            } 
+            ;        
+        });
+        
+
+      });
+  };
+</script>
+
+<div hidden id="main" class="col-lg-11">
+<!--<div class="col-lg-11" ng-show="user.isAdmin()">-->
+
+<h1 hidden id="iddi">{{global.user._id}}</h1>
 <div class="row">
   <h1 class="section-header">Authorize Users</h1>  
 
