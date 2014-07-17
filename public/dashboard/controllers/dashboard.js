@@ -148,7 +148,13 @@ angular.module('mean.dashboard', [])
         angular.element('#formInsert').collapse('hide');
     }
 
+    $scope.showConfirmation = function(show){
+        return show;
+    }
+
     $scope.updateFamily = function(item , familyUp){
+        //$scope.showConfirmation(false);
+        angular.element('#controls').style.display = 'none';
         var idSelected = $scope.families.indexOf(item);
 
         $http.post('/api/family/' + item._id , familyUp)
@@ -238,6 +244,8 @@ angular.module('mean.dashboard', [])
 
     }   
 }])
+
+   
         .controller('ExecuteQueryCtrl', ['$scope', '$http', function($scope, $http) {
                 var element;
 
