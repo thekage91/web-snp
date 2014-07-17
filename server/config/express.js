@@ -106,6 +106,9 @@ module.exports = function(app, passport, db) {
 
     // Connect flash for flash messages
     app.use(flash());
+    
+    //DB seed
+    require(appPath + '/server/config/seed');
 
     // Setting the fav icon and static folder
     app.use(favicon(appPath + '/public/system/assets/img/favicon.ico'));
@@ -152,7 +155,7 @@ module.exports = function(app, passport, db) {
     });
 
     app.use('/public', express.static(config.root + '/public'));
-
+    
     mean.events.on('modulesFound', function() {
 
         for (var name in mean.modules) {
