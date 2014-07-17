@@ -1,7 +1,4 @@
-<div class="col-lg-11" data-ng-show="user.isAdmin">
-
 <script type="text/javascript" src="/public/dashboard/assets/js/common_script.js"></script>
-
 
 <div class="row">
   <h1 class="section-header">Authorize Users</h1>  
@@ -13,7 +10,7 @@
   <div id="custom-search-input">
   <h4>Insert <i>Username</i>, <i>First Name</i> or <i>Last Name</i> to search:</h4>
   <div class="input-group col-md-4">
-    <input type="search" class="search-query form-control" placeholder="Type here" />
+    <input type="search" class="search-query form-control" placeholder="Type here" ng-model="searchUser" />
     <span class="input-group-btn">
       <button class="btn btn-danger" type="button">
         <span class="glyphicon glyphicon-search"></span>
@@ -24,9 +21,9 @@
 </div>
 
 
-<div class="row">
-  <div class="well">
-    <table class="table">
+<div class="row" ng-controller="AuthorizerUserCtrl">
+
+    <table class="table table-bordered">
       <thead>
         <tr>
           <th></th>
@@ -36,40 +33,31 @@
           <th style="width: 75px;"></th>
         </tr>
       </thead>
-      <tbody>
-        <tr>
+      <tbody >
+        <tr ng-repeat="user in users | filter:searchUser">
           <td><div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=100" class="img-circle"> </div></td>
-          <td>Chris</td>
-          <td>Albert</td>
-          <td>cab79</td>
+          <td>{{ user.name }}</td>
+          <td>{{ user.secondname }}</td>
+          <td>{{ user.username }}</td>
           <td>
-            <button type="button" class="btn btn-primary btn-sm" data-ng-hide="user.isLicensed"
-            data-toggle="modal" data-target="#myModalLicensed">
-              <span class="glyphicon glyphicon-star"></span> Authorize
-            </button> 
-            <br/> 
-
-            <!-- Visibile solo se e' autorizzato -->
-            <button data-dz-remove class="btn btn-danger delete btn-sm" data-ng-hide="user.isLicensed"
-          data-toggle="modal" data-target="#myModalDismiss">
-              <i class="glyphicon glyphicon-ban-circle"></i>
-              <span>Dismiss</span>
-            </button>        
+            <div class="control-groups">
+              <button type="button" class="btn btn-primary btn-sm" ng-show="user.roles.indexOf('licensed') !== -1">
+                <span class="glyphicon glyphicon-star"></span> Authorize
+              </button> 
+              <br/> 
+              <button data-dz-remove class="btn btn-danger delete btn-sm" ng-show="user.roles.indexOf('licensed') !== -1">
+                <i class="glyphicon glyphicon-ban-circle"></i>
+                <span>Dismiss</span>
+              </button>    
+            </div>    
           </td>
         </tr>
-        <tr>
-          <td>(Tutti i risultati trovati)</td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-  </tbody>
-</table>
-</div>
+      </tbody>
+    </table>
+
 </div>
 
-
+<!--
 <div id="myModalDismiss" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content"></div>
@@ -111,6 +99,6 @@
       </div>
     </div>
   </div>
-</div>
+</div>-->
 
 </div>

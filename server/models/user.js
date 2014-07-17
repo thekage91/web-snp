@@ -122,6 +122,10 @@ UserSchema.methods = {
     isAdmin: function() {
         return this.roles.indexOf('admin') !== -1;
     },
+
+    isLicensed: function(){
+        return this.roles.indexOf('licensed') !== -1;
+    },
 	
     /**
      * Authenticate - check if the passwords are the same

@@ -36,10 +36,9 @@ module.exports = function(app, passport) {
         });
     });
 
-    app.get('/api/users' , function(req , res){
-
+    app.route('/api/usersx')
+    .get(function(req , res){
         User.find(function(err , users) {
-
             if(err){
                 res.send(err);
             }
