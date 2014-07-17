@@ -1,0 +1,232 @@
+<<<<<<< HEAD
+=======
+<link rel="stylesheet" type="text/css" href="/public/dashboard/assets/css/dropzone/basic.css">
+<link rel="stylesheet" type="text/css" href="/public/dashboard/assets/css/dropzone/dropzone.css">
+
+<div class="col-lg-11" data-ng-show="user.isAdmin">
+
+>>>>>>> dev/bootAdmin
+<div class="row">
+  <h1 class="section-header">Sequencing Upload</h1>  
+
+  <hr>
+</div>
+
+
+<style>
+#drop{
+  border:2px dashed #bbb;
+  -moz-border-radius:5px;
+  -webkit-border-radius:5px;
+  border-radius:5px;
+  padding:100px;
+  text-align:center;
+  font:20pt bold,"Vollkorn";color:#bbb
+}
+#b64data{
+  width:100%;
+}
+</style>
+
+
+<div class="row bot15" ng-controller="UploaderCtrl">
+  <h4>Drag and drop into the box below your sequencing file to start uploading it:</h4>
+
+  <div id="drop" style="margin-bottom: 30px; margin-top: 30px">Drop an XLS or XML (2003) file here...</div>
+
+  <button id="btn_save" type="button" class="btn btn-success btn-xs" disabled="disabled"
+          ng-click="saveResult()" ui-sref="dashboard.sequencingEdit">
+      <span class="glyphicon glyphicon-upload"></span> Show result
+  </button>
+
+</div>
+
+<!--<pre id="out"></pre>-->
+
+
+<!-- Per progress bar -->
+<script src="public/system/lib/jquery/dist/jquery.js"></script>
+<script src="public/system/lib/jquery-ui/jquery-ui.js"></script>
+<script>
+
+$(function() {
+    var progressTimer,
+      progressbar = $( "#progressbar" ),
+      progressLabel = $( ".progress-label" ),
+      dialog = $( "#dialog" ).dialog({
+        autoOpen: false,
+        closeOnEscape: false,
+        resizable: false,
+        beforeClose: function() {
+          uploadButton.button( "option", {
+            disabled: false,
+          });
+        }
+      }),
+      uploadButton = $( "#uploadButton" )
+        .button()
+        .on( "click", function() {
+          $( this ).button( "option", {
+            disabled: true,
+          });
+          dialog.dialog( "open" );
+        });
+ 
+    progressbar.progressbar({
+      value: false,
+    });
+ 
+  });
+
+</script>
+
+<div id="dialog" title="File Upload">
+  <div class="progress-label">Uploading... Please wait...</div>
+  <div id="progressbar"></div>
+</div>
+<button hidden id="uploadButton">Start Upload</button>
+
+<!-- Fine progress bar -->
+
+</div>
+
+
+<br/>
+<!-- uncomment the next line here and in xlsxworker.js for encoding support -->
+<!--<script src="dist/cpexcel.js"></script>-->
+<script src="public/dashboard/assets/js/parser.js"></script>
+<script src="public/system/assets/js/xls.js"></script>
+<script>
+var rABS = typeof FileReader !== "undefined" && typeof FileReader.prototype !== "undefined" && typeof FileReader.prototype.readAsBinaryString !== "undefined";
+
+function fixdata(data) {
+  var o = "", l = 0, w = 10240;
+  for(; l<data.byteLength/w; ++l) o+=String.fromCharCode.apply(null,new Uint8Array(data.slice(l*w,l*w+w)));
+  o+=String.fromCharCode.apply(null, new Uint8Array(data.slice(o.length)));
+  return o;
+}
+
+
+function get_radio_value( radioName ) {
+  var radios = document.getElementsByName( radioName );
+  for( var i = 0; i < radios.length; i++ ) {
+    if( radios[i].checked || radios.length === 1 ) {
+      return radios[i].value;
+    }
+  }
+}
+
+function to_json(workbook) {
+  var result = {};
+  workbook.SheetNames.forEach(function(sheetName) {
+    var roa = XLS.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+    if(roa.length > 0){
+      result[sheetName] = roa;
+    }
+  });
+  return result;
+}
+
+function to_csv(workbook) {
+  var result = [];
+  workbook.SheetNames.forEach(function(sheetName) {
+    var csv = XLS.utils.sheet_to_csv(workbook.Sheets[sheetName]);
+    if(csv.length > 0){
+      result.push("SHEET: " + sheetName);
+      result.push("");
+      result.push(csv);
+    }
+  });
+  return result.join("\n");
+}
+
+function to_formulae(workbook) {
+  var result = [];
+  workbook.SheetNames.forEach(function(sheetName) {
+    var formulae = XLS.utils.get_formulae(workbook.Sheets[sheetName]);
+    if(formulae.length > 0){
+      result.push("SHEET: " + sheetName);
+      result.push("");
+      result.push(formulae.join("\n"));
+    }
+  });
+  return result.join("\n");
+}
+
+var tarea = document.getElementById('b64data');
+function b64it() {
+  if(typeof console !== 'undefined') console.log("onload", new Date());
+  var wb = XLS.read(tarea.value, {type: 'base64'});
+  process_wb(wb);
+}
+
+var output;
+function process_wb(wb) {
+  output = "";
+  switch("json") {
+    case "json":
+      output = JSON.stringify(to_json(wb), 2, 2);
+      filteredJson = filterOnlyAttributes(parse(output));
+      break;
+    case "form":
+      output = to_formulae(wb);
+      break;
+    default:
+      output = to_csv(wb);
+  }
+  if(out.innerText === undefined) out.textContent = output;
+  else out.innerText = output;
+
+  document.getElementById('dialog').style.display = 'none';
+  document.getElementById('ui-id-1').innerHTML = "Done!";
+  document.getElementById('btn_save').disabled = "enable";
+
+  if(typeof console !== 'undefined') console.log("output", new Date());
+}
+
+var drop = document.getElementById('drop');
+function handleDrop(e) {
+  e.stopPropagation();
+  e.preventDefault();
+  rABS = false;
+  var files = e.dataTransfer.files;
+  var i,f;
+
+  button = document.getElementById('uploadButton');
+  button.click();
+
+  for (i = 0, f = files[i]; i != files.length; ++i) {
+    var reader = new FileReader();
+    var name = f.name;
+    reader.onload = function(e) {
+
+
+      if(typeof console !== 'undefined') console.log("onload", new Date(), rABS, false);
+      var data = e.target.result;
+      
+      var wb;
+      if(rABS) {
+        wb = XLS.read(data, {type: 'binary'});
+      } else {
+        var arr = fixdata(data);
+        wb = XLS.read(btoa(arr), {type: 'base64'});
+      }
+      process_wb(wb);
+    };
+    if(rABS) reader.readAsBinaryString(f);
+    else reader.readAsArrayBuffer(f);
+  }
+}
+
+function handleDragover(e) {
+  e.stopPropagation();
+  e.preventDefault();
+  e.dataTransfer.dropEffect = 'copy';
+}
+
+if(drop.addEventListener) {
+  drop.addEventListener('dragenter', handleDragover, false);
+  drop.addEventListener('dragover', handleDragover, false);
+  drop.addEventListener('drop', handleDrop, false);
+}
+</script>
