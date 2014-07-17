@@ -1,7 +1,7 @@
 <link href="public/system/assets/css/dashboard.css" rel="stylesheet">
 
 
-<div class="row">
+<div class="row" ng-show="user.isAdmin()">
   <h1 class="section-header">Sequencing details</h1> 
 
   <button type="button" class="btn btn-primary btn-sm" ui-sref="dashboard.sequencingEdit" style="float: right">
@@ -12,7 +12,7 @@
 
 </div>
 
-<div class"box" ng-controller="UploaderCtrl">
+<div class"box" ng-controller="UploaderCtrl" ng-show="user.isAdmin()">
 
     <ul class="nav nav-tabs">
       <li class="text-left"><a href="#sequencing" data-toggle="tab">Sequencing</a></li>

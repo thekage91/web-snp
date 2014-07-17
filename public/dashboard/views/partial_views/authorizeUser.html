@@ -1,5 +1,7 @@
 <script type="text/javascript" src="/public/dashboard/assets/js/common_script.js"></script>
 
+<div ng-show="user.isAdmin()">
+
 <div class="row">
   <h1 class="section-header">Authorize Users</h1>  
 
@@ -56,7 +58,7 @@
     </table>
 
 </div>
-
+</div>
 <!--
 <div id="myModalDismiss" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
