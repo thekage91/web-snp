@@ -212,7 +212,11 @@ A \emph{Gene} is the molecular unit of heredity of a living organism. Genes hold
 \paragraph{Attributes}      
 
 	@d {Sequencing's attributes} @[
-		\lstinputlisting[firstline = 11, lastline = 91]{../server/models/sequencing.js}
+		\lstinputlisting[firstline = 11, lastline = 52]{../server/models/sequencing.js}
+	@]
+
+	@d {Sequencing's attributes - 2} @[
+		\lstinputlisting[firstline = 52, lastline = 91]{../server/models/sequencing.js}
 	@]
 
 \begin{itemize}
@@ -280,7 +284,7 @@ A \emph{Patient} describes a patient in the real world. Can only be created by a
 
 \paragraph{Attributes}      
 
-The Patient object has no attributes to be specified; it only has an identifier (\textbf{ID})that is added from MongoDB by default.
+The Patient object has no attributes to be specified; it only has an identifier (\textbf{ID})that is added from MongoDB by default and a \textbf{Name}.
 
 \paragraph{Relationships} 
 
@@ -339,7 +343,10 @@ These attributes are all self-explanatory.
 		\lstinputlisting[firstline = 10, lastline = 16]{../server/models/user.js}
 	@]
 	@d {User's methods} @[
-		\lstinputlisting[firstline = 58, lastline = 138]{../server/models/user.js}
+		\lstinputlisting[firstline = 58, lastline = 101]{../server/models/user.js}
+	@]
+	@d {User's methods - 2} @[
+		\lstinputlisting[firstline = 101, lastline = 138]{../server/models/user.js}
 	@]
 
 
