@@ -146,7 +146,7 @@ function saveFromParse (data) {
             break;
         }
     };
-    
+    }
     
 
 function filterFromAttributes(data, paths) {
@@ -227,4 +227,4 @@ function filterOnlyAttributes(data) {
     return res;
 
 }
-}
+
