@@ -7,15 +7,33 @@
       margin: 0;
       overflow: hidden;
     }
-
+    #menu {
+        position: absolute;
+        bottom: 20px;
+        width: 100%;
+        text-align: center;
+      }
     #stats {  /* Align stats top-left */
       position: absolute;
       left: 0px;
       top: 0px;
     }
+    button {
+        color: rgba(127,255,255,0.75);
+        background: transparent;
+        outline: 1px solid rgba(127,255,255,0.75);
+        border: 0px;
+        padding: 5px 10px;
+        cursor: pointer;
+      }
+      button:hover {
+        background-color: rgba(0,255,255,0.5);
+      }
+      button:active {
+        color: #000000;
+        background-color: rgba(0,255,255,0.75);
+      }
   </style> 
-  </head>
-  <body>
 
   <!-- JavaScript libraries -->
   <script src="libs/jquery.min.js"></script> 
@@ -35,7 +53,13 @@
   <script src="cytosine.js"></script>
   <script src="thymine.js"></script>
   <script src="guanine.js"></script>
+  </head>
 
+  <body>
+
+    <div id="menu">
+      <button id="animation">Show Animation</button>
+    </div>
   <!-- Javascript code that runs our Three.js examples --> 
   <script>
     // once everything is loaded, we run our Three.js stuff.
@@ -82,43 +106,6 @@
       function createCouple () {
         //Per test; quando ci saranno i costruttori chiamare i costruttori in base ai parametri
         var couple = new THREE.Object3D();
-
-        //Questo pezzo commentato crea un'elica generica fatta di cilindri
-
-        /*var baseLBaseGeometry = new THREE.CylinderGeometry( basesRadius, basesRadius, basesLength, 32 );
-        var baseLBaseMaterial = new THREE.MeshBasicMaterial( {color: 0x521515} );
-        var baseLBase = new THREE.Mesh(baseLBaseGeometry, baseLBaseMaterial);
-        baseLBase.position.set(0, -basesLength/2, 0);
-        baseLBase.castShadow = true;
-
-        couple.add(baseLBase);
-
-        var baseLBallGeometry = new THREE.SphereGeometry( basesRadius*2, 32, 32 );
-        var baseLBallMaterial = new THREE.MeshBasicMaterial( {color: 0xff0000} );
-        var baseLBall = new THREE.Mesh(baseLBallGeometry, baseLBallMaterial);
-        baseLBall.position.set(0, -basesLength - basesRadius, 0);
-        baseLBall.castShadow = true;
-
-        couple.add(baseLBall);
-
-        var baseRBaseGeometry = new THREE.CylinderGeometry( basesRadius, basesRadius, basesLength, 32 );
-        var baseRBaseMaterial = new THREE.MeshBasicMaterial( {color: 0xffffff} );
-        var baseRBase = new THREE.Mesh(baseRBaseGeometry, baseRBaseMaterial);
-        baseRBase.position.set(0, basesLength/2, 0);
-        baseRBase.castShadow = true;
-
-        couple.add(baseRBase);
-
-        var baseRBallGeometry = new THREE.SphereGeometry( basesRadius*2, 32, 32 );
-        var baseRBallMaterial = new THREE.MeshBasicMaterial( {color: 0x007bff} );
-        var baseRBall = new THREE.Mesh(baseRBallGeometry, baseRBallMaterial);
-        baseRBall.position.set(0, basesLength + basesRadius, 0);
-        baseRBall.castShadow = true;
-
-        couple.add(baseRBall);*/
-
-
-
 
         var baseLBase = createGuanine();
 
@@ -180,8 +167,12 @@
       //Function to create the supercoil
       function createSupercoil(numberOfElements) {  //Per passare le basi delle singole coppie, aggiungere come parametro una lista di liste
         var supercoil = new THREE.Object3D();
+        // positionsObj rappresenta l'array di coppie dove poi le basi azotate andranno dopo l'animazione
+        positionsObj = [];
 
         var previous = createCouple();
+
+        positionsObj.push(previous);
         supercoil.add(previous);
 
         for (var i = 0; i < numberOfElements - 1; i++) {
@@ -193,6 +184,7 @@
           previous.add(currentCouple);
 
           previous = currentCouple;
+          positionsObj.push(previous);
         }
 
         return supercoil;
@@ -383,8 +375,9 @@
       var axisHelper = new THREE.AxisHelper(3);
       scene.add(axisHelper);
         
-      var DNA = createSupercoil(31);
-
+      DNA = createSupercoil(31);
+      fooCouple = createCouple();
+      scene.add(fooCouple);
       //scene.add(DNA);
 
       //var temp = createAdenine();
@@ -407,30 +400,35 @@
       var segments = 400;
       var tubeRadius = 3.5;
       var radiusSegments = 12;
+      globalStructure = new THREE.Object3D();
 
       extrudePath = new THREE.Curves.HelixCurve();
 
       tube = new THREE.TubeGeometry(extrudePath, segments, tubeRadius, radiusSegments, false, false);
 
-      addGeometry(tube, 0xff3200);
+      var tubeMesh1 = addGeometry(tube, 0xff3200);
       setScale();
-      tubeMesh.rotation.y = Math.PI/2;
-      tubeMesh.rotation.z = -Math.PI/2;
+      tubeMesh1.rotation.y = Math.PI/2;
+      tubeMesh1.rotation.z = -Math.PI/2;
 
-      tubeMesh.position.x += -tubeRadius;
+      tubeMesh1.position.x += -tubeRadius;
 
-
-
-      addGeometry(tube, 0x007bff);
+      var tubeMesh2 = addGeometry(tube, 0x007bff);
       setScale();
-      tubeMesh.rotation.y = Math.PI/2;
-      tubeMesh.rotation.z = Math.PI/2;
+      tubeMesh2.rotation.y = Math.PI/2;
+      tubeMesh2.rotation.z = Math.PI/2;
 
-      tubeMesh.position.x += -tubeRadius;
-
+      tubeMesh2.position.x += -tubeRadius;
       
       DNA.position.x += basesRadius/2;
-      scene.add(DNA);
+
+      globalStructure.add(DNA);
+      globalStructure.add(tubeMesh1);
+      globalStructure.add(tubeMesh2);
+
+      scene.add(globalStructure);
+
+      animate();
 
       function addGeometry( geometry, color ) {
 
@@ -443,13 +441,53 @@
             side: THREE.DoubleSide
           }),
           new THREE.MeshBasicMaterial({
-            color: 0x000000,
+            color: 0xed3403,
             opacity: 0.3,
             //wireframe: true,
             transparent: true
         })]);
 
-        scene.add( tubeMesh );
+        return tubeMesh;
+
+      }
+
+      // funzione che crea un array random di object3d per sparpagliare le basi azotate
+      // una volta che si clicca sul tasto animate
+      function randomizePositionObject(){
+
+          var randomObjPositions = [];
+          var randomObj = new THREE.Object3D();
+
+          for(var i = 0; i < 31; i++){
+            var x = Math.random() * 4000 - 2000;
+            var y = Math.random() * 4000 - 2000;
+            var z = Math.random() * 4000 - 2000;
+            randomObj.position.set(x,y,z);
+            randomObjPositions.push(randomObj);
+          }
+          return randomObjPositions;
+      }
+
+      function transform(objects, targets, duration ) {
+
+        TWEEN.removeAll();
+
+        for ( var i = 0; i < objects.length; i ++ ) {
+
+          var object = objects[ i ];
+          var target = targets[ i ];
+
+          new TWEEN.Tween( object.position )
+            .to( { x: target.position.x, y: target.position.y, z: target.position.z }, duration )
+            .easing( TWEEN.Easing.Exponential.InOut )
+            .start();
+
+          new TWEEN.Tween( object.rotation )
+            .to( { x: target.rotation.x, y: target.rotation.y, z: target.rotation.z }, duration )
+            .easing( TWEEN.Easing.Exponential.InOut )
+            .start();
+
+        }
 
       }
 
@@ -460,16 +498,103 @@
 
       }
       /*------------------------------------------------------------------------------------------------------------*/
+      /*var button = document.getElementById( 'animation' );
+      button.addEventListener( 'click', function ( event ) {
+
+        animateScene(2000 );
+
+      }, false );*/
 
 
-      render();
+      function movingCamera(duration){
 
-      function render() {
+        var target = new THREE.Vector3(0,0,300);
+        camera.lookAt(new THREE.Vector3(0,0,400));
+
+        new TWEEN.Tween( camera.position )
+            .to( { x: target.x, y: target.y, z: target.z }, duration )
+            .easing( TWEEN.Easing.Quadratic.In )
+            .start();
+      }
+
+      // Le basi rigurdanti saranno le numero 15, per esempio
+      function aniateSNP(duration){
+
+        var couple = positionsObj[15];
+        // couple.childer[0] e' la prima base azotate
+        // couple.childer[1] e' la seconda base azotate
+        // couple.childer[2] sono tutte quelle che vengono dopo
+
+        var target = new THREE.Vector3(0,0,30);
+
+        var movingForward1 = new  new TWEEN.Tween( couple[0].position )
+            .to( { z: target.z }, duration )
+
+        var movingForward2 = new TWEEN.Tween( couple[1].position )
+            .to( { z: target.z }, duration )
+            .easing( TWEEN.Easing.Quadratic.In )
+            .chain(movingForward1)
+            .start();
+
+        /* in questo punto dovrebbero comparire due nuove basi azotate vicino quuelle vecchie che si
+        sono spostate avanti. Per far questo basta usare la funzione trasforms.... 
+        passndo un array (object) contenente le due nuove basi disperse da qualche parte
+        e un altro array (targets) che rappresenta la nuova posizione delle nuove basi azotate, ovvero vicino 
+        a quelle vecchie. Potrebbe essere (xVecchie + 10 , 0,30)
+        */
+
+        var newPosition = new THREE.Vector3(10,0,0); //posizione nuova per le vecchie basi
+        var oldPosition = new THREE.Vector3(couple[0].position.x , 0,0); // posizione nuova per le basi appena entrate
+
+        /* le basi vecchie si spostano */
+        var removeOldBase1 = new  new TWEEN.Tween( couple[0].position )
+            .to( { x: newPosition.x}, duration );
+
+        var removeOldBase2 = new  new TWEEN.Tween( couple[1].position )
+            .to( { x: newPosition.x}, duration );
+        /***********/
+
+        /* Le nuove basi si mettono al posto di quelle vecchie */
+        var  putNewBase1 = new  new TWEEN.Tween( new_couple[0].position )
+            .to( { x: oldPosition.x}, duration );
+
+        var putNewBase2 = new TWEEN.Tween( new_couple[1].position )
+            .to( { x: oldPosition.x }, duration )
+            .easing( TWEEN.Easing.Quadratic.In )
+            .chain(movingForward1)
+            .chain()
+            .start();
+        /***********/
+      }
+
+      function animateScene(duration){
+
+        var targetPos = randomizePositionObject();
+        var subjectPos = positionsObj;
+
+        movingCamera(2000); // la camera di sposta
+        // vedere come evidenziare
+        transform(subjectPos , targetPos , duration); // le altre basi azotate non evidenziate vanno via (eliminare la numero 15)  
+        animateSNP(2000); // si scambiano
+
+        // rimettiamo le cose al loro posto, le altri basi tornano
+        setTimeout( function() {  for(var i = 0; i < 31; i++){
+                                    subjectPos[i].position = targetPos[i].position;
+                                  }
+                                  transform(targetPos, subjectPos, duration); 
+                                } , duration);
+      }
+
+      var step = 0.01;
+      function animate() {
         stats.update();
         trackballControls.update();
 
+        globalStructure.rotation.x += step;
+
+        TWEEN.update();
         // render using requestAnimationFrame
-        requestAnimationFrame(render);
+        requestAnimationFrame(animate);
         webGLRenderer.render(scene, camera);
       }
 
