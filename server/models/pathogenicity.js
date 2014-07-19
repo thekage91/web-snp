@@ -64,4 +64,6 @@ PathogenicitySchema.statics.query = function query(q) {
     return this.find(q);
 };
 
-module.exports = mongoose.model('Pathogenicity', PathogenicitySchema);
+var model =  mongoose.model('Pathogenicity', PathogenicitySchema);
+model.attr = ['SIFT','polyPhen','mutationTaster','mutationAssessor','GERpp','phyloP','siPhy'] ;
+module.exports = model;

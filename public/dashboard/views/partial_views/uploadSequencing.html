@@ -1,22 +1,6 @@
-<script type="text/javascript">
-  function fill (){
-    $.get('/api/user/' + document.getElementById('iddi').innerHTML)
-      .success(function(data){
 
-        data.payload.roles.forEach(function(entry) {
-            if (data.payload.roles.indexOf("Admin") > -1) {
-                var e = document.getElementById('main');
-                e.visibility = "visible";
-            } 
-            ;        
-        });
-        
-
-      });
-  };
-</script>
-
-<div hidden id="main" class="col-lg-11">
+ <script src="/angoose/angoose-client.js"></script>
+<div  id="main" class="col-lg-11">
 <!--<div class="col-lg-11" ng-show="user.isAdmin()">-->
 
 <h1 hidden id="iddi">{{global.user._id}}</h1>
@@ -44,19 +28,19 @@
 </style>
 
 
-<div class="row bot15" ng-controller="UploaderCtrl">
+<div id="ctrlScope" class="row bot15" ng-controller="UploaderCtrl">
   <h4>Drag and drop into the box below your sequencing file to start uploading it:</h4>
 
   <div id="drop" style="margin-bottom: 30px; margin-top: 30px">Drop an XLS or XML (2003) file here...</div>
 
-  <button id="btn_save" type="button" class="btn btn-success btn-xs" disabled="disabled"
-          ng-click="saveResult()" ui-sref="dashboard.sequencingEdit">
+  <button id="btn_save" hidden type="button" class="btn btn-success btn-xs" 
+          ng-click="saveResult()">
       <span class="glyphicon glyphicon-upload"></span> Show result
   </button>
 
 </div>
 
-<!--<pre id="out"></pre>-->
+<!-- <input id="out" ng-model="response" ng.click="prova()"></input> -->
 
 
 <!-- Per progress bar -->
@@ -99,7 +83,7 @@ $(function() {
   <div class="progress-label">Uploading... Please wait...</div>
   <div id="progressbar"></div>
 </div>
-<button hidden id="uploadButton">Start Upload</button>
+<button id="uploadButton">Start Upload</button>
 
 <!-- Fine progress bar -->
 
@@ -113,6 +97,7 @@ $(function() {
 <script src="public/system/assets/js/xls.js"></script>
 <script>
 var rABS = typeof FileReader !== "undefined" && typeof FileReader.prototype !== "undefined" && typeof FileReader.prototype.readAsBinaryString !== "undefined";
+
 
 function fixdata(data) {
   var o = "", l = 0, w = 10240;
@@ -181,7 +166,8 @@ function process_wb(wb) {
   switch("json") {
     case "json":
       output = JSON.stringify(to_json(wb), 2, 2);
-      filteredJson = filterOnlyAttributes(parse(output));
+      btn_save.click();
+      //filteredJson = filterOnlyAttributes(parse(output));
       break;
     case "form":
       output = to_formulae(wb);
@@ -189,8 +175,8 @@ function process_wb(wb) {
     default:
       output = to_csv(wb);
   }
-  if(out.innerText === undefined) out.textContent = output;
-  else out.innerText = output;
+   /*if(out.innerText === undefined) out.textContent = output;
+   else out.innerText = output;*/
 
   document.getElementById('dialog').style.display = 'none';
   document.getElementById('ui-id-1').innerHTML = "Done!";
@@ -244,4 +230,6 @@ if(drop.addEventListener) {
   drop.addEventListener('dragover', handleDragover, false);
   drop.addEventListener('drop', handleDrop, false);
 }
+
+ 
 </script>

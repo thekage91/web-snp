@@ -29,4 +29,7 @@ FamilySchema.statics.query = function query(q) {
     return this.find(q);
 };
 
-module.exports = mongoose.model('Family', FamilySchema);
+
+var model = mongoose.model('Family', FamilySchema);
+model.attr = ['name'] ;
+module.exports = model;

@@ -74,4 +74,7 @@ VariantSchema.statics.query = function query(q) {
     return this.find(q);
 };
 
-module.exports = mongoose.model('Variant', VariantSchema);
+
+var model = mongoose.model('Variant', VariantSchema);
+model.attr = ['chr','start','end','ref','alt'] ;
+module.exports = model;

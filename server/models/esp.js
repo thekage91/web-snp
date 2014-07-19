@@ -38,4 +38,7 @@ EspSchema.statics.query = function query(q) {
     return this.find(q);
 };
 
-module.exports = mongoose.model('Esp', EspSchema);
+
+var model = mongoose.model('Esp', EspSchema);
+model.attr = ['ESP6500_ALL','ESP6500_AA','ESP6500_EA' ] ;
+module.exports = model;

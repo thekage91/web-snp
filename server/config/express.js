@@ -158,7 +158,7 @@ module.exports = function(app, passport, db) {
     
     require("angoose").init(app, {
    'module-dirs':'server/models',
-   'mongo-opts': 'localhost:27017/test',
+   'mongo-opts': 'localhost:27017/mean-dev'
 });
 
     mean.events.on('modulesFound', function() {

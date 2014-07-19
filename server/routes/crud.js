@@ -1,10 +1,16 @@
 'use strict';
 
 var express = require('express'); 
- var mers = require('mers');
- 
- module.exports = function(app, passport) { 
-    app.use('/api', mers({uri:'mongodb://localhost/mean-dev'}).rest());
+var mers = require('mers');
+var mongoose = require('mongoose');
+
+module.exports = function(app, passport) { 
+     var rest =mers({uri:'mongodb://localhost/mean-dev'});
+      
+     app.get('/api/model/:id', function (req, res, next) {
+        res.json(mongoose.model(req.params.id).attr);   
+});
+     app.use('/api', rest.rest());
  };
     
 /*

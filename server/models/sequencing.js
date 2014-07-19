@@ -106,5 +106,7 @@ SequencingSchema.statics.query = function query(q) {
     return this.find(q);
 };
 
+var model =  mongoose.model('Sequencing', SequencingSchema);
+model.attr = [ 'patientId','date','patientHealthStatus','sequencerName','sequencerModel','referenceGenome'] ;
+module.exports = model;
 
-module.exports = mongoose.model('Sequencing', SequencingSchema);

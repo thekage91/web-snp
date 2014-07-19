@@ -43,4 +43,6 @@ GeneSchema.statics.query = function query(q) {
     return this.find(q);
 };
 
-module.exports = mongoose.model('Gene', GeneSchema);
+var model = mongoose.model('Gene', GeneSchema);
+model.attr = ['genes','region','mutation','annotation'];
+module.exports = model;

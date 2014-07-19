@@ -4,6 +4,7 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
+    angoose = require("angoose"),
     Schema = mongoose.Schema,
     crypto = require('crypto');
     
@@ -40,5 +41,6 @@ DbSNPSchema.statics.query = function query(q) {
     return this.find(q);
 };
 
-
-module.exports = mongoose.model('DbSNP', DbSNPSchema);
+var model = mongoose.model('DbSNP', DbSNPSchema);
+model.attr = ['dbSNP','freqAlt','freqRef'] ;
+module.exports = model;

@@ -12,9 +12,10 @@ var error = function(err, element) {
 function retrieveFromSchema (data,schema,noModify) {
        var res = {};
        var camelized;
+       console.log("SCHEMA = " + JSON.stringify(schema));
        for( var el in data) {
            if(!noModify) camelized = camelize(el); else camelized = el;
-           if(schema.paths.hasOwnProperty(camelized)) {
+           if(schema.indexOf(camelized) > -1) {
                res[camelized] = data[el];
                delete data[el];
            }
@@ -22,48 +23,76 @@ function retrieveFromSchema (data,schema,noModify) {
        return res;
   };
 
-function retrieveVariantDetail (data) {
-        var detail = retrieveFromSchema(data,VariantDetail.schema);
+function retrieveVariantDetail (data,variantSchema) {
+        var detail = retrieveFromSchema(data,variantSchema);
         detail.altFilteredReads = data['Ref,Alt filtered reads'];
         detail.ref = data['Ref,Alt filtered reads'];
         return detail;
   } 
   
   
-function retrievePathogenicity (data) {
-        var path = retrieveFromSchema(data,Pathogenicity.schema);
+function retrievePathogenicity (data,pathogenicitySchema) {
+        var path = retrieveFromSchema(data,pathogenicitySchema);
         path.GERpp = data['GERP++'];
         path.SIFT = data['SIFT'];
         path.polyPhen = data['PolyPhen-2'];
         return path;
-  } 
-    
+  }
+
+function getModelSchema(element) {
+    $.get('/api/model/'+element)
+        .success(function (data) {
+            console.log("Got " + element + " schema\tdata = " + JSON.stringify(data));
+            return (JSON.parse('{ \"0\" : ' +data + '}'))['0'];
+        }).error(function (data) {
+            console.log("[ERROR] Failed getting  "+ element +"  schema");
+        });
+}
+
+
 function parse(json) {
     
     
     //Firse element is always some file information
-    for (var key in json) if (json.hasOwnProperty(key))  break;
-    var patientName = /[^_]*/.exec(key)[0];
-    var patient = new Patient({name: patientName});
+    for (var key in json) {console.log("key = " + key); if (json.hasOwnProperty(key))  break }
+    var patientName = 'prova';
+    var patient = {name: patientName};
     
     var result = {};
-    result.variants = new Array();
-    result.details = new Array();
-    result.genes = new Array();
-    result.dbsnps = new Array();
-    result.pathogenicities = new Array();
-    result.esps = new Array();
+    result.variants = [];
+    result.details = [];
+    result.genes = [];
+    result.dbsnps = [];
+    result.pathogenicities = [];
+    result.esps = [];
+
+    var Variant = {};
+    var VariantDetail= {};
+    var Gene= {};
+    var DbSNP= {};
+    var Pathogenicity = {};
+    var Esp = {};
+    var Patient = {};
+
+    Variant.schema = getModelSchema('Variant');
+    VariantDetail.schema = getModelSchema('VariantDetail');
+    Gene.schema = getModelSchema('Gene');
+    DbSNP.schema = getModelSchema('DbSNP');
+    Pathogenicity.schema = getModelSchema('Pathogenicity');
+    Esp.schema = getModelSchema('Esp');
+    Patient.schema = getModelSchema('Patient');
     
+    console.log('json key = '+ json[key] + "\nkey = " + json[0] + "\njson = " + json.toString().substr(0,100));
     //Iterate on single file elements
     json[key].forEach( function (element) {
         
         //build model classes
-        var variant = new Variant(retrieveFromSchema(element,Variant.schema));
-        var detail = new VariantDetail(retrieveVariantDetail(element));
-        var gene = new Gene(retrieveFromSchema(element,Gene.schema));
-        var dbsnp = new DbSNP(retrieveFromSchema(element,DbSNP.schema));
-        var pathogenicity = new Pathogenicity(retrievePathogenicity(element));
-        var esp = new Esp(retrieveFromSchema(element,Esp.schema,true));
+        var variant = retrieveFromSchema(element,Variant.schema);
+        var detail = retrieveVariantDetail(element,VariantDetail.schema);
+        var gene = retrieveFromSchema(element,Gene.schema);
+        var dbsnp = retrieveFromSchema(element,DbSNP.schema);
+        var pathogenicity = retrievePathogenicity(element,Pathogenicity.schema);
+        var esp = retrieveFromSchema(element,Esp.schema,true);
         
         //build model relationships
         variant.variantDetails.push(detail);
@@ -226,5 +255,9 @@ function filterOnlyAttributes(data) {
     }
     return res;
 
+
+
 }
+
+console.log("CIAO VENGO CHIAMATO");
 

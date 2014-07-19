@@ -1,22 +1,5 @@
-<script type="text/javascript">
-  function fill (){
-    $.get('/api/user/' + document.getElementById('iddi').innerHTML)
-      .success(function(data){
 
-        data.payload.roles.forEach(function(entry) {
-            if (data.payload.roles.indexOf("Licensed") > -1) {
-                var e = document.getElementById('main');
-                e.visibility = "visible";
-            } 
-            ;        
-        });
-        
-
-      });
-  };
-</script>
-
-<div hidden id="main" class="col-lg-11">
+<div id="main" class="col-lg-11">
 <!--<div class="col-lg-11" ng-show="user.isLicensed">-->
 
 <h1 hidden id="iddi">{{global.user._id}}</h1>
