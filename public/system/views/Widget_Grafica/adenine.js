@@ -1,21 +1,60 @@
+var options = {
+    size: 7,
+    height: 5*2/3,
+    font: "helvetiker",
+    bevelThickness: 1,
+    bevelSize: 0.5,
+    bevelSegments: 3,
+    bevelEnabled: true,
+    curveSegments: 12,
+    steps: 1
+};
 
-function Adenine(code){
+//Function to create an adenine base
+function createAdenine(basesLength, basesRadius) {
+    var shape = new THREE.Shape();
+    shape.moveTo(0, 0);
+    shape.lineTo(0, basesRadius*2);
+    shape.lineTo(basesLength/2, basesRadius*2);
+    shape.arc(0, 0, basesRadius/2, 2*Math.PI, Math.PI, false);
+    shape.lineTo(basesLength - basesRadius, basesRadius*2);
+    shape.moveTo(basesLength - basesRadius, basesRadius);
+    shape.arc(0, 0, basesRadius, -Math.PI/2, Math.PI/2, false);
+    shape.lineTo(0, 0);
 
-	this.code = code;
-	this.mesh = createMesh();
+    var shapeGeometry = shape.extrude({amount: basesRadius*2, bevelSize: 0, bevelThickness: 0});
+    var shapeMaterial = new THREE.MeshBasicMaterial({color: 0xfc9362, side: THREE.DoubleSide});
+    var shape = new THREE.Mesh(shapeGeometry, shapeMaterial);
 
-	function createMesh (){
+    shape.castShadow = true;
+    shape.receiveShadow = true;
 
-		var material = new THREE.MeshLambertMaterial({color: 0xffffff});
-		var shape = new THREE.Shape();
+    var adenine = new THREE.Object3D();
+    adenine.add(shape);
 
-		shape.moveTo(0,0);
+    //TODO: Mettere bordi neri
+    //shape.wireframe = new THREE.MeshBasicMaterial({color: 0x000000, side: THREE.DoubleSide});
+    //shape.wireframeLinewidth = 50;
+    //shape.wireFrameLineJoin = meshMaterial.wireframeLinejoin;
+        
+    //Add the text "A"
+    var text = createMesh(new THREE.TextGeometry("A", options), 0x396d35);
+    text.position.z = basesRadius*3/2;
+    text.position.y = basesRadius/3;
+    text.position.x = basesLength - basesRadius*3;
 
-		//inserire un arco
+    text.castShadow = true;
+    text.receiveShadow = true;
 
-		shape.lineTo(8,0);
-		
+    adenine.add(text);
 
-		return new THREE.Mesh(material , shape);
-	}
+    return adenine;
+}
+
+function createMesh(geom, textColor) {
+    var meshMaterial = new THREE.MeshPhongMaterial({specular: 0xffffff, color: textColor, shininess: 100, metal: true});
+    var textMesh = new THREE.Mesh(geom, meshMaterial);
+    textMesh.castShadow = true;
+
+    return textMesh;
 }

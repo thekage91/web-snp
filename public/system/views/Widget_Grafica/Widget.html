@@ -56,13 +56,12 @@
   </head>
 
   <body>
-
     <div id="menu">
       <button id="animation">Show Animation</button>
     </div>
-  <!-- Javascript code that runs our Three.js examples --> 
+  <!-- Javascript code --> 
   <script>
-    // once everything is loaded, we run our Three.js stuff.
+    //once everything is loaded, we run our Three.js stuff.
     $(function () {
 
       var stats = initStats();
@@ -86,97 +85,93 @@
       camera.position.set(0, 0, 500);
       camera.lookAt(new THREE.Vector3(0, 0, 0));
 
-
       // add the output of the renderer to the html element
       $('body').append(webGLRenderer.domElement);
 
 
-
-      /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-      function createMesh(geom, textColor) {
-        var meshMaterial = new THREE.MeshPhongMaterial({specular: 0xffffff, color: textColor, shininess: 100, metal: true});
-        var textMesh = new THREE.Mesh(geom, meshMaterial);
-        textMesh.castShadow = true;
-
-        return textMesh;
-      }
-
+      
       //Function to create a couple of nitrogenous bases
-      //function createCouple (baseLeft, baseRight) {
-      function createCouple () {
-        //Per test; quando ci saranno i costruttori chiamare i costruttori in base ai parametri
+      function createCouple (bases) {
         var couple = new THREE.Object3D();
 
-        var baseLBase = createGuanine();
+        var baseL;
+        var baseR;
+        var baseLeft = bases[0];
+        var baseRight = bases[1];
 
-        baseLBase.rotation.z = Math.PI/2;
+        switch(baseLeft) { 
+  
+          case "adenine": 
+            baseL = createAdenine(basesLength, basesRadius);
+          break;
 
-        baseLBase.position.set(0, -basesLength + basesRadius/2, 0);
-        baseLBase.castShadow = true;
+          case "thymine": 
+            baseL = createThymine(basesLength, basesRadius);
+          break;
+          
+          case "cytosine": 
+            baseL = createCytosine(basesLength, basesRadius);
+          break;
 
-        couple.add(baseLBase);
+          case "guanine": 
+            baseL = createGuanine(basesLength, basesRadius);
+          break;
 
-        var baseLBallGeometry = new THREE.SphereGeometry( basesRadius*2, 32, 32 );
-        var baseLBallMaterial = new THREE.MeshBasicMaterial( {color: 0xff3200} );
-        var baseLBall = new THREE.Mesh(baseLBallGeometry, baseLBallMaterial);
-        baseLBall.position.set(-basesRadius, -basesLength - basesRadius*2 + basesRadius/2, basesRadius);
-        baseLBall.castShadow = true;
+          default: 
+            baseL = createGuanine(basesLength, basesRadius);
+        }
 
+        switch(baseRight) { 
+  
+          case "adenine": 
+            baseR = createAdenine(basesLength, basesRadius);
+          break;
 
-        var baseRBase = createCytosine();
+          case "thymine": 
+            baseR = createThymine(basesLength, basesRadius);
+          break;
+          
+          case "cytosine": 
+            baseR = createCytosine(basesLength, basesRadius);
+          break;
 
-        baseRBase.rotation.z = Math.PI/2;
+          case "guanine": 
+            baseR = createGuanine(basesLength, basesRadius);
+          break;
 
-        baseRBase.position.set(0, 0, 0);
-        baseRBase.castShadow = true;
+          default: 
+            baseR = createCytosine(basesLength, basesRadius);
+        }
 
-        couple.add(baseRBase);
+        baseL.rotation.z = Math.PI/2;
+        baseL.position.set(0, -basesLength + basesRadius/2, 0);
+        baseL.castShadow = true;
+        couple.add(baseL);
 
-        var baseRBallGeometry = new THREE.SphereGeometry( basesRadius*2, 32, 32 );
-        var baseRBallMaterial = new THREE.MeshBasicMaterial( {color: 0x007bff} );
-        var baseRBall = new THREE.Mesh(baseRBallGeometry, baseRBallMaterial);
-        baseRBall.position.set(-basesRadius, basesLength + basesRadius*2, basesRadius);
-        baseRBall.castShadow = true;
+        baseR.rotation.z = Math.PI/2;
+        baseR.position.set(0, 0, 0);
+        baseR.castShadow = true;
+        couple.add(baseR);
 
-        var baseRPlaneGeometry = new THREE.BoxGeometry( basesRadius*8, basesRadius, basesRadius );
-        var baseRPlaneMaterial = new THREE.MeshBasicMaterial( {color: 0x007bff} );
-        var baseRPlane = new THREE.Mesh(baseRPlaneGeometry, baseRPlaneMaterial);
-        baseRPlane.position.set(-basesRadius*4, 0, 0);
-        baseRPlane.castShadow = true;
-
-        var baseLPlaneGeometry = new THREE.BoxGeometry( basesRadius*8, basesRadius, basesRadius );
-        var baseLPlaneMaterial = new THREE.MeshBasicMaterial( {color: 0xff3200} );
-        var baseLPlane = new THREE.Mesh(baseLPlaneGeometry, baseLPlaneMaterial);
-        baseLPlane.position.set(-basesRadius*4, 0, 0);
-        baseLPlane.castShadow = true;
-
-        baseLBall.rotation.y = Math.PI*1/3;
-        baseLBall.rotation.x = -Math.PI*1/15;
-        baseRBall.rotation.y = -Math.PI*1/3;
-        baseRBall.rotation.x = -Math.PI*1/15;
-
-        //couple.add(baseLBall);
-        //couple.add(baseRBall);
-        //baseRBall.add(baseRPlane);
-        //baseLBall.add(baseLPlane);
-        
         return couple;
       }
 
 
+
       //Function to create the supercoil
-      function createSupercoil(numberOfElements) {  //Per passare le basi delle singole coppie, aggiungere come parametro una lista di liste
+      function createSupercoil(numberOfElements, couplesList) {
         var supercoil = new THREE.Object3D();
-        // positionsObj rappresenta l'array di coppie dove poi le basi azotate andranno dopo l'animazione
+
+        //positionsObj rappresenta l'array di coppie dove poi le basi azotate andranno dopo l'animazione
         positionsObj = [];
 
-        var previous = createCouple();
+        var previous = createCouple(couplesList[0]);
 
         positionsObj.push(previous);
         supercoil.add(previous);
 
-        for (var i = 0; i < numberOfElements - 1; i++) {
-          var currentCouple = createCouple();
+        for (var i = 1; i < numberOfElements; i++) {
+          var currentCouple = createCouple(couplesList[i]);
 
           currentCouple.position.x += basesRadius*4;
           currentCouple.rotation.x = Math.PI*1/6;
@@ -191,249 +186,9 @@
       }
 
 
-      //Function to create an adenine base
-      function createAdenine() {
-        var shape = new THREE.Shape();
-        shape.moveTo(0, 0);
-        shape.lineTo(0, basesRadius*2);
-        shape.lineTo(basesLength/2, basesRadius*2);
-        shape.arc(0, 0, basesRadius/2, 2*Math.PI, Math.PI, false);
-        shape.lineTo(basesLength - basesRadius, basesRadius*2);
-        shape.moveTo(basesLength - basesRadius, basesRadius);
-        shape.arc(0, 0, basesRadius, -Math.PI/2, Math.PI/2, false);
-        shape.lineTo(0, 0);
 
-        var shapeGeometry = shape.extrude({amount: basesRadius*2, bevelSize: 0, bevelThickness: 0});
-        var shapeMaterial = new THREE.MeshBasicMaterial({color: 0xfc9362, side: THREE.DoubleSide});
-        var shape = new THREE.Mesh(shapeGeometry, shapeMaterial);
-
-        shape.castShadow = true;
-        shape.receiveShadow = true;
-
-        var adenine = new THREE.Object3D();
-        adenine.add(shape);
-
-        //TODO: Mettere bordi neri
-        //shape.wireframe = new THREE.MeshBasicMaterial({color: 0x000000, side: THREE.DoubleSide});
-        //shape.wireframeLinewidth = 50;
-        //shape.wireFrameLineJoin = meshMaterial.wireframeLinejoin;
-        
-        //Add the text "A"
-        var text = createMesh(new THREE.TextGeometry("A", options), 0x396d35);
-        text.position.z = basesRadius*3/2;
-        text.position.y = basesRadius/3;
-        text.position.x = basesLength - basesRadius*3;
-
-        text.castShadow = true;
-        text.receiveShadow = true;
-
-        adenine.add(text);
-
-        return adenine;
-      }
-
-
-      //Function to create a guanine base
-      function createGuanine() {
-        var shape = new THREE.Shape();
-        shape.moveTo(0, 0);
-        shape.lineTo(0, basesRadius*2);
-        shape.lineTo(basesLength/2, basesRadius*2);
-        shape.arc(0, 0, basesRadius/2, 2*Math.PI, Math.PI, false);
-        shape.lineTo(basesLength - basesRadius, basesRadius*2);
-        shape.lineTo(basesLength, basesRadius);
-        shape.lineTo(basesLength - basesRadius, 0);
-        shape.lineTo(0, 0);
-
-        var shapeGeometry = shape.extrude({amount: basesRadius*2, bevelSize: 0, bevelThickness: 0});
-        var shapeMaterial = new THREE.MeshBasicMaterial({color: 0xff0000, side: THREE.DoubleSide});
-        var shape = new THREE.Mesh(shapeGeometry, shapeMaterial);
-
-        shape.castShadow = true;
-        shape.receiveShadow = true;
-
-        var guanine = new THREE.Object3D();
-        guanine.add(shape);
-
-        //TODO: Mettere bordi neri
-        //shape.wireframe = new THREE.MeshBasicMaterial({color: 0x000000, side: THREE.DoubleSide});
-        //shape.wireframeLinewidth = 50;
-        //shape.wireFrameLineJoin = meshMaterial.wireframeLinejoin;
-        
-        //Add the text "G"
-        var text = createMesh(new THREE.TextGeometry("G", options), 0x396d35);
-        text.position.z = basesRadius*3/2;
-        text.position.y = basesRadius/3;
-        text.position.x = basesLength - basesRadius*3;
-
-        text.castShadow = true;
-        text.receiveShadow = true;
-
-        guanine.add(text);
-
-        return guanine;
-      }
-
-
-      //Function to create a cytosine base
-      function createCytosine() {
-        var shape = new THREE.Shape();
-        shape.moveTo(0, basesRadius*2);
-        shape.lineTo(basesRadius, basesRadius);
-        shape.lineTo(0, 0);
-        shape.lineTo(basesLength, 0);
-        shape.lineTo(basesLength, basesRadius*2);
-        shape.lineTo(0, basesRadius*2);
-
-        var shapeGeometry = shape.extrude({amount: basesRadius*2, bevelSize: 0, bevelThickness: 0});
-        var shapeMaterial = new THREE.MeshBasicMaterial({color: 0xdda411, side: THREE.DoubleSide});
-        var shape = new THREE.Mesh(shapeGeometry, shapeMaterial);
-
-        shape.castShadow = true;
-        shape.receiveShadow = true;
-
-        var cytosine = new THREE.Object3D();
-        cytosine.add(shape);
-
-        //TODO: Mettere bordi neri
-        //shape.wireframe = new THREE.MeshBasicMaterial({color: 0x000000, side: THREE.DoubleSide});
-        //shape.wireframeLinewidth = 50;
-        //shape.wireFrameLineJoin = meshMaterial.wireframeLinejoin;
-        
-        //Add the text "C"
-        var text = createMesh(new THREE.TextGeometry("C", options), 0x396d35);
-        text.position.z = basesRadius*3/2;
-        text.position.y = basesRadius/3;
-        text.position.x = basesRadius*2;
-
-        text.castShadow = true;
-        text.receiveShadow = true;
-
-        cytosine.add(text);
-
-        return cytosine;
-      }
-
-
-      //Function to create a thymine base
-      function createThymine() {
-        var shape = new THREE.Shape();
-        shape.moveTo(0, basesRadius);
-        shape.arc(0, 0, basesRadius, Math.PI/2, -Math.PI/2, false);
-        shape.lineTo(basesLength, basesRadius*2);
-        shape.lineTo(basesLength, 0);
-        shape.lineTo(0, 0);
-        
-        var shapeGeometry = shape.extrude({amount: basesRadius*2, bevelSize: 0, bevelThickness: 0});
-        var shapeMaterial = new THREE.MeshBasicMaterial({color: 0xffe900, side: THREE.DoubleSide});
-        var shape = new THREE.Mesh(shapeGeometry, shapeMaterial);
-
-        shape.castShadow = true;
-        shape.receiveShadow = true;
-
-        var thymine = new THREE.Object3D();
-        thymine.add(shape);
-
-        //TODO: Mettere bordi neri
-        //shape.wireframe = new THREE.MeshBasicMaterial({color: 0x000000, side: THREE.DoubleSide});
-        //shape.wireframeLinewidth = 50;
-        //shape.wireFrameLineJoin = meshMaterial.wireframeLinejoin;
-        
-        //Add the text "T"
-        var text = createMesh(new THREE.TextGeometry("T", options), 0x396d35);
-        text.position.z = basesRadius*3/2;
-        text.position.y = basesRadius/3;
-        text.position.x = basesRadius*2;
-
-        text.castShadow = true;
-        text.receiveShadow = true;
-
-        thymine.add(text);
-
-        return thymine;
-      }
-
-
-
-
-      //VARIABLES
-      var basesLength = 50;
-      var basesRadius = 5;
-
-      var options = {
-        size: 7,
-        height: basesRadius*2/3,
-        font: "helvetiker",
-        bevelThickness: 1,
-        bevelSize: 0.5,
-        bevelSegments: 3,
-        bevelEnabled: true,
-        curveSegments: 12,
-        steps: 1
-      };
-      
-      var axisHelper = new THREE.AxisHelper(3);
-      scene.add(axisHelper);
-        
-      DNA = createSupercoil(31);
-      fooCouple = createCouple();
-      scene.add(fooCouple);
-      //scene.add(DNA);
-
-      //var temp = createAdenine();
-      var temp = createGuanine();
-      var temp2 = createCytosine();
-      temp2.position.x = basesLength - basesRadius;
-
-      //scene.add(temp);
-      //scene.add(temp2);
-
-      var temp3 = createThymine();
-      //scene.add(temp3);
-
-
-      /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-      /*------------------------------------------------- PROVA ----------------------------------------------------*/
-
-      var segments = 400;
-      var tubeRadius = 3.5;
-      var radiusSegments = 12;
-      globalStructure = new THREE.Object3D();
-
-      extrudePath = new THREE.Curves.HelixCurve();
-
-      tube = new THREE.TubeGeometry(extrudePath, segments, tubeRadius, radiusSegments, false, false);
-
-      var tubeMesh1 = addGeometry(tube, 0xff3200);
-      setScale();
-      tubeMesh1.rotation.y = Math.PI/2;
-      tubeMesh1.rotation.z = -Math.PI/2;
-
-      tubeMesh1.position.x += -tubeRadius;
-
-      var tubeMesh2 = addGeometry(tube, 0x007bff);
-      setScale();
-      tubeMesh2.rotation.y = Math.PI/2;
-      tubeMesh2.rotation.z = Math.PI/2;
-
-      tubeMesh2.position.x += -tubeRadius;
-      
-      DNA.position.x += basesRadius/2;
-
-      globalStructure.add(DNA);
-      globalStructure.add(tubeMesh1);
-      globalStructure.add(tubeMesh2);
-
-      scene.add(globalStructure);
-
-      animate();
-
-      function addGeometry( geometry, color ) {
-
-        // 3d shape
-
+      function addGeometry(geometry, color) {
+        //3D shape
         tubeMesh = THREE.SceneUtils.createMultiMaterialObject( geometry, [
           new THREE.MeshBasicMaterial({
             color: color,
@@ -448,13 +203,12 @@
         })]);
 
         return tubeMesh;
-
       }
 
-      // funzione che crea un array random di object3d per sparpagliare le basi azotate
-      // una volta che si clicca sul tasto animate
-      function randomizePositionObject(){
 
+
+      //Function that creates an array of random object3d to scatter the nitrogenous bases once you click on the button animated
+      function randomizePositionObject(){
           var randomObjPositions = [];
           var randomObj = new THREE.Object3D();
 
@@ -468,8 +222,9 @@
           return randomObjPositions;
       }
 
-      function transform(objects, targets, duration ) {
 
+
+      function transform(objects, targets, duration) {
         TWEEN.removeAll();
 
         for ( var i = 0; i < objects.length; i ++ ) {
@@ -486,28 +241,12 @@
             .to( { x: target.rotation.x, y: target.rotation.y, z: target.rotation.z }, duration )
             .easing( TWEEN.Easing.Exponential.InOut )
             .start();
-
         }
-
       }
 
-      function setScale() {
-
-        scale = 2;
-        tubeMesh.scale.set( scale, scale, scale );
-
-      }
-      /*------------------------------------------------------------------------------------------------------------*/
-      /*var button = document.getElementById( 'animation' );
-      button.addEventListener( 'click', function ( event ) {
-
-        animateScene(2000 );
-
-      }, false );*/
 
 
       function movingCamera(duration){
-
         var target = new THREE.Vector3(0,0,300);
         camera.lookAt(new THREE.Vector3(0,0,400));
 
@@ -517,9 +256,10 @@
             .start();
       }
 
-      // Le basi rigurdanti saranno le numero 15, per esempio
-      function aniateSNP(duration){
 
+
+      // Le basi rigurdanti saranno le numero 15, per esempio
+      function animateSNP(duration){
         var couple = positionsObj[15];
         // couple.childer[0] e' la prima base azotate
         // couple.childer[1] e' la seconda base azotate
@@ -567,8 +307,9 @@
         /***********/
       }
 
-      function animateScene(duration){
 
+
+      function animateScene(duration){
         var targetPos = randomizePositionObject();
         var subjectPos = positionsObj;
 
@@ -584,8 +325,9 @@
                                   transform(targetPos, subjectPos, duration); 
                                 } , duration);
       }
+      
 
-      var step = 0.01;
+
       function animate() {
         stats.update();
         trackballControls.update();
@@ -593,10 +335,12 @@
         globalStructure.rotation.x += 0.01;
 
         //TWEEN.update();
-        // render using requestAnimationFrame
+        //render using requestAnimationFrame
         requestAnimationFrame(animate);
         webGLRenderer.render(scene, camera);
       }
+
+
 
       function initStats() {
         var stats = new Stats();
@@ -604,6 +348,64 @@
         $('body').append(stats.domElement);
         return stats;
       }
+
+
+
+      //VARIABLES
+      var basesLength = 50;
+      var basesRadius = 5;
+      var segments = 400;
+      var tubeRadius = 3.5;
+      var radiusSegments = 12;
+      var tubeMesh1;
+      var tubeMesh2;
+      var button;
+      var step = 0.01;
+      var couplesList;
+      var axisHelper = new THREE.AxisHelper(3);
+      scene.add(axisHelper);
+      
+
+      button = document.getElementById( 'animation' );
+
+      button.addEventListener( 'click', function ( event ) {
+        animateScene(2000 );
+      }, false );
+
+      //Basis Creation
+      couplesList = [["adenine","thymine"],["guanine","cytosine"],["guanine","cytosine"],["adenine","thymine"],["adenine","thymine"],["adenine","thymine"],["guanine","cytosine"],["guanine","cytosine"],["guanine","cytosine"],["guanine","cytosine"],["guanine","cytosine"],["guanine","cytosine"],["adenine","thymine"],["guanine","cytosine"],["adenine","thymine"],["adenine","thymine"],["adenine","thymine"],["guanine","cytosine"],["adenine","thymine"],["adenine","thymine"],["guanine","cytosine"],["guanine","cytosine"],["adenine","thymine"],["guanine","cytosine"],["guanine","cytosine"],["adenine","thymine"],["adenine","thymine"],["adenine","thymine"],["adenine","thymine"],["guanine","cytosine"],["adenine","thymine"]];
+
+      DNA = createSupercoil(31, couplesList);
+
+      
+      //DNA Strands Creation
+      globalStructure = new THREE.Object3D();
+
+      extrudePath = new THREE.Curves.HelixCurve();
+
+      tube = new THREE.TubeGeometry(extrudePath, segments, tubeRadius, radiusSegments, false, false);
+
+      tubeMesh1 = addGeometry(tube, 0xff3200);
+      tubeMesh1.scale.set(2, 2, 2);
+      tubeMesh1.rotation.y = Math.PI/2;
+      tubeMesh1.rotation.z = -Math.PI/2;
+      tubeMesh1.position.x += -tubeRadius;
+
+      tubeMesh2 = addGeometry(tube, 0x007bff);
+      tubeMesh2.scale.set(2, 2, 2);
+      tubeMesh2.rotation.y = Math.PI/2;
+      tubeMesh2.rotation.z = Math.PI/2;
+      tubeMesh2.position.x += -tubeRadius;
+      
+      DNA.position.x += basesRadius/2;
+
+      globalStructure.add(DNA);
+      globalStructure.add(tubeMesh1);
+      globalStructure.add(tubeMesh2);
+
+      scene.add(globalStructure);
+
+      animate();      
     });
   </script>
  </body>
