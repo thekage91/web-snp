@@ -590,9 +590,9 @@
         stats.update();
         trackballControls.update();
 
-        globalStructure.rotation.x += step;
+        globalStructure.rotation.x += 0.01;
 
-        TWEEN.update();
+        //TWEEN.update();
         // render using requestAnimationFrame
         requestAnimationFrame(animate);
         webGLRenderer.render(scene, camera);
