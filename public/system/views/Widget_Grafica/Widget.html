@@ -231,65 +231,6 @@
         return stats;
       }
 
-
-
-      //VARIABLES
-      var basesLength = 50;
-      var basesRadius = 5;
-      var segments = 400;
-      var tubeRadius = 3.5;
-      var radiusSegments = 12;
-      var tubeMesh1;
-      var tubeMesh2;
-      var button;
-      var step = 0.01;
-      var couplesList;
-      var axisHelper = new THREE.AxisHelper(3);
-      scene.add(axisHelper);
-      
-
-      button = document.getElementById( 'animation' );
-
-      button.addEventListener( 'click', function ( event ) {
-        animateScene(2000);
-      }, false );
-
-      //Basis Creation
-      couplesList = [["adenine","thymine"],["guanine","cytosine"],["guanine","cytosine"],["adenine","thymine"],["adenine","thymine"],["adenine","thymine"],["guanine","cytosine"],["guanine","cytosine"],["guanine","cytosine"],["guanine","cytosine"],["guanine","cytosine"],["guanine","cytosine"],["adenine","thymine"],["guanine","cytosine"],["adenine","thymine"],["adenine","thymine"],["adenine","thymine"],["guanine","cytosine"],["adenine","thymine"],["adenine","thymine"],["guanine","cytosine"],["guanine","cytosine"],["adenine","thymine"],["guanine","cytosine"],["guanine","cytosine"],["adenine","thymine"],["adenine","thymine"],["adenine","thymine"],["adenine","thymine"],["guanine","cytosine"],["adenine","thymine"]];
-
-      DNA = createSupercoil(31, couplesList);
-
-      
-      //DNA Strands Creation
-      globalStructure = new THREE.Object3D();
-
-      extrudePath = new THREE.Curves.HelixCurve();
-
-      tube = new THREE.TubeGeometry(extrudePath, segments, tubeRadius, radiusSegments, false, false);
-
-      tubeMesh1 = addGeometry(tube, 0xff3200);
-      tubeMesh1.scale.set(2, 2, 2);
-      tubeMesh1.rotation.y = Math.PI/2;
-      tubeMesh1.rotation.z = -Math.PI/2;
-      tubeMesh1.position.x += -tubeRadius;
-
-      tubeMesh2 = addGeometry(tube, 0x007bff);
-      tubeMesh2.scale.set(2, 2, 2);
-      tubeMesh2.rotation.y = Math.PI/2;
-      tubeMesh2.rotation.z = Math.PI/2;
-      tubeMesh2.position.x += -tubeRadius;
-      
-      DNA.position.x += basesRadius/2;
-
-      globalStructure.add(DNA);
-      globalStructure.add(tubeMesh1);
-      globalStructure.add(tubeMesh2);
-
-      scene.add(globalStructure);
-
-      animate();
-
-
       //Animations
       var animator = null;
       var duration = 5; //sec
@@ -404,7 +345,7 @@
         movingCamera(4000); // la camera di sposta
         // vedere come evidenziare
         //transform(subjectPos , targetPos , duration); // le altre basi azotate non evidenziate vanno via (eliminare la numero 15)  
-        animateSNP(2000); // si scambiano
+        //animateSNP(2000); // si scambiano
         newBasesEnter();
 
         // rimettiamo le cose al loro posto, le altri basi tornano
@@ -455,8 +396,6 @@
           easing: TWEEN.Easing.Circular.In
         });
       }
-<<<<<<< HEAD
-
 
 
       //VARIABLES
@@ -514,8 +453,6 @@
       scene.add(globalStructure);
 
       animate();      
-=======
->>>>>>> FETCH_HEAD
     });
   </script>
  </body>
