@@ -247,13 +247,23 @@
 
 
       function movingCamera(duration){
-        var target = new THREE.Vector3(0,0,300);
-        camera.lookAt(new THREE.Vector3(0,0,400));
+        var target = new THREE.Vector3(600,0,200);
+
+        var movingRight = new TWEEN.Tween( camera.position )
+            .to( { x: target.x }, duration*2 )
 
         new TWEEN.Tween( camera.position )
-            .to( { x: target.x, y: target.y, z: target.z }, duration )
+            .to( { z: target.z }, duration )           
             .easing( TWEEN.Easing.Quadratic.In )
+            .chain(movingRight)
             .start();
+
+        setTimeout(function(){  new TWEEN.Tween( camera.position )
+                                .to({ x: target.x/2 }, duration*2)
+                                .easing( TWEEN.Easing.Quadratic.In )
+                                .start(); 
+                                 step = 0;} , duration*3);
+       
       }
 
 
@@ -313,17 +323,17 @@
         var targetPos = randomizePositionObject();
         var subjectPos = positionsObj;
 
-        movingCamera(2000); // la camera di sposta
+        movingCamera(4000); // la camera di sposta
         // vedere come evidenziare
-        transform(subjectPos , targetPos , duration); // le altre basi azotate non evidenziate vanno via (eliminare la numero 15)  
+        //transform(subjectPos , targetPos , duration); // le altre basi azotate non evidenziate vanno via (eliminare la numero 15)  
         animateSNP(2000); // si scambiano
 
         // rimettiamo le cose al loro posto, le altri basi tornano
-        setTimeout( function() {  for(var i = 0; i < 31; i++){
+        /*setTimeout( function() {  for(var i = 0; i < 31; i++){
                                     subjectPos[i].position = targetPos[i].position;
                                   }
                                   transform(targetPos, subjectPos, duration); 
-                                } , duration);
+                                } , duration);*/
       }
       
 
@@ -332,9 +342,11 @@
         stats.update();
         trackballControls.update();
 
-        globalStructure.rotation.x += 0.01;
+        camera.lookAt(new THREE.Vector3(camera.position.x , camera.position.y , camera.position.z));
 
-        //TWEEN.update();
+        globalStructure.rotation.x += step;
+
+        TWEEN.update();
         //render using requestAnimationFrame
         requestAnimationFrame(animate);
         webGLRenderer.render(scene, camera);
@@ -360,7 +372,7 @@
       var tubeMesh1;
       var tubeMesh2;
       var button;
-      var step = 0.01;
+      var step = 0.02;
       var couplesList;
       var axisHelper = new THREE.AxisHelper(3);
       scene.add(axisHelper);
@@ -369,7 +381,7 @@
       button = document.getElementById( 'animation' );
 
       button.addEventListener( 'click', function ( event ) {
-        animateScene(2000 );
+        animateScene(2000);
       }, false );
 
       //Basis Creation
