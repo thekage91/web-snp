@@ -231,6 +231,8 @@
         return stats;
       }
 
+      
+
       //Animations
       var animator = null;
       var duration = 5; //sec
@@ -281,19 +283,8 @@
 
 
       // Le basi rigurdanti saranno le numero 15, per esempio
-      function animateSNP(duration){
-        oldCouple = positionsObj[15];
-        // oldCouple.childer[0] e' la prima base azotate
-        // oldCouple.childer[1] e' la seconda base azotate
-        // oldCouple.childer[2] sono tutte quelle che vengono dopo
-
-        //New couple, the one caused by SNP
-        new_couple = createCouple(["adenine","thymine"]);
-        new_couple.position.x += 500;
-        new_couple.position.y += 50;
-        new_couple.position.z += 50;
-
-
+      function animateSNP(duration, oldCouple){
+        
         var target = new THREE.Vector3(0,0,30);
 
         var movingForward1 = new  new TWEEN.Tween( oldCouple.children[0].position )
@@ -375,6 +366,16 @@
 
 
       function newBasesEnter() {
+        oldCouple = positionsObj[15];
+        // oldCouple.childer[0] e' la prima base azotate
+        // oldCouple.childer[1] e' la seconda base azotate
+        // oldCouple.childer[2] sono tutte quelle che vengono dopo
+
+        //New couple, the one caused by SNP
+        new_couple = createCouple(["adenine","thymine"]);
+        new_couple.position.x += 500;
+        new_couple.position.y += 50;
+        new_couple.position.z += 50;
         scene.add(new_couple);
 
         animator = new KF.KeyFrameAnimator;
