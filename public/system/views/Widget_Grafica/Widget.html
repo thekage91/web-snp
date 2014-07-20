@@ -337,7 +337,7 @@
         // vedere come evidenziare
         //transform(subjectPos , targetPos , duration); // le altre basi azotate non evidenziate vanno via (eliminare la numero 15)  
         //animateSNP(2000); // si scambiano
-        newBasesEnter();
+        //newBasesEnter();
 
         // rimettiamo le cose al loro posto, le altri basi tornano
         /*setTimeout( function() {  for(var i = 0; i < 31; i++){
@@ -357,6 +357,7 @@
 
         globalStructure.rotation.x += step;
 
+        KF.update();
         TWEEN.update();
         //render using requestAnimationFrame
         requestAnimationFrame(animate);
