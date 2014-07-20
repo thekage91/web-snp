@@ -48,6 +48,7 @@
   <script type="text/javascript" src="libs/bitstream_vera_sans_mono_roman.typeface.js"></script>
   <script src="libs/keyframe.js"></script>
   <script src="libs/CurveExtras.js"></script>
+  <script src="js/tween_animation.js"></script>
 
   <script src="adenine.js"></script>
   <script src="cytosine.js"></script>
@@ -190,12 +191,12 @@
       function addGeometry(geometry, color) {
         //3D shape
         tubeMesh = THREE.SceneUtils.createMultiMaterialObject( geometry, [
-          new THREE.MeshBasicMaterial({
+          new THREE.MeshPhongMaterial({
             color: color,
             transparent: true,
             side: THREE.DoubleSide
           }),
-          new THREE.MeshBasicMaterial({
+          new THREE.MeshPhongMaterial({
             color: 0xed3403,
             opacity: 0.3,
             //wireframe: true,
@@ -283,61 +284,71 @@
 
 
       // Le basi rigurdanti saranno le numero 15, per esempio
-      function animateSNP(duration, oldCouple){
+      function animateSNP(oldCouple, duration){
         
-        var target = new THREE.Vector3(0,0,30);
+        var target = new THREE.Vector3(oldCouple.children[0].position.x, oldCouple.children[0].position.y, 80);
 
-        var movingForward1 = new  new TWEEN.Tween( oldCouple.children[0].position )
-            .to( { z: target.z }, duration )
-
-        var movingForward2 = new TWEEN.Tween( oldCouple.children[1].position )
-            .to( { z: target.z }, duration )
-            .easing( TWEEN.Easing.Quadratic.In )
-            .chain(movingForward1)
-            .start();
-
-        /* in questo punto dovrebbero comparire due nuove basi azotate vicino quuelle vecchie che si
-        sono spostate avanti. Per far questo basta usare la funzione trasforms.... 
-        passndo un array (object) contenente le due nuove basi disperse da qualche parte
-        e un altro array (targets) che rappresenta la nuova posizione delle nuove basi azotate, ovvero vicino 
-        a quelle vecchie. Potrebbe essere (xVecchie + 10 , 0,30)
-        */
-
-        var newPosition = new THREE.Vector3(10,0,0); //posizione nuova per le vecchie basi
-        var oldPosition = new THREE.Vector3(oldCouple.children[0].position.x , 0,0); // posizione nuova per le basi appena entrate
-
-        /* le basi vecchie si spostano */
-        var removeOldBase1 = new  new TWEEN.Tween( oldCouple.children[0].position )
-            .to( { x: newPosition.x}, duration );
-
-        var removeOldBase2 = new  new TWEEN.Tween( oldCouple.children[1].position )
-            .to( { x: newPosition.x}, duration );
-        /***********/
-
-        /* Le nuove basi si mettono al posto di quelle vecchie */
-        var  putNewBase1 = new  new TWEEN.Tween( new_couple.children[0].position )
-            .to( { x: oldPosition.x}, duration );
-
-        var putNewBase2 = new TWEEN.Tween( new_couple.children[1].position )
-            .to( { x: oldPosition.x }, duration )
-            .easing( TWEEN.Easing.Quadratic.In )
-            .chain(movingForward1)
-            .chain()
-            .start();
-        /***********/
+        positionTween(oldCouple.children[0], duration, target).start();
+        positionTween(oldCouple.children[1], duration, target).start();
+        
       }
 
+      function opacizeFilament(duration){
 
+      }
+
+      function highLightBase(couple, duration){
+        var spotLight = new THREE.SpotLight( 0xffffff );
+        spotLight.target = couple;
+        spotLight.intensity = 100;
+        
+        spotLight.position.set(couple.position.x , couple.position.y , couple.position.z);
+        couple.add(spotLight);
+
+        flashTween(spotLight, duration, 10).start();
+      }
+
+      function newBasesEnter(oldCouple, duration) {
+        // oldCouple.childer[0] e' la prima base azotate
+        // oldCouple.childer[1] e' la seconda base azotate
+        // oldCouple.childer[2] sono tutte quelle che vengono dopo
+
+        var objOldPos = new THREE.Object3D();        
+        var new_couple = createCouple(["adenine","thymine"]);
+
+        new_couple.position.x = 800;
+        new_couple.position.y = 800;
+        new_couple.position.z = 800;
+        
+        objOldPos.position.set(300 , 0 , oldCouple.children[0].position.z);
+        scene.add(new_couple);
+        transform([new_couple], [objOldPos], 1000);
+
+        return new_couple;
+      }
+
+      function insertNewCouple(newCouple, oldCouple, duration){
+
+        var target = new THREE.Vector3(oldCouple.children[0].position.x, oldCouple.children[0].position.y, oldCouple.children[0].position.z);
+
+        positionTween(oldCouple.children[0], duration, target).start();
+        positionTween(oldCouple.children[1], duration, target).start();
+      }
 
       function animateScene(duration){
         var targetPos = randomizePositionObject();
         var subjectPos = positionsObj;
+        var oldCouple = positionsObj[12];
+        var new_couple;
 
-        movingCamera(4000); // la camera di sposta
-        // vedere come evidenziare
-        //transform(subjectPos , targetPos , duration); // le altre basi azotate non evidenziate vanno via (eliminare la numero 15)  
-        //animateSNP(2000); // si scambiano
-        //newBasesEnter();
+        movingCamera(4000);
+        //smoothFilament(2000)
+        
+        //setTimeout(highLightBase(oldCouple, 1000) , 4000);
+        
+        setTimeout(function(){animateSNP(oldCouple, 2000)}, 22000); // si scambiano
+        setTimeout(function(){ new_couple = newBasesEnter(oldCouple , 2000); }, 24000);;
+        //setTimeout(function(){insertNewCouple(new_couple, oldCouple, 2000)}, 24000);;
 
         // rimettiamo le cose al loro posto, le altri basi tornano
         /*setTimeout( function() {  for(var i = 0; i < 31; i++){
@@ -364,42 +375,6 @@
         webGLRenderer.render(scene, camera);
       }
 
-
-
-      function newBasesEnter() {
-        oldCouple = positionsObj[15];
-        // oldCouple.childer[0] e' la prima base azotate
-        // oldCouple.childer[1] e' la seconda base azotate
-        // oldCouple.childer[2] sono tutte quelle che vengono dopo
-
-        //New couple, the one caused by SNP
-        new_couple = createCouple(["adenine","thymine"]);
-        new_couple.position.x += 500;
-        new_couple.position.y += 50;
-        new_couple.position.z += 50;
-        scene.add(new_couple);
-
-        animator = new KF.KeyFrameAnimator;
-        animator.init({ 
-          interps:
-            [
-              { 
-                keys:[0, .2, 1], 
-                values:[
-                  {z: new_couple.position.z},
-                  {z: new_couple.position.z - new_couple.position.z/2},
-                  {z: oldCouple.position.z},
-                ],
-                target:new_couple.position
-              },
-            ],
-          loop: loopAnimation,
-          duration: duration * 1000,
-          easing: TWEEN.Easing.Circular.In
-        });
-      }
-
-
       //VARIABLES
       var basesLength = 50;
       var basesRadius = 5;
@@ -409,12 +384,12 @@
       var tubeMesh1;
       var tubeMesh2;
       var button;
-      var step = 0.02;
+      var step = 0;
       var couplesList;
       var axisHelper = new THREE.AxisHelper(3);
-      scene.add(axisHelper);
-      
+      var ambientLightScene = new THREE.AmbientLight( 0xffffff ); // soft white light
 
+      
       button = document.getElementById( 'animation' );
 
       button.addEventListener( 'click', function ( event ) {
@@ -425,8 +400,7 @@
       couplesList = [["adenine","thymine"],["guanine","cytosine"],["guanine","cytosine"],["adenine","thymine"],["adenine","thymine"],["adenine","thymine"],["guanine","cytosine"],["guanine","cytosine"],["guanine","cytosine"],["guanine","cytosine"],["guanine","cytosine"],["guanine","cytosine"],["adenine","thymine"],["guanine","cytosine"],["adenine","thymine"],["adenine","thymine"],["adenine","thymine"],["guanine","cytosine"],["adenine","thymine"],["adenine","thymine"],["guanine","cytosine"],["guanine","cytosine"],["adenine","thymine"],["guanine","cytosine"],["guanine","cytosine"],["adenine","thymine"],["adenine","thymine"],["adenine","thymine"],["adenine","thymine"],["guanine","cytosine"],["adenine","thymine"]];
 
       DNA = createSupercoil(31, couplesList);
-
-      
+ 
       //DNA Strands Creation
       globalStructure = new THREE.Object3D();
 
@@ -452,7 +426,14 @@
       globalStructure.add(tubeMesh1);
       globalStructure.add(tubeMesh2);
 
+      ambientLightScene.target = globalStructure;
+      ambientLightScene.intensity = 2;
+      ambientLightScene.position.set(0,50,500);
+
+      //scene.add(ambientLightScene);
       scene.add(globalStructure);
+      scene.add(axisHelper);
+
 
       animate();      
     });
