@@ -14,11 +14,17 @@ Video not supported </video>
 
         <div class="row message-bottom col-xs-6" data-ng-hide="global.authenticated">
             Please 
-            <a ui-sref='auth.login' role="button" class="btn btn-primary"><b>Login</b></a>
+            <a ui-sref='auth.login' role="button" class="btn btn-primary">Login</a>
             <!--or 
             <a ui-sref='auth.register' role="button" class="btn btn-primary">Sign Up</a> -->
             to use this portal...
         </div>
+
+        <div class="row message-email col-xs-9" data-ng-hide="global.authenticated">
+            If you do not have an account yet, please 
+            <a href="mailto:admin@admin.it" role="button">contact an administrator</a> to have it!
+        </div>
+
     </section>
 </div>
 
