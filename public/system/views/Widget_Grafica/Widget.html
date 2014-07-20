@@ -327,6 +327,20 @@
         return new_couple;
       }
 
+      function exchangeBase(newCouple, oldCouple, duration){
+
+        console.log(newCouple.children[0].position , " " , oldCouple.children[0].position)
+        console.log(newCouple.children[1].position , " " , oldCouple.children[1].position)
+
+        var targetOld1 = oldCouple.children[0].position.x;
+        var targetOld2 = oldCouple.children[1].position.x;
+        var targetNew1 = newCouple.children[0].position.x;
+        var targetNew2 = newCouple.children[1].position.x;
+
+        positionXTween(oldCouple.children[1], duration, 58.2).start();
+        positionXTween(newCouple.children[1], duration, -58.2).start();
+      }
+
       function insertNewCouple(newCouple, oldCouple, duration){
 
         var target = new THREE.Vector3(oldCouple.children[0].position.x, oldCouple.children[0].position.y, oldCouple.children[0].position.z);
@@ -339,7 +353,7 @@
         var targetPos = randomizePositionObject();
         var subjectPos = positionsObj;
         var oldCouple = positionsObj[12];
-        var new_couple;
+        var newCouple;
 
         movingCamera(4000);
         //smoothFilament(2000)
@@ -347,7 +361,9 @@
         //setTimeout(highLightBase(oldCouple, 1000) , 4000);
         
         setTimeout(function(){animateSNP(oldCouple, 2000)}, 22000); // si scambiano
-        setTimeout(function(){ new_couple = newBasesEnter(oldCouple , 2000); }, 24000);;
+        setTimeout(function(){ newCouple = newBasesEnter(oldCouple , 2000); }, 24000);
+        //console.log(newCouple);
+        setTimeout(function(){exchangeBase(newCouple, oldCouple, 1000)}, 26000);
         //setTimeout(function(){insertNewCouple(new_couple, oldCouple, 2000)}, 24000);;
 
         // rimettiamo le cose al loro posto, le altri basi tornano

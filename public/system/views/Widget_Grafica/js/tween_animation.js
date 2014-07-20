@@ -35,3 +35,19 @@ function positionTween(object, duration, targetPosition){
 
 	return tweenPosition;
 }
+
+// targetPosition = new THREE.Vector3(x,y,z);
+function positionXTween(object, duration, targetPosition){
+
+	var tweenPosition = new TWEEN.Tween(object.position)
+		.to({ x:targetPosition }, duration)
+		.easing(TWEEN.Easing.Quadratic.In);
+
+	return tweenPosition;
+}
+
+
+
+
+
+
