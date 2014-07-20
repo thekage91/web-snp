@@ -404,6 +404,8 @@
       var couplesList;
       var axisHelper = new THREE.AxisHelper(3);
       var ambientLightScene = new THREE.AmbientLight( 0xffffff ); // soft white light
+      var spotLightScene = new THREE.SpotLight( 0xffffff ); // soft white light
+      var directionalLight = new THREE.DirectionalLight( 0xffffff );
 
       
       button = document.getElementById( 'animation' );
@@ -442,11 +444,18 @@
       globalStructure.add(tubeMesh1);
       globalStructure.add(tubeMesh2);
 
-      ambientLightScene.target = globalStructure;
-      ambientLightScene.intensity = 2;
-      ambientLightScene.position.set(0,50,500);
+      spotLightScene.target = globalStructure;
+      spotLightScene.intensity = 2;
+      spotLightScene.position.set(0,50,500);
+
+      directionalLight.intensity = 7;
+      directionalLight.position.set(0,50,500);
+      directionalLight.target = globalStructure;
+
+
 
       //scene.add(ambientLightScene);
+      scene.add(directionalLight)
       scene.add(globalStructure);
       scene.add(axisHelper);
 
