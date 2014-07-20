@@ -20,7 +20,7 @@ function createThymine(basesLength, basesRadius) {
     shape.lineTo(0, 0);
         
     var shapeGeometry = shape.extrude({amount: basesRadius*2, bevelSize: 0, bevelThickness: 0});
-    var shapeMaterial = new THREE.MeshPhongMaterial({color: 0xffe900, side: THREE.DoubleSide});
+    var shapeMaterial = new THREE.MeshPhongMaterial({color: 0xffe900, side: THREE.DoubleSide, shininess: 100, metal: true});
     var shape = new THREE.Mesh(shapeGeometry, shapeMaterial);
 
     shape.castShadow = true;
@@ -29,11 +29,6 @@ function createThymine(basesLength, basesRadius) {
     var thymine = new THREE.Object3D();
     thymine.add(shape);
 
-    //TODO: Mettere bordi neri
-    //shape.wireframe = new THREE.MeshBasicMaterial({color: 0x000000, side: THREE.DoubleSide});
-    //shape.wireframeLinewidth = 50;
-    //shape.wireFrameLineJoin = meshMaterial.wireframeLinejoin;
-        
     //Add the text "T"
     var text = createMesh(new THREE.TextGeometry("T", options), 0x396d35);
     text.position.z = basesRadius*3/2;
