@@ -40,5 +40,5 @@ EspSchema.statics.query = function query(q) {
 
 
 var model = mongoose.model('Esp', EspSchema);
-model.attr = ['ESP6500_ALL','ESP6500_AA','ESP6500_EA' ] ;
+model.attr = {'ESP6500_ALL' : 1,'ESP6500_AA' : 2,'ESP6500_EA' : 3} ;
 module.exports = model;

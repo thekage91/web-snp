@@ -42,5 +42,5 @@ DbSNPSchema.statics.query = function query(q) {
 };
 
 var model = mongoose.model('DbSNP', DbSNPSchema);
-model.attr = ['dbSNP','freqAlt','freqRef'] ;
+model.attr = {'dbSNP' : 1,'freqAlt' : 2,'freqRef' : 3} ;
 module.exports = model;
