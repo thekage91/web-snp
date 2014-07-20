@@ -3,8 +3,8 @@
 
 angular.module('mean.dashboard', [])
 
-.controller('UploaderCtrl', ['$scope', '$window',
-      function($scope, $window) {
+.controller('UploaderCtrl', ['$scope', '$window','$http',
+      function($scope, $window,$http) {
             $scope.prova = function() {
                   //output e' gia' il json uscito puoi dalla funzione parse
                   var parsedJson = $window.output;
@@ -52,7 +52,7 @@ angular.module('mean.dashboard', [])
             }
             $scope.saveResult = function() {
                   $scope.jsonUpload = JSON.parse($window.output);
-                  console.log(parse($scope.jsonUpload));
+                  console.log(parse($scope.jsonUpload,$http));
             };
 
             //angular.bootstrap(document, ['myApp']);

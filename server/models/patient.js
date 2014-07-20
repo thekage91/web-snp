@@ -34,6 +34,6 @@ PatientSchema.statics.findPatientSNPS = function findPatientSNPS() {
 };
 
 var model =  mongoose.model('Patient', PatientSchema);
-model.attr = {'name' : 1};
+model.attr = {'Family':['name']};
 module.exports = model;
 

@@ -76,5 +76,5 @@ VariantDetailSchema.statics.query = function query(q) {
 };
 
 var model = mongoose.model('VariantDetail', VariantDetailSchema);
-model.attr = {'qual' : 1,'genotype' : 2,'genotypeQuality' : 3,'readsDeeph' : 4,'ref' : 5,'altFilteredReads' : 6,'genotypesLikelihood' : 7,'haplotypeScore' : 8,'strandBias' : 9} ;
+model.attr = {'VariantDetail': ['qual' ,'genotype' ,'genotypeQuality' ,'readsDeeph' ,'ref' ,'altFilteredReads' ,'genotypesLikelihood' ,'haplotypeScore' ,'strandBias' ]} ;
 module.exports = model;

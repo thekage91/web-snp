@@ -31,5 +31,5 @@ FamilySchema.statics.query = function query(q) {
 
 
 var model = mongoose.model('Family', FamilySchema);
-model.attr = {'name':  1 } ;
+model.attr = {'Family' : ['name']} ;
 module.exports = model;

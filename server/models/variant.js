@@ -76,5 +76,5 @@ VariantSchema.statics.query = function query(q) {
 
 
 var model = mongoose.model('Variant', VariantSchema);
-model.attr = {'chr' : 1,'start' : 2,'end' : 3,'ref' : 4,'alt' : 5} ;
+model.attr = {'Variant' : ['chr' ,'start' ,'end' ,'ref' ,'alt' ]} ;
 module.exports = model;

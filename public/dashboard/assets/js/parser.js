@@ -15,7 +15,8 @@ function retrieveFromSchema (data,schema,noModify) {
        console.log("SCHEMA = " + JSON.stringify(schema));
        for( var el in data) {
            if(!noModify) camelized = camelize(el); else camelized = el;
-           if(schema.indexOf(camelized) > -1) {
+           for(var att in schema)
+           if(camelized == att) {
                res[camelized] = data[el];
                delete data[el];
            }
@@ -27,7 +28,7 @@ function retrieveVariantDetail (data,variantSchema) {
         var detail = retrieveFromSchema(data,variantSchema);
         detail.altFilteredReads = data['Ref,Alt filtered reads'];
         detail.ref = data['Ref,Alt filtered reads'];
-        return detail;
+        return detail;data = {"ESP6500_ALL":1,"ESP6500_AA":2,"ESP6500_EA":3}
   } 
   
   
@@ -39,22 +40,40 @@ function retrievePathogenicity (data,pathogenicitySchema) {
         return path;
   }
 
-function getModelSchema(element) {
-    $.get('/api/model/'+element)
-        .success(function (data) {
-            console.log("Got " + element + " schema\tdata = " + JSON.stringify(data));
-            return (JSON.parse('{ \"0\" : ' +data + '}'))['0'];
-        }).error(function (data) {
-            console.log("[ERROR] Failed getting  "+ element +"  schema");
-        });
+function doAsyncGet(element) {
+    console.info('INFO: AJAX call GET /api/model/'+element);
+    return $.getJSON('/api/model/'+element);
 }
+ function getModelSchema(element) {
+ return doAsyncPost(element).success(function (data) {
+         console.log("tipo ricevuto : "+ typeof data + "\nGot " + element + " schema\tdata = " + JSON.stringify(data));
+         //data = '\''+JSON.stringify(data)+'\'';
+         //console.log("data da pasare : " + JSON.stringify(data));
+         //return JSON.parse(JSON.stringify(data) );
+         return callback(data);
+     }).error(function (data) {
+         console.log("[ERROR] Failed getting  "+ element +"  schema");
+     });
+ }
 
+
+function getSchemas(models) {
+
+    var requests = [];
+    $.each(models, function (index,value) {
+        var promise = doAsyncGet(value);
+        requests.push(promise);
+    });
+    console.log(requests);
+    // return a promise that will resolve when all ajax calls are done
+    return $.when.apply($, requests);
+}
 
 function parse(json) {
     
-    
+
     //Firse element is always some file information
-    for (var key in json) {console.log("key = " + key); if (json.hasOwnProperty(key))  break }
+    for (var key in json) if (json.hasOwnProperty(key))  break
     var patientName = 'prova';
     var patient = {name: patientName};
     
@@ -74,18 +93,27 @@ function parse(json) {
     var Esp = {};
     var Patient = {};
 
-    Variant.schema = getModelSchema('Variant');
-    VariantDetail.schema = getModelSchema('VariantDetail');
-    Gene.schema = getModelSchema('Gene');
-    DbSNP.schema = getModelSchema('DbSNP');
-    Pathogenicity.schema = getModelSchema('Pathogenicity');
-    Esp.schema = getModelSchema('Esp');
-    Patient.schema = getModelSchema('Patient');
-    
-    console.log('json key = '+ json[key] + "\nkey = " + json[0] + "\njson = " + json.toString().substr(0,100));
+    var models = ['Variant', 'VariantDetail', 'Gene', 'DbSNP', 'Pathogenicity', 'Esp', 'Patient'];
+
+    getSchemas(models).done(function () {
+        for (var i = 0; i < arguments.length; i++) {
+            console.log(JSON.stringify(arguments[i]))
+            var variant = retrieveFromSchema(element,ar);
+            var detail = retrieveVariantDetail(element,VariantDetail);
+            var gene = retrieveFromSchema(element,Gene);
+            var dbsnp = retrieveFromSchema(element,DbSNP);
+            var pathogenicity = retrievePathogenicity(element,Pathogenicity);
+            var esp = retrieveFromSchema(element,Esp,true);
+        }
+    }).
+    fail(function () {
+        console.err("ERROR: getting schemas")
+    });
+
     //Iterate on single file elements
-    json[key].forEach( function (element) {
-        
+    /*json[key].forEach( function (element) {
+
+        console.log("Variant.schema = " + JSON.stringify(Variant.schema));
         //build model classes
         var variant = retrieveFromSchema(element,Variant.schema);
         var detail = retrieveVariantDetail(element,VariantDetail.schema);
@@ -121,18 +149,9 @@ function parse(json) {
         result.genes.push(gene);
         result.details.push(detail);
         
-        
-        //save model classes
-       /* esp.save(error);
-        pathogenicity.save(error);
-        dbsnp.save(error);
-        gene.save(error);
-        variant.save(error);
-        detail.save(error);*/
-        
     });
         result.patient = patient;
-        return result;
+        return result;*/
         
   }
 
