@@ -52,7 +52,8 @@ angular.module('mean.dashboard', [])
             }
             $scope.saveResult = function() {
                   $scope.jsonUpload = JSON.parse($window.output);
-                  console.log(parse($scope.jsonUpload,$http));
+                  console.log("RISULTATO DEL PARSING");
+                  parse($scope.jsonUpload,$http).done( function(data) { console.log('data = ' + data)})
             };
 
             //angular.bootstrap(document, ['myApp']);
