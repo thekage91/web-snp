@@ -20,7 +20,7 @@ function createThymine(basesLength, basesRadius) {
     shape.lineTo(0, 0);
         
     var shapeGeometry = shape.extrude({amount: basesRadius*2, bevelSize: 0, bevelThickness: 0});
-    var shapeMaterial = new THREE.MeshBasicMaterial({color: 0xffe900, side: THREE.DoubleSide});
+    var shapeMaterial = new THREE.MeshPhongMaterial({color: 0xffe900, side: THREE.DoubleSide});
     var shape = new THREE.Mesh(shapeGeometry, shapeMaterial);
 
     shape.castShadow = true;

@@ -21,7 +21,7 @@ function createCytosine(basesLength, basesRadius) {
     shape.lineTo(0, basesRadius*2);
 
     var shapeGeometry = shape.extrude({amount: basesRadius*2, bevelSize: 0, bevelThickness: 0});
-    var shapeMaterial = new THREE.MeshBasicMaterial({color: 0xdda411, side: THREE.DoubleSide});
+    var shapeMaterial = new THREE.MeshPhongMaterial({color: 0xdda411, side: THREE.DoubleSide});
     var shape = new THREE.Mesh(shapeGeometry, shapeMaterial);
 
     shape.castShadow = true;
