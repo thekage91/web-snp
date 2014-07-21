@@ -136,9 +136,19 @@
             <td>{{ user.username }}</td>
             <td>
               <div class="control-groups">
-                <button data-dz-remove class="btn btn-danger delete btn-sm" ng-click="cancelUser(user)">
+                <button data-dz-remove class="btn btn-success delete btn-sm bot5" ng-click="promote2Admin(user)"
+                        ng-show="user.roles.indexOf('admin') === -1">
+                  <i class="glyphicon glyphicon-stair"></i>
+                  <span>Promote</span>
+                </button>
+                <button data-dz-remove class="btn btn-danger delete btn-sm bot5" ng-click="cancelUser(user)">
                   <i class="glyphicon glyphicon-ban-circle"></i>
                   <span>Dismiss</span>
+                </button>  
+                <button data-dz-remove class="btn btn-primary delete btn-sm" ng-click="degrade2licensed(user)"
+                        ng-show="user.roles.indexOf('admin') !== -1">
+                  <i class="glyphicon glyphicon-ban-circle"></i>
+                  <span>Degrade</span>
                 </button>    
               </div>    
             </td>

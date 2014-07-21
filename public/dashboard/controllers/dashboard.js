@@ -112,7 +112,34 @@ angular.module('mean.dashboard', [])
         angular.element('#formInsert').collapse('hide');
         $scope.user = {};
     };
-    
+
+    $scope.promote2Admin = function(user){
+        var roles = user.roles;
+        roles.push('admin');
+        $http.post('/api/user/' + user._id , {roles: roles})
+            .success(function(data){
+                var index = $scope.users.indexOf(user);
+                $scope.users[index].roles.push('admin');
+                console.log("[DEBUG] Promote to admin this users " + user._id);
+            })
+            .error(function(data){
+                console.log("[ERROR] Error for Promote to admin this users " + user._id);
+            });
+    }
+
+    $scope.degrade2licensed = function(user){
+        var roles = ['authenticated' , 'licensed'];
+        $http.post('/api/user/' + user._id , {roles: roles})
+            .success(function(data){
+                var index = $scope.users.indexOf(user);
+                $scope.users[index].roles = roles;
+                console.log("[DEBUG] Degrade to licensed this users " + user._id);
+            })
+            .error(function(data){
+                console.log("[ERROR] Error for degrade to licensed this users " + user._id);
+            });   
+    }
+
 }])
 
 .controller('FamilyCtrl' , ['$scope', '$http', function($scope , $http){
