@@ -41,7 +41,12 @@ function retrievePathogenicity(data, pathogenicitySchema) {
     return path;
 }
 
-function doAsyncGet(element) {
+function doAsyncGetID() {
+    console.info('INFO: AJAX call GET /api/id/');
+    return $.get('/api/id/');
+}
+
+function doAsyncGetModel(element) {
     console.info('INFO: AJAX call GET /api/model/' + element);
     return $.getJSON('/api/model/' + element);
 }
@@ -59,20 +64,21 @@ function getSchemas() {
     var models = ['Variant', 'VariantDetail', 'Gene', 'DbSNP', 'Pathogenicity', 'Esp', 'Patient'];
     var requests = [];
     $.each(models, function (index, value) {
-        var promise = doAsyncGet(value);
+        var promise = doAsyncGetModel(value);
         requests.push(promise);
     });
     // return a promise that will resolve when all ajax calls are done
     return $.when.apply($, requests);
 }
 
-function postElementArray(element,elements) {
+function getIDS(howMuch) {
 
     var requests = [];
-    $.each(elements, function (index, value) {
-        var promise = doAsyncPost(element,value);
+    while(howMuch) {
+        var promise = doAsyncGetID();
         requests.push(promise);
-    });
+        howMuch--;
+    };
     // return a promise that will resolve when all ajax calls are done
     return $.when.apply($, requests);
 }
@@ -102,34 +108,42 @@ function parseFromSchemas(json, schemas, patientName) {
         var pathogenicity = retrievePathogenicity(element, schemas['Pathogenicity']);
         var esp = retrieveFromSchema(element, schemas['Esp'], true);
 
-        //build model relationships
-        (variant.variantDetails = []).push(detail);
-        variant.gene = gene;
-        (variant.dbSNPs = []).push(dbsnp);
-        variant.pathogenicity = pathogenicity;
-        (variant.esps = []).push(esp);
-        (variant.patients = []).push(patient);
+        var models = [variant,detail,gene,dbsnp,pathogenicity,esp];
+        getIDS(6).done( function() {
+            for (var i = 0; i < arguments.length; i++) {
 
-        pathogenicity.variant = variant;
+                console.log("RESTITUiTO DAL POST: " + arguments[i][0]);
+                models[i]._id = arguments[i][0];
+            }
+            //build model relationships
+            (variant.variantDetails = []).push(detail._id);
+            variant.gene = gene._id;
+            (variant.dbSNPs = []).push(dbsnp._id);
+            variant.pathogenicity = pathogenicity._id;
+            (variant.esps = []).push(esp._id);
+            (variant.patients = []).push(patient._id);
 
-        ( dbsnp.variants = []).push(variant);
+            pathogenicity.variant = variant._id;
 
-        ( esp.variants = []).push(variant);
+            ( dbsnp.variants = []).push(variant._id);
 
-        (gene.variants = []).push(variant);
+            ( esp.variants = []).push(variant._id);
 
-        detail.variant = variant;
+            (gene.variants = []).push(variant._id);
 
-        (patient.variants = []).push(variant);
+            detail.variant = variant._id;
 
-        result.variants.push(variant);
-        result.pathogenicities.push(pathogenicity);
-        result.dbsnps.push(dbsnp);
-        result.esps.push(esp);
-        result.genes.push(gene);
-        result.details.push(detail);
+            (patient.variants = []).push(variant._id);
+
+            result.variants.push(variant._id);
+            result.pathogenicities.push(pathogenicity._id);
+            result.dbsnps.push(dbsnp._id);
+            result.esps.push(esp._id);
+            result.genes.push(gene._id);
+            result.details.push(detail._id);
 
 
+        }).fail(function(err) {console.err("ERROR: " + err)})
     });
     // console.log( result);
     return result;

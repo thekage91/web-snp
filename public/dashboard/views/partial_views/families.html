@@ -1,27 +1,7 @@
-<script type="text/javascript">
-  function fill (){
-    $.get('/api/user/' + document.getElementById('iddi').innerHTML)
-      .success(function(data){
-
-        data.payload.roles.forEach(function(entry) {
-            if (data.payload.roles.indexOf("Admin") > -1) {
-                var e = document.getElementById('title');
-                e.visibility = "visible";
-
-                e = document.getElementById('main');
-                e.visibility = "visible";
-            } 
-            ;        
-        });
-        
-
-      });
-  };
-</script>
 
 <h1 hidden id="iddi">{{global.user._id}}</h1>
 
-<div hidden id="title" class="row">
+<div  id="title" class="row">
 <!--<div class="row" ng-show="user.isAdmin()">-->
 
   <h1 class="section-header">Families</h1>  
@@ -29,7 +9,7 @@
   <hr>
 </div>
 
-<div hidden id="main" ng-controller="FamilyCtrl" ng-show="user.isAdmin()">
+<div  id="main" ng-controller="FamilyCtrl" >
       
       <div class="row bot10" id="operation">
         <div class="col-md-6">

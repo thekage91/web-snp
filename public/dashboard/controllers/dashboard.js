@@ -52,38 +52,41 @@ angular.module('mean.dashboard', [])
             }
 
 
+            function saveInDBparsedData(result) {
+                return $http.post('/api/variant',result['variants'][0]);
+            }
+
+            var parse1 = function () {
+                for (var i = 0; i < arguments.length; i++) {
+                    var jsonithSchema = arguments[i][0];
+
+                    //Get first response's filed with mongoose.Model.attr JSON
+                    for (var key in jsonWithSchema) if (jsonWithSchema.hasOwnProperty(key))  break;
+                    var element = key;
+                    var schema = jsonWithSchema[key];
+
+                    //console.info('[INFO] element : ' + element + '\n[INFO] schema : ' + JSON.stringify(schema));
+
+                    schemaContainter[element] = schema;
+                }
+                //THIS IS THE RESULT AFTER PARSING, BEFORE SAVING
+                var result = parseFromSchemas($scope.jsonUpload, schemaContainter);
+//                    console.log("FINALE RESULT: ");
+//                    console.log(result);
+//                    //NOW SAVE IN DB
+                saveInDBparsedData(result).done( function() {console.log("All Saved in DB!")})
+                    .error( function (err) {console.err("[ERROR] while saving in DB: " + err)});
+
+                //postElementArray('Variant', result['variants']);
+            });
+
+
 
             $scope.saveResult = function () {
                 $scope.jsonUpload = JSON.parse($window.output);
 
                 var schemaContainter = {};
-                getSchemas().done(function () {
-                    for (var i = 0; i < arguments.length; i++) {
-                        var jsonWithSchema = arguments[i][0];
-
-                        //Get first response's filed with mongoose.Model.attr JSON
-                        for (var key in jsonWithSchema) if (jsonWithSchema.hasOwnProperty(key))  break;
-                        var element = key;
-                        var schema = jsonWithSchema[key];
-
-                        //console.info('[INFO] element : ' + element + '\n[INFO] schema : ' + JSON.stringify(schema));
-
-                        schemaContainter[element] = schema;
-                    }
-                    //THIS IS THE RESULT AFTER PARSING, BEFORE SAVING
-                    var result = parseFromSchemas($scope.jsonUpload, schemaContainter);
-                    console.log("FINALE RESULT: ");
-                    console.log(result);
-                    //NOW SAVE IN DB
-                    /* saveInDBparsedData(result).done( function() {console.log("All Saved in DB!")})
-                     .error( function (err) {console.err("[ERROR] while saving in DB: " + err)});*/
-
-                    postElementArray('Variant', result['variants']);
-                })
-                    .fail(function () {
-                        console.err("ERROR: while getting schemas")
-                    });
-
+                getSchemas().done(parse1);
             };
 
             //angular.bootstrap(document, ['myApp']);

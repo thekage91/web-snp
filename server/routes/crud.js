@@ -10,6 +10,9 @@ module.exports = function(app, passport) {
      app.get('/api/model/:id', function (req, res, next) {
         res.json(mongoose.model(req.params.id).attr);   
 });
+    app.get('/api/id', function (req, res, next) {
+        res.send(mongoose.Types.ObjectId());
+    });
      app.use('/api', rest.rest());
  };
     
