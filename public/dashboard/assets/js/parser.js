@@ -46,12 +46,31 @@ function doAsyncGet(element) {
     return $.getJSON('/api/model/' + element);
 }
 
+function doAsyncPost(element,data) {
+    var path = '/api/'+element+'/';
+    console.info('INFO: AJAX call POST '+path);
+    console.info('INFO: AJAX call POST data: '); console.info(data);
+    return $.post(path,data);
+}
 
-function getSchemas(models) {
 
+function getSchemas() {
+
+    var models = ['Variant', 'VariantDetail', 'Gene', 'DbSNP', 'Pathogenicity', 'Esp', 'Patient'];
     var requests = [];
     $.each(models, function (index, value) {
         var promise = doAsyncGet(value);
+        requests.push(promise);
+    });
+    // return a promise that will resolve when all ajax calls are done
+    return $.when.apply($, requests);
+}
+
+function postElementArray(element,elements) {
+
+    var requests = [];
+    $.each(elements, function (index, value) {
+        var promise = doAsyncPost(element,value);
         requests.push(promise);
     });
     // return a promise that will resolve when all ajax calls are done
@@ -114,45 +133,6 @@ function parseFromSchemas(json, schemas, patientName) {
     });
     // console.log( result);
     return result;
-}
-function parse(json, patient) {
-
-    console.log = function() {}
-    console.info = function() {}
-    //Firse element is always some file information
-
-    var res = {};
-    var Variant = {};
-    var VariantDetail = {};
-    var Gene = {};
-    var DbSNP = {};
-    var Pathogenicity = {};
-    var Esp = {};
-    var Patient = {};
-
-    var models = ['Variant', 'VariantDetail', 'Gene', 'DbSNP', 'Pathogenicity', 'Esp', 'Patient'];
-
-    return getSchemas(models).done(function () {
-        for (var i = 0; i < arguments.length; i++) {
-            var jsonWithSchema = arguments[i][0];
-
-            //Get first response's filed with mongoose.Model.attr JSON
-            for (var key in jsonWithSchema) if (jsonWithSchema.hasOwnProperty(key))  break;
-            var element = key;
-            var schema = jsonWithSchema[key];
-
-            console.info('[INFO] element : ' + element + '\n[INFO] schema : ' + JSON.stringify(schema));
-
-            res[element] = schema;
-        }
-        return parseFromSchemas(json, res);
-    }).
-        fail(function () {
-            console.err("ERROR: while getting schemas")
-        });
-
-    //Iterate on single file elements
-
 }
 
 function saveForEachElement(element, model) {
