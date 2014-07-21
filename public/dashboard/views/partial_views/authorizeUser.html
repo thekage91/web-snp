@@ -18,109 +18,132 @@
   };
 </script>
 
-<div hidden id="main" class="col-lg-11">
+<div id="main" class="col-lg-11" ng-controller="AuthorizerUserCtrl">
 <!--<div class="col-lg-11" ng-show="user.isAdmin()">-->
+  <div class="row">
+    <h1 class="section-header">Authorize Users</h1>  
 
-<h1 hidden id="iddi">{{global.user._id}}</h1>
-<div class="row">
-  <h1 class="section-header">Authorize Users</h1>  
-
-  <hr>
-</div>
-
-<div class="row bot15">
-  <div id="custom-search-input">
-  <h4>Insert <i>Username</i>, <i>First Name</i> or <i>Last Name</i> to search:</h4>
-  <div class="input-group col-md-4">
-    <input type="search" class="search-query form-control" placeholder="Type here" ng-model="searchUser" />
-    <span class="input-group-btn">
-      <button class="btn btn-danger" type="button">
-        <span class="glyphicon glyphicon-search"></span>
-      </button>
-    </span>
+    <hr>
   </div>
-</div>
-</div>
 
-
-<div class="row" ng-controller="AuthorizerUserCtrl">
-
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th></th>
-          <th>First Name</th>
-          <th>Last Name</th>
-          <th>Username</th>
-          <th style="width: 75px;"></th>
-        </tr>
-      </thead>
-      <tbody >
-        <tr ng-repeat="user in users | filter:searchUser">
-          <td><div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=100" class="img-circle"> </div></td>
-          <td>{{ user.name }}</td>
-          <td>{{ user.secondname }}</td>
-          <td>{{ user.username }}</td>
-          <td>
-            <div class="control-groups">
-              <button type="button" class="btn btn-primary btn-sm" ng-show="user.roles.indexOf('licensed') !== -1">
-                <span class="glyphicon glyphicon-star"></span> Authorize
-              </button> 
-              <br/> 
-              <button data-dz-remove class="btn btn-danger delete btn-sm" ng-show="user.roles.indexOf('licensed') !== -1">
-                <i class="glyphicon glyphicon-ban-circle"></i>
-                <span>Dismiss</span>
-              </button>    
-            </div>    
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
-</div>
-</div>
-<!--
-<div id="myModalDismiss" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content"></div>
-  </div>
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close " data-dismiss="modal" aria-hidden="true">×</button>
-        <h3 id="myModalLabel">Dismiss Confirmation</h3>
-      </div>
-      <div class="modal-body">
-        <p class="error-text">Are you sure you want to dismiss the user?</p>
-      </div>
-      <div class="modal-footer">
-        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-        <button class="btn btn-danger" data-dismiss="modal">Dismiss</button>
-      </div>
+  <div class="row bot15">
+    <div id="custom-search-input">
+    <h4>Insert <i>Username</i>, <i>First Name</i> or <i>Last Name</i> to search:</h4>
+    <div class="input-group col-md-4">
+      <input type="search" class="search-query form-control" placeholder="Type here" ng-model="searchUser" />
+      <span class="input-group-btn">
+        <button class="btn btn-danger" type="button">
+          <span class="glyphicon glyphicon-search"></span>
+        </button>
+      </span>
     </div>
   </div>
-</div>
-
-
-<div id="myModalLicensed" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content"></div>
   </div>
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close " data-dismiss="modal" aria-hidden="true">×</button>
-        <h3 id="myModalLabel">Authorize Confirmation</h3>
-      </div>
-      <div class="modal-body">
-        <p class="error-text">Are you sure you want to authorize the user?</p>
-      </div>
-      <div class="modal-footer">
-        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-        <button class="btn btn-danger" data-dismiss="modal">Authorize</button>
+
+  <div class="row">
+    <form class="form-horizontal">
+    <fieldset>
+
+    <!-- Form Name -->
+    <legend>Form Name</legend>
+
+    <!-- Text input-->
+    <div class="control-group">
+      <label class="control-label" for="username">Username</label>
+      <div class="controls">
+        <input id="username" name="username" type="text" placeholder="Username" class="input-large" required=""
+          ng-model="user.username">
+        
       </div>
     </div>
-  </div>
-</div>-->
 
+    <!-- Text input-->
+    <div class="control-group">
+      <label class="control-label" for="name">Name</label>
+      <div class="controls">
+        <input id="name" name="name" type="text" placeholder="Name" class="input-large" required=""
+                ng-model="user.firstName">
+        
+      </div>
+    </div>
+
+    <!-- Text input-->
+    <div class="control-group">
+      <label class="control-label" for="secondname">Secondname</label>
+      <div class="controls">
+        <input id="secondname" name="secondname" type="text" placeholder="ss" class="input-large" required=""
+                ng-model="user.lastName">
+        
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label" for="email">Email</label>
+      <div class="controls">
+        <input id="email" name="email" type="text" placeholder="email" class="input-large" required=""
+                ng-model="user.email">
+        
+      </div>
+    </div>
+
+    <!-- Password input-->
+    <div class="control-group">
+      <label class="control-label" for="passwordUser">Password</label>
+      <div class="controls">
+        <input id="passwordUser" name="passwordUser" type="password" placeholder="pass" class="input-large" required="" ng-model="user.password">
+        
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label" for="confirmpasswordUser">Confim Password</label>
+      <div class="controls">
+        <input id="ConfpasswordUser" name="ConffpasswordUser" type="password" placeholder="pass" class="input-large" required="" ng-model="user.confirmPassword">
+        
+      </div>
+    </div>
+
+    <!-- Button (Double) -->
+    <div class="control-group">
+      <label class="control-label" for="saveUser"></label>
+      <div class="controls">
+        <button id="saveUser" name="saveUser" class="btn btn-success" ng-click="authorizeUser(user)">Save</button>
+        <button id="cancelUser" name="cancelUser" class="btn btn-danger" ng-click="cancelOperation(user)">Cancel</button>
+      </div>
+    </div>
+
+    </fieldset>
+    </form>
+  </div>
+
+  <div class="row">
+
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th></th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Username</th>
+            <th style="width: 75px;"></th>
+          </tr>
+        </thead>
+        <tbody >
+          <tr ng-repeat="user in users | filter:searchUser">
+            <td><div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=100" class="img-circle"> </div></td>
+            <td>{{ user.firstName }}</td>
+            <td>{{ user.lastName }}</td>
+            <td>{{ user.username }}</td>
+            <td>
+              <div class="control-groups">
+                <button data-dz-remove class="btn btn-danger delete btn-sm" ng-click="cancelUser(user)">
+                  <i class="glyphicon glyphicon-ban-circle"></i>
+                  <span>Dismiss</span>
+                </button>    
+              </div>    
+            </td>
+          </tr>
+        </tbody>
+      </table>
+  </div>
 </div>

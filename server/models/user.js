@@ -42,13 +42,9 @@ var UserSchema = new Schema({
     },
     address: {
         type: String,
-        required: true,
-        validate: [validatePresenceOf, 'Address Name cannot be blank']
     },
     phone: {
         type: String,
-        required: true,
-        validate: [validatePresenceOf, 'Phone Name cannot be blank']
     },
     username: {
         type: String,
