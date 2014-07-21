@@ -107,6 +107,12 @@ angular.module('mean.dashboard', [])
                 console.log("[ERROR] Failed to update  user:" + user._id);
             });    
         };
+
+    $scope.cancelOperation = function(){
+        angular.element('#formInsert').collapse('hide');
+        $scope.user = {};
+    };
+    
 }])
 
 .controller('FamilyCtrl' , ['$scope', '$http', function($scope , $http){
