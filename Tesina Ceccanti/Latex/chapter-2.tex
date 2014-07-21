@@ -92,22 +92,57 @@ The high demand for low-cost sequencing has also driven the development of high-
 	\centering
 	\includegraphics[width=150mm]{../Images/NGSworkflowCommented.png}
 	\label{overflow}
-	\caption{Nowadays Sequencing}
+	\caption{NGS work-flow}
 	\end{figure}
+
+
+\subsection{Whole Exome Sequencing}
+The type of sequencing used to obtain the data that our web-app manages is the \textbf{Whole Exome Sequencing}.
+\\
+\\The Whole Exome Sequencing test is a highly complex test that is newly developed for the identification of changes in a patient's DNA that are causative or related to their medical concerns. In contrast to "common" sequencing tests that analyze one gene or small groups of related genes at a time, the Whole Exome Sequencing test analyze the \emph{exons or coding regions of thousands of genes simultaneously} using next-generation sequencing techniques.
+\\
+\\The \textbf{exome} refers to the \emph{portion of the human genome that contains functionally important sequences of DNA that direct the body to make proteins essential for the body to function properly}. There are approximately 180000 exons in the human genome; these exons are arranged in about 22000 genes.
+\\It is known that \textbf{most of the errors that occur in DNA sequences that then lead to genetic disorders are located in the exons}. Therefore, sequencing of the exome is thought to be an efficient method of analyzing a patient's DNA to discover the genetic cause of diseases or disabilities.
+\\Additionally, the WES includes a \textbf{mitochondrial genome sequencing}. Mitochondria are structures within cells that convert the energy from food into a form that cells can use. Although most DNA is packaged in chromosomes within the nucleus, mitochondria also have a small amount of their own DNA. This genetic material is known as \textbf{mitochondrial DNA}. In humans, mitochondrial DNA represents a small fraction of the total DNA in cells, but many genetic conditions are related to changes in particular mitochondrial genes.
+\\
+\\
+The key principle of the test is:
+\\
+\\ "\emph{to sequence nucleotide by nucleotide, the human exome of an individual to a depth of coverage necessary to build a sequence with high accuracy. This sequence is then compared to standards and references of what is normal in the population and the result is interpreted by laboratory directors and clinicians}"
+\\
+\\ By sequencing the exome of a patient and comparing it to normal reference sequence, variations in an individual's DNA sequence can be identified and related back to the individual's medical concerns in an effort to discover the cause of the medical disorder.
+
+
+\newpage
 
 
 \section{DNA Sequencing Data format}
 
-Text
+Once the sequencing is done, the data collected must be described using \textbf{well-known data formats} so that they can subsequently be used by other people without any problems.
+\\ However, as often happens, even for the sequencing there isn not a single universal format, but there are many differents (e.g.: FASTQ, SAM, BAM, etc.). 
+\\
+\\The sequencer that generates the data managed by our web-app provides the results of the sequencing using format \textbf{CSFASTA}, a \emph{textual format} that also allows for sequence names and comments to precede the sequences.
+\\A sequence in FASTA format begins with a single-line description, followed by lines of sequence data. The description line is distinguished from the sequence data by a greater-than (">") symbol in the first column. The word following the ">" symbol is the identifier of the sequence, and the rest of the line is the description (both are optional). It is recommended that all lines of text be shorter than 80 characters. The sequence ends if another line starting with a ">" appears; this indicates the start of another sequence.
+\\
+\\An example of sequence in FASTA format is the following:
 
+\vspace{5mm}
+
+\begin{lstlisting}     
+>MCHU - Calmodulin - Human, rabbit, bovine, rat, and chicken
+ADQLTEEQIAEFKEAFSLFDKDGDGTITTKELGTVMRSLGQNPTEAELQDMINEVDADGNGTID
+FPEFLTMMARKMKDTDSEEEIREAFRVFDKDGNGYISAAELRHVMTNLGEKLTDEEVDEMIREA
+DIDGDGQVNYEEFVQMMTAK*
+\end{lstlisting}
 
 
 \section{SNPs databases}
 
 Because SNPs are expected to facilitate large-scale association genetics studies, there has recently been great interest in SNP discovery and detection. For this reason databases can to serve as a central repository. Once discovered, polymorphisms could be used by additional laboratories, using the sequence information around the polymorphism and the specific experimental conditions.
-\\
-\\
-\\There are several databases that, nowadays, are used. The most important are:
+
+\newpage
+
+There are several databases that, nowadays, are used. The most important are:
 
 \begin{enumerate}
 	\item \textbf{dbSNP}, a SNP database from the \emph{National Center for Biotechnology Infor-mation (NCBI)}

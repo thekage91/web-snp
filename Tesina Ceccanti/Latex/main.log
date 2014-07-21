@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/W32TeX) (format=pdflatex 2014.5.9)  5 JUL 2014 13:02
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/W32TeX) (format=pdflatex 2014.5.9)  21 JUL 2014 16:28
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -917,49 +917,83 @@ Overfull \hbox (14.22636pt too wide) in paragraph at lines 93--95
  []
 
 [14 <../Images/NowadaysSequencing.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 107--111
+Underfull \hbox (badness 10000) in paragraph at lines 100--114
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 107--111
+Underfull \hbox (badness 10000) in paragraph at lines 100--114
 
  []
 
-[15 <../Images/NGSworkflowCommented.png>]) [16] (./main.aux)
+
+Underfull \hbox (badness 10000) in paragraph at lines 100--114
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 100--114
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 100--114
+
+ []
+
+[15 <../Images/NGSworkflowCommented.png>] [16]
+Underfull \hbox (badness 10000) in paragraph at lines 121--128
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 121--128
+
+ []
+
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <9> on input line 132.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 132.
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <9> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 135.
+[17]) [18] (./main.aux)
 
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 8957 strings out of 493308
- 130875 string characters out of 6128492
- 231690 words of memory out of 5000000
- 12301 multiletter control sequences out of 15000+600000
- 15866 words of font info for 36 fonts, out of 8000000 for 9000
+ 9273 strings out of 493308
+ 133553 string characters out of 6128492
+ 237693 words of memory out of 5000000
+ 12613 multiletter control sequences out of 15000+600000
+ 18012 words of font info for 40 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
- 45i,11n,45p,1037b,306s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 45i,11n,45p,1037b,1129s stack positions out of 5000i,500n,10000p,200000b,80000s
 {c:/Users/Damian/SDCard/Programs/texlive/2013/texmf-dist/fonts/enc/dvips/cm-s
 uper/cm-super-t1.enc}<c:/Users/Damian/SDCard/Programs/texlive/2013/texmf-dist/f
 onts/type1/public/amsfonts/cm/cmsy10.pfb><c:/Users/Damian/SDCard/Programs/texli
-ve/2013/texmf-dist/fonts/type1/public/cm-super/sfbx1095.pfb><c:/Users/Damian/SD
-Card/Programs/texlive/2013/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb>
+ve/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb><c:/Users/Damian/SD
+Card/Programs/texlive/2013/texmf-dist/fonts/type1/public/cm-super/sfbx1095.pfb>
 <c:/Users/Damian/SDCard/Programs/texlive/2013/texmf-dist/fonts/type1/public/cm-
-super/sfbx1440.pfb><c:/Users/Damian/SDCard/Programs/texlive/2013/texmf-dist/fon
-ts/type1/public/cm-super/sfbx2074.pfb><c:/Users/Damian/SDCard/Programs/texlive/
-2013/texmf-dist/fonts/type1/public/cm-super/sfbx2488.pfb><c:/Users/Damian/SDCar
-d/Programs/texlive/2013/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb><c:
+super/sfbx1200.pfb><c:/Users/Damian/SDCard/Programs/texlive/2013/texmf-dist/fon
+ts/type1/public/cm-super/sfbx1440.pfb><c:/Users/Damian/SDCard/Programs/texlive/
+2013/texmf-dist/fonts/type1/public/cm-super/sfbx2074.pfb><c:/Users/Damian/SDCar
+d/Programs/texlive/2013/texmf-dist/fonts/type1/public/cm-super/sfbx2488.pfb><c:
 /Users/Damian/SDCard/Programs/texlive/2013/texmf-dist/fonts/type1/public/cm-sup
-er/sfrm1200.pfb><c:/Users/Damian/SDCard/Programs/texlive/2013/texmf-dist/fonts/
-type1/public/cm-super/sfrm1440.pfb><c:/Users/Damian/SDCard/Programs/texlive/201
-3/texmf-dist/fonts/type1/public/cm-super/sfrm1728.pfb><c:/Users/Damian/SDCard/P
-rograms/texlive/2013/texmf-dist/fonts/type1/public/cm-super/sfrm2488.pfb><c:/Us
+er/sfrm0700.pfb><c:/Users/Damian/SDCard/Programs/texlive/2013/texmf-dist/fonts/
+type1/public/cm-super/sfrm0900.pfb><c:/Users/Damian/SDCard/Programs/texlive/201
+3/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb><c:/Users/Damian/SDCard/P
+rograms/texlive/2013/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb><c:/Us
 ers/Damian/SDCard/Programs/texlive/2013/texmf-dist/fonts/type1/public/cm-super/
-sfti1095.pfb>
-Output written on main.pdf (17 pages, 606744 bytes).
+sfrm1440.pfb><c:/Users/Damian/SDCard/Programs/texlive/2013/texmf-dist/fonts/typ
+e1/public/cm-super/sfrm1728.pfb><c:/Users/Damian/SDCard/Programs/texlive/2013/t
+exmf-dist/fonts/type1/public/cm-super/sfrm2488.pfb><c:/Users/Damian/SDCard/Prog
+rams/texlive/2013/texmf-dist/fonts/type1/public/cm-super/sfti1095.pfb>
+Output written on main.pdf (19 pages, 653823 bytes).
 PDF statistics:
- 130 PDF objects out of 1000 (max. 8388607)
- 86 compressed objects within 1 object stream
+ 149 PDF objects out of 1000 (max. 8388607)
+ 100 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  36 words of extra memory for PDF output out of 10000 (max. 10000000)
 
