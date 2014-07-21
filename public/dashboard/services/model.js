@@ -1,7 +1,7 @@
 /**
  * Created by ugo on 7/21/14.
  */
-// js/services/todos.js
+
 angular.module('ModelService', [])
     // super simple service
     // each function returns a promise object
@@ -19,10 +19,10 @@ angular.module('ModelService', [])
             getSchema : function (element) {
                 return $http.get('/api/model/'+element);
             },
-            prova : function () {
+            getAnId : function () {
                 var resu;
-                return $http.get('/api/id').done( function (res) { resu = res});
-                return resu;
+                return $http.get('/api/id',{cache : 'false'}).success( function (res) { resu = res});
+                return resu[0];
             }
         }
     });

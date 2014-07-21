@@ -3,8 +3,8 @@
 
 angular.module('mean.dashboard', [])
 
-    .controller('UploaderCtrl', ['$scope', '$window', '$http', 'Model',
-        function ($scope, $window, $http,Model) {
+    .controller('UploaderCtrl', ['$scope', '$window', '$http', 'Model','Parse',
+        function ($scope, $window, $http,Model,Parse) {
 
             function saveInDBparsedData(result) {
                 return $http.post('/api/variant',result['variants'][0]);
@@ -38,8 +38,10 @@ angular.module('mean.dashboard', [])
 
             $scope.saveResult = function () {
 
-                console.log("CALLING MODEL SERVICE" + Model.prova);
-               /* $scope.jsonUpload = JSON.parse($window.output);
+                console.log("CALLING PARSE SERVICE" + (Parse.parse)());
+
+
+               /* $scope.jsonUpload = JSON.parnse($window.output);
 
 
                 var schemaContainter = {};
