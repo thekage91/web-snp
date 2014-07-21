@@ -10,10 +10,10 @@ String.prototype.capitalize = function() {
 
 String.prototype.camelize = function() {
 
-return this.replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, function (match, index) {
-    if (+match === 0) return ""; // or if (/\s+/.test(match)) for white spaces
-    return index == 0 ? match.toLowerCase() : match.toUpperCase();
-});
+    return this.replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, function (match, index) {
+        if (+match === 0) return ""; // or if (/\s+/.test(match)) for white spaces
+        return index == 0 ? match.toLowerCase() : match.toUpperCase();
+    });
 }
 
 module.exports = function(app, passport) { 
@@ -25,9 +25,9 @@ module.exports = function(app, passport) {
              model = mongoose.model(req.params.id.capitalize());
          }
 
-        res.json(model);
+        res.json(model.attr);
 });
-    app.get('/api/id', function (req, res, next) {
+    app.get('/api/id/:kill', function (req, res, next) {
         res.send(mongoose.Types.ObjectId());
     });
      app.use('/api', rest.rest());

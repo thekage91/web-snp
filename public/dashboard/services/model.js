@@ -35,10 +35,11 @@ angular.module('ModelService', [])
 
             },
             getANumberOfIds : function (num) {
-                while(num) {
-                    equests[i] = $http.get('/api/id');
-                    num--;
-                }
+                var requests = [];
+
+                for(var i=0;i<num; i++)
+                    requests[i] = $http.get('/api/id/'+Math.random(),{cache : 'false'});
+
                 return $q.all(requests);
             }
 

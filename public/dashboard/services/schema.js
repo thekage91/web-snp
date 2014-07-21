@@ -8,6 +8,15 @@ angular.module('SchemaService', [])
     .factory('Schema', function($http,$q) {
         return {
             retrieveFromSchema: function (data, schema, noModify) {
+
+                camelize = function(x) {
+
+                    return x.replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, function (match, index) {
+                        if (+match === 0) return ""; // or if (/\s+/.test(match)) for white spaces
+                        return index == 0 ? match.toLowerCase() : match.toUpperCase();
+                    });
+                }
+
                 var res = {};
                 var camelized;
                 for (var el in data) {
@@ -24,7 +33,7 @@ angular.module('SchemaService', [])
 
             var schemaContainer = [];
             for (var i = 0; i < args.length; i++) {
-                var jsonWithSchema = args[i][0];
+                var jsonWithSchema = args[i].data;
 
                 //Get first response's filed with mongoose.Model.attr JSON
                 for (var key in jsonWithSchema) if (jsonWithSchema.hasOwnProperty(key))  break;

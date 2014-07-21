@@ -2,6 +2,8 @@
  * Created by ugo on 7/21/14.
  */
 
+
+
 angular.module('ParseService', [])
     // super simple service
     // each function returns a promise object
@@ -9,15 +11,32 @@ angular.module('ParseService', [])
         return {
             createModelClassesFromData: function (json, patientName) {
 
-                function initializeModelsIDs(args , models) {
-                    for (var i = 0; i < arguments.length; i++) {
-                    models[i]._id = arguments[i][0];
-                }
+                function initializeModelsIDs(args, models) {
+                    for (var i = 0; i < models.length; i++) {
+                        models[i]._id = args[i].data;
+                    }
 
                 }
+
+                function retrieveVariantDetail(data, variantSchema) {
+                    var detail = (Schema.retrieveFromSchema)(data, variantSchema);
+                    detail.altFilteredReads = data['Ref,Alt filtered reads'];
+                    detail.ref = data['Ref,Alt filtered reads'];
+                    return detail;
+                };
+
+
+                function retrievePathogenicity(data, pathogenicitySchema) {
+                    var path = (Schema.retrieveFromSchema)(data, pathogenicitySchema);
+                    path.GERpp = data['GERP++'];
+                    path.SIFT = data['SIFT'];
+                    path.polyPhen = data['PolyPhen-2'];
+                    return path;
+                };
+
                 var result = {};
 
-                var idNumber = 7;
+                var idNumber = 6;
                 result.variants = [];
                 result.details = [];
                 result.genes = [];
@@ -27,26 +46,27 @@ angular.module('ParseService', [])
 
                 (Model.getAllSchemas)().then(
                     function () {
-                        schemas = (Schema.inizializeSchemasFromGET)(arguments);
 
+                        var schemas = (Schema.inizializeSchemasFromGET)(arguments[0]);
+                        console.log("Got schemas: " + JSON.stringify(schemas));
                         for (var key in json) if (json.hasOwnProperty(key))  break;
 
                         json[key].forEach(function (element) {
 
-
                             //build model classes
 
-                            var variant = retrieveFromSchema(element, schemas['Variant']);
+                            var variant = (Schema.retrieveFromSchema)(element, schemas['Variant']);
                             var detail = retrieveVariantDetail(element, schemas['VariantDetail']);
-                            var gene = retrieveFromSchema(element, schemas['Gene']);
-                            var dbsnp = retrieveFromSchema(element, schemas['DbSNP']);
+                            var gene = (Schema.retrieveFromSchema)(element, schemas['Gene']);
+                            var dbsnp = (Schema.retrieveFromSchema)(element, schemas['DbSNP']);
                             var pathogenicity = retrievePathogenicity(element, schemas['Pathogenicity']);
-                            var esp = retrieveFromSchema(element, schemas['Esp'], true);
+                            var esp = (Schema.retrieveFromSchema)(element, schemas['Esp'], true);
 
                             var models = [variant, detail, gene, dbsnp, pathogenicity, esp];
+                            var patient = {name :patientName};
 
-                            (Model.getANumberOfIDs)(6).then(function () {
-                                initializeModelsIDs(arguments,models);
+                            (Model.getANumberOfIds)(idNumber).then(function () {
+                                initializeModelsIDs(arguments[0], models);
                                 //build model relationships
                                 (variant.variantDetails = []).push(detail._id);
                                 variant.gene = gene._id;
