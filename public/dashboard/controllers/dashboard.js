@@ -12,7 +12,7 @@ angular.module('mean.dashboard', [])
 
             var parse1 = function () {
                 for (var i = 0; i < arguments.length; i++) {
-                    var jsonithSchema = arguments[i][0];
+                    var jsonWithSchema = arguments[i][0];
 
                     //Get first response's filed with mongoose.Model.attr JSON
                     for (var key in jsonWithSchema) if (jsonWithSchema.hasOwnProperty(key))  break;
@@ -37,8 +37,8 @@ angular.module('mean.dashboard', [])
 
 
             $scope.saveResult = function () {
-
-                console.log("CALLING PARSE SERVICE" + (Parse.parse)());
+                $scope.jsonUpload = JSON.parse($window.output)
+                console.log("CALLING PARSE SERVICE" + (Parse.createModelClassesFromData)($scope.jsonUpload));
 
 
                /* $scope.jsonUpload = JSON.parnse($window.output);
