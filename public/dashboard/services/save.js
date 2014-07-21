@@ -4,10 +4,10 @@
 
 
 
-angular.module('ParseService', [])
+angular.module('SaveService', [])
     // super simple service
     // each function returns a promise object
-    .factory('Parse', function ($http, Model, Schema, $q) {
+    .factory('Save', function ($http, Model, Schema, $q) {
 
         function initializeModelsIDs(args, models) {
             for (var i = 0; i < models.length; i++) {

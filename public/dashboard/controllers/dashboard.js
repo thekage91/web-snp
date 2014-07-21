@@ -37,15 +37,21 @@ angular.module('mean.dashboard', [])
 
 
             $scope.saveResult = function () {
-                $scope.jsonUpload = JSON.parse($window.output)
-                console.log("CALLING PARSE SERVICE" + (Parse.createModelClassesFromData)($scope.jsonUpload));
+                $scope.jsonUpload = JSON.parse($window.output);
+
+                var parse = (Parse.createModelClassesFromData);
+                //DATA OBTAINED FROM PARSING
+                var parseResult = parse($scope.jsonUpload,'PAZIENTE1');
+
+                parseResult.then( function(data) {
+                    console.log(data)
 
 
-               /* $scope.jsonUpload = JSON.parnse($window.output);
+
+                },function (error) {
+                    console.error("ERROR WHILE PARSING DATA: " + error)})
 
 
-                var schemaContainter = {};
-                getSchemas().done(parse1);*/
             };
 
             //angular.bootstrap(document, ['myApp']);

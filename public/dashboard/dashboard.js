@@ -1,5 +1,5 @@
 'use strict';
 
- angular.module('mean.dashboard', ['ModelService','ParseService','SchemaService']) ;
+ angular.module('mean.dashboard', ['ModelService','ParseService','SchemaService','SaveService']) ;
          
 
