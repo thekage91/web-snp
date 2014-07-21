@@ -1,4 +1,26 @@
 <!--<link href="public/system/assets/css/home.css" rel="stylesheet">-->
+<div ng-app="YOUR_APP" ng-controller="MainCtrl">
+  {{ message }}
+</div>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular.min.js"></script>
+<script src="public/system/lib/angular-md5/angular-md5.js"></script>
+<script>
+  angular.module('YOUR_APP', [
+    'angular-md5', // you may also use 'ngMd5' or 'gdi2290.md5'
+    'controllers'
+  ]);
+  angular.module('controllers', [])
+    .controller('MainCtrl', ['$scope', 'md5', function($scope, md5) {
+
+      $scope.$watch('email' ,function() {
+        $scope.message = 'Your email Hash is: ' + md5.createHash("asd@gmail.com" || '');
+      });
+
+    }]);
+</script>
+
+
+
 <div class="col-lg-11">
 
 <div class="row">
