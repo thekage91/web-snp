@@ -4,11 +4,21 @@ var express = require('express');
 var mers = require('mers');
 var mongoose = require('mongoose');
 
+String.prototype.capitalize = function() {
+    return this.charAt(0).toUpperCase() + this.slice(1);
+}
+
+
 module.exports = function(app, passport) { 
      var rest =mers({uri:'mongodb://localhost/mean-dev'});
       
      app.get('/api/model/:id', function (req, res, next) {
-        res.json(mongoose.model(req.params.id).attr);   
+         var model = mongoose.model(req.params.id);
+         if(typeof model === 'undefined') {
+             model = mongoose.model(req.params.id.capitalize());
+         }
+
+        res.json(model);
 });
     app.get('/api/id', function (req, res, next) {
         res.send(mongoose.Types.ObjectId());

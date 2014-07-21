@@ -1,7 +1,6 @@
 'use strict';
 
 angular.element(document).ready(function() {
-    console.log("DOCUMENT = "+ document.baseURI);
     //Fixing facebook bug with redirect
     if (window.location.hash === '#_=_') window.location.hash = '#!';
 
@@ -18,7 +17,7 @@ for (var index in window.modules) {
 }
 
 // Default modules
-var modules = ['ngCookies','ngResource',  'ui.bootstrap', 'ui.router', 'mean.system', 'mean.auth' ,'mean.dashboard'];
+var modules = ['ngCookies','ngResource',  'ui.bootstrap', 'ui.router', 'mean.system', 'mean.auth' ,'mean.dashboard','ModelService'];
 modules = modules.concat(packageModules);
 
 // Combined modules

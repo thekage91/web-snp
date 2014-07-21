@@ -3,54 +3,8 @@
 
 angular.module('mean.dashboard', [])
 
-    .controller('UploaderCtrl', ['$scope', '$window', '$http',
-        function ($scope, $window, $http) {
-            $scope.prova = function () {
-                //output e' gia' il json uscito puoi dalla funzione parse
-                var parsedJson = $window.output;
-                console.log($scope.response);
-                // Filtrare tutto, e creare i vari array variants , patient , sequencing ecc ecc
-                // metterli nello scope.. esempio $scope.variants ecc la tabella di crea da sola
-                console.log(parsedJson);
-                var filteredJson = $scope.filtJson;
-                $scope.variants = filteredJson.variants;
-                $scope.esps = filteredJson.esps;
-                $scope.dbsnps = filteredJson.dbsnps;
-                $scope.pathogenicities = filteredJson.pathogenicities;
-                $scope.variantDetails = filteredJson.detail;
-                $scope.genes = filteredJson.genes;
-                $scope.patient = filteredJson.patient;
-
-                $scope.Table2Json = function () {
-
-                    function parseTable(table) {
-                        var result = {};
-                        for (var i = 1; table.rows; i++) {
-                            result[table.rows[i].cells[0].innerText] = table.rows[i].cells[1].innerText;
-                        }
-                        result_json = JSON.stringify(result);
-                    }
-
-                    var tableVariant = angular.element('.variant');
-                    var tableDbsnp = angular.element('.dbsnp');
-                    var tablePatient = angular.element('.patient');
-                    var tableEsp = angular.element('.esp');
-                    var tableGene = angular.element('.gene');
-                    var tablePatho = angular.element('.pathogenicity');
-                    var tableSeque = angular.element('.sequencing');
-
-                    var jsonVariant = parseTable(tableVariant);
-                    var jsonDBsnp = parseTable(tableDbsnp);
-                    var jsonPatient = parseTable(tablePatient);
-                    var jsonEsp = parseTable(tableEsp);
-                    var jsonGene = parseTable(tableGene);
-                    var jsonPatho = parseTable(tablePatho);
-                    var jsonSeque = parseTable(tableSeque);
-
-                    // salvare sul DB richiamando la funzione di ugo
-                }
-            }
-
+    .controller('UploaderCtrl', ['$scope', '$window', '$http', 'Model',
+        function ($scope, $window, $http,Model) {
 
             function saveInDBparsedData(result) {
                 return $http.post('/api/variant',result['variants'][0]);
@@ -78,15 +32,18 @@ angular.module('mean.dashboard', [])
                     .error( function (err) {console.err("[ERROR] while saving in DB: " + err)});
 
                 //postElementArray('Variant', result['variants']);
-            });
+            };
 
 
 
             $scope.saveResult = function () {
-                $scope.jsonUpload = JSON.parse($window.output);
+
+                console.log("CALLING MODEL SERVICE" + Model.prova);
+               /* $scope.jsonUpload = JSON.parse($window.output);
+
 
                 var schemaContainter = {};
-                getSchemas().done(parse1);
+                getSchemas().done(parse1);*/
             };
 
             //angular.bootstrap(document, ['myApp']);
