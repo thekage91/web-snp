@@ -156,13 +156,13 @@
                         <span id="refine_value">Refine by...</span> <span class="caret"></span>
                       </button>
                       <ul class="dropdown-menu" role="menu">
-                        <li><a ng-click="elValue('patient')" onClick="changeLabel2('dnSNP not specified'); document.getElementById('valueFreq').style.visibility='hidden';">dnSNP not specified</a></li>
-                        <li><a ng-click="elValue('gene')" onClick="changeLabel2('FreqRef smaller than...'); document.getElementById('valueFreq').style.visibility='visible';">FreqRef smaller than...</a></li>
-                        <li><a ng-click="elValue('gene')" onClick="changeLabel2('FreqAlt smaller than...'); document.getElementById('valueFreq').style.visibility='visible';">FreqAlt smaller than...</a></li>
+                        <li><a ng-click="elValue('patient')" onClick="changeLabel2('dnSNP not specified'); document.getElementById('valueFreq').style.display='none';">dnSNP not specified</a></li>
+                        <li><a ng-click="elValue('gene')" onClick="changeLabel2('FreqRef smaller than...'); document.getElementById('valueFreq').style.display='block';">FreqRef smaller than...</a></li>
+                        <li><a ng-click="elValue('gene')" onClick="changeLabel2('FreqAlt smaller than...'); document.getElementById('valueFreq').style.display='block';">FreqAlt smaller than...</a></li>
                       </ul>
                     </div>
 
-                    <div id="valueFreq" class="col-md-4">
+                    <div style="display:none;" id="valueFreq" class="col-md-4">
                       <input type="text" class="form-control" placeholder="value">
                     </div>
 
