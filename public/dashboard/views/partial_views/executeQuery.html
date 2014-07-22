@@ -33,12 +33,16 @@
        var e = document.getElementById('search_concept');
        e.innerHTML = value;
    }
+
+   function changeLabel2(value) {
+       var e = document.getElementById('refine_value');
+       e.innerHTML = value;
+   }
 </script>
 
 <ul class="nav nav-tabs" ng-controller="ExecuteQueryCtrl">
       <li class="text-left"><a href="#basic" data-toggle="tab" ng-click="clear()">Basic SNPs Search</a></li>
-      <li class="text-left"><a href="#complex" data-toggle="tab" ng-click="clear()">Complex SNPs Search</a></li>
-      <li class="text-left"><a href="#patients" data-toggle="tab" ng-click="clear()">Patients Search</a></li>
+      <li class="text-left"><a href="#complex" data-toggle="tab" ng-click="clear()">Range SNPs Search</a></li>
 
     </ul>
 
@@ -121,79 +125,7 @@
       <div class="tab-pane active in" id="basic">
 
         <div>
-          <ul class="nav nav-tabs">
-            <li class="text-left"><a href="#esp" data-toggle="tab">By ESP</a></li>
-            <li class="text-left"><a href="#region" data-toggle="tab">By Region</a></li>
-          </ul>
-
-          <!-- First sub-tab -->
-          <div id="myTabContent" class="tab-content">
-            <div class="tab-pane active in" id="esp">
-
-              <div class="row bot15">
-                      <div id="custom-search-input" >
-                      <h4>Insert required fields:</h4>
-                      <div class="input-group col-md-12">
-                        <div class="input-group">
-                          <div class="input-group-btn search-panel">
-                            <input type="text" ng-model="ESP6500_ALL" class="form-control" name="x" placeholder="ESP6500_ALL">
-                          </div>
-                          <div class="input-group-btn search-panel">
-                            <input type="text" ng-model="ESP6500_AA" class="form-control" name="x" placeholder="ESP6500_AA">
-                          </div>
-                          <div class="input-group-btn search-panel">
-                            <input type="text" ng-model="ESP6500_EA" class="form-control" name="x" placeholder="ESP6500_EA">
-                          </div>
-                        <span class="input-group-btn">
-                            <button class="btn btn-danger" type="button" ng-click="submitByEsp()">
-                              <span class="glyphicon glyphicon-search"></span>
-                            </button>
-                          </span>
-
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="row" style="margin-top: 30px">
-            <h4>Results:</h4>
-        <h4 ng-hide="elements.length"> No Results! </h4>
-          <div class="well" ng-show="elements && elements.length">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th>Chr</th>
-                  <th>Start</th>
-                  <th>End</th>
-                  <th>Ref</th>
-                  <th>Alt</th>
-                  <th style="width: 75px;"></th>
-                </tr>
-              </thead>
-              <tbody>
-                  <tr ng-repeat="el in elements"> 
-                  <td>{{el.chr}}</td>
-                  <td>{{el.start}}</td>
-                  <td>{{el.end}}</td>
-                  <td>{{el.ref}}</td>
-                  <td>{{el.alt}}</td>
-                  <td>
-                    <button type="button" class="btn btn-primary btn-sm" data-ng-hide="user.isLicensed"
-                    data-toggle="modal" data-target="#myModalLicensed">
-                    <span class="glyphicon glyphicon-eye-open"></span> View
-                    </button> 
-                  <br/> 
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        </div>
-        </div>
-            </div>
-            <!-- First sub-tab end -->
-
-            <!-- Second sub-tab -->
-            <div class="tab-pane fade" id="region">
+            <div class="tab-pane" id="region">
             <div class="row bot15">
                       <div id="custom-search-input">
                       <h4>Insert required fields:</h4>
@@ -212,11 +144,28 @@
                             <button class="btn btn-danger" type="button" ng-click="submitByRegion()">
                               <span class="glyphicon glyphicon-search"></span>
                             </button>
-                          </span>
-
+                          </span>                    
+                        </div>
                         </div>
                       </div>
                     </div>
+
+                    <div class="row input-group-btn search-panel">
+                      <div id="value" class="col-md-4">
+                      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                        <span id="refine_value">Refine by...</span> <span class="caret"></span>
+                      </button>
+                      <ul class="dropdown-menu" role="menu">
+                        <li><a ng-click="elValue('patient')" onClick="changeLabel2('dnSNP not specified'); document.getElementById('valueFreq').style.visibility='hidden';">dnSNP not specified</a></li>
+                        <li><a ng-click="elValue('gene')" onClick="changeLabel2('FreqRef smaller than...'); document.getElementById('valueFreq').style.visibility='visible';">FreqRef smaller than...</a></li>
+                        <li><a ng-click="elValue('gene')" onClick="changeLabel2('FreqAlt smaller than...'); document.getElementById('valueFreq').style.visibility='visible';">FreqAlt smaller than...</a></li>
+                      </ul>
+                    </div>
+
+                    <div id="valueFreq" class="col-md-4">
+                      <input type="text" class="form-control" placeholder="value">
+                    </div>
+
                   </div>
 
                    <div class="row" style="margin-top: 30px">
@@ -254,68 +203,11 @@
         </div>
         </div>
             </div>
-            <!-- Second sub-tab end -->
 
         </div>
-      </div>
       </div>
       </div>
       <!-- Second tab end -->
-
-
-
-      <!-- Third tab -->
-      <div class="tab-pane fade" id="patients">
-      <div class="tab-pane active in" id="basic">
-        <div class="row bot15">
-                <div id="custom-search-input">
-                <h4>Insert patient's genotype to search:</h4>
-                <div class="input-group col-md-12">
-                  <div class="input-group">
-                    <div class="input-group-btn search-panel">
-                      <input type="text" ng-model="genotype" class="form-control" name="x" placeholder="Genotype">
-                    </div>
-                  <span class="input-group-btn">
-                      <button class="btn btn-danger" type="button" ng-click="submitByGenotype()">
-                        <span class="glyphicon glyphicon-search"></span>
-                      </button>
-                    </span>
-
-                  </div>
-                </div>
-              </div>
-            </div>
-
-
-        <div class="row" style="margin-top: 30px">
-            <h4>Results:</h4>
-        <h4 ng-hide="patients.length"> No Results! </h4>
-          <div class="well" ng-show="patients && patients.length">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th>Patient Name</th>
-                  <th style="width: 75px;"></th>
-                </tr>
-              </thead>
-              <tbody>
-                  <tr ng-repeat="patient in patients"> 
-                  <td>{{patient.name}}</td>
-                  <td>
-                    <button type="button" class="btn btn-primary btn-sm" data-ng-hide="user.isLicensed"
-                    data-toggle="modal" data-target="#myModalLicensed">
-                    <span class="glyphicon glyphicon-eye-open"></span> View
-                    </button> 
-                  <br/> 
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        </div>
-        </div>
-      </div>
-      </div>
-      <!-- Third tab end -->
 
   </div>
 </div>
