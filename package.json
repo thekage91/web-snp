@@ -26,6 +26,7 @@
     "postinstall": "node node_modules/bower/bin/bower install"
   },
   "dependencies": {
+    "angular-md5": "*",
     "assetmanager": "0.1.2",
     "body-parser": "^1.2.0",
     "bower": "^1.3.3",

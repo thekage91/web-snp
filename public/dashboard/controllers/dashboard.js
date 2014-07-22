@@ -4,8 +4,7 @@
 
 angular.module('mean.dashboard', [])
 
-        .controller('UploaderCtrl', ['$scope' , '$window' ,
-        DbSNP,Esp,Family,Gene,Pathogenicity,Patient,Sequencing,Variant,VariantDetail,
+.controller('UploaderCtrl', ['$scope' , '$window' ,
         function($scope, $window) {
               
               //output e' gia' il json uscito puoi dalla funzione parse
@@ -252,160 +251,180 @@ angular.module('mean.dashboard', [])
     }])
 
    
-        .controller('ExecuteQueryCtrl', ['$scope', '$http', function($scope, $http) {
-                var element;
+.controller('ExecuteQueryCtrl', ['$scope', '$http', function($scope, $http) {
+        var element;
 
-                var successInitialQuery = function(data) {
-                    $scope.elements = new Array();
-                    console.log("QUERY SUCCEDED. RECEIVED:" + JSON.stringify(data));
+        var successInitialQuery = function(data) {
+            $scope.elements = new Array();
+            console.log("QUERY SUCCEDED. RECEIVED:" + JSON.stringify(data));
+            
+            data.payload.forEach( function (payload) { 
+                if(payload.variants) payload.variants.forEach(function(variant) {
                     
-                    data.payload.forEach( function (payload) { 
-                        if(payload.variants) payload.variants.forEach(function(variant) {
-                            
-                            $http.get('/api/variant/' + variant)
-                                .success(function(data) {
-                                    console.log('Got variant');
-                                    $scope.elements.push(data.payload);
-                                })
-                                .error(function() {
-                                    console.log('[ERROR] Failed retrieving variant  ith ID: ' + variant);
-                                });
-                            });
-                        else
-                            $http.get('/api/variant/' + payload.variant)
-                                .success(function(data) {
-                                    console.log('Got variant');
-                                    $scope.elements.push(data.payload);
-                                })
-                                .error(function() {
-                                    console.log('[ERROR] Failed retrieving variant  ith ID: ' + variant);
-                                });
+                    $http.get('/api/variant/' + variant)
+                        .success(function(data) {
+                            console.log('Got variant');
+                            $scope.elements.push(data.payload);
+                        })
+                        .error(function() {
+                            console.log('[ERROR] Failed retrieving variant  ith ID: ' + variant);
+                        });
                     });
-                };
-                           
-                $scope.elValue = function(x) {
-                    element = x;
-                };
+                else
+                    $http.get('/api/variant/' + payload.variant)
+                        .success(function(data) {
+                            console.log('Got variant');
+                            $scope.elements.push(data.payload);
+                        })
+                        .error(function() {
+                            console.log('[ERROR] Failed retrieving variant  ith ID: ' + variant);
+                        });
+            });
+        };
+                   
+        $scope.elValue = function(x) {
+            element = x;
+        };
 
-                $scope.submitBase = function() {
-                    var keyword = $scope.query.keyword;
+        $scope.submitBase = function() {
+            var keyword = $scope.query.keyword;
 
-                    switch (element) {
+            switch (element) {
 
-                        case 'gene':
-                        case 'region':
-                        case 'mutation':
+                case 'gene':
+                case 'region':
+                case 'mutation':
 
-                            $http.get('/api/gene/finder/query?' + element + '=' + keyword)
-                                    .success(successInitialQuery)
-                                    .error(function(data) {
-                                        console.log('[ERROR] Failed retrieving gene with ' + element + ' field: ' + keyword);
-                                    });
-                            break;
+                    $http.get('/api/gene/finder/query?' + element + '=' + keyword)
+                            .success(successInitialQuery)
+                            .error(function(data) {
+                                console.log('[ERROR] Failed retrieving gene with ' + element + ' field: ' + keyword);
+                            });
+                    break;
 
-                        case 'patient':
-                            $http.get('/api/patient/' + keyword)
-                                    .success(successInitialQuery)
-                                    .error(function(data) {
-                                        console.log('[ERROR] Failed retrieving gene with gene field: ' + keyword);
-                                    });
-                            break;
+                case 'patient':
+                    $http.get('/api/patient/' + keyword)
+                            .success(successInitialQuery)
+                            .error(function(data) {
+                                console.log('[ERROR] Failed retrieving gene with gene field: ' + keyword);
+                            });
+                    break;
 
-                        case 'genotype':
-                            $http.get('/api/variantdetail/finder/query?' + element + '=' + keyword)
-                                    .success(successInitialQuery)
-                                    .error(function(data) {
-                                        console.log('[ERROR] Failed retrieving gene with ' + element + ' field: ' + keyword);
-                                    });
-                            break;
-                        case 'freqAlt':
-                        case 'dbsnp':
-                            $http.get('/api/dbsnp/finder/query?' + element + '=' + keyword)
-                                    .success(successInitialQuery)
-                                    .error(function(data) {
-                                        console.log('[ERROR] Failed retrieving gene with ' + element + ' field: ' + keyword);
-                                    });
-                            break;
-                    }
-                };
-                
-                $scope.submitByEsp = function() {
-                    $http.get('/api/esp/finder/query?ESP6500_ALL=' +
-                               $scope.ESP6500_ALL+ '&ESP6500_AA='  +  
-                               $scope.ESP6500_AA + '&ESP6500_EA='  + $scope.ESP6500_EA)
-                               .success(successInitialQuery)
-                               .error(function(data) {
-                                        console.log('[ERROR] Failed retrieving ESP with thath field: ');
-                                    });
-                };
-                
-                $scope.submitByRegion = function() {
-                    $http.get('/api/variant/finder/query?chr=' +
-                               $scope.chr+ '&start='  +  
-                               $scope.start + '&end='  + $scope.end)
-                               .success(function (data) {
-                                   console.log('Got variant: '+ JSON.stringify(data));
-                                   $scope.elements = new Array();
-                                   $scope.elements = data.payload;
-                                   console.log('dovrei : '+ JSON.stringify($scope.elements));
-                            })
-                               .error(function(data) {
-                                        console.log('[ERROR] Failed retrieving variant with thath field: ');
-                                    } );
-                };
-                
-                var getVariantFromDetail = function (variant) {
-                  
-                     $http.get('/api/variant/' + variant)
-                             .success(function (data) {
-                                 data.payload.patients.forEach(getPatientFromVariant);
-                                  })
-                             .error(function(data) {
-                                        console.log('[ERROR] Failed retrieving Variant: '+ variant);
-                                    });          
-                }
-                
-                 var getPatientFromVariant = function (patient) {
-                  
-                     $http.get('/api/patient/finder/query?name=' + patient)
-                             .success(function (data) {
-                                $scope.patients.push(data.payload);
-                                console.log('Pushed '+JSON.stringify(data)+' in scope.patients');
-                            })
-                             .error(function(data) {
-                                        console.log('[ERROR] Failed retrieving patient: '+ patient);
-                                    });          
-                }
-                
-                $scope.submitByGenotype = function() {
-                    $http.get('/api/variantdetail/finder/query?genotype=' +
-                               $scope.genotype)
-                       
-                               .success(function(data) {
-                                   $scope.patients = new Array();
-                                   data.payload.forEach(function (element) {
-                                    console.log("ELEMENT = "+JSON.stringify(element));
-                                       getVariantFromDetail(element.variant);
-                                       });
-                                   })
-                               .error(function(data) {
-                                        console.log('[ERROR] Failed retrieving VariantDetail with genotype: '+$scope.genotype);
-                                    });               
-                                   
-                               };
-                
-                
-                $scope.clear = function() {
-                    console.log("CLEAR CALLED");
-                    $scope.elements = {};
-                    console.log("ORA ELEMENTI:" + JSON.stringify($scope.elements));
-                }
-       
-            
+                case 'genotype':
+                    $http.get('/api/variantdetail/finder/query?' + element + '=' + keyword)
+                            .success(successInitialQuery)
+                            .error(function(data) {
+                                console.log('[ERROR] Failed retrieving gene with ' + element + ' field: ' + keyword);
+                            });
+                    break;
+                case 'freqAlt':
+                case 'dbsnp':
+                    $http.get('/api/dbsnp/finder/query?' + element + '=' + keyword)
+                            .success(successInitialQuery)
+                            .error(function(data) {
+                                console.log('[ERROR] Failed retrieving gene with ' + element + ' field: ' + keyword);
+                            });
+                    break;
             }
-            
-           
+        };
         
-            
-            ]);
+        $scope.submitByEsp = function() {
+            $http.get('/api/esp/finder/query?ESP6500_ALL=' +
+                       $scope.ESP6500_ALL+ '&ESP6500_AA='  +  
+                       $scope.ESP6500_AA + '&ESP6500_EA='  + $scope.ESP6500_EA)
+                       .success(successInitialQuery)
+                       .error(function(data) {
+                                console.log('[ERROR] Failed retrieving ESP with thath field: ');
+                            });
+        };
+        
+        $scope.submitByRegion = function() {
+            $http.get('/api/variant/finder/query?chr=' +
+                       $scope.chr+ '&start='  +  
+                       $scope.start + '&end='  + $scope.end)
+                       .success(function (data) {
+                           console.log('Got variant: '+ JSON.stringify(data));
+                           $scope.elements = new Array();
+                           $scope.elements = data.payload;
+                           console.log('dovrei : '+ JSON.stringify($scope.elements));
+                    })
+                       .error(function(data) {
+                                console.log('[ERROR] Failed retrieving variant with thath field: ');
+                            } );
+        };
+        
+        var getVariantFromDetail = function (variant) {
+          
+             $http.get('/api/variant/' + variant)
+                     .success(function (data) {
+                         data.payload.patients.forEach(getPatientFromVariant);
+                          })
+                     .error(function(data) {
+                                console.log('[ERROR] Failed retrieving Variant: '+ variant);
+                            });          
+        }
+        
+         var getPatientFromVariant = function (patient) {
+          
+             $http.get('/api/patient/finder/query?name=' + patient)
+                     .success(function (data) {
+                        $scope.patients.push(data.payload);
+                        console.log('Pushed '+JSON.stringify(data)+' in scope.patients');
+                    })
+                     .error(function(data) {
+                                console.log('[ERROR] Failed retrieving patient: '+ patient);
+                            });          
+        }
+        
+        $scope.submitByGenotype = function() {
+            $http.get('/api/variantdetail/finder/query?genotype=' +
+                       $scope.genotype)
+               
+                       .success(function(data) {
+                           $scope.patients = new Array();
+                           data.payload.forEach(function (element) {
+                            console.log("ELEMENT = "+JSON.stringify(element));
+                               getVariantFromDetail(element.variant);
+                               });
+                           })
+                       .error(function(data) {
+                                console.log('[ERROR] Failed retrieving VariantDetail with genotype: '+$scope.genotype);
+                            });               
+                           
+                       };
+        
+        
+        $scope.clear = function() {
+            console.log("CLEAR CALLED");
+            $scope.elements = {};
+            console.log("ORA ELEMENTI:" + JSON.stringify($scope.elements));
+        }
+
+    
+    }
+      
+])
+
+.controller('ProfileCtrl', ['$scope' , 'md5' , function($scope, md5){
+
+    var email = $scope.user.email;
+    console.log(md5.createHash(email || ''));
+}])
+
+.directive('gravatar', function() {
+    return {
+       restrict: 'AE',
+       replace: true,
+       scope: {
+         name: 'profileImage',
+         height: '100',
+         width: '100',
+         emailHash: '@'
+       },
+       link: function(scope, el, attr) {
+        scope.defaultImage = 'https://somedomain.com/images/avatar.png';
+       },
+       template: '<img alt="{{ name }}" height="{{ height }}"  width="{{ width }}" src="https://secure.gravatar.com/avatar/{{ emailHash }}.jpg?s={{ width }}&d={{ defaultImage }}">'
+     };
+});
 
