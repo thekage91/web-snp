@@ -412,6 +412,15 @@ angular.module('mean.dashboard', ['angular-md5'])
     $scope.emailHash = md5.createHash('thekage91@gmail.com')
     console.log($scope.emailHash);
 
+    $http.get('/api/user/' + $scope.global.user._id)
+        .success(function(data) {
+            $scope._user = data.payload;
+            console.log("[SUCCESS] Retrive user " + $scope._user._id + " from database");
+        })
+        .error(function(err){
+            console.log("[ERROR] Failed Retrive user " + $scope._user._id + " from database");            
+        });
+
     $scope.updateProfile = function(user){
 
         $http.post('/api/user/' + $scope.global.user._id , user)

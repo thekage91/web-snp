@@ -1,96 +1,66 @@
-<link rel="stylesheet" type="text/css" href="/public/dashboard/assets/css/dropzone/basic.css">
-<link rel="stylesheet" type="text/css" href="/public/dashboard/assets/css/dropzone/dropzone.css">
 
-<div class="col-lg-11">
 
-<div class="row">
-  <h1 class="section-header">My profile</h1>  
+  <div class="row">
+    <h1 class="section-header">My profile
+    <button type="button" class="btn btn-primary btn-xs" ui-sref="dashboard.editProfile">
+        <span class="glyphicon glyphicon-edit"></span> Edit profile
+    </button></h1>  
 
-  <hr>
-</div>
 
-<script type="text/javascript">
-  function fill (){
-    $.get('/api/user/' + document.getElementById('iddi').innerHTML)
-      .success(function(data){
-        var e = document.getElementById('firstNameField');
-        e.innerHTML = data.payload.firstName;
+    <hr>
+  </div>
 
-        e = document.getElementById('lastNameField');
-        e.innerHTML = data.payload.lastName;
-
-        e = document.getElementById('addressField');
-        e.innerHTML = data.payload.address;
-
-        e = document.getElementById('emailField');
-        e.innerHTML = data.payload.email;
-
-        e = document.getElementById('phoneField');
-        e.innerHTML = data.payload.phone;
-      });
-  };
-</script>
-
-      <div class="row" ng-controller="ProfileCtrl">
-        <div class="col-xs-12 col-sm-12 col-lg-9 col-xs-offset-0 col-sm-offset-0 toppad" >     
-          <div>
-            <div class="panel-heading">
-              <h2>{{global.user.name}}</h2>
-            </div>
-            <div class="panel-body">
-              <div class="row">
-                <div class="col-md-3 col-lg-3" align="center"> 
-
-                <span gravatar name="{{ global.user.name }}" email-hash="{{ emailHash }}" width="100" height="100"></span>
-                
-                <br></br></div>
-                
-                <div class="col-md-9 col-lg-9"> 
-                  <table class="table table-user-information">
-                    <tbody>
-                      <tr>
-                        <td class="col-lg-4"> Username:</td>
-                        <td>{{global.user.username}}</td>
-                      </tr>
-                      <tr>
-                        <td>First Name:</td>
-                        <td id="firstNameField">{{global.user.firstName}}</td>
-                      </tr>
-                      <tr>
-                        <td>Last Name:</td>
-                        <td id="lastNameField">{{global.user.lastName}}</td>
-                      </tr>
-                   
-                      <tr>
-                      <tr>
-                        <td>Address:</td>
-                        <td id="addressField">{{global.user.address}}</td>
-                      </tr>
-                      <tr>
-                        <td>Email:</td>
-                        <td id="emailField">{{global.user.email}}</td>
-                      </tr>
-                        <td>Phone Number:</td>
-                        <td id="phoneField">{{global.user.phone}}
-                        </td>
-                           
-                      </tr>
-                     
-                    </tbody>
-                  </table>
-                  
-                </div>
-              </div>
-            </div>
-            <div class="panel-footer">
-              <button type="button" class="btn btn-primary btn-sm" ui-sref="dashboard.editProfile" style="float: right">
-                <span class="glyphicon glyphicon-edit"></span> Edit profile
-              </button>
-              <input type="button" onclick="fill()" value="Fill!"/>
-            </div>
+  <div class="row" ng-controller="ProfileCtrl">
+    <div class="col-xs-12 col-sm-12 col-lg-9 col-xs-offset-0 col-sm-offset-0 toppad" >     
+      <div>
+        <div class="panel-heading">
+          <h2>{{ _user.name }}</h2>
         </div>
-        </div>
-      </div>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-md-3 col-lg-3" align="center"> 
 
-<!-- DONE -->
-</div>
+            <span gravatar name="{{ global.user.name }}" email-hash="{{ emailHash }}" width="100" height="100"></span>
+            
+            <br></br></div>
+            
+            <div class="col-md-9 col-lg-9"> 
+              <table class="table table-user-information">
+                <tbody>
+                  <tr>
+                    <td class="col-lg-4"> Username:</td>
+                    <td>{{ _user.username }}</td>
+                  </tr>
+                  <tr>
+                    <td>First Name:</td>
+                    <td id="firstNameField">{{ _user.firstName }}</td>
+                  </tr>
+                  <tr>
+                    <td>Last Name:</td>
+                    <td id="lastNameField">{{ _user.lastName }}</td>
+                  </tr>
+               
+                  <tr>
+                  <tr>
+                    <td>Address:</td>
+                    <td id="addressField">{{ _user.address }}</td>
+                  </tr>
+                  <tr>
+                    <td>Email:</td>
+                    <td id="emailField">{{ _user.email }}</td>
+                  </tr>
+                    <td>Phone Number:</td>
+                    <td id="phoneField">{{ _user.phone }}
+                    </td>
+                       
+                  </tr>
+                 
+                </tbody>
+              </table>
+              
+            </div>
+          </div>
+        </div>
+    </div>
+    </div>
+  </div>
