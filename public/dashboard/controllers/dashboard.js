@@ -677,4 +677,35 @@ angular.module('mean.dashboard', ['ngGrid'])
 
 }])
 
-.controller('HistoryLoadCtrl')
+.controller('HistoryLoadCtrl' ['$scope' , '$http' , function($scope , $http){
+
+    $http.get('/api/history')
+        .success(function(data){
+            $scope.sequencings = data.payload;
+            console.log("[SUCCESS] Retrieve all sequencings");
+        })
+        .error(function(err){
+            console.log("[ERROR] Failed Retrieve all sequencings");
+        });
+
+    $scope.removeSequencing = function(sequencing){
+
+        for(item in $scope.sequencings){
+            var idsToRemove = item.ids;
+            for(itemDelete in idsToRemove){
+                for(idRemove in itemDelete.id){
+                $http.delete('/api/' + itemDelete.name + "/" + idRemove)
+                    .success(function(data){})
+                    .error(function(err){});
+                }
+            }
+        }
+    }
+}]);
+
+
+
+
+
+
+
