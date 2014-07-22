@@ -9,110 +9,94 @@ angular.module('SaveService', [])
     // each function returns a promise object
     .factory('Save', function ($http, Model, Schema, $q) {
 
-        function initializeModelsIDs(args, models) {
-            for (var i = 0; i < models.length; i++) {
-                models[i]._id = args[i].data;
+        saveForEachElement = function(element, modelName) {
+            var requests = [];
+            var arrayAttributes = [];
+            for(var i=0;i<element.length; i++) {
+                console.log(element[i]);
+                for(var j = 0; i < element[i].length; i++)
+                {
+                    if(element[i][j] instanceof Array){
+
+                        arrayAttributes = element[i][j];
+                        delete element[i][j];
+                    }
+                }
+
+                requests[i] = $http.post('/api/'+modelName,element[i]);
             }
+            for(var i=0;i<arrayAttributes.length; i++) {
+                requests[requests.length + i] = $http.post('/api/'+modelName+'/'+element._id,element[i]);
+            return $q.all(requests);
+
+        };
+
+        function f(element, modelName) {
+            var arrayAttributes = [];
+            var i = 0;
+            for(var i=0;i<element.length; i++) {
+                for(var el in element[i]) {
+                    if(element.hasOwnProperty(el))
+                        if (element[el] instanceof Array){
+
+                            arrayAttributes.push([el,element[el]])
+                            delete element[el];
+                        };
+
+                        }
+                requests[i] = $http.post('/api/'+modelName,element[i]);
+                arrayAttributes.forEach( function (item) {
+                }
+            })
+                }
+            }
+            return {
+            saveModel: function (element,data) {
+                return $http.post('/api/'+element, data)
+            },
+
+            saveParsedData :  function (data) {
+            var ok = true;
+            var current;
+            for (element in data) {
+
+                if(data.hasOwnProperty(element)) {
+                    switch (element) {
+                        case 'variants':
+                            current = 'Variant';
+                            break;
+                        case 'details':
+                            current = 'VariantDetail';
+                            break;
+                        case 'pathogenicities':
+                            current = 'Pathogenicity';
+                            break;
+                        case 'dbsnps':
+                            current = 'DbSNP';
+                            break;
+                        case 'esps':
+                            current = 'Esp';
+                            break;
+                        case 'genes':
+                            current = 'Gene';
+                            break;
+                        case 'patient':
+                            current = 'Patient';
+                            break;
+                        default:
+                            console.log("ERROR: while parsing data. Not recognized object: " + element);
+                            break;
+                    }
+
+                    var saveResult = saveForEachElement(data[element],current);
+                    saveResult.then(function(err) { console.log("response: " + JSON.stringify(err)); ok = false})
+                }
+            }
+            ;
+                return ok;
+        },
+
+            saveForEachElement : saveForEachElement
 
         }
-
-        function retrieveVariantDetail(data, variantSchema) {
-            var detail = (Schema.retrieveFromSchema)(data, variantSchema);
-            detail.altFilteredReads = data['Ref,Alt filtered reads'];
-            detail.ref = data['Ref,Alt filtered reads'];
-            return detail;
-        };
-
-        function retrievePathogenicity(data, pathogenicitySchema) {
-            var path = (Schema.retrieveFromSchema)(data, pathogenicitySchema);
-            path.GERpp = data['GERP++'];
-            path.SIFT = data['SIFT'];
-            path.polyPhen = data['PolyPhen-2'];
-            return path;
-        };
-
-
-
-        return {
-            createModelClassesFromData: function (json, patientName) {
-
-                if(!json) console.log("JSON not passed correctly");
-                var returnValue = $q.defer();
-                var result = {};
-
-                var idNumber = 6;
-                result.variants = [];
-                result.details = [];
-                result.genes = [];
-                result.dbsnps = [];
-                result.pathogenicities = [];
-                result.esps = [];
-
-                (Model.getAllSchemas)().then(
-                    function () {
-
-                        var schemas = (Schema.inizializeSchemasFromGET)(arguments[0]);
-                        console.info("Got schemas " );
-                        console.info(schemas);
-                        for (var key in json) if (json.hasOwnProperty(key))  break;
-
-                        json[key].forEach(function (element) {
-
-                            //build model classes
-
-                            var variant = (Schema.retrieveFromSchema)(element, schemas['Variant']);
-                            var detail = retrieveVariantDetail(element, schemas['VariantDetail']);
-                            var gene = (Schema.retrieveFromSchema)(element, schemas['Gene']);
-                            var dbsnp = (Schema.retrieveFromSchema)(element, schemas['DbSNP']);
-                            var pathogenicity = retrievePathogenicity(element, schemas['Pathogenicity']);
-                            var esp = (Schema.retrieveFromSchema)(element, schemas['Esp'], true);
-
-                            var models = [variant, detail, gene, dbsnp, pathogenicity, esp];
-                            var patient = {name :patientName};
-
-                            (Model.getANumberOfIds)(idNumber).then(function () {
-                                initializeModelsIDs(arguments[0], models);
-                                //build model relationships
-                                (variant.variantDetails = []).push(detail._id);
-                                variant.gene = gene._id;
-                                (variant.dbSNPs = []).push(dbsnp._id);
-                                variant.pathogenicity = pathogenicity._id;
-                                (variant.esps = []).push(esp._id);
-                                (variant.patients = []).push(patient._id);
-
-                                pathogenicity.variant = variant._id;
-
-                                ( dbsnp.variants = []).push(variant._id);
-
-                                ( esp.variants = []).push(variant._id);
-
-                                (gene.variants = []).push(variant._id);
-
-                                detail.variant = variant._id;
-
-                                (patient.variants = []).push(variant._id);
-
-                                result.variants.push(variant);
-                                result.pathogenicities.push(pathogenicity);
-                                result.dbsnps.push(dbsnp);
-                                result.esps.push(esp);
-                                result.genes.push(gene);
-                                result.details.push(detail);
-
-
-
-                            },function(err) { console.err("Error: "+err); returnValue.reject(err);});
-                        });
-                        result.patient = patients;
-                        returnValue.resolve(result);
-                    } ,function(err) { console.err("Error: "+err); returnValue.reject(err);});
-
-                return returnValue.promise;
-            }
-
-
-
-
-
-        };
-    });
+        });

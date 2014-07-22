@@ -55,6 +55,7 @@ angular.module('ParseService', [])
                         console.info("Got schemas " );
                         console.info(schemas);
                         for (var key in json) if (json.hasOwnProperty(key))  break;
+                        var patient = {name :patientName};
 
                         json[key].forEach(function (element) {
 
@@ -68,7 +69,7 @@ angular.module('ParseService', [])
                             var esp = (Schema.retrieveFromSchema)(element, schemas['Esp'], true);
 
                             var models = [variant, detail, gene, dbsnp, pathogenicity, esp];
-                            var patient = {name :patientName};
+
 
                             (Model.getANumberOfIds)(idNumber).then(function () {
                                 initializeModelsIDs(arguments[0], models);
@@ -98,14 +99,14 @@ angular.module('ParseService', [])
                                 result.esps.push(esp);
                                 result.genes.push(gene);
                                 result.details.push(detail);
+                                result.patient = patient;
 
-
-
-                            },function(err) { console.err("Error: "+err); returnValue.reject(err);});
+                            },function(err) { console.error("Error: "+err); returnValue.reject(err);});
                         });
-                        result.patient = patients;
+
+
                         returnValue.resolve(result);
-                    } ,function(err) { console.err("Error: "+err); returnValue.reject(err);});
+                    } ,function(err) { console.error("Error: "+err); returnValue.reject(err);});
 
                 return returnValue.promise;
             }

@@ -3,8 +3,8 @@
 
 angular.module('mean.dashboard', [])
 
-    .controller('UploaderCtrl', ['$scope', '$window', '$http', 'Model','Parse',
-        function ($scope, $window, $http,Model,Parse) {
+    .controller('UploaderCtrl', ['$scope', '$window', '$http', 'Model','Parse','Save','$q','$timeout',
+        function ($scope, $window, $http,Model,Parse,Save,$q,$timeout) {
 
             function saveInDBparsedData(result) {
                 return $http.post('/api/variant',result['variants'][0]);
@@ -39,17 +39,26 @@ angular.module('mean.dashboard', [])
             $scope.saveResult = function () {
                 $scope.jsonUpload = JSON.parse($window.output);
 
-                var parse = (Parse.createModelClassesFromData);
+                var parseFunction = (Parse.createModelClassesFromData);
                 //DATA OBTAINED FROM PARSING
-                var parseResult = parse($scope.jsonUpload,'PAZIENTE1');
+                var parseResult = parseFunction($scope.jsonUpload,'PAZIENTE1');
 
                 parseResult.then( function(data) {
-                    console.log(data)
+
+                    console.log(data);
+                    var saveFunction = (Save.saveParsedData);
+                    console.log("EEHIEIHEIHEHI");
+
+                    //To ensure all ASYNC functions are fulfilled
+                    $timeout(function() {
+                        saveFunction(data);
+                    }, 3000).then(function () {  console.log("Data correctly save in DB!");
+                    });
 
 
 
                 },function (error) {
-                    console.error("ERROR WHILE PARSING DATA: " + error)})
+                    console.error("ERROR WHILE PARSING DATA: " + error)});
 
 
             };
