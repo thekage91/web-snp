@@ -83,7 +83,7 @@
       webGLRenderer.setSize(window.innerWidth, window.innerHeight);
 
       // position and point the camera to the center of the scene
-      camera.position.set(0, 0, 500);
+      camera.position.set(300, 0, 400);
       camera.lookAt(new THREE.Vector3(0, 0, 0));
 
       // add the output of the renderer to the html element
@@ -212,6 +212,22 @@
 
 
 
+      function initStats() {
+        var stats = new Stats();
+        stats.setMode(0); // 0: fps, 1: ms
+        $('body').append(stats.domElement);
+        return stats;
+      }
+
+      
+
+      //Animations
+      var animator = null;
+      var duration = 5; //sec
+      var loopAnimation = true;
+
+
+
       //Function that creates an array of random object3d to scatter the nitrogenous bases once you click on the button animate
       function randomizePositionObject(){
           var randomObjPositions = [];
@@ -228,20 +244,6 @@
       }
 
 
-
-      function initStats() {
-        var stats = new Stats();
-        stats.setMode(0); // 0: fps, 1: ms
-        $('body').append(stats.domElement);
-        return stats;
-      }
-
-      
-
-      //Animations
-      var animator = null;
-      var duration = 5; //sec
-      var loopAnimation = true;
 
       function transform(objects, targets, duration) {
         TWEEN.removeAll();
@@ -285,6 +287,24 @@
        
       }
 
+
+
+      function movingCameraBefore(duration){
+        var target = new THREE.Vector3(-100,0,200);
+
+        var movingLeft = new TWEEN.Tween( camera.position )
+            .to( { x: target.x }, duration*2 )
+
+        new TWEEN.Tween( camera.position )
+            .to( { z: target.z }, duration )           
+            .easing( TWEEN.Easing.Quadratic.In )
+            .chain(movingLeft)
+            .start();
+       
+      }
+
+
+
       function movingCameraAfter(duration){
         var target = new THREE.Vector3(300,0,400);
 
@@ -297,25 +317,26 @@
             .chain(movingLeft)
             .start();
 
-        step = 0.01;
-       
+        step = 0.01;       
       }
 
 
 
       // Le basi rigurdanti saranno le numero 15, per esempio
-      function animateSNP(oldCouple, duration){
-        
+      function animateSNP(oldCouple, duration){        
         var target = new THREE.Vector3(oldCouple.children[0].position.x, oldCouple.children[0].position.y, 80);
 
         positionTween(oldCouple.children[0], duration, target).start();
-        positionTween(oldCouple.children[1], duration, target).start();
-        
+        positionTween(oldCouple.children[1], duration, target).start();        
       }
+
+
 
       function opacizeFilament(duration){
 
       }
+
+
 
       function highLightBase(couple, duration){
         var spotLight = new THREE.SpotLight( 0xffffff );
@@ -327,6 +348,8 @@
 
         flashTween(spotLight, duration, 10).start();
       }
+
+
 
       function newBasesEnter(oldCouple, duration) {
         // oldCouple.childer[0] e' la prima base azotate
@@ -346,6 +369,8 @@
 
         return new_couple;
       }
+
+
 
       function exchangeBase(newCouple, oldCouple, duration){
         console.log(newCouple.children[0].position , " " , oldCouple.children[0].position)
@@ -367,15 +392,20 @@
         setTimeout(function(){positionTween(newCouple.children[1], duration, target).start();}, duration*2);
         setTimeout(function(){positionXTween(oldCouple.children[0], duration, 5000).start();}, duration*2);
         setTimeout(function(){positionXTween(oldCouple.children[1], duration, 5000).start();}, duration*2);
+
+        globalStructure.add(new_couple);
       }
 
-      function insertNewCouple(newCouple, oldCouple, duration){
 
+
+      function insertNewCouple(newCouple, oldCouple, duration){
         var target = new THREE.Vector3(oldCouple.children[0].position.x, oldCouple.children[0].position.y, oldCouple.children[0].position.z);
 
         positionTween(oldCouple.children[0], duration, target).start();
         positionTween(oldCouple.children[1], duration, target).start();
       }
+
+
 
       function animateScene(duration){
         var targetPos = randomizePositionObject();
@@ -386,20 +416,24 @@
         document.getElementById("animation").style.visibility="hidden";
 
         //position and point the camera to the center of the scene
-        camera.position.set(0, 0, 500);
-        camera.lookAt(new THREE.Vector3(0, 0, 0));
+        //camera.position.set(0, 0, 500);
+        //camera.lookAt(new THREE.Vector3(0, 0, 0));
 
-        movingCamera(4000);
+        movingCameraBefore(4000);
+
+        setTimeout(function(){movingCamera(4000)}, 4000); // si scambiano
+
+        
         //smoothFilament(2000)
         
-        setTimeout(highLightBase(oldCouple, 1000) , 4000);
+        //setTimeout(highLightBase(oldCouple, 1000) , 4000);
         
-        setTimeout(function(){animateSNP(oldCouple, 2000)}, 22000); // si scambiano
-        setTimeout(function(){ newCouple = newBasesEnter(oldCouple , 2000); }, 24000);
+        setTimeout(function(){animateSNP(oldCouple, 2000)}, 26000); // si scambiano
+        setTimeout(function(){ newCouple = newBasesEnter(oldCouple , 2000); }, 28000);
         //console.log(newCouple);
-        setTimeout(function(){exchangeBase(newCouple, oldCouple, 1000)}, 26000);
+        setTimeout(function(){exchangeBase(newCouple, oldCouple, 1000)}, 30000);
         //setTimeout(function(){insertNewCouple(new_couple, oldCouple, 2000)}, 24000);;
-        setTimeout(function(){movingCameraAfter(4000);}, 30000);
+        setTimeout(function(){movingCameraAfter(4000);}, 34000);
 
         // rimettiamo le cose al loro posto, le altri basi tornano
         /*setTimeout( function() {  for(var i = 0; i < 31; i++){
@@ -419,17 +453,14 @@
 
         globalStructure.rotation.x += step;
 
-        try{
-          new_couple.rotation.x += step;
-        } catch (e) {
-        }
-
         KF.update();
         TWEEN.update();
         //render using requestAnimationFrame
         requestAnimationFrame(animate);
         webGLRenderer.render(scene, camera);
       }
+
+
 
       //VARIABLES
       var basesLength = 50;
