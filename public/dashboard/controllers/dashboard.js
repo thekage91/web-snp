@@ -675,4 +675,6 @@ angular.module('mean.dashboard', ['ngGrid'])
                     {field:'ESP6500_EA', width: 120, displayName:'ESP6500_EA', enableCellEdit: true}]
     };
 
-}]);
+}])
+
+.controller('HistoryLoadCtrl')
