@@ -405,12 +405,29 @@ angular.module('mean.dashboard', ['angular-md5'])
       
 ])
 
-.controller('ProfileCtrl', ['$scope' , 'md5' , function($scope, md5){
+.controller('ProfileCtrl', ['$scope' , 'md5', '$http' , function($scope, md5, $http){
 
     //$scope.emailHash = md5.createHash($scope.user.email)
 
     $scope.emailHash = md5.createHash('thekage91@gmail.com')
     console.log($scope.emailHash);
+
+    $scope.updateProfile = function(user){
+
+        $http.post('/api/user/' + $scope.global.user._id , user)
+            .success(function(data){
+                console.log("[SUCCESS] Upload info of this user " + $scope.user._id);
+            })
+            .error(function(data){
+                console.log("[ERROR] Error in upload info of this user " + $scope.user._id);
+            });
+
+    };
+
+    $scope.cancelOperation = function(){
+        $scope.user = {};
+    }
+
 }])
 
 .directive('gravatar', function() {

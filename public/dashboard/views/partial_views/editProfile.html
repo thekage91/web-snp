@@ -20,7 +20,7 @@
   };
 </script>
 
-<div class="col-lg-11">
+<div class="col-lg-11" ng-controller="ProfileCtrl">
 
 <h1 hidden id="iddi">{{global.user._id}}</h1>
 
@@ -32,8 +32,6 @@
 
     <div id="myTabContent" class="tab-content">
       <div class="tab-pane active in" id="profile">
-
-        <h5><span class="fa fa-lightbulb-o"></span>&nbsp;<b>TIP</b>: Click on a value to modify it</h5>
 
         <div class="row">
           <div class="col-xs-12">
@@ -53,27 +51,31 @@
                   <tbody>
                     <tr>
                       <td>Username:</td>
-                      <td><input type="text" value="{{global.user.name}}"></td>
+                      <td>{{global.user.name}}</td>
                     </tr>
                     <tr>
                       <td>First Name:</td>
-                      <td><input id="firstNameField" type="text" value="{{global.user.firstName}}"></td>
+                      <td><input id="firstNameField" type="text" value="{{global.user.firstName}}"
+                                  ng-model="user.firstName"></td>
                     </tr>
                     <tr>
                       <td>Last Name:</td>
-                      <td><input id="lastNameField" type="text" value="{{global.user.lastName}}"></td>
+                      <td><input id="lastNameField" type="text" value="{{global.user.lastName}}"
+                                  ng-model="user.lastName"></td>
                     </tr>
                     <tr>
                       <td>Email:</td>
-                      <td><input id="emailField" type="text" value="{{global.user.email}}"></td>
+                      <td>{{global.user.email}}</td>
                     </tr>
                     <tr>
                       <td>Address:</td>
-                      <td><input id="addressField" type="text" value="{{global.user.address}}"></td>
+                      <td><input id="addressField" type="text" value="{{global.user.address}}"
+                                  ng-model="user.address"></td>
                     </tr>
                     <tr>
                       <td>Phone:</td>
-                      <td><input id="phoneField" type="text" value="{{global.user.phone}}"></td>
+                      <td><input id="phoneField" type="text" value="{{global.user.phone}}"
+                                  ng-model="user.phone"></td>
                     </tr>
                   </tbody>
                 </table>
@@ -82,17 +84,22 @@
           </div>
         </div>
 
-        <button type="button" class="btn btn-primary btn-sm" ui-sref="dashboard.userProfile" >
-          <span class="glyphicon glyphicon-floppy-saved"></span> Save
-        </button>
+        <div class="controls-group">
+          <button type="button" class="btn btn-success btn-sm" ui-sref="dashboard.userProfile"
+                    ng-click="updateProfile(user)" >
+            <span class="glyphicon glyphicon-floppy-saved"></span> Save
+          </button>
+          <button type="button" class="btn btn-danger btn-sm" ui-sref="dashboard.userProfile"
+                    ng-click="cancelOperation(user)">
+            <span class="glyphicon glyphicon-trash"></span> Cancel
+          </button>
+        </div>
       </div>
       </div>
 
 
       <div class="tab-pane fade" id="password">
       
-      <h5><span class="fa fa-lightbulb-o"></span>&nbsp;<b>TIP</b>: Click on a value to modify it</h5>
-
         <div class="row">
           <div class="col-xs-12">
             <div class="box">
@@ -109,11 +116,11 @@
                   <tbody>
                     <tr>
                       <td>New Password:</td>
-                      <td><input type="text" value="**********"></td>
+                      <td><input type="text" value="**********" ng-model="user.password"></td>
                     </tr>
                     <tr>
                       <td>Repeat New Password:</td>
-                      <td><input type="text" value="**********"></td>
+                      <td><input type="text" value="**********" ng-model="user.confirmPassword"></td>
                     </tr>
                   </tbody>
                 </table>
@@ -123,7 +130,7 @@
         </div>
 
         <button type="button" class="btn btn-primary btn-sm" ui-sref="dashboard.userProfile">
-          <span class="glyphicon glyphicon-floppy-saved"></span> Save
+          <span class="glyphicon glyphicon-floppy-saved" ng-click="updateProfile(user)"></span> Save
         </button>
       </div>
 
