@@ -1,5 +1,4 @@
 <!--<link href="public/system/assets/css/home.css" rel="stylesheet">-->
-<script src="public/system/lib/md5.js"></script> 
 
 <div class="col-lg-11">
 
@@ -16,7 +15,7 @@
         <div class="row coralbg white" style="margin-top: 30px">
             <div class="col-md-6 no-pad">
                 <div class="user-pad" style="margin-left: 30px">
-                    <h3>Welcome back, </h3><h1>{{global.user.username}}</h1>
+                    <h3>Welcome back, </h3><h1>{{ global.user.username }}</h1>
                     <!--<div>
                         <h4 class="white"><i class="fa fa-phone"></i>{{global.user.phone}}</h4>
                         <h4 class="white"><i class="fa fa-home"></i>{{global.user.address}}</h4>
@@ -28,7 +27,7 @@
             <div class="col-lg-6 no-pad">
                 <div class="user-image">
                     <!--<img src="https://farm7.staticflickr.com/6163/6195546981_200e87ddaf_b.jpg" class="img-responsive thumbnail">-->
-                    <img src="https://secure.gravatar.com/avatar/{{ CryptoJS.MD5( document.getElementById('email').innerHTML ); }}.jpg?s=1000" class="img-responsive thumbnail">
+                    
                 </div>
             </div>
         </div>

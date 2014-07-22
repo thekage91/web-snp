@@ -2,7 +2,7 @@
 
 
 
-angular.module('mean.dashboard', [])
+angular.module('mean.dashboard', ['angular-md5'])
 
 .controller('UploaderCtrl', ['$scope' , '$window' ,
         function($scope, $window) {
@@ -407,8 +407,10 @@ angular.module('mean.dashboard', [])
 
 .controller('ProfileCtrl', ['$scope' , 'md5' , function($scope, md5){
 
-    var email = $scope.user.email;
-    console.log(md5.createHash(email || ''));
+    //$scope.emailHash = md5.createHash($scope.user.email)
+
+    $scope.emailHash = md5.createHash('thekage91@gmail.com')
+    console.log($scope.emailHash);
 }])
 
 .directive('gravatar', function() {
@@ -416,13 +418,13 @@ angular.module('mean.dashboard', [])
        restrict: 'AE',
        replace: true,
        scope: {
-         name: 'profileImage',
-         height: '100',
-         width: '100',
+         name: '@',
+         height: '@',
+         width: '@',
          emailHash: '@'
        },
        link: function(scope, el, attr) {
-        scope.defaultImage = 'https://somedomain.com/images/avatar.png';
+        scope.defaultImage = 'https://www.mechanicpool.com/pictures/greypros.png';
        },
        template: '<img alt="{{ name }}" height="{{ height }}"  width="{{ width }}" src="https://secure.gravatar.com/avatar/{{ emailHash }}.jpg?s={{ width }}&d={{ defaultImage }}">'
      };
