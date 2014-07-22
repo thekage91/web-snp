@@ -285,6 +285,22 @@
        
       }
 
+      function movingCameraAfter(duration){
+        var target = new THREE.Vector3(300,0,400);
+
+        var movingLeft = new TWEEN.Tween( camera.position )
+            .to( { x: target.x }, duration*2 )
+
+        new TWEEN.Tween( camera.position )
+            .to( { z: target.z }, duration )           
+            .easing( TWEEN.Easing.Quadratic.In )
+            .chain(movingLeft)
+            .start();
+
+        step = 0.01;
+       
+      }
+
 
 
       // Le basi rigurdanti saranno le numero 15, per esempio
@@ -318,7 +334,7 @@
         // oldCouple.childer[2] sono tutte quelle che vengono dopo
 
         var objOldPos = new THREE.Object3D();        
-        var new_couple = createCouple(["guanine","cytosine"]);
+        new_couple = createCouple(["guanine","cytosine"]);
 
         new_couple.position.x = 800;
         new_couple.position.y = 800;
@@ -349,8 +365,8 @@
 
         setTimeout(function(){positionTween(newCouple.children[0], duration, target).start();}, duration*2);
         setTimeout(function(){positionTween(newCouple.children[1], duration, target).start();}, duration*2);
-        setTimeout(function(){positionXTween(oldCouple.children[0], duration, 500).start();}, duration*2);
-        setTimeout(function(){positionXTween(oldCouple.children[1], duration, 500).start();}, duration*2);
+        setTimeout(function(){positionXTween(oldCouple.children[0], duration, 5000).start();}, duration*2);
+        setTimeout(function(){positionXTween(oldCouple.children[1], duration, 5000).start();}, duration*2);
       }
 
       function insertNewCouple(newCouple, oldCouple, duration){
@@ -383,6 +399,7 @@
         //console.log(newCouple);
         setTimeout(function(){exchangeBase(newCouple, oldCouple, 1000)}, 26000);
         //setTimeout(function(){insertNewCouple(new_couple, oldCouple, 2000)}, 24000);;
+        setTimeout(function(){movingCameraAfter(4000);}, 30000);
 
         // rimettiamo le cose al loro posto, le altri basi tornano
         /*setTimeout( function() {  for(var i = 0; i < 31; i++){
@@ -401,6 +418,11 @@
         camera.lookAt(new THREE.Vector3(camera.position.x , camera.position.y , camera.position.z));
 
         globalStructure.rotation.x += step;
+
+        try{
+          new_couple.rotation.x += step;
+        } catch (e) {
+        }
 
         KF.update();
         TWEEN.update();
