@@ -16,10 +16,8 @@
   };
 </script>
 
-<div hidden id="main" class="col-lg-11">
+<div  id="main" class="col-lg-11">
 <!--<div class="col-lg-11" ng-show="user.isAdmin()">-->
-
-<h1 hidden id="iddi">{{global.user._id}}</h1>
 
 <div class="row">
   <h1 class="section-header">Sequencing Upload</h1>  
@@ -49,7 +47,7 @@
 
   <div id="drop" style="margin-bottom: 30px; margin-top: 30px">Drop an XLS or XML (2003) file here...</div>
 
-  <button id="btn_save" type="button" class="btn btn-success btn-xs" disabled="disabled"
+  <button id="btn_save" type="button" class="btn btn-success btn-xs"
           ng-click="saveResult()" ui-sref="dashboard.sequencingEdit">
       <span class="glyphicon glyphicon-upload"></span> Show result
   </button>

@@ -1,4 +1,4 @@
 'use strict';
 
-angular.module('mean.dashboard', [ 'angoose.client'])
+angular.module('mean.dashboard', [ 'angoose.client' , 'ngGrid'])
 
