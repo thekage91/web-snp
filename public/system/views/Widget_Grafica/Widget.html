@@ -212,7 +212,7 @@
 
 
 
-      //Function that creates an array of random object3d to scatter the nitrogenous bases once you click on the button animated
+      //Function that creates an array of random object3d to scatter the nitrogenous bases once you click on the button animate
       function randomizePositionObject(){
           var randomObjPositions = [];
           var randomObj = new THREE.Object3D();
@@ -332,7 +332,6 @@
       }
 
       function exchangeBase(newCouple, oldCouple, duration){
-
         console.log(newCouple.children[0].position , " " , oldCouple.children[0].position)
         console.log(newCouple.children[1].position , " " , oldCouple.children[1].position)
 
@@ -345,6 +344,13 @@
         positionXTween(newCouple.children[0], duration, -58.2).start();
         positionXTween(oldCouple.children[1], duration, 58.2).start();
         positionXTween(newCouple.children[1], duration, -58.2).start();
+
+        var target = new THREE.Vector3(oldCouple.children[0].position.x, oldCouple.children[0].position.y, -80);
+
+        setTimeout(function(){positionTween(newCouple.children[0], duration, target).start();}, duration*2);
+        setTimeout(function(){positionTween(newCouple.children[1], duration, target).start();}, duration*2);
+        setTimeout(function(){positionXTween(oldCouple.children[0], duration, 500).start();}, duration*2);
+        setTimeout(function(){positionXTween(oldCouple.children[1], duration, 500).start();}, duration*2);
       }
 
       function insertNewCouple(newCouple, oldCouple, duration){
@@ -360,6 +366,12 @@
         var subjectPos = positionsObj;
         var oldCouple = positionsObj[12];
         var newCouple;
+
+        document.getElementById("animation").style.visibility="hidden";
+
+        //position and point the camera to the center of the scene
+        camera.position.set(0, 0, 500);
+        camera.lookAt(new THREE.Vector3(0, 0, 0));
 
         movingCamera(4000);
         //smoothFilament(2000)
