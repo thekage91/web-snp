@@ -30,8 +30,10 @@
 
 <div class="row bot15" ng-controller="UploaderCtrl">
   <h4>These are all the uploads you have done:</h4>
+  
+  <div class="row" style="height: 500px; overflow-y: auto; margin-top: 50px">
 
-  <table class="table table-bordered" ng-show="!showEditFamily" style="margin-top: 30px">
+  <table class="table table-bordered" ng-show="!showEditFamily">
     <thead>
       <tr>
         <th>Name</th>
@@ -54,6 +56,8 @@
       </tr>
     </tbody>
   </table>
+</div>
+
 </div>
 
 
