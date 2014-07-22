@@ -68,7 +68,7 @@ var VariantSchema = new Schema({
         ref: 'VariantDetail'
     }]
 
-});
+},{ versionKey: false });
 
 VariantSchema.statics.query = function query(q) {
     return this.find(q);

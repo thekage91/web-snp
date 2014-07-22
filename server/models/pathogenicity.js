@@ -58,7 +58,7 @@ var PathogenicitySchema = new Schema({
         ref: 'Variant'
     } 
     
-});
+},{ versionKey: false });
 
 PathogenicitySchema.statics.query = function query(q) {
     return this.find(q);

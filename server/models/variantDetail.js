@@ -68,7 +68,7 @@ var VariantDetailSchema = new Schema({
         ref: 'Sequencing'
     }*/
 
-});
+},{ versionKey: false });
 
 
 VariantDetailSchema.statics.query = function query(q) {

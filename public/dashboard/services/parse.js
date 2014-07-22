@@ -9,13 +9,6 @@ angular.module('ParseService', [])
     // each function returns a promise object
     .factory('Parse', function ($http, Model, Schema, $q) {
 
-        function initializeModelsIDs(args, models) {
-            for (var i = 0; i < models.length; i++) {
-                models[i]._id = args[i].data;
-            }
-
-        }
-
         function retrieveVariantDetail(data, variantSchema) {
             var detail = (Schema.retrieveFromSchema)(data, variantSchema);
             detail.altFilteredReads = data['Ref,Alt filtered reads'];
@@ -34,7 +27,7 @@ angular.module('ParseService', [])
 
 
         return {
-            createModelClassesFromData: function (json, patientName) {
+            saveInDbFromData: function (json, patientName) {
 
                 if(!json) console.log("JSON not passed correctly");
                 var returnValue = $q.defer();
@@ -51,47 +44,83 @@ angular.module('ParseService', [])
                 (Model.getAllSchemas)().then(
                     function () {
 
+                        var patient = $q.defer();
                         var schemas = (Schema.inizializeSchemasFromGET)(arguments[0]);
                         console.info("Got schemas " );
                         console.info(schemas);
                         for (var key in json) if (json.hasOwnProperty(key))  break;
-                        var patient = {name :patientName};
+                        var patientBeforeID = {name :patientName};
+
+                        $http.post('/api/Patient',patientBeforeID).success(
+                            function (res) {
+                                console.info(res);
+                            patientBeforeID._id = res.payload._id;
+                            patient.resolve(patientBeforeID)}).error(
+                            function (err) {
+                                console.error("ERROR while saving patient: " + err);
+                                patient.reject(err);
+                            });
 
                         json[key].forEach(function (element) {
 
                             //build model classes
-
+                            var requests = [];
                             var variant = (Schema.retrieveFromSchema)(element, schemas['Variant']);
                             var detail = retrieveVariantDetail(element, schemas['VariantDetail']);
                             var gene = (Schema.retrieveFromSchema)(element, schemas['Gene']);
                             var dbsnp = (Schema.retrieveFromSchema)(element, schemas['DbSNP']);
                             var pathogenicity = retrievePathogenicity(element, schemas['Pathogenicity']);
                             var esp = (Schema.retrieveFromSchema)(element, schemas['Esp'], true);
+                            esp.ESP6500_EA = '.';
 
                             var models = [variant, detail, gene, dbsnp, pathogenicity, esp];
+                            var modelNames = ['Variant', 'VariantDetail', 'Gene', 'DbSNP', 'Pathogenicity', 'Esp'];
 
+                            for(var i=0;i<modelNames.length;i++) {
+                                requests[i] = $http.post('/api/'+modelNames[i],models[i]);
+                            }
+                            var onSuccess = function () {
 
-                            (Model.getANumberOfIds)(idNumber).then(function () {
-                                initializeModelsIDs(arguments[0], models);
+                                console.log(arguments);
+                                for (var i = 0; i < arguments[0].length; i++) {
+                                    models[i]._id = arguments[0][i].data.payload._id;
+                                }
                                 //build model relationships
-                                (variant.variantDetails = []).push(detail._id);
-                                variant.gene = gene._id;
-                                (variant.dbSNPs = []).push(dbsnp._id);
-                                variant.pathogenicity = pathogenicity._id;
-                                (variant.esps = []).push(esp._id);
-                                (variant.patients = []).push(patient._id);
+                                var i = 0;
+                                var temp = {};
+                                var relationRequest = [];
 
-                                pathogenicity.variant = variant._id;
+                                temp = {variantDetails : detail._id};
+                                relationRequest[i++] = $http.post('/api/Variant/'+variant._id,temp);
 
-                                ( dbsnp.variants = []).push(variant._id);
+                                temp = {gene : gene._id};
+                                relationRequest[i++] = $http.post('/api/Variant/'+variant._id,temp);
 
-                                ( esp.variants = []).push(variant._id);
+                                temp = {dbSNPs : dbsnp._id};
+                                relationRequest[i++] = $http.post('/api/Variant/'+variant._id,temp);
 
-                                (gene.variants = []).push(variant._id);
+                                temp = {pathogenicity : pathogenicity._id};
+                                relationRequest[i++] = $http.post('/api/Variant/'+variant._id,temp);
 
-                                detail.variant = variant._id;
+                                temp = {esps : esp._id};
+                                relationRequest[i++] = $http.post('/api/Variant/'+variant._id,temp);
 
-                                (patient.variants = []).push(variant._id);
+                                temp = {patients : patient._id};
+                                relationRequest[i++] = $http.post('/api/Variant/'+variant._id,temp);
+
+
+                                temp = {variant : variant._id};
+                                relationRequest[i++] = $http.post('/api/Pathogenicity/'+pathogenicity._id,temp);
+
+                                relationRequest[i++] = $http.post('/api/DbSNP/'+dbsnp._id,temp);
+
+                                relationRequest[i++] = $http.post('/api/Esp/'+esp._id,temp);
+
+                                relationRequest[i++] = $http.post('/api/Gene/'+gene._id,temp);
+
+                                relationRequest[i++] = $http.post('/api/VariantDetail/'+detail._id,temp);
+
+                                $q.all(relationRequest).catch(function(err) {console.error("ERROR while saving relation: " + err)})
 
                                 result.variants.push(variant);
                                 result.pathogenicities.push(pathogenicity);
@@ -101,7 +130,14 @@ angular.module('ParseService', [])
                                 result.details.push(detail);
                                 result.patient = patient;
 
-                            },function(err) { console.error("Error: "+err); returnValue.reject(err);});
+                            };
+
+                                var then = function () { $q.all(requests).then(onSuccess, function (err) {
+                                    console.error("Error: " + err);
+                                    returnValue.reject(err);
+                                }); };
+
+                            patient.promise.then(then);
                         });
 
 

@@ -23,7 +23,7 @@ var FamilySchema = new Schema({
     	ref: 'Patient'
     }]
 
-});
+},{ versionKey: false });
 
 FamilySchema.statics.query = function query(q) {
     return this.find(q);

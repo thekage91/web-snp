@@ -37,7 +37,7 @@ var GeneSchema = new Schema({
         ref: 'Variant'
     }]
 
-});
+},{ versionKey: false });
 
 GeneSchema.statics.query = function query(q) {
     return this.find(q);

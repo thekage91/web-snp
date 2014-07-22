@@ -32,7 +32,7 @@ var EspSchema = new Schema({
         ref: 'Variant'
     }]
     
-});
+},{ versionKey: false });
 
 EspSchema.statics.query = function query(q) {
     return this.find(q);

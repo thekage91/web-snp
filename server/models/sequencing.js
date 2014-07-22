@@ -99,7 +99,7 @@ var SequencingSchema = new Schema({
         type: Schema.ObjectId,
         ref: 'Variant'
     }]
-});
+},{ versionKey: false });
 
 
 SequencingSchema.statics.query = function query(q) {

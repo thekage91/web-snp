@@ -16,17 +16,19 @@ angular.module('SchemaService', [])
                         return index == 0 ? match.toLowerCase() : match.toUpperCase();
                     });
                 }
-
+                var count = 0;
                 var res = {};
                 var camelized;
                 for (var el in data) {
                     if (!noModify) camelized = camelize(el); else camelized = el;
                     for (var i = 0; i < schema.length; i++)
                         if (camelized === schema[i]) {
+                            count++;
                             res[camelized] = data[el];
                             delete data[el];
                         }
                 }
+                if(count ==! schema.length) console.warn("WARNING: Did not got all elements of schema: " + schema)
                 return res;
             },
             inizializeSchemasFromGET : function (args) {

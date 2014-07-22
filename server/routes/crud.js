@@ -28,7 +28,7 @@ module.exports = function(app, passport) {
         res.json(model.attr);
 });
     app.get('/api/id/:kill', function (req, res, next) {
-        res.send(mongoose.Types.ObjectId());
+        res.json(mongoose.Types.ObjectId());
     });
      app.use('/api', rest.rest());
  };

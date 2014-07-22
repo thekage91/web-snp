@@ -35,7 +35,7 @@ var DbSNPSchema = new Schema({
         ref: 'Variant'
     }]
 
-});
+},{ versionKey: false });
 
 DbSNPSchema.statics.query = function query(q) {
     return this.find(q);

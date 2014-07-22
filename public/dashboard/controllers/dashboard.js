@@ -38,26 +38,11 @@ angular.module('mean.dashboard', [])
 
             $scope.saveResult = function () {
                 $scope.jsonUpload = JSON.parse($window.output);
-
-                var parseFunction = (Parse.createModelClassesFromData);
-                //DATA OBTAINED FROM PARSING
-                var parseResult = parseFunction($scope.jsonUpload,'PAZIENTE1');
-
-                parseResult.then( function(data) {
-
-                    console.log(data);
-                    var saveFunction = (Save.saveParsedData);
-                    console.log("EEHIEIHEIHEHI");
-
-                    //To ensure all ASYNC functions are fulfilled
-                    $timeout(function() {
-                        saveFunction(data);
-                    }, 3000).then(function () {  console.log("Data correctly save in DB!");
-                    });
-
-
-
-                },function (error) {
+                var saveFunction = (Parse.saveInDbFromData);
+                saveFunction($scope.jsonUpload,'PATIENT1').then(function () {
+                    console.log("OKE");
+                }
+               ,function (error) {
                     console.error("ERROR WHILE PARSING DATA: " + error)});
 
 
@@ -136,6 +121,7 @@ angular.module('mean.dashboard', [])
                         $scope.family = {};
                         angular.element('#formInsert').collapse('hide');
                         console.log("[SUCCESS] Write this data on DB: " + data)
+                        $http.post('/api/family/'+data.payload._id, {name:'MANNAIAOOO'})
                     })
                     .error(function (data) {
                         console.log("[ERROR] Failed save family: " + data);

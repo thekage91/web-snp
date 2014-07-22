@@ -27,7 +27,7 @@ var PatientSchema = new Schema({
 		ref: 'Family'
 	}
 
-});
+},{ versionKey: false });
 
 PatientSchema.statics.findPatientSNPS = function findPatientSNPS() {
     return this.find({'title':new RegExp(q.title || term, 'i')});
