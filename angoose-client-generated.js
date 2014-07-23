@@ -1418,6 +1418,122 @@
 			"pluralization": true
 		}
 	},
+	"Upload": {
+		"moduleName": "Upload",
+		"methods": {
+			"save": "$PROXIED$",
+			"remove": "$PROXIED$",
+			"populate": "$PROXIED$"
+		},
+		"statics": {
+			"query": "$PROXIED$",
+			"populate": "$PROXIED$",
+			"find": "$PROXIED$",
+			"findOne": "$PROXIED$",
+			"findById": "$PROXIED$",
+			"findByIdAndRemove": "$PROXIED$",
+			"findByIdAndUpdate": "$PROXIED$",
+			"findOneAndRemove": "$PROXIED$",
+			"findOneAndUpdate": "$PROXIED$",
+			"update": "$PROXIED$",
+			"remove": "$PROXIED$",
+			"count": "$PROXIED$",
+			"geoNear": "$PROXIED$",
+			"geoSearch": "$PROXIED$",
+			"create": "$PROXIED$"
+		},
+		"paths": {
+			"name": {
+				"enumValues": [],
+				"regExp": null,
+				"path": "name",
+				"instance": "String",
+				"setters": [],
+				"getters": [],
+				"options": {
+					"type": "String",
+					"required": true,
+					"validate": [
+						"not-supported",
+						"Name cannot be blank"
+					]
+				},
+				"_index": null,
+				"isRequired": true
+			},
+			"date": {
+				"enumValues": [],
+				"regExp": null,
+				"path": "date",
+				"instance": "String",
+				"setters": [],
+				"getters": [],
+				"options": {
+					"type": "String",
+					"required": true,
+					"validate": [
+						"not-supported",
+						"Date cannot be blank"
+					]
+				},
+				"_index": null,
+				"isRequired": true
+			},
+			"ids": {
+				"casterConstructor": "not-supported",
+				"caster": {
+					"path": "ids",
+					"instance": "ObjectID",
+					"setters": [],
+					"getters": [],
+					"options": {},
+					"_index": null
+				},
+				"path": "ids",
+				"setters": [],
+				"getters": [],
+				"options": {
+					"type": [
+						{
+							"type": "not-supported"
+						}
+					]
+				},
+				"_index": null,
+				"defaultValue": "not-supported"
+			},
+			"_id": {
+				"path": "_id",
+				"instance": "ObjectID",
+				"setters": [
+					"not-supported"
+				],
+				"getters": [],
+				"options": {
+					"type": "ObjectId",
+					"auto": true
+				},
+				"_index": null,
+				"defaultValue": "not-supported"
+			}
+		},
+		"options": {
+			"versionKey": false,
+			"id": true,
+			"noVirtualId": false,
+			"_id": true,
+			"noId": false,
+			"read": null,
+			"shardKey": null,
+			"autoIndex": true,
+			"minimize": true,
+			"discriminatorKey": "__t",
+			"capped": false,
+			"bufferCommands": true,
+			"strict": true,
+			"pluralization": true
+		}
+	},
 	"User": {
 		"moduleName": "User",
 		"methods": {
