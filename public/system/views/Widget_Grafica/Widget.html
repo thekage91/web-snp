@@ -59,6 +59,8 @@
   <body>
     <div id="menu">
       <button id="animation">Show Animation</button>
+      <button id="startMusic">Start music</button>
+      <button id="stopMusic">Stop music</button>
     </div>
   <!-- Javascript code --> 
   <script>
@@ -462,6 +464,24 @@
 
 
 
+      function startMusic() {
+        if (audio == null) {
+        audio = document.createElement('audio');
+        var source = document.createElement('source');
+        source.src = '../../assets/audios/Esplorando _il_corpo_umano_sigla.wav';
+        audio.appendChild(source);
+        audio.play();
+        }
+      }
+
+
+
+      function stopMusic() {
+        audio.pause();
+        audio = null;
+      }
+
+
       //VARIABLES
       var basesLength = 50;
       var basesRadius = 5;
@@ -477,13 +497,25 @@
       var ambientLightScene = new THREE.AmbientLight( 0xffffff ); // soft white light
       var spotLightScene = new THREE.SpotLight( 0xffffff ); // soft white light
       var directionalLight = new THREE.DirectionalLight( 0xffffff );
-
+      var audio;
       
-      button = document.getElementById( 'animation' );
+      button = document.getElementById('animation');
 
-      button.addEventListener( 'click', function ( event ) {
+      button.addEventListener('click', function (event) {
         animateScene(2000);
-      }, false );
+      }, false);
+
+      button = document.getElementById('startMusic');
+
+      button.addEventListener('click', function (event) {
+        startMusic();
+      }, false);
+
+      button = document.getElementById('stopMusic');
+
+      button.addEventListener('click', function (event) {
+        stopMusic();
+      }, false);
 
       //Basis Creation
       couplesList = [["adenine","thymine"],["guanine","cytosine"],["guanine","cytosine"],["adenine","thymine"],["adenine","thymine"],["adenine","thymine"],["guanine","cytosine"],["guanine","cytosine"],["guanine","cytosine"],["guanine","cytosine"],["guanine","cytosine"],["guanine","cytosine"],["adenine","thymine"],["guanine","cytosine"],["adenine","thymine"],["adenine","thymine"],["adenine","thymine"],["guanine","cytosine"],["adenine","thymine"],["adenine","thymine"],["guanine","cytosine"],["guanine","cytosine"],["adenine","thymine"],["guanine","cytosine"],["guanine","cytosine"],["adenine","thymine"],["adenine","thymine"],["adenine","thymine"],["adenine","thymine"],["guanine","cytosine"],["adenine","thymine"]];
@@ -529,7 +561,6 @@
       scene.add(directionalLight)
       scene.add(globalStructure);
       scene.add(axisHelper);
-
 
       animate();      
     });
