@@ -18,3 +18,32 @@
 .top15 { margin-top:15px; }
 .top17 { margin-top:17px; }
 .top30 { margin-top:30px; }
+
+
+/*
+thead { 
+	display:block; 
+	background: green; 
+	margin:0px; 
+	cell-spacing:0px; 
+	left:0px; 
+}
+
+tbody { 
+	display:block; 
+	overflow:auto; 
+	height:100px; 
+}
+
+th { 
+	height:50px; 
+	width:80px; 
+}
+td { height:50px; 
+	width:80px; 
+	background:blue; 
+	margin:0px; 
+	cell-spacing:0px;
+}*/
+
+
