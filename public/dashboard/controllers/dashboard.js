@@ -34,8 +34,8 @@ angular.module('mean.dashboard', ['angular-md5'])
 
         $http.get('/api/user')
             .success(function (data) {
-                $scope.users = data;
-                console.log("[DEBUG] Retrive this users " + data);
+                $scope.users = data.payload;
+                console.log("[DEBUG] Retrive this users " + data.payload);
             })
             .error(function (data) {
                 console.log("[ERROR] Failed retrieve all users");
@@ -50,6 +50,8 @@ angular.module('mean.dashboard', ['angular-md5'])
 
             $http.post('/register', user)
                 .success(function (data) {
+                    angular.element('#formInsert').collapse('hide');
+                    $scope.user = {};
                     // authentication OK
                     $scope.users.push(user);
                     $scope.registerError = 0;

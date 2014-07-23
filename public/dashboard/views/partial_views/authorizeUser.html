@@ -129,7 +129,7 @@
 </div>
 
 <div class="row" style="height: 500px; overflow-y: auto; margin-top: 50px">
-  <div id="searchResults" class="row" ng-controller="AuthorizerUserCtrl">
+  <div id="searchResults" class="row">
 
       <table class="table table-bordered">
         <thead>
@@ -159,7 +159,7 @@
                   <span>Promote</span>
                 </button>
                 <button data-dz-remove class="btn btn-danger delete btn-sm bot5" ng-click="cancelUser(user)">
-                  <i class="glyphicon glyphicon-ban-circle"></i>
+                  <i class="glyphicon glyphicon-ban-trash"></i>
                   <span>Dismiss</span>
                 </button>  
                 <button data-dz-remove class="btn btn-primary delete btn-sm" ng-click="degrade2licensed(user)"
