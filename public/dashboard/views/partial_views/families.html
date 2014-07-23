@@ -1,3 +1,23 @@
+<!--<script type="text/javascript">
+  function fill (){
+    $.get('/api/user/' + document.getElementById('iddi').innerHTML)
+      .success(function(data){
+
+        data.payload.roles.forEach(function(entry) {
+            if (data.payload.roles.indexOf("Admin") > -1) {
+                var e = document.getElementById('title');
+                e.visibility = "visible";
+
+                e = document.getElementById('main');
+                e.visibility = "visible";
+            } 
+            ;        
+        });
+        
+
+      });
+  };
+</script>
 
 <h1 hidden id="iddi">{{global.user._id}}</h1>
 
@@ -132,7 +152,6 @@
       <!-- -->
       
       <div class="row" style="height: 500px; overflow-y: auto; margin-top: 50px">
->
           <div>
             <table class="table table-bordered" ng-show="!showEditFamily">
               <thead>
