@@ -34,7 +34,7 @@ angular.module('mean.dashboard', ['angular-md5'])
         }])
 
 
-    .controller('AuthorizerUserCtrl', ['$scope' , '$http' , function ($scope, $http) {
+    .controller('AuthorizerUserCtrl', ['$scope' , '$http' , 'md5', function ($scope, $http, md5) {
 
         $scope.formData = {};
 
@@ -53,6 +53,9 @@ angular.module('mean.dashboard', ['angular-md5'])
                 console.log("[ERROR] Failed retrieve all users");
             });
 
+        $scope.users.forEach(function(user){
+            user.emailHash = md5.(user.email);
+        });
 
         $scope.authorizeUser = function (user) {
             console.log(user);
