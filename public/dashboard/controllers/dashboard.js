@@ -691,10 +691,10 @@ angular.module('mean.dashboard', ['ngGrid'])
     $scope.removeSequencing = function(sequencing){
 
         for(item in $scope.sequencings){
-            var idsToRemove = item.ids;
+            var idsToRemove = item.item;
             for(itemDelete in idsToRemove){
                 for(idRemove in itemDelete.id){
-                $http.delete('/api/' + itemDelete.name + "/" + idRemove)
+                $http.delete('/api/' + itemDelete.table + "/" + idRemove)
                     .success(function(data){})
                     .error(function(err){});
                 }
