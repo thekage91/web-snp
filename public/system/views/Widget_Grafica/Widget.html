@@ -165,7 +165,7 @@
       function createSupercoil(numberOfElements, couplesList) {
         var supercoil = new THREE.Object3D();
 
-        //positionsObj rappresenta l'array di coppie dove poi le basi azotate andranno dopo l'animazione
+        //positionsObj represents the array of pairs where the nitrogenous bases will go after the animation
         positionsObj = [];
 
         var previous = createCouple(couplesList[0]);
@@ -203,7 +203,6 @@
           new THREE.MeshPhongMaterial({
             color: 0xed3403,
             opacity: 0.3,
-            //wireframe: true,
             transparent: true,
             shininess: 100,
             metal: true
@@ -223,49 +222,10 @@
 
       
 
-      //Animations
+      //ANIMATIONS
       var animator = null;
       var duration = 5; //sec
       var loopAnimation = true;
-
-
-
-      //Function that creates an array of random object3d to scatter the nitrogenous bases once you click on the button animate
-      function randomizePositionObject(){
-          var randomObjPositions = [];
-          var randomObj = new THREE.Object3D();
-
-          for(var i = 0; i < 31; i++){
-            var x = Math.random() * 4000 - 2000;
-            var y = Math.random() * 4000 - 2000;
-            var z = Math.random() * 4000 - 2000;
-            randomObj.position.set(x,y,z);
-            randomObjPositions.push(randomObj);
-          }
-          return randomObjPositions;
-      }
-
-
-
-      function transform(objects, targets, duration) {
-        TWEEN.removeAll();
-
-        for ( var i = 0; i < objects.length; i ++ ) {
-
-          var object = objects[ i ];
-          var target = targets[ i ];
-
-          new TWEEN.Tween( object.position )
-            .to( { x: target.position.x, y: target.position.y, z: target.position.z }, duration )
-            .easing( TWEEN.Easing.Exponential.InOut )
-            .start();
-
-          new TWEEN.Tween( object.rotation )
-            .to( { x: target.rotation.x, y: target.rotation.y, z: target.rotation.z }, duration )
-            .easing( TWEEN.Easing.Exponential.InOut )
-            .start();
-        }
-      }
 
 
 
@@ -324,39 +284,58 @@
 
 
 
-      // Le basi rigurdanti saranno le numero 15, per esempio
+      //Function that creates an array of random object3d to scatter the nitrogenous bases once you click the button animate
+      function randomizePositionObject(){
+          var randomObjPositions = [];
+          var randomObj = new THREE.Object3D();
+
+          for(var i = 0; i < 31; i++){
+            var x = Math.random() * 4000 - 2000;
+            var y = Math.random() * 4000 - 2000;
+            var z = Math.random() * 4000 - 2000;
+            randomObj.position.set(x,y,z);
+            randomObjPositions.push(randomObj);
+          }
+          return randomObjPositions;
+      }
+
+
+
+      function transform(objects, targets, duration) {
+        TWEEN.removeAll();
+
+        for ( var i = 0; i < objects.length; i ++ ) {
+
+          var object = objects[ i ];
+          var target = targets[ i ];
+
+          new TWEEN.Tween( object.position )
+            .to( { x: target.position.x, y: target.position.y, z: target.position.z }, duration )
+            .easing( TWEEN.Easing.Exponential.InOut )
+            .start();
+
+          new TWEEN.Tween( object.rotation )
+            .to( { x: target.rotation.x, y: target.rotation.y, z: target.rotation.z }, duration )
+            .easing( TWEEN.Easing.Exponential.InOut )
+            .start();
+        }
+      }
+
+
+
       function animateSNP(oldCouple, duration){        
         var target = new THREE.Vector3(oldCouple.children[0].position.x, oldCouple.children[0].position.y, 80);
 
         positionTween(oldCouple.children[0], duration, target).start();
         positionTween(oldCouple.children[1], duration, target).start();        
-      }
-
-
-
-      function opacizeFilament(duration){
-
-      }
-
-
-
-      function highLightBase(couple, duration){
-        var spotLight = new THREE.SpotLight( 0xffffff );
-        spotLight.target = couple;
-        spotLight.intensity = 100;
-        
-        spotLight.position.set(couple.position.x , couple.position.y , couple.position.z);
-        couple.add(spotLight);
-
-        flashTween(spotLight, duration, 10).start();
-      }
+      }      
 
 
 
       function newBasesEnter(oldCouple, duration) {
-        // oldCouple.childer[0] e' la prima base azotate
-        // oldCouple.childer[1] e' la seconda base azotate
-        // oldCouple.childer[2] sono tutte quelle che vengono dopo
+        //oldCouple.children[0] is the first nitrogenous base
+        //oldCouple.children[1] is the second nitrogenous base
+        //oldCouple.children[2] sono tutte quelle che vengono dopo
 
         var objOldPos = new THREE.Object3D();        
         new_couple = createCouple(["guanine","cytosine"]);
@@ -417,49 +396,17 @@
 
         document.getElementById("animation").style.visibility="hidden";
 
-        //position and point the camera to the center of the scene
-        //camera.position.set(0, 0, 500);
-        //camera.lookAt(new THREE.Vector3(0, 0, 0));
-
         movingCameraBefore(4000);
 
-        setTimeout(function(){movingCamera(4000)}, 4000); // si scambiano
+        setTimeout(function(){movingCamera(4000)}, 4000);
+        
+        setTimeout(function(){animateSNP(oldCouple, 2000)}, 26000);
 
-        
-        //smoothFilament(2000)
-        
-        //setTimeout(highLightBase(oldCouple, 1000) , 4000);
-        
-        setTimeout(function(){animateSNP(oldCouple, 2000)}, 26000); // si scambiano
-        setTimeout(function(){ newCouple = newBasesEnter(oldCouple , 2000); }, 28000);
-        //console.log(newCouple);
+        setTimeout(function(){newCouple = newBasesEnter(oldCouple, 2000); }, 28000);
+
         setTimeout(function(){exchangeBase(newCouple, oldCouple, 1000)}, 30000);
-        //setTimeout(function(){insertNewCouple(new_couple, oldCouple, 2000)}, 24000);;
+
         setTimeout(function(){movingCameraAfter(4000);}, 34000);
-
-        // rimettiamo le cose al loro posto, le altri basi tornano
-        /*setTimeout( function() {  for(var i = 0; i < 31; i++){
-                                    subjectPos[i].position = targetPos[i].position;
-                                  }
-                                  transform(targetPos, subjectPos, duration); 
-                                } , duration);*/
-      }
-      
-
-
-      function animate() {
-        stats.update();
-        trackballControls.update();
-
-        camera.lookAt(new THREE.Vector3(camera.position.x , camera.position.y , camera.position.z));
-
-        globalStructure.rotation.x += step;
-
-        KF.update();
-        TWEEN.update();
-        //render using requestAnimationFrame
-        requestAnimationFrame(animate);
-        webGLRenderer.render(scene, camera);
       }
 
 
@@ -482,11 +429,43 @@
       }
 
 
+
+      /*function highLightBase(couple, duration){
+        var spotLight = new THREE.SpotLight( 0xffffff );
+        spotLight.target = couple;
+        spotLight.intensity = 100;
+        
+        spotLight.position.set(couple.position.x , couple.position.y , couple.position.z);
+        couple.add(spotLight);
+
+        flashTween(spotLight, duration, 10).start();
+      }*/
+
+
+
+      function animate() {
+        stats.update();
+        trackballControls.update();
+
+        camera.lookAt(new THREE.Vector3(camera.position.x , camera.position.y , camera.position.z));
+
+        globalStructure.rotation.x += step;
+
+        KF.update();
+        TWEEN.update();
+        
+        //render using requestAnimationFrame
+        requestAnimationFrame(animate);
+        webGLRenderer.render(scene, camera);
+      }
+
+
+
       //VARIABLES
       var basesLength = 50;
       var basesRadius = 5;
       var segments = 400;
-      var tubeRadius = 3.5;
+      var tubeRadius = 4;
       var radiusSegments = 12;
       var tubeMesh1;
       var tubeMesh2;
@@ -555,9 +534,6 @@
       directionalLight.position.set(0,50,500);
       directionalLight.target = globalStructure;
 
-
-
-      //scene.add(ambientLightScene);
       scene.add(directionalLight)
       scene.add(globalStructure);
       scene.add(axisHelper);
