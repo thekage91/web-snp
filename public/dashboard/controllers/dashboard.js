@@ -217,10 +217,10 @@ angular.module('mean.dashboard', ['angular-md5'])
                 .success(function (data) {
                     var allPatients = data.payload;
                     $scope.outPatients = allPatients.filter(function (item) {
-                        return !$scope.contains($scope.inPatients, item._id);
+                        return !($scope.contains($scope.inPatients, item._id));
                     });
                     $scope.inPatients = allPatients.filter(function (item) {
-                        return !$scope.contains($scope.outPatients, item);
+                        return !($scope.contains($scope.outPatients, item));
                     });
 
                     console.log("out")
