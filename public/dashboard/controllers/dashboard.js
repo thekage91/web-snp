@@ -6,89 +6,12 @@ angular.module('mean.dashboard', [])
     .controller('UploaderCtrl', ['$scope' , '$window' ,
         function ($scope, $window) {
 
-            //output e' gia' il json uscito puoi dalla funzione parse
-            var parsedJson = $window.output;
-
-            // Filtrare tutto, e creare i vari array variants , patient , sequencing ecc ecc
-            // metterli nello scope.. esempio $scope.variants ecc la tabella di crea da sola
-
-            var filteredJson = $scope.filtJson;
-            $scope.variants = filteredJson.variants;
-            $scope.esps = filteredJson.esps;
-            $scope.dbsnps = filteredJson.dbsnps;
-            $scope.pathogenicities = filteredJson.pathogenicities;
-            $scope.variantDetails = filteredJson.details;
-            $scope.genes = filteredJson.genes;
-            $scope.patient = filteredJson.patient;
-
-            $scope.Table2Json = function () {
-
-                function parseTable(table) {
-                    var result = {};
-                    for (var i = 1; table.rows; i++) {
-                        result[table.rows[i].cells[0].innerText] = table.rows[i].cells[1].innerText;
-                    }
-                    var result_json = JSON.stringify(result);
-                }
-
-                var tableVariant = angular.element('.variant');
-                var tableDbsnp = angular.element('.dbsnp');
-                var tablePatient = angular.element('.patient');
-                var tableEsp = angular.element('.esp');
-                var tableGene = angular.element('.gene');
-                var tablePatho = angular.element('.pathogenicity');
-                var tableSeque = angular.element('.sequencing');
-
-                var jsonVariant = parseTable(tableVariant);
-                var jsonDBsnp = parseTable(tableDbsnp);
-                var jsonPatient = parseTable(tablePatient);
-                var jsonEsp = parseTable(tableEsp);
-                var jsonGene = parseTable(tableGene);
-                var jsonPatho = parseTable(tablePatho);
-                var jsonSeque = parseTable(tableSeque);
-
-                // salvare sul DB richiamando la funzione di ugo
-            }
-
-
-            function saveInDBparsedData(result) {
-                return $http.post('/api/variant', result['variants'][0]);
-            }
-
-            var parse1 = function () {
-                for (var i = 0; i < arguments.length; i++) {
-                    var jsonWithSchema = arguments[i][0];
-
-                    //Get first response's filed with mongoose.Model.attr JSON
-                    for (var key in jsonWithSchema) if (jsonWithSchema.hasOwnProperty(key))  break;
-                    var element = key;
-                    var schema = jsonWithSchema[key];
-
-                    //console.info('[INFO] element : ' + element + '\n[INFO] schema : ' + JSON.stringify(schema));
-
-                    schemaContainter[element] = schema;
-                }
-                //THIS IS THE RESULT AFTER PARSING, BEFORE SAVING
-                var result = parseFromSchemas($scope.jsonUpload, schemaContainter);
-//                    console.log("FINALE RESULT: ");
-//                    console.log(result);
-//                    //NOW SAVE IN DB
-                saveInDBparsedData(result).done(function () {
-                    console.log("All Saved in DB!")
-                })
-                    .error(function (err) {
-                        console.err("[ERROR] while saving in DB: " + err)
-                    });
-
-                //postElementArray('Variant', result['variants']);
-            };
-
-
             $scope.saveResult = function () {
                 $scope.jsonUpload = JSON.parse($window.output);
+
                 var saveFunction = (Parse.saveInDbFromData);
-                saveFunction($scope.jsonUpload, 'PATIENT1').then(function () {
-                        console.log("OKE");
+                saveFunction($scope.jsonUpload, $scope.searchUser).then(function () {
+                        console.log("OK");
                     }
                     , function (error) {
                         console.error("ERROR WHILE PARSING DATA: " + error)

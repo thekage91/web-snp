@@ -1,22 +1,5 @@
-<script type="text/javascript">
-  function fill (){
-    $.get('/api/user/' + document.getElementById('iddi').innerHTML)
-      .success(function(data){
 
-        data.payload.roles.forEach(function(entry) {
-            if (data.payload.roles.indexOf("Admin") > -1) {
-                var e = document.getElementById('main');
-                e.visibility = "visible";
-            } 
-            ;        
-        });
-        
-
-      });
-  };
-</script>
-
-<div hidden id="main" class="col-lg-11">
+<div  id="main" class="col-lg-11">
 <!--<div class="col-lg-11" ng-show="user.isAdmin()">-->
 
 <div class="row">
@@ -85,7 +68,7 @@ $(function() {
         resizable: false,
         beforeClose: function() {
           uploadButton.button( "option", {
-            disabled: false,
+            disabled: false
           });
         }
       }),
@@ -99,7 +82,7 @@ $(function() {
         });
  
     progressbar.progressbar({
-      value: false,
+      value: false
     });
  
   });
@@ -200,8 +183,6 @@ function process_wb(wb) {
     default:
       output = to_csv(wb);
   }
-  if(out.innerText === undefined) out.textContent = output;
-  else out.innerText = output;
 
   document.getElementById('dialog').style.display = 'none';
   document.getElementById('ui-id-1').innerHTML = "Done!";
