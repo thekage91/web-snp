@@ -1,26 +1,6 @@
-<!--<script type="text/javascript">
-  function fill (){
-    $.get('/api/user/' + document.getElementById('iddi').innerHTML)
-      .success(function(data){
 
-        data.payload.roles.forEach(function(entry) {
-            if (data.payload.roles.indexOf("Admin") > -1) {
-                var e = document.getElementById('main');
-                e.visibility = "visible";
-            } 
-            ;        
-        });
-        
-
-      });
-  };
-</script>
-
-<div hidden id="main" class="col-lg-11">-->
+<div  id="main" class="col-lg-11">
 <!--<div class="col-lg-11" ng-show="user.isAdmin()">-->
-<div class="col-lg-11">
-
-<h1 hidden id="iddi">{{global.user._id}}</h1>
 
 <div class="row">
   <h1 class="section-header">Sequencing Upload</h1>  
@@ -67,6 +47,7 @@
   <button id="btn_save" type="button" class="btn btn-success btn-xs" disabled="disabled" ng-click="saveResult()" ui-sref="dashboard.sequencingEdit">
     <span class="glyphicon glyphicon-upload"></span> Show result
   </button>
+
 </div>
 
 <!--<pre id="out"></pre>-->
@@ -122,7 +103,6 @@ $(function() {
 <br/>
 <!-- uncomment the next line here and in xlsxworker.js for encoding support -->
 <!--<script src="dist/cpexcel.js"></script>-->
-<script src="public/dashboard/assets/js/parser.js"></script>
 <script src="public/system/assets/js/xls.js"></script>
 <script>
 var rABS = typeof FileReader !== "undefined" && typeof FileReader.prototype !== "undefined" && typeof FileReader.prototype.readAsBinaryString !== "undefined";
@@ -194,7 +174,8 @@ function process_wb(wb) {
   switch("json") {
     case "json":
       output = JSON.stringify(to_json(wb), 2, 2);
-      filteredJson = filterOnlyAttributes(parse(output));
+      btn_save.click();
+      //filteredJson = filterOnlyAttributes(parse(output));
       break;
     case "form":
       output = to_formulae(wb);
