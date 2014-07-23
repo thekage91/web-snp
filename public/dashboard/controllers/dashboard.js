@@ -54,7 +54,7 @@ angular.module('mean.dashboard', ['angular-md5'])
             });
 
         $scope.users.forEach(function(user){
-            user.emailHash = md5.(user.email);
+            user.emailHash = md5.createHash(user.email);
         });
 
         $scope.authorizeUser = function (user) {
