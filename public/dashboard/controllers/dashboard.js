@@ -210,7 +210,17 @@ angular.module('mean.dashboard', ['angular-md5'])
                 family.patients = [];
             }
 
-            $scope.inPatients = family.patients;
+            for(var itemId in family.patients){
+                $scope.inPatients = [];
+                $http.get('/api/patient/' + itemId)
+                    .success(function (data) {
+                        $scope.inPatients.push(data.payload);
+                    })
+                    .error(function (err) {
+                        console.log("[ERROR] Failed retrieve patients -->" + err);
+                    });
+            }
+
             $scope.familySelected = family;
 
             $http.get('/api/patient')
