@@ -2,10 +2,9 @@
 
 
 
-angular.module('mean.dashboard', [])
+angular.module('mean.dashboard', ['angular-md5'])
 
-        .controller('UploaderCtrl', ['$scope' , '$window' ,
-        DbSNP,Esp,Family,Gene,Pathogenicity,Patient,Sequencing,Variant,VariantDetail,
+.controller('UploaderCtrl', ['$scope' , '$window' ,
         function($scope, $window) {
               
               //output e' gia' il json uscito puoi dalla funzione parse
@@ -83,17 +82,7 @@ angular.module('mean.dashboard', [])
 
 
               
-            $scope.saveResult = function () {
-                $scope.jsonUpload = JSON.parse($window.output);
-                var saveFunction = (Parse.saveInDbFromData);
-                saveFunction($scope.jsonUpload,'PATIENT1').then(function () {
-                    console.log("OKE");
-                }
-               ,function (error) {
-                    console.error("ERROR WHILE PARSING DATA: " + error)});
-
-
-            }
+              };
         }])
 
        
@@ -289,7 +278,8 @@ angular.module('mean.dashboard', [])
 
     }])
 
-   
+
+
         .controller('ExecuteQueryCtrl', ['$scope', '$http', function($scope, $http) {
                 var element;
 
@@ -745,4 +735,57 @@ angular.module('mean.dashboard', [])
         
             
             ]);
+
+.controller('ProfileCtrl', ['$scope' , 'md5', '$http' , function($scope, md5, $http){
+
+    //$scope.emailHash = md5.createHash($scope.user.email)
+
+    $scope.emailHash = md5.createHash('thekage91@gmail.com')
+    console.log($scope.emailHash);
+
+    $http.get('/api/user/' + $scope.global.user._id)
+        .success(function(data) {
+            $scope._user = data.payload;
+            console.log("[SUCCESS] Retrive user " + $scope._user._id + " from database");
+        })
+        .error(function(err){
+            console.log("[ERROR] Failed Retrive user " + $scope._user._id + " from database");            
+        });
+
+    $scope.updateProfile = function(user){
+
+        $http.post('/api/user/' + $scope.global.user._id , user)
+            .success(function(data){
+                console.log("[SUCCESS] Upload info of this user " + $scope.user._id);
+            })
+            .error(function(data){
+                console.log("[ERROR] Error in upload info of this user " + $scope.user._id);
+            });
+
+    };
+
+    $scope.cancelOperation = function(){
+        $scope.user = {};
+    }
+
+}])
+
+.directive('gravatar', function() {
+    return {
+       restrict: 'AE',
+       replace: true,
+       scope: {
+         name: '@',
+         height: '@',
+         width: '@',
+         emailHash: '@'
+       },
+       link: function(scope, el, attr) {
+        scope.defaultImage = 'https://www.mechanicpool.com/pictures/greypros.png';
+       },
+       template: '<img alt="{{ name }}" height="{{ height }}"  width="{{ width }}" src="https://secure.gravatar.com/avatar/{{ emailHash }}.jpg?s={{ width }}&d={{ defaultImage }}">'
+     };
+});
+
+
 

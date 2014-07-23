@@ -1,4 +1,4 @@
 'use strict';
 
-angular.module('mean.dashboard', [ 'angoose.client' , 'ngGrid','ModelService','ParseService','SchemaService','SaveService']])
+angular.module('mean.dashboard', ['angular-md5'])
 
