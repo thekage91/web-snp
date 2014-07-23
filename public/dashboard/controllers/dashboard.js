@@ -222,6 +222,12 @@ angular.module('mean.dashboard', ['angular-md5'])
                     $scope.inPatients = allPatients.filter(function (item) {
                         return !$scope.contains($scope.outPatients, item);
                     });
+
+                    console.log("out")
+                    console.log($scope.outPatients);
+                    console.log("in")
+                    console.log($scope.inPatients);
+
                 })
                 .error(function (err) {
                     console.log("[ERROR] Failed retrieve all patients -->" + err);
