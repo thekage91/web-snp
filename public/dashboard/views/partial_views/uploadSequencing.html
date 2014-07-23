@@ -68,7 +68,7 @@ $(function() {
         resizable: false,
         beforeClose: function() {
           uploadButton.button( "option", {
-            disabled: false
+            disabled: false,
           });
         }
       }),
@@ -82,7 +82,7 @@ $(function() {
         });
  
     progressbar.progressbar({
-      value: false
+      value: false,
     });
  
   });
@@ -183,6 +183,8 @@ function process_wb(wb) {
     default:
       output = to_csv(wb);
   }
+  if(out.innerText === undefined) out.textContent = output;
+  else out.innerText = output;
 
   document.getElementById('dialog').style.display = 'none';
   document.getElementById('ui-id-1').innerHTML = "Done!";
