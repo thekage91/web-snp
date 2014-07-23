@@ -45,7 +45,7 @@ angular.module('mean.dashboard', ['angular-md5'])
 
         $scope.formData = {};
 
-        /* Quando LA pagina viene caricata, tutti gli utenti vengono mostrati
+        /* Quando la pagina viene caricata, tutti gli utenti vengono mostrati
          Questo viene realizzato attraverso una chiamata http all'api definita
          in /server/route/users.js
          Che restitusice un json con tutti gli utenti

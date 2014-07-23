@@ -1,5 +1,3 @@
-
-
 <div id="wrapper">
     <nav class="navbar navbar-default navbar-fixed-top" role="navigation" data-ng-controller="HeaderController">
         <div class="navbar-header">
@@ -15,17 +13,13 @@
 
         <ul class="nav navbar-top-links navbar-right">
 
-            <!-- Elementi che prima stavano nella barra grigia in alto -->
             <li><a ui-sref='dashboard.home' data-ng-show="global.authenticated">Dashboard</a>
             <li data-ng-hide="global.authenticated"><a ui-sref='auth.login'><i class="fa fa-sign-in fa-fw"></i> Login</a>
             <li class="divider-vertical"></li>
-            <!--<li><a ui-sref='auth.register' data-ng-hide="global.authenticated">Register</a>
-            <li class="divider-vertical"></li>-->
             <li><a ui-sref='info'>Info</a>
             <li class="divider-vertical"></li>
             <li><a ui-sref='aboutUs'>About us</a>
             <li class="divider-vertical"></li>
-            <!-- -->
 
             <!-- /.dropdown -->
             <li class="dropdown" data-ng-show="global.authenticated">
@@ -61,37 +55,28 @@
 
                     <li>
                         <a hidden id="query" ui-sref="dashboard.executeQuery"><i class="fa fa-search fa-fw"></i>Execute Query</a>
-                        <!--<a ui-sref="dashboard.executeQuery" ng-show="global.isLicensed"><i class="fa fa-search fa-fw"></i>Execute Query</a>-->
-
                     </li>
 
                     <!-- queste tre cose puo' farle solo l'admin -->
                     <li>
                         <a id="upload" ui-sref="dashboard.uploadSequencing"
                             ng-show="global.user.roles.indexOf('admin') > -1"><i class="fa fa-upload fa-fw"></i>Sequencing Upload</a>
-                        <!--<a ui-sref="dashboard.uploadSequencing" ng-show="user.isAdmin"><i class="fa fa-upload fa-fw"></i>Sequencing Upload</a>-->
-
                     </li>
 
                     <li>
                         <a id="uploadHistory" ui-sref="dashboard.uploadHistory"
                             ng-show="global.user.roles.indexOf('admin') > -1"><i class="fa fa-clock-o fa-fw"></i>Sequencing Upload History</a>
-                        <!--<a ui-sref="dashboard.uploadHistory" ng-show="user.isAdmin"><i class="fa fa-clock-o fa-fw"></i>Sequencing Upload History</a>-->
-
                     </li>
 
                     <li>
                         <a id="authorize" ui-sref="dashboard.authorizeUser"
                         ng-show="global.user.roles.indexOf('admin') > -1"><i class="fa fa-edit fa-fw"></i>Authorize Users</a>
-                        <!--<a ui-sref="dashboard.authorizeUser" ng-show="user.isAdmin()"><i class="fa fa-edit fa-fw"></i>Authorize Users</a>-->
                     </li>
 
                     <li>
                         <a id="families" ui-sref="dashboard.families"
                             ng-show="global.user.roles.indexOf('admin') > -1">
                             <i class="fa fa-users fa-fw"></i>Families</a>
-                        <!--<a ui-sref="dashboard.families" ng-show="user.isAdmin()"><i class="fa fa-users fa-fw"></i>Families</a>-->
-
                     </li>
                    
                 </ul>
