@@ -35,21 +35,21 @@ To realize an object using mongoose, we need to follow a specific syntax.
 \\At the beginning of each file, we have to inform the database that all data passed to builders, but that are not present in the schema that we will define below, must not be stored.
 \\To do this we use the following line of code:
 
-	
-                \begin{lstlisting}
-                'use strict';
-                \end{lstlisting}
-        
+
+\begin{lstlisting}
+'use strict';
+\end{lstlisting}
+
 
 Next, we must specify needed \emph{modules dependencies}. In our project, we have to insert the dependency from mongoose and crypto (a module for encryption of information):
 
-	
-                \begin{lstlisting}      
-                var mongoose = require('mongoose'),
-                Schema = mongoose.Schema,
-                crypto = require('crypto');
-                \end{lstlisting}
-        
+
+\begin{lstlisting}      
+var mongoose = require('mongoose'),
+Schema = mongoose.Schema,
+crypto = require('crypto');
+\end{lstlisting}
+
 
 Now we move to define the \emph{schema}, specifying all necessary components (attributes and relationships). Note that MongoDB will automatically add an ID field to each schema and assigns it using an internal policy.
 \\
@@ -57,29 +57,29 @@ Now we move to define the \emph{schema}, specifying all necessary components (at
 
 \newpage
 
-	\begin{flushleft} \small
+\begin{flushleft} \small
 \begin{minipage}{\linewidth}\label{scrap1}\raggedright\small
 \NWtarget{nuweb?}{} $\langle\,${\itshape {Example schema}}\nobreak\ {\footnotesize {?}}$\,\rangle\equiv$
 \vspace{-1ex}
 \begin{list}{}{} \item
 
-                \begin{lstlisting} 
-                UserSchema = new Schema ({
-                        / / attribute
-                        name: {
-                                        type: String,
-                                        required: true,
-                                        validate: [validatePresenceOf, 'Name can not be blank']
-                        },
+\begin{lstlisting} 
+UserSchema = new Schema ({
+        //attribute
+        name: {
+                type: String,
+                required: true,
+                validate: [validatePresenceOf, 'Name can not be blank']
+        },
 
-                        / / relationship
-                        patiens: [{
-                                type: Schema.Type.ObjectId,
-                                ref: 'Patient'
-                        }]
-                ); 
-                \end{lstlisting}
-        {\NWsep}
+        //relationship
+        patiens: [{
+                type: Schema.Type.ObjectId,
+                ref: 'Patient'
+        }]
+        ); 
+\end{lstlisting}
+{\NWsep}
 \end{list}
 \vspace{-1.5ex}
 \footnotesize
@@ -303,7 +303,25 @@ A \emph{Gene} is the molecular unit of heredity of a living organism. Genes hold
 \vspace{-1ex}
 \begin{list}{}{} \item
 
-                \lstinputlisting[firstline = 11, lastline = 53]{../server/models/pathogenicity.js}
+                \lstinputlisting[firstline = 11, lastline = 48]{../server/models/pathogenicity.js}
+        {\NWsep}
+\end{list}
+\vspace{-1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item {\NWtxtMacroNoRef}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap9}\raggedright\small
+\NWtarget{nuweb?}{} $\langle\,${\itshape {Pathogenicity's attributes - 2}}\nobreak\ {\footnotesize {?}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{list}{}{} \item
+
+                \lstinputlisting[firstline = 49, lastline = 53]{../server/models/pathogenicity.js}
         {\NWsep}
 \end{list}
 \vspace{-1.5ex}
@@ -323,7 +341,7 @@ A \emph{Gene} is the molecular unit of heredity of a living organism. Genes hold
 \paragraph{Relationships} 
 
 	\begin{flushleft} \small
-\begin{minipage}{\linewidth}\label{scrap9}\raggedright\small
+\begin{minipage}{\linewidth}\label{scrap10}\raggedright\small
 \NWtarget{nuweb?}{} $\langle\,${\itshape {Pathogenicity's relationships}}\nobreak\ {\footnotesize {?}}$\,\rangle\equiv$
 \vspace{-1ex}
 \begin{list}{}{} \item
@@ -353,12 +371,12 @@ A \emph{Gene} is the molecular unit of heredity of a living organism. Genes hold
 \paragraph{Attributes}      
 
 	\begin{flushleft} \small
-\begin{minipage}{\linewidth}\label{scrap10}\raggedright\small
+\begin{minipage}{\linewidth}\label{scrap11}\raggedright\small
 \NWtarget{nuweb?}{} $\langle\,${\itshape {Sequencing's attributes}}\nobreak\ {\footnotesize {?}}$\,\rangle\equiv$
 \vspace{-1ex}
 \begin{list}{}{} \item
 
-                \lstinputlisting[firstline = 11, lastline = 52]{../server/models/sequencing.js}
+                \lstinputlisting[firstline = 11, lastline = 43]{../server/models/sequencing.js}
         {\NWsep}
 \end{list}
 \vspace{-1.5ex}
@@ -371,12 +389,12 @@ A \emph{Gene} is the molecular unit of heredity of a living organism. Genes hold
 \end{minipage}\vspace{4ex}
 \end{flushleft}
 \begin{flushleft} \small
-\begin{minipage}{\linewidth}\label{scrap11}\raggedright\small
+\begin{minipage}{\linewidth}\label{scrap12}\raggedright\small
 \NWtarget{nuweb?}{} $\langle\,${\itshape {Sequencing's attributes - 2}}\nobreak\ {\footnotesize {?}}$\,\rangle\equiv$
 \vspace{-1ex}
 \begin{list}{}{} \item
 
-                \lstinputlisting[firstline = 52, lastline = 91]{../server/models/sequencing.js}
+                \lstinputlisting[firstline = 45, lastline = 96]{../server/models/sequencing.js}
         {\NWsep}
 \end{list}
 \vspace{-1.5ex}
@@ -410,12 +428,12 @@ A \emph{Gene} is the molecular unit of heredity of a living organism. Genes hold
 \paragraph{Relationships} 
 
 	\begin{flushleft} \small
-\begin{minipage}{\linewidth}\label{scrap12}\raggedright\small
+\begin{minipage}{\linewidth}\label{scrap13}\raggedright\small
 \NWtarget{nuweb?}{} $\langle\,${\itshape {Sequencing's relationships}}\nobreak\ {\footnotesize {?}}$\,\rangle\equiv$
 \vspace{-1ex}
 \begin{list}{}{} \item
 
-                \lstinputlisting[firstline = 55, lastline = 61]{../server/models/sequencing.js}
+                \lstinputlisting[firstline = 97, lastline = 102]{../server/models/sequencing.js}
         {\NWsep}
 \end{list}
 \vspace{-1.5ex}
@@ -440,7 +458,7 @@ A \emph{Gene} is the molecular unit of heredity of a living organism. Genes hold
 \paragraph{Attributes}      
 
 	\begin{flushleft} \small
-\begin{minipage}{\linewidth}\label{scrap13}\raggedright\small
+\begin{minipage}{\linewidth}\label{scrap14}\raggedright\small
 \NWtarget{nuweb?}{} $\langle\,${\itshape {esp's attributes}}\nobreak\ {\footnotesize {?}}$\,\rangle\equiv$
 \vspace{-1ex}
 \begin{list}{}{} \item
@@ -466,7 +484,7 @@ A \emph{Gene} is the molecular unit of heredity of a living organism. Genes hold
 \paragraph{Relationships} 
 
 	\begin{flushleft} \small
-\begin{minipage}{\linewidth}\label{scrap14}\raggedright\small
+\begin{minipage}{\linewidth}\label{scrap15}\raggedright\small
 \NWtarget{nuweb?}{} $\langle\,${\itshape {esp's relationships}}\nobreak\ {\footnotesize {?}}$\,\rangle\equiv$
 \vspace{-1ex}
 \begin{list}{}{} \item
@@ -497,15 +515,33 @@ A \emph{Patient} describes a patient in the real world. Can only be created by a
 
 The Patient object has no attributes to be specified; it only has an identifier (\textbf{ID})that is added from MongoDB by default and a \textbf{Name}.
 
+	\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap16}\raggedright\small
+\NWtarget{nuweb?}{} $\langle\,${\itshape {Patient's attributes}}\nobreak\ {\footnotesize {?}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{list}{}{} \item
+
+                \lstinputlisting[firstline = 11, lastline = 18]{../server/models/patient.js}
+        {\NWsep}
+\end{list}
+\vspace{-1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item {\NWtxtMacroNoRef}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
 \paragraph{Relationships} 
 
 	\begin{flushleft} \small
-\begin{minipage}{\linewidth}\label{scrap15}\raggedright\small
+\begin{minipage}{\linewidth}\label{scrap17}\raggedright\small
 \NWtarget{nuweb?}{} $\langle\,${\itshape {Patient's relationships}}\nobreak\ {\footnotesize {?}}$\,\rangle\equiv$
 \vspace{-1ex}
 \begin{list}{}{} \item
 
-                \lstinputlisting[firstline = 11, lastline = 25]{../server/models/patient.js}
+                \lstinputlisting[firstline = 19, lastline = 30]{../server/models/patient.js}
         {\NWsep}
 \end{list}
 \vspace{-1.5ex}
@@ -531,7 +567,7 @@ A \emph{Family} represents a set of one or more \emph{patients} (modeled in pati
 \paragraph{Attributes}      
 
 	\begin{flushleft} \small
-\begin{minipage}{\linewidth}\label{scrap16}\raggedright\small
+\begin{minipage}{\linewidth}\label{scrap18}\raggedright\small
 \NWtarget{nuweb?}{} $\langle\,${\itshape {Family's attributes}}\nobreak\ {\footnotesize {?}}$\,\rangle\equiv$
 \vspace{-1ex}
 \begin{list}{}{} \item
@@ -555,7 +591,7 @@ A \emph{Family} represents a set of one or more \emph{patients} (modeled in pati
 \paragraph{Relationships} 
 
 	\begin{flushleft} \small
-\begin{minipage}{\linewidth}\label{scrap17}\raggedright\small
+\begin{minipage}{\linewidth}\label{scrap19}\raggedright\small
 \NWtarget{nuweb?}{} $\langle\,${\itshape {Family's relationships}}\nobreak\ {\footnotesize {?}}$\,\rangle\equiv$
 \vspace{-1ex}
 \begin{list}{}{} \item
@@ -585,12 +621,30 @@ The \emph{User} object describes a user of the system, a \emph{biologist} who ac
 \paragraph{Attributes}      
 
 	\begin{flushleft} \small
-\begin{minipage}{\linewidth}\label{scrap18}\raggedright\small
+\begin{minipage}{\linewidth}\label{scrap20}\raggedright\small
 \NWtarget{nuweb?}{} $\langle\,${\itshape {User's attributes}}\nobreak\ {\footnotesize {?}}$\,\rangle\equiv$
 \vspace{-1ex}
 \begin{list}{}{} \item
 
-                \lstinputlisting[firstline = 18, lastline = 56]{../server/models/user.js}
+                \lstinputlisting[firstline = 18, lastline = 57]{../server/models/user.js}
+        {\NWsep}
+\end{list}
+\vspace{-1.5ex}
+\footnotesize
+\begin{list}{}{\setlength{\itemsep}{-\parsep}\setlength{\itemindent}{-\leftmargin}}
+\item {\NWtxtMacroNoRef}.
+
+\item{}
+\end{list}
+\end{minipage}\vspace{4ex}
+\end{flushleft}
+\begin{flushleft} \small
+\begin{minipage}{\linewidth}\label{scrap21}\raggedright\small
+\NWtarget{nuweb?}{} $\langle\,${\itshape {User's attributes - 2}}\nobreak\ {\footnotesize {?}}$\,\rangle\equiv$
+\vspace{-1ex}
+\begin{list}{}{} \item
+
+                \lstinputlisting[firstline = 58, lastline = 76]{../server/models/user.js}
         {\NWsep}
 \end{list}
 \vspace{-1.5ex}
@@ -607,12 +661,12 @@ These attributes are all self-explanatory.
 \paragraph{Methods} 
 
 	\begin{flushleft} \small
-\begin{minipage}{\linewidth}\label{scrap19}\raggedright\small
+\begin{minipage}{\linewidth}\label{scrap22}\raggedright\small
 \NWtarget{nuweb?}{} $\langle\,${\itshape {User's validation}}\nobreak\ {\footnotesize {?}}$\,\rangle\equiv$
 \vspace{-1ex}
 \begin{list}{}{} \item
 
-                \lstinputlisting[firstline = 10, lastline = 16]{../server/models/user.js}
+                \lstinputlisting[firstline = 78, lastline = 114]{../server/models/user.js}
         {\NWsep}
 \end{list}
 \vspace{-1.5ex}
@@ -625,12 +679,12 @@ These attributes are all self-explanatory.
 \end{minipage}\vspace{4ex}
 \end{flushleft}
 \begin{flushleft} \small
-\begin{minipage}{\linewidth}\label{scrap20}\raggedright\small
+\begin{minipage}{\linewidth}\label{scrap23}\raggedright\small
 \NWtarget{nuweb?}{} $\langle\,${\itshape {User's methods}}\nobreak\ {\footnotesize {?}}$\,\rangle\equiv$
 \vspace{-1ex}
 \begin{list}{}{} \item
 
-                \lstinputlisting[firstline = 58, lastline = 101]{../server/models/user.js}
+                \lstinputlisting[firstline = 115, lastline = 149]{../server/models/user.js}
         {\NWsep}
 \end{list}
 \vspace{-1.5ex}
@@ -643,12 +697,12 @@ These attributes are all self-explanatory.
 \end{minipage}\vspace{4ex}
 \end{flushleft}
 \begin{flushleft} \small
-\begin{minipage}{\linewidth}\label{scrap21}\raggedright\small
+\begin{minipage}{\linewidth}\label{scrap24}\raggedright\small
 \NWtarget{nuweb?}{} $\langle\,${\itshape {User's methods - 2}}\nobreak\ {\footnotesize {?}}$\,\rangle\equiv$
 \vspace{-1ex}
 \begin{list}{}{} \item
 
-                \lstinputlisting[firstline = 101, lastline = 138]{../server/models/user.js}
+                \lstinputlisting[firstline = 150, lastline = 162]{../server/models/user.js}
         {\NWsep}
 \end{list}
 \vspace{-1.5ex}

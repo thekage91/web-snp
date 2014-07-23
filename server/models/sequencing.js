@@ -94,7 +94,7 @@ var SequencingSchema = new Schema({
             validate: [validatePresenceOf, 'strandBias cannot be blank']
         }
     },*/
-    //Relatinship
+    //Relationship
     variants: [{
         type: Schema.ObjectId,
         ref: 'Variant'

@@ -20,21 +20,21 @@ To realize an object using mongoose, we need to follow a specific syntax.
 \\At the beginning of each file, we have to inform the database that all data passed to builders, but that are not present in the schema that we will define below, must not be stored.
 \\To do this we use the following line of code:
 
-	@[
-		\begin{lstlisting}
-		'use strict';
-		\end{lstlisting}
-	@]
+@[
+\begin{lstlisting}
+'use strict';
+\end{lstlisting}
+@]
 
 Next, we must specify needed \emph{modules dependencies}. In our project, we have to insert the dependency from mongoose and crypto (a module for encryption of information):
 
-	@[
-		\begin{lstlisting}      
-		var mongoose = require('mongoose'),
-		Schema = mongoose.Schema,
-		crypto = require('crypto');
-		\end{lstlisting}
-	@]
+@[
+\begin{lstlisting}      
+var mongoose = require('mongoose'),
+Schema = mongoose.Schema,
+crypto = require('crypto');
+\end{lstlisting}
+@]
 
 Now we move to define the \emph{schema}, specifying all necessary components (attributes and relationships). Note that MongoDB will automatically add an ID field to each schema and assigns it using an internal policy.
 \\
@@ -42,24 +42,24 @@ Now we move to define the \emph{schema}, specifying all necessary components (at
 
 \newpage
 
-	@d {Example schema} @[
-		\begin{lstlisting} 
-		UserSchema = new Schema ({
-		  	/ / attribute
-		  	name: {
-		         		type: String,
-		         		required: true,
-		         		validate: [validatePresenceOf, 'Name can not be blank']
-		     	},
+@d {Example schema} @[
+\begin{lstlisting} 
+UserSchema = new Schema ({
+  	//attribute
+  	name: {
+   		type: String,
+   		required: true,
+   		validate: [validatePresenceOf, 'Name can not be blank']
+   	},
 
-		    	/ / relationship
-		   	patiens: [{
-		   		type: Schema.Type.ObjectId,
-		   		ref: 'Patient'
-		   	}]
-		); 
-		\end{lstlisting}
-	@]
+   	//relationship
+   	patiens: [{
+   		type: Schema.Type.ObjectId,
+   		ref: 'Patient'
+   	}]
+	); 
+\end{lstlisting}
+@]
 
 Next, we can define a number of \emph{additional features} to our model, such as:
 
@@ -185,7 +185,11 @@ A \emph{Gene} is the molecular unit of heredity of a living organism. Genes hold
 \paragraph{Attributes}      
 
 	@d {Pathogenicity's attributes} @[
-		\lstinputlisting[firstline = 11, lastline = 53]{../server/models/pathogenicity.js}
+		\lstinputlisting[firstline = 11, lastline = 48]{../server/models/pathogenicity.js}
+	@]
+
+	@d {Pathogenicity's attributes - 2} @[
+		\lstinputlisting[firstline = 49, lastline = 53]{../server/models/pathogenicity.js}
 	@]
 
 \begin{itemize}
@@ -212,12 +216,13 @@ A \emph{Gene} is the molecular unit of heredity of a living organism. Genes hold
 \paragraph{Attributes}      
 
 	@d {Sequencing's attributes} @[
-		\lstinputlisting[firstline = 11, lastline = 52]{../server/models/sequencing.js}
+		\lstinputlisting[firstline = 11, lastline = 43]{../server/models/sequencing.js}
 	@]
 
 	@d {Sequencing's attributes - 2} @[
-		\lstinputlisting[firstline = 52, lastline = 91]{../server/models/sequencing.js}
+		\lstinputlisting[firstline = 45, lastline = 96]{../server/models/sequencing.js}
 	@]
+
 
 \begin{itemize}
  	\item \textbf{patientId}: identifier of the patient.
@@ -241,7 +246,7 @@ A \emph{Gene} is the molecular unit of heredity of a living organism. Genes hold
 \paragraph{Relationships} 
 
 	@d {Sequencing's relationships} @[
-		\lstinputlisting[firstline = 55, lastline = 61]{../server/models/sequencing.js}
+		\lstinputlisting[firstline = 97, lastline = 102]{../server/models/sequencing.js}
 	@]
 
 \begin{itemize}
@@ -286,10 +291,14 @@ A \emph{Patient} describes a patient in the real world. Can only be created by a
 
 The Patient object has no attributes to be specified; it only has an identifier (\textbf{ID})that is added from MongoDB by default and a \textbf{Name}.
 
+	@d {Patient's attributes} @[
+		\lstinputlisting[firstline = 11, lastline = 18]{../server/models/patient.js}
+	@]
+
 \paragraph{Relationships} 
 
 	@d {Patient's relationships} @[
-		\lstinputlisting[firstline = 11, lastline = 25]{../server/models/patient.js}
+		\lstinputlisting[firstline = 19, lastline = 30]{../server/models/patient.js}
 	@]
 
 \begin{itemize}
@@ -332,7 +341,11 @@ The \emph{User} object describes a user of the system, a \emph{biologist} who ac
 \paragraph{Attributes}      
 
 	@d {User's attributes} @[
-		\lstinputlisting[firstline = 18, lastline = 56]{../server/models/user.js}
+		\lstinputlisting[firstline = 18, lastline = 57]{../server/models/user.js}
+	@]
+
+	@d {User's attributes - 2} @[
+		\lstinputlisting[firstline = 58, lastline = 76]{../server/models/user.js}
 	@]
 
 These attributes are all self-explanatory.
@@ -340,13 +353,13 @@ These attributes are all self-explanatory.
 \paragraph{Methods} 
 
 	@d {User's validation} @[
-		\lstinputlisting[firstline = 10, lastline = 16]{../server/models/user.js}
+		\lstinputlisting[firstline = 78, lastline = 114]{../server/models/user.js}
 	@]
 	@d {User's methods} @[
-		\lstinputlisting[firstline = 58, lastline = 101]{../server/models/user.js}
+		\lstinputlisting[firstline = 115, lastline = 149]{../server/models/user.js}
 	@]
 	@d {User's methods - 2} @[
-		\lstinputlisting[firstline = 101, lastline = 138]{../server/models/user.js}
+		\lstinputlisting[firstline = 150, lastline = 162]{../server/models/user.js}
 	@]
 
 

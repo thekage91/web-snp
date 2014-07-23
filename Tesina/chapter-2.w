@@ -59,20 +59,22 @@ Models required for the API are the same as those described in \emph{Chapter 2},
 \\
 \\This is the User model:
 
-	@d {package.json} @[
-		\lstinputlisting[firstline = 1, lastline = 44]{../server/models/user.js}
+	@d {User's attributes} @[
+		\lstinputlisting[firstline = 18, lastline = 57]{../server/models/user.js}
 	@]
 
-	@d {package.json - 2} @[
-		\lstinputlisting[firstline = 44, lastline = 88]{../server/models/user.js}
+	@d {User's attributes - 2} @[
+		\lstinputlisting[firstline = 58, lastline = 76]{../server/models/user.js}
 	@]
 
-	@d {package.json - 3} @[
-		\lstinputlisting[firstline = 88, lastline = 132]{../server/models/user.js}
+	@d {User's validation} @[
+		\lstinputlisting[firstline = 78, lastline = 114]{../server/models/user.js}
 	@]
-
-	@d {package.json - 4} @[
-		\lstinputlisting[firstline = 132, lastline = 141]{../server/models/user.js}
+	@d {User's methods} @[
+		\lstinputlisting[firstline = 115, lastline = 149]{../server/models/user.js}
+	@]
+	@d {User's methods - 2} @[
+		\lstinputlisting[firstline = 150, lastline = 162]{../server/models/user.js}
 	@]
 
 
