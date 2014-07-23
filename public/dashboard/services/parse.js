@@ -53,8 +53,10 @@ angular.module('ParseService', [])
 
                         $http.post('/api/Patient',patientBeforeID).success(
                             function (res) {
-                                console.info(res);
+                            console.info(res);
                             patientBeforeID._id = res.payload._id;
+                            console.log("Resolving patient");
+                            console.log(patientBeforeID)
                             patient.resolve(patientBeforeID)}).error(
                             function (err) {
                                 console.error("ERROR while saving patient: " + err);
@@ -132,7 +134,7 @@ angular.module('ParseService', [])
 
                             };
 
-                                var then = function () { $q.all(requests).then(onSuccess, function (err) {
+                                var then = function (patientLocal) { patient = patientLocal; $q.all(requests).then(onSuccess, function (err) {
                                     console.error("Error: " + err);
                                     returnValue.reject(err);
                                 }); };
