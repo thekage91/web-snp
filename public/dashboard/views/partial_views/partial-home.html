@@ -9,29 +9,26 @@
 
 <div class="row">
   <h1 class="section-header">Home</h1>  
-  <h1 hidden id="email">a8017032@drdrb.net</h1>
 
   <hr>
 </div>
 
 
-<div class="row user-menu-container square">
+<div class="row user-menu-container square" ng-controller="ProfileCtrl">
     <div class="col-md-12 user-details">
         <div class="row coralbg white" style="margin-top: 30px">
             <div class="col-md-6 no-pad">
                 <div class="user-pad" style="margin-left: 30px">
                     <h3>Welcome back, </h3><h1>{{global.user.username}}</h1>
-                    <!--<div>
-                        <h4 class="white"><i class="fa fa-phone"></i>{{global.user.phone}}</h4>
-                        <h4 class="white"><i class="fa fa-home"></i>{{global.user.address}}</h4>
-                    </div>-->
+                    
                     <h4 style="margin-top: 75px"><span class="fa fa-lightbulb-o"></span>&nbsp;<b>TIP</b>: Click on a button in the sidebar to start.</h4>
 
                 </div>
             </div>
             <div class="col-lg-6 no-pad">
                 <div class="user-image">
-                    <img src="https://farm7.staticflickr.com/6163/6195546981_200e87ddaf_b.jpg" class="img-responsive thumbnail">
+                    <span gravatar name="{{ global.user.name }}" email-hash="{{ emailHash }}" width="300" height="300"></span>
+                    <!--<img src="https://farm7.staticflickr.com/6163/6195546981_200e87ddaf_b.jpg" class="img-responsive thumbnail">-->
                 </div>
 
                 <a style="align-right" data-toggle="modal" data-target="#myModal">
