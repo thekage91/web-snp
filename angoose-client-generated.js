@@ -1602,15 +1602,9 @@
 				"setters": [],
 				"getters": [],
 				"options": {
-					"type": "String",
-					"required": true,
-					"validate": [
-						"not-supported",
-						"Address Name cannot be blank"
-					]
+					"type": "String"
 				},
-				"_index": null,
-				"isRequired": true
+				"_index": null
 			},
 			"phone": {
 				"enumValues": [],
@@ -1620,15 +1614,9 @@
 				"setters": [],
 				"getters": [],
 				"options": {
-					"type": "String",
-					"required": true,
-					"validate": [
-						"not-supported",
-						"Phone Name cannot be blank"
-					]
+					"type": "String"
 				},
-				"_index": null,
-				"isRequired": true
+				"_index": null
 			},
 			"username": {
 				"enumValues": [],
