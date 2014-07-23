@@ -210,25 +210,17 @@ angular.module('mean.dashboard', ['angular-md5'])
                 family.patients = [];
             }
 
-            for(var itemId in family.patients){
-                $scope.inPatients = [];
-                $http.get('/api/patient/' + itemId)
-                    .success(function (data) {
-                        $scope.inPatients.push(data.payload);
-                    })
-                    .error(function (err) {
-                        console.log("[ERROR] Failed retrieve patients -->" + err);
-                    });
-            }
-
+            $scope.inPatients = family.patients;
             $scope.familySelected = family;
 
             $http.get('/api/patient')
                 .success(function (data) {
                     var allPatients = data.payload;
-                    console.log(allPatients);
                     $scope.outPatients = allPatients.filter(function (item) {
-                        return !$scope.contains($scope.inPatients, item);
+                        return !$scope.contains($scope.inPatients, item._id);
+                    });
+                    $scope.inPatients = allPatients.filter(function (item) {
+                        return !$scope.contains($scope.outPatients, item);
                     });
                 })
                 .error(function (err) {
@@ -241,6 +233,7 @@ angular.module('mean.dashboard', ['angular-md5'])
             var newPatients = $scope.inPatients;
 
             newPatients.splice(newPatients.indexOf(patient), 1);
+            console.log(newPatients);
             var jsonToSend = {'patients': newPatients};
 
             $http.post('/api/family/' + idFamily, jsonToSend)
@@ -256,16 +249,19 @@ angular.module('mean.dashboard', ['angular-md5'])
 
         $scope.addPatient = function (patient) {
             var idFamily = $scope.familySelected._id;
-            var newPatients = $scope.inPatients;
+            var newPatients = [];
 
+            $scope.inPatients.forEach(function(item){
+                newPatients.push(item._id);                
+            })
+                        
             newPatients.push(patient._id);
 
             var jsonToSend = {'patients': newPatients};
-            console.log('JSON to send' + jsonToSend);
 
             $http.post('/api/family/' + idFamily, jsonToSend)
                 .success(function (data) {
-                    $scope.inPatients = newPatients;
+                    $scope.inPatients.push(patient);
                     $scope.outPatients.splice($scope.outPatients.indexOf(patient), 1);
                     console.log("[SUCCESS] Add patient " + patient._id + " in family " + idFamily);
                 })
