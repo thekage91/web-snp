@@ -7,7 +7,7 @@
 angular.module('ParseService', [])
     // super simple service
     // each function returns a promise object
-    .factory('Parse', function ($http, Model, Schema, $q) {
+    .factory('Parse', function ($http, Model, Schema, $q,$timeout) {
 
         function retrieveVariantDetail(data, variantSchema) {
             var detail = (Schema.retrieveFromSchema)(data, variantSchema);
@@ -31,15 +31,19 @@ angular.module('ParseService', [])
 
                 if(!json) console.log("JSON not passed correctly");
                 var returnValue = $q.defer();
-                var result = {};
+                var jsonWithIdToSave =  $q.defer();
+                var resultIDs = {};
 
-                var idNumber = 6;
-                result.variants = [];
-                result.details = [];
-                result.genes = [];
-                result.dbsnps = [];
-                result.pathogenicities = [];
-                result.esps = [];
+                var classes= ['variants','variantdetails','esps','genes','pathogenicities','dbsnps','patients'];
+                resultIDs.name = patientName;
+                resultIDs.ids = [];
+                for(var i=0;i<classes.length;i++)
+                {
+                    resultIDs.ids[classes[i]]= [];
+                }
+
+
+
 
                 (Model.getAllSchemas)().then(
                     function () {
@@ -119,6 +123,8 @@ angular.module('ParseService', [])
                                 relationRequest[i++] = $http.post('/api/Gene/'+gene._id,temp);
 
                                 $http.get('/api/Patient/'+patient._id).success(function (data) {
+                                    console.log("Got: ",data.payload.variants);
+                                    console.log("Data che posterei: ",data.payload.variants.concat(variant._id));
                                     $http({
                                         method: 'POST',
                                         url: '/api/Patient/'+patient._id,
@@ -126,7 +132,8 @@ angular.module('ParseService', [])
                                         transformRequest: function(obj) {
                                             var str = [];
                                             for(var p in obj) if(obj.hasOwnProperty(p))
-                                                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                                                str.push(encodeURIComponent('variants') + "=" + encodeURIComponent(obj[p]));
+                                            console.log("La richiesta è così formulata: " + str.join("&"));
                                             return str.join("&");
                                         },
                                         data: data.payload.variants.concat(variant._id)
@@ -141,19 +148,24 @@ angular.module('ParseService', [])
                                 relationRequest[i++] = $http.post('/api/Pathogenicity/'+pathogenicity._id,temp);
                                 relationRequest[i++] = $http.post('/api/VariantDetail/'+detail._id,temp);
 
-                                $q.all(relationRequest).catch(function(err) {console.error("ERROR while saving relation: " + err)})
+                                $q.all(relationRequest).then(
+                                    function(doneData) {
 
-                                result.variants.push(variant);
-                                result.pathogenicities.push(pathogenicity);
-                                result.dbsnps.push(dbsnp);
-                                result.esps.push(esp);
-                                result.genes.push(gene);
-                                result.details.push(detail);
-                                result.patient = patient;
+
+
+                                    },function(err) {console.error("ERROR while saving relation: " + err)})
+
+                                resultIDs.ids.variants.push(variant._id);
+                                resultIDs.ids.pathogenicities.push(pathogenicity._id);
+                                resultIDs.ids.dbsnps.push(dbsnp._id);
+                                resultIDs.ids.esps.push(esp._id);
+                                resultIDs.ids.genes.push(gene._id);
+                                resultIDs.ids.variantdetails.push(detail._id);
+                                resultIDs.ids.patient = patient;
 
                             };
 
-                                var then = function (patientLocal) { patient = patientLocal; $q.all(requests).then(onSuccess, function (err) {
+                            var then = function (patientLocal) { patient = patientLocal; $q.all(requests).then(onSuccess, function (err) {
                                     console.error("Error: " + err);
                                     returnValue.reject(err);
                                 }); };
@@ -162,10 +174,22 @@ angular.module('ParseService', [])
                         });
 
 
-                        returnValue.resolve(result);
-                    } ,function(err) { console.error("Error: "+err); returnValue.reject(err);});
+                        jsonWithIdToSave.resolve(resultIDs);
+                    } ,function(err) { console.error("Error: "+err); jsonWithIdToSave.reject(err);});
 
-                return returnValue.promise;
+                jsonWithIdToSave.promise.then(
+                    function (data) {
+                     $timeout(function() {
+                          console.log("Now posting Upload ID");
+                          console.log(data);
+                          $http.post('api/upload',data).success(function() {  console.log("Post of upload went ok")} )
+                          },3000);
+
+                    },
+                    function(err) {
+                        console.error("Error: "+err); returnValue.reject(err);
+                    });
+                ;
             }
 
 
