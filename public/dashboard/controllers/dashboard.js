@@ -32,7 +32,7 @@ angular.module('mean.dashboard', ['angular-md5'])
          Che restitusice un json con tutti gli utenti
          */
 
-        $http.get('/api/users')
+        $http.get('/api/user')
             .success(function (data) {
                 $scope.users = data;
                 console.log("[DEBUG] Retrive this users " + data);
