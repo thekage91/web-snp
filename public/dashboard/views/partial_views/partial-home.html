@@ -32,25 +32,55 @@
                 <div class="user-image">
                     <img src="https://farm7.staticflickr.com/6163/6195546981_200e87ddaf_b.jpg" class="img-responsive thumbnail">
                 </div>
+
+                <a style="align-right" data-toggle="modal" data-target="#myModal">
+                    How can I set my profile picture?
+                </a>
             </div>
+
         </div>
 
-        <!--<div class="row overview" style="margin-top: 30px; margin-left: 30px" >
-                <h2 style="margin-bottom: 25px">Quick Shortcuts</h2>
-                <div class="row">
-                    <a ui-sref="dashboard.uploadSequencing" class="btn btn-primary btn-lg" role="button"><span class="fa fa-upload fa-fw"></span> <br/>Sequencing Upload</a>
-                    <a ui-sref="dashboard.authorizeUser" class="btn btn-primary btn-lg" role="button"><span class="fa fa-edit fa-fw"></span> <br/>Authorize Users</a>
-                    <a ui-sref="dashboard.families" class="btn btn-primary btn-lg" role="button"><span class="fa fa-users fa-fw"></span> <br/>Families</a>
-                    <a ui-sref="dashboard.executeQuery" class="btn btn-primary btn-lg" role="button"><span class="fa fa-search fa-fw"></span> <br/>Execute Query</a>    
-                    <a ui-sref="dashboard.userProfile" class="btn btn-primary btn-lg" role="button"><span class="fa fa-user fa-fw"></span> <br/>My Profile</a>
-                    <a href="/logout" class="btn btn-danger btn-lg" role="button"><span class="fa fa-sign-out fa-fw"></span> <br/>Logout</a> 
+
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">              
+              <div class="modal-body">
+                <div class="alert-message alert-message-info">
+                    <h4>
+                        How can I set my profile picture?</h4>
+                    <p>
+                        In this application are used <b>Gravatar</b>. A Gravatar is an image that follows you from site to site and will appear next to your name being associated to your email address.<br>
+                        To change your profile picture, sign up on Gravatar.com (<a href="https://gravatar.com/" target="_blank">link</a>) using the email address you use to log on to this platform, or, if you are already registered, you can simply change your Gravatar image at <a href="https://gravatar.com/emails/" target="_blank">this link</a>.
+                    </p>
                 </div>
-        </div>-->
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+              </div>
+            </div>
+          </div>
+        </div>
 
     </div>
 </div>
 
 </div>
 
-<!-- DONE -->
-
+<style>
+.alert-message
+{
+    margin: 20px 0;
+    padding: 20px;
+    border-left: 3px solid #eee;
+}
+.alert-message-info
+{
+    background-color: #f4f8fa;
+    border-color: #5bc0de;
+}
+.alert-message-info h4
+{
+    color: #5bc0de;
+}
+</style>
