@@ -1,11 +1,32 @@
 <<<<<<< HEAD
+
+<div  id="main" class="col-lg-11">
 =======
-<link rel="stylesheet" type="text/css" href="/public/dashboard/assets/css/dropzone/basic.css">
-<link rel="stylesheet" type="text/css" href="/public/dashboard/assets/css/dropzone/dropzone.css">
+<!--<script type="text/javascript">
+  function fill (){
+    $.get('/api/user/' + document.getElementById('iddi').innerHTML)
+      .success(function(data){
 
-<div class="col-lg-11" data-ng-show="user.isAdmin">
+        data.payload.roles.forEach(function(entry) {
+            if (data.payload.roles.indexOf("Admin") > -1) {
+                var e = document.getElementById('main');
+                e.visibility = "visible";
+            } 
+            ;        
+        });
+        
 
->>>>>>> dev/bootAdmin
+      });
+  };
+</script>
+
+<div hidden id="main" class="col-lg-11">-->
+>>>>>>> 72e7c14548070806f91a7552d1b45aea818be708
+<!--<div class="col-lg-11" ng-show="user.isAdmin()">-->
+<div class="col-lg-11">
+
+<h1 hidden id="iddi">{{global.user._id}}</h1>
+
 <div class="row">
   <h1 class="section-header">Sequencing Upload</h1>  
 
@@ -28,17 +49,29 @@
 }
 </style>
 
-
 <div class="row bot15" ng-controller="UploaderCtrl">
+  <h4>Insert patient's name to start:</h4>
+
+  <div id="custom-search-input" class="col-md-10 bot15">
+      <div class="input-group col-md-6 pull-left">
+        <input type="search" class="search-query form-control" placeholder="Patient's name" ng-model="searchUser" />
+        <span class="input-group-btn">
+          <button class="btn btn-danger" type="button" onClick="document.getElementById('uploadMain').style.display='block';">
+            <span>OK</span>
+          </button>
+        </span>
+      </div>
+  </div>
+</div>
+
+<div style="display:none;" id="uploadMain" class="row bot15" ng-controller="UploaderCtrl">
   <h4>Drag and drop into the box below your sequencing file to start uploading it:</h4>
 
-  <div id="drop" style="margin-bottom: 30px; margin-top: 30px">Drop an XLS or XML (2003) file here...</div>
+  <div id="drop" style="margin-bottom: 50px; margin-top: 50px">Drop an XLS or XML (2003) file here...</div>
 
-  <button id="btn_save" type="button" class="btn btn-success btn-xs" disabled="disabled"
-          ng-click="saveResult()" ui-sref="dashboard.sequencingEdit">
-      <span class="glyphicon glyphicon-upload"></span> Show result
+  <button id="btn_save" type="button" class="btn btn-success btn-xs" disabled="disabled" ng-click="saveResult()" ui-sref="dashboard.sequencingEdit">
+    <span class="glyphicon glyphicon-upload"></span> Show result
   </button>
-
 </div>
 
 <!--<pre id="out"></pre>-->
@@ -59,7 +92,7 @@ $(function() {
         resizable: false,
         beforeClose: function() {
           uploadButton.button( "option", {
-            disabled: false,
+            disabled: false
           });
         }
       }),
@@ -73,7 +106,7 @@ $(function() {
         });
  
     progressbar.progressbar({
-      value: false,
+      value: false
     });
  
   });
@@ -174,8 +207,6 @@ function process_wb(wb) {
     default:
       output = to_csv(wb);
   }
-  if(out.innerText === undefined) out.textContent = output;
-  else out.innerText = output;
 
   document.getElementById('dialog').style.display = 'none';
   document.getElementById('ui-id-1').innerHTML = "Done!";

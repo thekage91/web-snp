@@ -3,14 +3,24 @@
 
 angular.module('mean.dashboard', [])
 
-    .controller('UploaderCtrl', ['$scope' , '$window' ,
-        function ($scope, $window) {
+    .controller('UploaderCtrl', ['$scope', '$window', '$http', 'Model','Parse','Save','$q','$timeout',
+        function ($scope, $window, $http,Model,Parse,Save,$q,$timeout) {
+
+
+            var name;
+            $scope.savePatient = function () {
+                if($scope.patient)
+                name = $scope.patient;
+                console.log("Save patient triggered. Name : "+ name );
+            };
 
             $scope.saveResult = function () {
+               name = $scope.patient
+                console.log("pATIENT nAME = " + name)
                 $scope.jsonUpload = JSON.parse($window.output);
 
                 var saveFunction = (Parse.saveInDbFromData);
-                saveFunction($scope.jsonUpload, $scope.searchUser).then(function () {
+                saveFunction($scope.jsonUpload,name).then(function () {
                         console.log("OK");
                     }
                     , function (error) {
@@ -19,6 +29,8 @@ angular.module('mean.dashboard', [])
 
 
             };
+
+
         }])
 
 

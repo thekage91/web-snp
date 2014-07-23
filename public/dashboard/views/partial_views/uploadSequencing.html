@@ -29,7 +29,8 @@
 
   <div id="custom-search-input" class="col-md-10 bot15">
       <div class="input-group col-md-6 pull-left">
-        <input type="search" class="search-query form-control" placeholder="Patient's name" ng-model="searchUser" />
+        <input type="search" class="search-query form-control" placeholder="Patient's name" ng-model="patient" />
+        <button hidden data-ng-show="false" id="btn_save" type="button" class="btn btn-success btn-xs ng-hide"  ng-click="saveResult()" />
         <span class="input-group-btn">
           <button class="btn btn-danger" type="button" onClick="document.getElementById('uploadMain').style.display='block';">
             <span>OK</span>
@@ -44,9 +45,8 @@
 
   <div id="drop" style="margin-bottom: 50px; margin-top: 50px">Drop an XLS or XML (2003) file here...</div>
 
-  <button id="btn_save" type="button" class="btn btn-success btn-xs" disabled="disabled" ng-click="saveResult()" ui-sref="dashboard.sequencingEdit">
-    <span class="glyphicon glyphicon-upload"></span> Show result
-  </button>
+  <!--   <span class="glyphicon glyphicon-upload"></span> Show result
+  </button> -->
 
 </div>
 
@@ -183,8 +183,7 @@ function process_wb(wb) {
     default:
       output = to_csv(wb);
   }
-  if(out.innerText === undefined) out.textContent = output;
-  else out.innerText = output;
+
 
   document.getElementById('dialog').style.display = 'none';
   document.getElementById('ui-id-1').innerHTML = "Done!";
