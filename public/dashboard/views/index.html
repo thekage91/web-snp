@@ -67,24 +67,29 @@
 
                     <!-- queste tre cose puo' farle solo l'admin -->
                     <li>
-                        <a hidden id="upload" ui-sref="dashboard.uploadSequencing"><i class="fa fa-upload fa-fw"></i>Sequencing Upload</a>
+                        <a id="upload" ui-sref="dashboard.uploadSequencing"
+                            ng-show="global.user.roles.indexOf('admin') > -1"><i class="fa fa-upload fa-fw"></i>Sequencing Upload</a>
                         <!--<a ui-sref="dashboard.uploadSequencing" ng-show="user.isAdmin"><i class="fa fa-upload fa-fw"></i>Sequencing Upload</a>-->
 
                     </li>
 
                     <li>
-                        <a hidden id="uploadHistory" ui-sref="dashboard.uploadHistory"><i class="fa fa-clock-o fa-fw"></i>Sequencing Upload History</a>
+                        <a id="uploadHistory" ui-sref="dashboard.uploadHistory"
+                            ng-show="global.user.roles.indexOf('admin') > -1"><i class="fa fa-clock-o fa-fw"></i>Sequencing Upload History</a>
                         <!--<a ui-sref="dashboard.uploadHistory" ng-show="user.isAdmin"><i class="fa fa-clock-o fa-fw"></i>Sequencing Upload History</a>-->
 
                     </li>
 
                     <li>
-                        <a hidden id="authorize" ui-sref="dashboard.authorizeUser"><i class="fa fa-edit fa-fw"></i>Authorize Users</a>
+                        <a id="authorize" ui-sref="dashboard.authorizeUser"
+                        ng-show="global.user.roles.indexOf('admin') > -1"><i class="fa fa-edit fa-fw"></i>Authorize Users</a>
                         <!--<a ui-sref="dashboard.authorizeUser" ng-show="user.isAdmin()"><i class="fa fa-edit fa-fw"></i>Authorize Users</a>-->
                     </li>
 
                     <li>
-                        <a hidden id="families" ui-sref="dashboard.families"><i class="fa fa-users fa-fw"></i>Families</a>
+                        <a id="families" ui-sref="dashboard.families"
+                            ng-show="global.user.roles.indexOf('admin') > -1">
+                            <i class="fa fa-users fa-fw"></i>Families</a>
                         <!--<a ui-sref="dashboard.families" ng-show="user.isAdmin()"><i class="fa fa-users fa-fw"></i>Families</a>-->
 
                     </li>
