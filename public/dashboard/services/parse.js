@@ -91,6 +91,9 @@ angular.module('ParseService', [])
 
                                 console.log(arguments);
                                 for (var i = 0; i < arguments[0].length; i++) {
+                                    if(arguments[0][i].data.payload._id === undefined) {
+                                        console.error("ERROR: arguments[0]["+i+'].data.payload._id undefined ');
+                                        console.error(arguments); }
                                     models[i]._id = arguments[0][i].data.payload._id;
                                 }
                                 //build model relationships

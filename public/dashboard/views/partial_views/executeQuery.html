@@ -51,12 +51,10 @@
                       </button>
                       <ul class="dropdown-menu" role="menu">
                         <li><a href="#patient" ng-click="elValue('patient')" onClick="changeLabel('Patient')">Patient</a></li>
-                        <li><a href="#gene" ng-click="elValue('gene')" onClick="changeLabel('Gene')">Gene</a></li>                                               
-                        <li><a href="#region" ng-click="elValue('region')" onClick="changeLabel('Region')">Region</a></li>
-                        <li><a href="#mutation"  ng-click="elValue('mutation')" onClick="changeLabel('Mutation')">Mutation</a></li>
+                        <li><a href="#gene" ng-click="elValue('gene')" onClick="changeLabel('Gene')">Gene</a></li>
                         <li><a href="#genotype"  ng-click="elValue('genotype')" onClick="changeLabel('Genotype')">Genotype</a></li>
-                        <li><a href="#freqAlt"  ng-click="elValue('freqAlt')" onClick="changeLabel('Freq alt')">Freq alt</a></li>
-                        <li><a href="#dbsnp"  ng-click="elValue('dbsnp')" onClick="changeLabel('dbSNP')">dbSNP</a></li>
+                       <li><a href="#freqAlt"  ng-click="elValue('freqAlt')" onClick="changeLabel('Freq alt')">Freq alt</a></li>
+                        <li><a href="#dbsnp"  ng-click="elValue('dbSNP')" onClick="changeLabel('dbSNP')">dbSNP</a></li>
                       </ul>
                     </div>
                     <input type="hidden" name="search_param" value="all" id="search_param" />         
@@ -77,9 +75,9 @@
                   <span id="refine_value_first">Choose Mutation...</span> <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu" role="menu">
-                  <li><a ng-click="elValue('patient')" onClick="changeLabel3('Patient');">Patient</a></li>
-                  <li><a ng-click="elValue('gene')" onClick="changeLabel3('Region');">Region</a></li>
-                  <li><a ng-click="elValue('gene')" onClick="changeLabel3('Mutation');">Mutation</a></li>
+                  <li><a ng-click="valueRefine('nonsynonymous SNV')" onClick="changeLabel3('nonsynonymous SNV');">nonsynonymous SNV</a></li>
+                  <li><a ng-click="valueRefine('synonymous SNV')" onClick="changeLabel3('synonymous SNV');">synonymous SNV</a></li>
+                  <li><a ng-click="valueRefine('all')" onClick="changeLabel3('All');">all</a></li>
                 </ul>
               </div>
 
@@ -88,9 +86,11 @@
                   <span id="refine_value_second">Choose Region...</span> <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu" role="menu">
-                  <li><a ng-click="elValue('patient')" onClick="changeLabel4('Patient');">Patient</a></li>
-                  <li><a ng-click="elValue('gene')" onClick="changeLabel4('Region');">Region</a></li>
-                  <li><a ng-click="elValue('gene')" onClick="changeLabel4('Mutation');">Mutation</a></li>
+                  <li><a ng-click="valueRefine('UTR5')" onClick="changeLabel4('UTR5');">UTR5</a></li>
+                  <li><a ng-click="valueRefine('UTR3')" onClick="changeLabel4('UTR3');">UTR3</a></li>
+                  <li><a ng-click="valueRefine('exonic')" onClick="changeLabel4('exonic');">exonic</a></li>
+                  <li><a ng-click="valueRefine('intronic')" onClick="changeLabel4('intronic');">intronic</a></li>
+                   <li><a ng-click="valueRefine('all')" onClick="changeLabel4('all');">all</a></li>
                 </ul>              
               </div>
             </div>
@@ -108,6 +108,10 @@
                   <th>End</th>
                   <th>Ref</th>
                   <th>Alt</th>
+                  <th>Genes</th>
+                  <th>Region</th>
+                  <th>Mutation</th>
+
                   <!--<th style="width: 75px;"></th>-->
                 </tr>
               </thead>
@@ -118,6 +122,11 @@
                   <td>{{el.end}}</td>
                   <td>{{el.ref}}</td>
                   <td>{{el.alt}}</td>
+                  <td>{{el.genes}}</td>
+                  <td>{{el.region}}</td>
+                  <td>{{el.mutation}}</td>
+
+
                   <!--<td>
                     <button type="button" class="btn btn-primary btn-sm" data-ng-hide="user.isLicensed"
                     data-toggle="modal" data-target="#myModalLicensed">
@@ -190,21 +199,27 @@
             <table class="table table-striped  ">
               <thead>
                 <tr>
-                  <th>Chr</th>
-                  <th>Start</th>
-                  <th>End</th>
-                  <th>Ref</th>
-                  <th>Alt</th>
+                    <th>Chr</th>
+                    <th>Start</th>
+                    <th>End</th>
+                    <th>Ref</th>
+                    <th>Alt</th>
+                    <th>Genes</th>
+                    <th>Region</th>
+                    <th>Mutation</th>
                   <!--<th style="width: 75px;"></th>-->
                 </tr>
               </thead>
               <tbody>
-                  <tr ng-repeat="el in elements"> 
-                  <td>{{el.chr}}</td>
-                  <td>{{el.start}}</td>
-                  <td>{{el.end}}</td>
-                  <td>{{el.ref}}</td>
-                  <td>{{el.alt}}</td>
+                  <tr ng-repeat="el in elements">
+                      <td>{{el.chr}}</td>
+                      <td>{{el.start}}</td>
+                      <td>{{el.end}}</td>
+                      <td>{{el.ref}}</td>
+                      <td>{{el.alt}}</td>
+                      <td>{{el.genes}}</td>
+                      <td>{{el.region}}</td>
+                      <td>{{el.mutation}}</td>
                   <!--<td>
                       <button type="button" class="btn btn-primary btn-sm" data-ng-hide="user.isLicensed"
                       data-toggle="modal" data-target="#myModalLicensed">
