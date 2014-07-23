@@ -93,7 +93,7 @@
       \vspace{10mm}
       {\Large UNIVERSIT\`A DEGLI STUDI ROMA TRE} \\
       \vspace{5mm}
-      {\LARGE Faculty of Engineering} \\
+      {\LARGE Department of Engineering} \\
       {\Large Master Degree Course in Computer Engineering} \\
       \vspace{25mm}
       {\HUGE \@titolo} \\

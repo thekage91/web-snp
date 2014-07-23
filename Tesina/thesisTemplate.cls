@@ -90,7 +90,7 @@
       \vspace{10mm}
       {\Large UNIVERSIT\`A DEGLI STUDI ROMA TRE} \\
       \vspace{5mm}
-      {\LARGE Facolt\`a di Ingegneria} \\
+      {\LARGE Dipartimento di Ingegneria} \\
       {\Large Corso di Laurea Magistrale in Ingegneria Informatica} \\
       \vspace{15mm}
       {\HUGE \@titolo} \\
