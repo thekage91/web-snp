@@ -29,7 +29,7 @@
 
           <button id="btn_edit" type="button" class="btn btn-primary btn-sm" ng-click="showEditFamily = !showEditFamily"  href="#patientsPanel">
             <div ng-show="!showEditFamily"><span class="glyphicon glyphicon-pencil"></span> Edit</div>
-            <div ng-show="showEditFamily"><span class="glyphicon glyphicon-pencil"></span>Finish</div>
+            <div ng-show="showEditFamily"><span class="glyphicon glyphicon-floppy-save"></span>Finish</div>
           </button>
 
           <!--
@@ -188,7 +188,7 @@
                       <div class="control-group pull-right" ng-show="showConfirm">
                         <div class="controls">
                           <button type="button" class="btn btn-success btn-sm" ng-click="updateFamily(family, familyUpdate)">
-                            <span class="glyphicon glyphicon-pencil"></span> OK
+                            <span class="glyphicon glyphicon-floppy-save"></span> OK
                           </button>
                           <button type="button" class="btn btn-danger btn-sm" ng-click="showConfirm = false">
                             <span class="glyphicon glyphicon-ban-circle" ></span> Cancel
