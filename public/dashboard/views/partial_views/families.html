@@ -21,20 +21,22 @@
           </div>
         </div>
 
-        <div class="controls col-md-4 pull-right">
+        <div class="controls-group col-md-3 pull-right">
           <button type="button" class="btn btn-success btn-sm" 
                   data-toggle="collapse" data-parent="#operation" href="#formInsert">
             <span class="glyphicon glyphicon-plus"></span> Add new
           </button>
 
-          <button id="btn_edit" type="button" class="btn btn-primary btn-sm" ng-click="showEditFamily = !showEditFamily" ng-disabled="showEditFamily">
-            <span class="glyphicon glyphicon-pencil" ></span> Edit
+          <button id="btn_edit" type="button" class="btn btn-primary btn-sm" ng-click="showEditFamily = !showEditFamily"  href="#patientsPanel">
+            <div ng-show="!showEditFamily"><span class="glyphicon glyphicon-pencil"></span> Edit</div>
+            <div ng-show="showEditFamily"><span class="glyphicon glyphicon-pencil"></span>Finish</div>
           </button>
 
+          <!--
           <button id="btn_finish" type="button" class="btn btn-primary btn-sm" ng-click="finishedOperation()"
                   ng-disabled="!showEditFamily">
-            <span class="glyphicon glyphicon-ok"></span> Finish
-          </button>
+            <span class="glyphicon glyphicon-ok" href="#patientsPanel"></span> Finish
+          </button>-->
         </div>
       </div>
 
@@ -128,7 +130,7 @@
       
       <div class="row" style="height: 500px; overflow-y: auto; margin-top: 50px">
           <div>
-            <table class="table table-bordered" ng-show="!showEditFamily">
+            <table class="table table-bordered" ng-show="showEditFamilies(!showEditFamily)">
               <thead>
                 <tr>
                   <th>Name</th>
@@ -151,7 +153,7 @@
               </tbody>
             </table>
 
-            <table class="table table-bordered" ng-show="showEditFamily">
+            <table class="table table-bordered" ng-show="showEditFamilies(showEditFamily)">
               <thead>
                 <tr>
                   <th>Name</th>
@@ -161,19 +163,21 @@
               <tbody>
                 <tr ng-repeat="family in families | filter:searchFamily "> 
                     <td>
-                      <div ng-show="!showConfirm">{{ family.name }}</div>
-                      <input id="nameUpdate" name="nameUpdate" type="text" value="{{ family.name }}" class="form-control input-xlarge" ng-model="familyUpdate.name" ng-show="showConfirm">
+                      <div>{{ family.name }}</div>
+                      <!--
+                      <input id="nameUpdate" name="nameUpdate" type="text" value="{{ family.name }}" class="form-control input-xlarge" ng-model="familyUpdate.name" ng-show="showConfirm">-->
                     </td>
                     <td>
                       <div class="control-group pull-right" ng-show="!showConfirm">
                         <div class="controls" id="controlsBtn">
-                          <button type="button" class="btn btn-success btn-sm" ng-click="showConfirm = !showConfirm">
+                          <!--<button type="button" class="btn btn-success btn-sm" ng-click="showConfirm = !showConfirm">
                             <span class="glyphicon glyphicon-pencil"></span> Edit Name
-                          </button>
+                          </button>-->
                           <button type="button" class="btn btn-primary btn-sm" 
                                   data-toggle="collapse" data-parent="#controlsBtn" href="#patientsPanel"
                                   ng-click="showPatients(family)">
-                            <span class="glyphicon glyphicon-pencil"></span> Edit Patients
+                            <div ><span class="glyphicon glyphicon-pencil"></span> Edit Patients</div>
+                            <!--<div ng-show="showEditFamily"><span class="glyphicon glyphicon-pencil"></span> Finishs Patents</div>-->
                           </button>
                           <button type="button" class="btn btn-danger btn-sm" ng-click="removeFamily(family)">
                             <span class="glyphicon glyphicon-trash"></span> Remove
