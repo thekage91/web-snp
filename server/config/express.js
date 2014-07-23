@@ -156,6 +156,14 @@ module.exports = function(app, passport, db) {
 
     app.use('/public', express.static(config.root + '/public'));
     
+<<<<<<< HEAD
+=======
+   /* require("angoose").init(app, {
+   'module-dirs':'server/models',
+   'mongo-opts': 'localhost:27017/mean-dev'
+});*/
+
+>>>>>>> FETCH_HEAD
     mean.events.on('modulesFound', function() {
 
         for (var name in mean.modules) {
