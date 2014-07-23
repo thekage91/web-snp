@@ -1,5 +1,6 @@
+<script type="text/javascript" src="/public/dashboard/assets/js/common_script.js"></script>
 
-<!--<script type="text/javascript">
+<script type="text/javascript">
   function fill (){
     $.get('/api/user/' + document.getElementById('iddi').innerHTML)
       .success(function(data){
@@ -17,22 +18,18 @@
   };
 </script>
 
-<h1 hidden id="iddi">{{global.user._id}}</h1>
-
-<div hidden id="main" class="col-lg-11">-->
+<div id="main" class="col-lg-11" ng-controller="AuthorizerUserCtrl">
 <!--<div class="col-lg-11" ng-show="user.isAdmin()">-->
-<div class="col-lg-11">
+  <div class="row">
+    <h1 class="section-header">Authorize Users</h1>  
 
-<div class="row">
-  <h1 class="section-header">Authorize Users</h1>  
+    <hr>
+  </div>
 
-  <hr>
-</div>
-
-<div class="row">
-
-  <div id="custom-search-input" class="col-md-10 bot15">
-    <div class="input-group col-md-4 pull-left">
+  <div class="row bot15">
+    <div id="custom-search-input">
+    <h4>Insert <i>Username</i>, <i>First Name</i> or <i>Last Name</i> to search:</h4>
+    <div class="input-group col-md-4">
       <input type="search" class="search-query form-control" placeholder="Type here" ng-model="searchUser" />
       <span class="input-group-btn">
         <button class="btn btn-danger" type="button">
@@ -41,92 +38,122 @@
       </span>
     </div>
   </div>
-
-  <div class="col-md-2">
-    <button type="button" class="btn btn-success btn-sm" data-toggle="collapse" data-parent="#operation" href="#formInsert">
-      <span class="glyphicon glyphicon-plus"></span> Add new User
-    </button>
   </div>
-</div>
 
-
-<!-- appearance panel -->
-<div id="formInsert" class="top10 bot10 panel-collapse collapse out row col-md-6 col-md-offset-3 text-center panel panel-primary appearance">
-
-  <h4>Create user</h4>
-
-  <div class="panel-body">
+  <div class="row">
     <form class="form-horizontal">
-      <fieldset>
+    <fieldset>
 
-        <!-- Text input-->
-        <div class="control-group">
-          <label class="control-label" for="username">Username</label>
-          <div class="controls">
-            <input required id="username" name="username" type="text" placeholder="Username" class="form-control input-xlarge" ng-model="user.username">
-          </div>
-        </div>
+    <!-- Form Name -->
+    <legend>Form Name</legend>
 
-        <div class="control-group">
-          <label class="control-label" for="email">Email</label>
-          <div class="controls">
-            <input required id="email" name="email" type="text" placeholder="something@domain.com" class="form-control input-xlarge" ng-model="user.email">
-          </div>
-        </div>
+    <!-- Text input-->
+    <div class="control-group">
+      <label class="control-label" for="username">Username</label>
+      <div class="controls">
+        <input id="username" name="username" type="text" placeholder="Username" class="input-large" required=""
+          ng-model="user.username">
+        
+      </div>
+    </div>
 
-        <div class="control-group">
-          <label class="control-label" for="password">Temporary password</label>
-          <div class="controls">
-            <input required id="password" name="password" type="text" placeholder="**********" class="form-control input-xlarge" ng-model="user.password">
-          </div>
-        </div>
+    <!-- Text input-->
+    <div class="control-group">
+      <label class="control-label" for="name">Name</label>
+      <div class="controls">
+        <input id="name" name="name" type="text" placeholder="Name" class="input-large" required=""
+                ng-model="user.firstName">
+        
+      </div>
+    </div>
 
-        <!-- Button (Double) -->
-        <div class="control-group top10">
-          <div class="controls">
-            <button id="save_btn" name="save_btn" class="btn btn-success" ng-click="createUser(user)">Save</button>
-            <button id="cancel_btn" name="cancel_btn" class="btn btn-danger" ng-click="cancel()">Cancel</button>
-          </div>
-        </div>
+    <!-- Text input-->
+    <div class="control-group">
+      <label class="control-label" for="secondname">Secondname</label>
+      <div class="controls">
+        <input id="secondname" name="secondname" type="text" placeholder="ss" class="input-large" required=""
+                ng-model="user.lastName">
+        
+      </div>
+    </div>
 
-      </fieldset>
+    <div class="control-group">
+      <label class="control-label" for="email">Email</label>
+      <div class="controls">
+        <input id="email" name="email" type="text" placeholder="email" class="input-large" required=""
+                ng-model="user.email">
+        
+      </div>
+    </div>
+
+    <!-- Password input-->
+    <div class="control-group">
+      <label class="control-label" for="passwordUser">Password</label>
+      <div class="controls">
+        <input id="passwordUser" name="passwordUser" type="password" placeholder="pass" class="input-large" required="" ng-model="user.password">
+        
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label" for="confirmpasswordUser">Confim Password</label>
+      <div class="controls">
+        <input id="ConfpasswordUser" name="ConffpasswordUser" type="password" placeholder="pass" class="input-large" required="" ng-model="user.confirmPassword">
+        
+      </div>
+    </div>
+
+    <!-- Button (Double) -->
+    <div class="control-group">
+      <label class="control-label" for="saveUser"></label>
+      <div class="controls">
+        <button id="saveUser" name="saveUser" class="btn btn-success" ng-click="authorizeUser(user)">Save</button>
+        <button id="cancelUser" name="cancelUser" class="btn btn-danger" ng-click="cancelOperation()">Cancel</button>
+      </div>
+    </div>
+
+    </fieldset>
     </form>
   </div>
-</div>
 
-<div class="row" style="height: 500px; overflow-y: auto; margin-top: 50px">
-  <div id="searchResults" class="row" ng-controller="AuthorizerUserCtrl">
+  <div class="row">
 
       <table class="table table-bordered">
         <thead>
           <tr>
             <th></th>
-            <th>Username</th>
             <th>First Name</th>
             <th>Last Name</th>
+            <th>Username</th>
             <th style="width: 75px;"></th>
           </tr>
         </thead>
         <tbody >
           <tr ng-repeat="user in users | filter:searchUser">
             <td><div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=100" class="img-circle"> </div></td>
+            <td>{{ user.firstName }}</td>
+            <td>{{ user.lastName }}</td>
             <td>{{ user.username }}</td>
-            <td>{{ user.name }}</td>
-            <td>{{ user.secondname }}</td>
             <td>
               <div class="control-groups">
-                  <button data-dz-remove class="btn btn-danger delete btn-sm" ng-click="removeUser(user)">
+                <button data-dz-remove class="btn btn-success delete btn-sm bot5" ng-click="promote2Admin(user)"
+                        ng-show="user.roles.indexOf('admin') === -1">
+                  <i class="glyphicon glyphicon-stair"></i>
+                  <span>Promote</span>
+                </button>
+                <button data-dz-remove class="btn btn-danger delete btn-sm bot5" ng-click="cancelUser(user)">
                   <i class="glyphicon glyphicon-ban-circle"></i>
                   <span>Dismiss</span>
+                </button>  
+                <button data-dz-remove class="btn btn-primary delete btn-sm" ng-click="degrade2licensed(user)"
+                        ng-show="user.roles.indexOf('admin') !== -1">
+                  <i class="glyphicon glyphicon-ban-circle"></i>
+                  <span>Degrade</span>
                 </button>    
               </div>    
             </td>
           </tr>
         </tbody>
       </table>
-
   </div>
-</div>
-
-
 </div>

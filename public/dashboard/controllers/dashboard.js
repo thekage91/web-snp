@@ -2,9 +2,9 @@
 
 
 
-angular.module('mean.dashboard', ['angular-md5'])
+angular.module('mean.dashboard', [])
 
-.controller('UploaderCtrl', ['$scope' , '$window' ,
+        .controller('UploaderCtrl', ['$scope' , '$window' ,
         function($scope, $window) {
               
               //output e' gia' il json uscito puoi dalla funzione parse
@@ -105,27 +105,75 @@ angular.module('mean.dashboard', ['angular-md5'])
             console.log("[ERROR] Failed retrieve all users");
         });
 
-    $scope.authorizeUser = function(){
-       $http.put('/api/users' , $scope.formData)
-            .success(function(data){
-                $scope.users = data;
-                console.log("[DEBUG] Retrive this users " + data);
-            })
-            .error(function(data){
-                console.log("[ERROR] Failed to update user:" + data);
-            });
-        };
+       
+    $scope.authorizeUser = function(user){
+        console.log(user);
 
-    $scope.dismissUser = function(){
-        $http.put('/api/users' , $scope.formData)
+        $scope.usernameError = null;
+        $scope.registerError = null;
+
+        $http.post('/register', user)
+        .success(function(data) {
+            // authentication OK
+            $scope.users.push(user);
+            $scope.registerError = 0;
+        })
+        .error(function(error) {
+            // Error: authentication failed
+            if (error === 'Username already taken') {
+                $scope.usernameError = error;
+            } else {
+                $scope.registerError = error;
+            }
+        });
+    };
+
+
+    $scope.cancelUser = function(user){
+        console.log(user._id)
+        $http.delete('/api/user/' + user._id)
             .success(function(data){
-                $scope.users = data;
-                console.log("[DEBUG] Retrive this users " + data);
+                var index = $scope.users.indexOf(user);
+                $scope.users.splice(index , 1);
+                console.log("[DEBUG] Remove this users " + user._id);
             })
             .error(function(data){
-                console.log("[ERROR] Failed to update  user:" + data);
+                console.log("[ERROR] Failed to update  user:" + user._id);
             });    
         };
+
+    $scope.cancelOperation = function(){
+        angular.element('#formInsert').collapse('hide');
+        $scope.user = {};
+    };
+
+    $scope.promote2Admin = function(user){
+        var roles = user.roles;
+        roles.push('admin');
+        $http.post('/api/user/' + user._id , {roles: roles})
+            .success(function(data){
+                var index = $scope.users.indexOf(user);
+                $scope.users[index].roles.push('admin');
+                console.log("[DEBUG] Promote to admin this users " + user._id);
+            })
+            .error(function(data){
+                console.log("[ERROR] Error for Promote to admin this users " + user._id);
+            });
+    }
+
+    $scope.degrade2licensed = function(user){
+        var roles = ['authenticated' , 'licensed'];
+        $http.post('/api/user/' + user._id , {roles: roles})
+            .success(function(data){
+                var index = $scope.users.indexOf(user);
+                $scope.users[index].roles = roles;
+                console.log("[DEBUG] Degrade to licensed this users " + user._id);
+            })
+            .error(function(data){
+                console.log("[ERROR] Error for degrade to licensed this users " + user._id);
+            });   
+    }
+
 }])
 
 .controller('FamilyCtrl' , ['$scope', '$http', function($scope , $http){
@@ -278,8 +326,7 @@ angular.module('mean.dashboard', ['angular-md5'])
 
     }])
 
-
-
+   
         .controller('ExecuteQueryCtrl', ['$scope', '$http', function($scope, $http) {
                 var element;
 
