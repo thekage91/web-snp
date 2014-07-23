@@ -1,37 +1,12 @@
-<!--<script type="text/javascript">
-  function fill (){
-    $.get('/api/user/' + document.getElementById('iddi').innerHTML)
-      .success(function(data){
+<div id="main" ng-controller="FamilyCtrl" ng-show="global.user.roles.indexOf('admin') > -1">
 
-        data.payload.roles.forEach(function(entry) {
-            if (data.payload.roles.indexOf("Admin") > -1) {
-                var e = document.getElementById('title');
-                e.visibility = "visible";
+  <div class="row">
 
-                e = document.getElementById('main');
-                e.visibility = "visible";
-            } 
-            ;        
-        });
-        
+    <h1 class="section-header">Families</h1>  
 
-      });
-  };
-</script>
+    <hr>
+  </div>
 
-<h1 hidden id="iddi">{{global.user._id}}</h1>
-
-<div hidden id="title" class="row">-->
-<!--<div class="row" ng-show="user.isAdmin()">-->
-<div class="row">
-
-  <h1 class="section-header">Families</h1>  
-
-  <hr>
-</div>
-
-<!--<div hidden id="main" ng-controller="FamilyCtrl" ng-show="user.isAdmin()">-->
-<div id="main" ng-controller="FamilyCtrl">
       
       <div class="row bot10" id="operation">
         <div class="col-md-6">
@@ -224,9 +199,4 @@
             </table>
           </div>
       </div>
-
-</div>
- 
-</div>
-
 </div>

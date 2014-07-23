@@ -1,22 +1,4 @@
 
-<script type="text/javascript">
-function fill (){
-  $.get('/api/user/' + document.getElementById('iddi').innerHTML)
-  .success(function(data){
-
-    data.payload.roles.forEach(function(entry) {
-      if (data.payload.roles.indexOf("Admin") > -1) {
-        var e = document.getElementById('main');
-        e.visibility = "visible";
-      } 
-      ;        
-    });
-
-
-  });
-};
-</script>
-
 <style type="text/css">
 .gridStyle {
     border: 1px solid rgb(212,212,212);
@@ -27,7 +9,7 @@ function fill (){
 </style>
 
 
-<div id="main" class="col-lg-11" ng-controller="SequencingEditCtrl">
+<div id="main" class="col-lg-11" ng-controller="SequencingEditCtrl" ng-show="global.user.roles.indexOf('admin') > -1">
   <!--<div class="col-md-12" ng-show="user.isAdmin">-->
   <div class="row">
     <h1 class="section-header">Sequencing edit</h1> 
