@@ -32,6 +32,11 @@ angular.module('mean.dashboard').config(['$stateProvider',
             	url: "/uploadSequencing",
             	templateUrl: 'public/dashboard/views/partial_views/uploadSequencing.html'
             })
+
+            .state('dashboard.uploadHistory', {
+                url: "/uploadHistory",
+                templateUrl: 'public/dashboard/views/partial_views/uploadHistory.html'
+            })
             
             .state('dashboard.authorizeUser', {
                 url: '/authorizeUser',

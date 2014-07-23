@@ -19,6 +19,12 @@ body {
     color: #ffffff
 }
 
+.message-email{
+    font-size: 90%;
+    padding-top: 130px;
+    color: #ffffff
+}
+
 .main {
     font-size: 20px;
 }

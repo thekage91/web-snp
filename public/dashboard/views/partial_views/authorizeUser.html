@@ -1,6 +1,5 @@
-<script type="text/javascript" src="/public/dashboard/assets/js/common_script.js"></script>
 
-<script type="text/javascript">
+<!--<script type="text/javascript">
   function fill (){
     $.get('/api/user/' + document.getElementById('iddi').innerHTML)
       .success(function(data){
@@ -18,109 +17,116 @@
   };
 </script>
 
-<div hidden id="main" class="col-lg-11">
-<!--<div class="col-lg-11" ng-show="user.isAdmin()">-->
-
 <h1 hidden id="iddi">{{global.user._id}}</h1>
+
+<div hidden id="main" class="col-lg-11">-->
+<!--<div class="col-lg-11" ng-show="user.isAdmin()">-->
+<div class="col-lg-11">
+
 <div class="row">
   <h1 class="section-header">Authorize Users</h1>  
 
   <hr>
 </div>
 
-<div class="row bot15">
-  <div id="custom-search-input">
-  <h4>Insert <i>Username</i>, <i>First Name</i> or <i>Last Name</i> to search:</h4>
-  <div class="input-group col-md-4">
-    <input type="search" class="search-query form-control" placeholder="Type here" ng-model="searchUser" />
-    <span class="input-group-btn">
-      <button class="btn btn-danger" type="button">
-        <span class="glyphicon glyphicon-search"></span>
-      </button>
-    </span>
-  </div>
-</div>
-</div>
+<div class="row">
 
-
-<div class="row" ng-controller="AuthorizerUserCtrl">
-
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th></th>
-          <th>First Name</th>
-          <th>Last Name</th>
-          <th>Username</th>
-          <th style="width: 75px;"></th>
-        </tr>
-      </thead>
-      <tbody >
-        <tr ng-repeat="user in users | filter:searchUser">
-          <td><div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=100" class="img-circle"> </div></td>
-          <td>{{ user.name }}</td>
-          <td>{{ user.secondname }}</td>
-          <td>{{ user.username }}</td>
-          <td>
-            <div class="control-groups">
-              <button type="button" class="btn btn-primary btn-sm" ng-show="user.roles.indexOf('licensed') !== -1">
-                <span class="glyphicon glyphicon-star"></span> Authorize
-              </button> 
-              <br/> 
-              <button data-dz-remove class="btn btn-danger delete btn-sm" ng-show="user.roles.indexOf('licensed') !== -1">
-                <i class="glyphicon glyphicon-ban-circle"></i>
-                <span>Dismiss</span>
-              </button>    
-            </div>    
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
-</div>
-</div>
-<!--
-<div id="myModalDismiss" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content"></div>
-  </div>
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close " data-dismiss="modal" aria-hidden="true">×</button>
-        <h3 id="myModalLabel">Dismiss Confirmation</h3>
-      </div>
-      <div class="modal-body">
-        <p class="error-text">Are you sure you want to dismiss the user?</p>
-      </div>
-      <div class="modal-footer">
-        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-        <button class="btn btn-danger" data-dismiss="modal">Dismiss</button>
-      </div>
+  <div id="custom-search-input" class="col-md-10 bot15">
+    <div class="input-group col-md-4 pull-left">
+      <input type="search" class="search-query form-control" placeholder="Type here" ng-model="searchUser" />
+      <span class="input-group-btn">
+        <button class="btn btn-danger" type="button">
+          <span class="glyphicon glyphicon-search"></span>
+        </button>
+      </span>
     </div>
   </div>
+
+  <div class="col-md-2">
+    <button type="button" class="btn btn-success btn-sm" data-toggle="collapse" data-parent="#operation" href="#formInsert">
+      <span class="glyphicon glyphicon-plus"></span> Add new User
+    </button>
+  </div>
 </div>
 
 
-<div id="myModalLicensed" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content"></div>
+<!-- appearance panel -->
+<div id="formInsert" class="top10 bot10 panel-collapse collapse out row col-md-6 col-md-offset-3 text-center panel panel-primary appearance">
+
+  <h4>Create user</h4>
+
+  <div class="panel-body">
+    <form class="form-horizontal">
+      <fieldset>
+
+        <!-- Text input-->
+        <div class="control-group">
+          <label class="control-label" for="username">Username</label>
+          <div class="controls">
+            <input required id="username" name="username" type="text" placeholder="Username" class="form-control input-xlarge" ng-model="user.username">
+          </div>
+        </div>
+
+        <div class="control-group">
+          <label class="control-label" for="email">Email</label>
+          <div class="controls">
+            <input required id="email" name="email" type="text" placeholder="something@domain.com" class="form-control input-xlarge" ng-model="user.email">
+          </div>
+        </div>
+
+        <div class="control-group">
+          <label class="control-label" for="password">Temporary password</label>
+          <div class="controls">
+            <input required id="password" name="password" type="text" placeholder="**********" class="form-control input-xlarge" ng-model="user.password">
+          </div>
+        </div>
+
+        <!-- Button (Double) -->
+        <div class="control-group top10">
+          <div class="controls">
+            <button id="save_btn" name="save_btn" class="btn btn-success" ng-click="createUser(user)">Save</button>
+            <button id="cancel_btn" name="cancel_btn" class="btn btn-danger" ng-click="cancel()">Cancel</button>
+          </div>
+        </div>
+
+      </fieldset>
+    </form>
   </div>
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close " data-dismiss="modal" aria-hidden="true">×</button>
-        <h3 id="myModalLabel">Authorize Confirmation</h3>
-      </div>
-      <div class="modal-body">
-        <p class="error-text">Are you sure you want to authorize the user?</p>
-      </div>
-      <div class="modal-footer">
-        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-        <button class="btn btn-danger" data-dismiss="modal">Authorize</button>
-      </div>
-    </div>
+</div>
+
+<div class="row" style="height: 500px; overflow-y: auto; margin-top: 50px">
+  <div id="searchResults" class="row" ng-controller="AuthorizerUserCtrl">
+
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Username</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th style="width: 75px;"></th>
+          </tr>
+        </thead>
+        <tbody >
+          <tr ng-repeat="user in users | filter:searchUser">
+            <td><div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=100" class="img-circle"> </div></td>
+            <td>{{ user.username }}</td>
+            <td>{{ user.name }}</td>
+            <td>{{ user.secondname }}</td>
+            <td>
+              <div class="control-groups">
+                  <button data-dz-remove class="btn btn-danger delete btn-sm" ng-click="removeUser(user)">
+                  <i class="glyphicon glyphicon-ban-circle"></i>
+                  <span>Dismiss</span>
+                </button>    
+              </div>    
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
   </div>
-</div>-->
+</div>
+
 
 </div>

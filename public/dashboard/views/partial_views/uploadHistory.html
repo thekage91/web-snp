@@ -1,0 +1,64 @@
+<!--<script type="text/javascript">
+  function fill (){
+    $.get('/api/user/' + document.getElementById('iddi').innerHTML)
+      .success(function(data){
+
+        data.payload.roles.forEach(function(entry) {
+            if (data.payload.roles.indexOf("Admin") > -1) {
+                var e = document.getElementById('main');
+                e.visibility = "visible";
+            } 
+            ;        
+        });
+        
+
+      });
+  };
+</script>
+
+<div hidden id="main" class="col-lg-11">-->
+<!--<div class="col-lg-11" ng-show="user.isAdmin()">-->
+<div class="col-lg-11">
+
+<h1 hidden id="iddi">{{global.user._id}}</h1>
+
+<div class="row">
+  <h1 class="section-header">Sequencing Upload History</h1>  
+
+  <hr>
+</div>
+
+<div class="row bot15" ng-controller="UploaderCtrl">
+  <h4>These are all the uploads you have done:</h4>
+  
+  <div class="row" style="height: 500px; overflow-y: auto; margin-top: 50px">
+
+  <table class="table table-bordered" ng-show="!showEditFamily">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Date</th>
+        <th>&nbsp;</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr ng-repeat="upload in uploads"> 
+        <td>{{upload.name}</td>
+        <td>{{upload.date}</td>
+        <td>
+          <button type="button" class="btn btn-primary btn-sm">
+            <span class="glyphicon glyphicon-trash" ></span> Delete
+          </button>
+        </td>                  
+      </tr>
+      <tr>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+</div>
+
+
+</div>
