@@ -145,15 +145,25 @@
           <tr ng-repeat="user in users | filter:searchUser">
             <td><div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=100" class="img-circle"> </div></td>
             <td>{{ user.username }}</td>
-            <td>{{ user.name }}</td>
-            <td>{{ user.secondname }}</td>
+            <td>{{ user.firstName }}</td>
+            <td>{{ user.lastName }}</td>
             <td>
               <div class="control-groups">
-                  <button data-dz-remove class="btn btn-danger delete btn-sm" ng-click="removeUser(user)">
+                <button data-dz-remove class="btn btn-success delete btn-sm bot5" ng-click="promote2Admin(user)"
+                        ng-show="user.roles.indexOf('admin') === -1">
+                  <i class="glyphicon glyphicon-stair"></i>
+                  <span>Promote</span>
+                </button>
+                <button data-dz-remove class="btn btn-danger delete btn-sm bot5" ng-click="cancelUser(user)">
                   <i class="glyphicon glyphicon-ban-circle"></i>
                   <span>Dismiss</span>
+                </button>  
+                <button data-dz-remove class="btn btn-primary delete btn-sm" ng-click="degrade2licensed(user)"
+                        ng-show="user.roles.indexOf('admin') !== -1">
+                  <i class="glyphicon glyphicon-ban-circle"></i>
+                  <span>Degrade</span>
                 </button>    
-              </div>    
+              </div>      
             </td>
           </tr>
         </tbody>
