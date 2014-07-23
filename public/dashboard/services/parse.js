@@ -73,6 +73,8 @@ angular.module('ParseService', [])
                             var dbsnp = (Schema.retrieveFromSchema)(element, schemas['DbSNP']);
                             var pathogenicity = retrievePathogenicity(element, schemas['Pathogenicity']);
                             var esp = (Schema.retrieveFromSchema)(element, schemas['Esp'], true);
+
+                            //TO REMOVE WHEN SOLVED INVALID PARSING
                             esp.ESP6500_EA = '.';
 
                             var models = [variant, detail, gene, dbsnp, pathogenicity, esp];
@@ -111,15 +113,32 @@ angular.module('ParseService', [])
                                 relationRequest[i++] = $http.post('/api/Variant/'+variant._id,temp);
 
 
-                                temp = {variant : variant._id};
-                                relationRequest[i++] = $http.post('/api/Pathogenicity/'+pathogenicity._id,temp);
-
-                                relationRequest[i++] = $http.post('/api/DbSNP/'+dbsnp._id,temp);
-
+                                temp = {variants : variant._id};
                                 relationRequest[i++] = $http.post('/api/Esp/'+esp._id,temp);
-
+                                relationRequest[i++] = $http.post('/api/DbSNP/'+dbsnp._id,temp);
                                 relationRequest[i++] = $http.post('/api/Gene/'+gene._id,temp);
 
+                                $http.get('/api/Patient/'+patient._id).success(function (data) {
+                                    $http({
+                                        method: 'POST',
+                                        url: '/api/Patient/'+patient._id,
+                                        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                                        transformRequest: function(obj) {
+                                            var str = [];
+                                            for(var p in obj) if(obj.hasOwnProperty(p))
+                                                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                                            return str.join("&");
+                                        },
+                                        data: data.payload.variants.concat(variant._id)
+                                    }).success(function () {console.log("ALLZ OK")}).error(function(err) {
+                                        console.error("ERROR: " + JSON.stringify(err))
+                                    });
+                                })
+
+                                relationRequest[i++] = $http.post('/api/Patient/'+patient._id,temp);
+
+                                temp = {variant : variant._id};
+                                relationRequest[i++] = $http.post('/api/Pathogenicity/'+pathogenicity._id,temp);
                                 relationRequest[i++] = $http.post('/api/VariantDetail/'+detail._id,temp);
 
                                 $q.all(relationRequest).catch(function(err) {console.error("ERROR while saving relation: " + err)})
