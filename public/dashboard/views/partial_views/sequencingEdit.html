@@ -1,491 +1,60 @@
-<!--<script type="text/javascript">
-  function fill (){
-    $.get('/api/user/' + document.getElementById('iddi').innerHTML)
-      .success(function(data){
 
-        data.payload.roles.forEach(function(entry) {
-            if (data.payload.roles.indexOf("Admin") > -1) {
-                var e = document.getElementById('main');
-                e.visibility = "visible";
-            } 
-            ;        
-        });
-        
+<script type="text/javascript">
+function fill (){
+  $.get('/api/user/' + document.getElementById('iddi').innerHTML)
+  .success(function(data){
 
-      });
-  };
+    data.payload.roles.forEach(function(entry) {
+      if (data.payload.roles.indexOf("Admin") > -1) {
+        var e = document.getElementById('main');
+        e.visibility = "visible";
+      } 
+      ;        
+    });
+
+
+  });
+};
 </script>
 
-<div hidden id="main" class="col-lg-11">-->
-<!--<div class="col-md-12" ng-show="user.isAdmin">-->
-<div class="col-md-12">
+<style type="text/css">
+.gridStyle {
+    border: 1px solid rgb(212,212,212);
+    overflow-y: auto;
+    height: 210px;
 
-<div class="row">
-  <h1 class="section-header">Sequencing edit</h1> 
-
-  <button type="button" class="btn btn-primary btn-sm" ui-sref="dashboard.sequencingDetails">
-    <span class="glyphicon glyphicon-floppy-saved"></span> Save
-  </button>
-  <hr>
-</div>
+}
+</style>
 
 
-<div>
-    <ul class="nav nav-tabs">
-      <li class="text-left"><a href="#sequencing" data-toggle="tab">Sequencing</a></li>
-      <li class="text-left"><a href="#variant" data-toggle="tab">Variant</a></li>
-      <li class="text-left"><a href="#pathogenicity" data-toggle="tab">Pathogenicity</a></li>
-      <li class="text-left"><a href="#gene" data-toggle="tab">Gene</a></li>
-      <li class="text-left"><a href="#esp" data-toggle="tab">ESP</a></li>
-      <li class="text-left"><a href="#dbsnp" data-toggle="tab">dbSNP</a></li>
-      <li class="text-left"><a href="#patient" data-toggle="tab">Patient</a></li>
-      <li class="text-left"><a href="#family" data-toggle="tab">Family</a></li>
+<div id="main" class="col-lg-11" ng-controller="SequencingEditCtrl">
+  <!--<div class="col-md-12" ng-show="user.isAdmin">-->
+  <div class="row">
+    <h1 class="section-header">Sequencing edit</h1> 
+
+    <hr>
+  </div>
 
 
-
-    </ul>
-
-    <div id="myTabContent" class="tab-content">
-      
-      <!-- Sequencing -->
-      <div class="tab-pane active in" id="sequencing">
-
-        <h5><span class="fa fa-lightbulb-o"></span>&nbsp;<b>TIP</b>: Click on a value to modify it</h5>
-
-        <div class="row">
-          <div class="col-md-12">
-            <div class="box">
-              <div class="box-header">
-                
-              <div class="box-content">
-                <table class="table beauty-table table-hover sequencing">
-                  <thead>
-                    <tr>
-                      <th class="col-md-3">&nbsp;</th>
-                      <th>&nbsp;</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr ng-repeat="(key,value) in sequencings">
-                      <td>{{ key }}</td>
-                      <td><input type="text" value="{{ value }}"></td>
-                    </tr>
-                    <tr>
-                      <td>Type:</td>
-                      <td><input type="text" value="5"></td>
-                    </tr>
-                    <tr>
-                      <td>Patient health status:</td>
-                      <td><input type="text" value="5"></td>
-                    </tr>
-                    <tr>
-                      <td>Sequencer name:</td>
-                      <td><input type="text" value="5"></td>
-                    </tr>
-                    <tr>
-                      <td>Sequencer model:</td>
-                      <td><input type="text" value="5"></td>
-                    </tr>
-                    <tr>
-                      <td>Reference genome:</td>
-                      <td><input type="text" value="5"></td>
-                    </tr>
-                    <tr>
-                      <td>Qual:</td>
-                      <td><input type="text" value="1"></td>
-                    </tr>
-                    <tr>
-                      <td>Filter:</td>
-                      <td><input type="text" value="2"></td>
-                    </tr>
-                    <tr>
-                      <td>Genotype:</td>
-                      <td><input type="text" value="3"></td>
-                    </tr>
-                    <tr>
-                      <td>Genotype quality:</td>
-                      <td><input type="text" value="4"></td>
-                    </tr>
-                    <tr>
-                      <td>Reads depth:</td>
-                      <td><input type="text" value="5"></td>
-                    </tr>
-                    <tr>
-                      <td>Ref:</td>
-                      <td><input type="text" value="5"></td>
-                    </tr>
-                    <tr>
-                      <td>Alt filtered reads:</td>
-                      <td><input type="text" value="5"></td>
-                    </tr>
-                    <tr>
-                      <td>Genotype likelihood:</td>
-                      <td><input type="text" value="5"></td>
-                    </tr>
-                    <tr>
-                      <td>Haplotype score:</td>
-                      <td><input type="text" value="5"></td>
-                    </tr>
-                    <tr>
-                      <td>Strand Bias:</td>
-                      <td><input type="text" value="5"></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+  <div class="row"> 
+ 
+    <div class="gridStyle" ng-grid="gridOptions">
     </div>
 
-      <!-- Variant -->
-      <div class="tab-pane fade" id="variant">
+    <button id="btn_save" type="button" class="btn btn-success btn-xs top15"
+          ng-click="saveOnServer()">
+      <span class="glyphicon glyphicon-upload"></span> Save on Server
+    </button>
 
-      <h5><span class="fa fa-lightbulb-o"></span>&nbsp;<b>TIP</b>: Click on a value to modify it</h5>
-
-      <div class="row">
-          <div class="col-md-12">
-            <div class="box">
-              <div class="box-header">
-                
-              <div class="box-content">
-                <table class="table beauty-table table-hover variant">
-                  <thead>
-                    <tr>
-                      <th class="col-md-3">&nbsp;</th>
-                      <th>&nbsp;</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr ng-repeat="(key,value) in variant">
-                      <td>{{ key }}</td>
-                      <td><input type="text" value="{{ value }}"></td>
-                    </tr>
-                    <tr>
-                      <td>chr:</td>
-                      <td><input type="text" value="5"></td>
-                    </tr>
-                    <tr>
-                      <td>start:</td>
-                      <td><input type="text" value="5"></td>
-                    </tr>
-                    <tr>
-                      <td>end:</td>
-                      <td><input type="text" value="5"></td>
-                    </tr>
-                    <tr>
-                      <td>ref:</td>
-                      <td><input type="text" value="5"></td>
-                    </tr>
-                    <tr>
-                      <td>alt:</td>
-                      <td><input type="text" value="5"></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Pathogenicity -->
-      <div class="tab-pane fade" id="pathogenicity">
-
-      <h5><span class="fa fa-lightbulb-o"></span>&nbsp;<b>TIP</b>: Click on a value to modify it</h5>
-
-      <div class="row">
-          <div class="col-md-12">
-            <div class="box">
-              <div class="box-header">
-                
-              <div class="box-content">
-                <table class="table beauty-table table-hover pathogenicity">
-                  <thead>
-                    <tr>
-                      <th class="col-md-3">&nbsp;</th>
-                      <th>&nbsp;</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr ng-repeat="(key,value) in pathogenicity">
-                      <td>{{ key }}</td>
-                      <td><input type="text" value="{{ value }}"></td>
-                    </tr>
-                    <tr>
-                      <td>SIFT:</td>
-                      <td><input type="text" value="5"></td>
-                    </tr>
-                    <tr>
-                      <td>polyPhen-2:</td>
-                      <td><input type="text" value="5"></td>
-                    </tr>
-                    <tr>
-                      <td>Mutation taster:</td>
-                      <td><input type="text" value="5"></td>
-                    </tr>
-                    <tr>
-                      <td>Mutation assessor:</td>
-                      <td><input type="text" value="5"></td>
-                    </tr>
-                    <tr>
-                      <td>GERP++:</td>
-                      <td><input type="text" value="5"></td>
-                    </tr>
-                    <tr>
-                      <td>phyloP:</td>
-                      <td><input type="text" value="5"></td>
-                    </tr>
-                    <tr>
-                      <td>SiPhy:</td>
-                      <td><input type="text" value="1"></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Gene -->
-      <div class="tab-pane fade" id="gene">
-
-      <h5><span class="fa fa-lightbulb-o"></span>&nbsp;<b>TIP</b>: Click on a value to modify it</h5>
-
-      <div class="row">
-          <div class="col-md-12">
-            <div class="box">
-              <div class="box-header">
-                
-              <div class="box-content">
-                <table class="table beauty-table table-hover gene">
-                  <thead>
-                    <tr>
-                      <th class="col-md-3">&nbsp;</th>
-                      <th>&nbsp;</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr ng-repeat="(key,value) in genes">
-                      <td>{{ key }}</td>
-                      <td><input type="text" value="{{ value }}"></td>
-                    </tr>
-                    <tr>
-                      <td>Gene:</td>
-                      <td><input type="text" value="5"></td>
-                    </tr>
-                    <tr>
-                      <td>Region:</td>
-                      <td><input type="text" value="5"></td>
-                    </tr>
-                    <tr>
-                      <td>Mutation:</td>
-                      <td><input type="text" value="5"></td>
-                    </tr>
-                    <tr>
-                      <td>Annotation:</td>
-                      <td><input type="text" value="5"></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ESP -->
-      <div class="tab-pane fade" id="esp">
-
-      <h5><span class="fa fa-lightbulb-o"></span>&nbsp;<b>TIP</b>: Click on a value to modify it</h5>
-
-      <div class="row">
-          <div class="col-md-12">
-            <div class="box">
-              <div class="box-header">
-                
-              <div class="box-content">
-                <table class="table beauty-table table-hover esp">
-                  <thead>
-                    <tr>
-                      <th class="col-md-3">&nbsp;</th>
-                      <th>&nbsp;</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr ng-repeat="(key,value) in esp">
-                      <td>{{ key }}</td>
-                      <td><input type="text" value="{{ value }}"></td>
-                    </tr>
-                    <tr>
-                      <td>ESP6500_ALL:</td>
-                      <td><input type="text" value="5"></td>
-                    </tr>
-                    <tr>
-                      <td>ESP6500_AA:</td>
-                      <td><input type="text" value="5"></td>
-                    </tr>
-                    <tr>
-                      <td>ESP6500_EA:</td>
-                      <td><input type="text" value="5"></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- dbSNP -->
-      <div class="tab-pane fade" id="dbsnp">
-
-      <h5><span class="fa fa-lightbulb-o"></span>&nbsp;<b>TIP</b>: Click on a value to modify it</h5>
-
-      <div class="row">
-          <div class="col-md-12">
-            <div class="box">
-              <div class="box-header">
-                
-              <div class="box-content">
-                <table class="table beauty-table table-hover dbsnp">
-                  <thead>
-                    <tr>
-                      <th class="col-md-3">&nbsp;</th>
-                      <th>&nbsp;</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr ng-repeat="(key,value) in dbsnp">
-                      <td>{{ key }}</td>
-                      <td><input type="text" value="{{ value }}"></td>
-                    </tr>
-                    <tr>
-                      <td>dbSNP:</td>
-                      <td><input type="text" value="5"></td>
-                    </tr>
-                    <tr>
-                      <td>FreqAlt:</td>
-                      <td><input type="text" value="5"></td>
-                    </tr>
-                    <tr>
-                      <td>FreqRed:</td>
-                      <td><input type="text" value="5"></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Patient -->
-      <div class="tab-pane fade" id="patient">
-
-      <h5><span class="fa fa-lightbulb-o"></span>&nbsp;<b>TIP</b>: Click on a value to modify it</h5>
-
-      <div class="row">
-          <div class="col-md-12">
-            <div class="box">
-              <div class="box-header">
-                
-              <div class="box-content">
-                <table class="table beauty-table table-hover patient">
-                  <thead>
-                    <tr ng-repeat="(key,value) in patient">
-                      <td>{{ key }}</td>
-                      <td><input type="text" value="{{ value }}"></td>
-                    </tr>
-                    <tr>
-                      <th class="col-md-3">&nbsp;</th>
-                      <th>&nbsp;</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>ID:</td>
-                      <td><input type="text" value="5"></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Family -->
-      <div class="tab-pane fade" id="family">
-
-      <h5><span class="fa fa-lightbulb-o"></span>&nbsp;<b>TIP</b>: Click on a value to modify it</h5>
-
-      <div class="row">
-          <div class="col-md-12">
-            <div class="box">
-              <div class="box-header">
-                
-              <div class="box-content">
-                <table class="table beauty-table table-hover family">
-                  <thead>
-                    <tr ng-repeat="(key,value) in family">
-                      <td>{{ key }}</td>
-                      <td><input type="text" value="{{ value }}"></td>
-                    </tr>
-                    <tr>
-                      <th class="col-md-3">&nbsp;</th>
-                      <th>&nbsp;</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>Name:</td>
-                      <td><input type="text" value="5"></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
+    <!--
+    <div>
+      {{ myData }}
+    </div>-->
+  
+  </div>
 
 </div>
 
-</div>
-
-</div>
-
-<script>
-$(document).ready(function() {
-  // Run beauty tables plugin on every table with class .beauty-table
-  $('.beauty-table').each(function(){
-    // Run keyboard navigation in table
-    $(this).beautyTables();
-    // Nice CSS-hover row and col for current cell
-    $(this).beautyHover();
-  });
-  // Attach to click action for create JSON data from tables.
-  $('.beauty-table-to-json').on('click', function(e){
-    e.preventDefault();
-    var table = $(this).closest('.box').find('table');
-    Table2Json(table);
-  });
-  // Add Drag-n-Drop feature
-  WinMove();
-});
-</script>
 
 
 
