@@ -75,10 +75,8 @@ exports.create = function(req, res, next) {
 
             return res.status(400);
         }
-        req.logIn(user, function(err) {
-            if (err) return next(err);
-            return res.redirect('/');
-        });
+        res.redirect('/');
+        
         res.status(200);
     });
 };
