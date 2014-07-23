@@ -1,61 +1,53 @@
+var options = {
+    size: 7,
+    height: 5*2/3,
+    font: "helvetiker",
+    bevelThickness: 1,
+    bevelSize: 0.5,
+    bevelSegments: 3,
+    bevelEnabled: true,
+    curveSegments: 12,
+    steps: 1
+};
 
-function Cytosine(code){
+//Function to create a cytosine base
+function createCytosine(basesLength, basesRadius) {
+    var shape = new THREE.Shape();
+    shape.moveTo(0, basesRadius*2);
+    shape.lineTo(basesRadius, basesRadius);
+    shape.lineTo(0, 0);
+    shape.lineTo(basesLength, 0);
+    shape.lineTo(basesLength, basesRadius*2);
+    shape.lineTo(0, basesRadius*2);
 
-	// Code C
-	this.code = code;
-	this.mesh = createMesh();
+    var shapeGeometry = shape.extrude({amount: basesRadius*2, bevelSize: 0, bevelThickness: 0});
+    var shapeMaterial = new THREE.MeshPhongMaterial({color: 0xdda411, side: THREE.DoubleSide, shininess: 100, metal: true});
+    var shape = new THREE.Mesh(shapeGeometry, shapeMaterial);
 
-	function createMesh(){
+    shape.castShadow = true;
+    shape.receiveShadow = true;
 
-		var basesRadius = 5;
-		var basesLength = 50;
-		var options = {
-				        size: 7,
-				        height: basesRadius*2/3,
-				        font: "helvetiker",
-				        bevelThickness: 1,
-				        bevelSize: 0.5,
-				        bevelSegments: 3,
-				        bevelEnabled: true,
-				        curveSegments: 12,
-				        steps: 1
-				      };
+    var cytosine = new THREE.Object3D();
+    cytosine.add(shape);
 
-		var material = new THREE.MeshLambertMaterial({color: 0xdda411, side: THREE.DoubleSide});
-		var shape = new THREE.Shape();
-		var geometry = null;
-		var text = null;
-		var mesh = null;
+    //Add the text "C"
+    var text = createMesh(new THREE.TextGeometry("C", options), 0x396d35);
+    text.position.z = basesRadius*3/2;
+    text.position.y = basesRadius/3;
+    text.position.x = basesRadius*2;
 
-		/*
-		shape.moveTo(0,0);
+    text.castShadow = true;
+    text.receiveShadow = true;
 
-		shape.lineTo(6,0);
-		shape.lineTo(4,2);
-		shape.lineTo(6,4);
-		shape.lineTo(0,4);
-		shape.lineTo(0,0);
-		*/
+    cytosine.add(text);
 
-		shape.moveTo(0, basesRadius*2);
-        
-        shape.lineTo(basesRadius, basesRadius);
-        shape.lineTo(0, 0);
-        shape.lineTo(basesLength, 0);
-        shape.lineTo(basesLength, basesRadius*2);
-        shape.lineTo(0, basesRadius*2);
+    return cytosine;
+}
 
-		geometry = shape.extrude({amount: basesRadius*2, bevelSize: 0, bevelThickness: 0});
+function createMesh(geom, textColor) {
+    var meshMaterial = new THREE.MeshPhongMaterial({specular: 0xffffff, color: textColor, shininess: 100, metal: true});
+    var textMesh = new THREE.Mesh(geom, meshMaterial);
+    textMesh.castShadow = true;
 
-		text = createMesh(new THREE.TextGeometry(this.code , options), 0x396d35);
-        text.position.z = basesRadius*3/2;
-        text.position.y = basesRadius/3;
-        text.position.x = basesRadius*2;
-
-		mesh = new THREE.Mesh(material , geometry);
-
-		mesh.add(text);
-
-		return mesh;
-	}
+    return textMesh;
 }
