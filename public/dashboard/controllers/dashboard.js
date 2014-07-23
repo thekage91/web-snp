@@ -48,14 +48,16 @@ angular.module('mean.dashboard', ['angular-md5'])
             .success(function (data) {
                 $scope.users = data.payload;
                 console.log("[DEBUG] Retrive this users " + data.payload);
+
+                $scope.users.forEach(function(user){
+                    user.emailHash = md5.createHash(user.email);
+                });
             })
             .error(function (data) {
                 console.log("[ERROR] Failed retrieve all users");
             });
 
-        $scope.users.forEach(function(user){
-            user.emailHash = md5.createHash(user.email);
-        });
+        
 
         $scope.authorizeUser = function (user) {
             console.log(user);
