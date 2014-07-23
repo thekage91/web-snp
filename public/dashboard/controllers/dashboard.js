@@ -270,7 +270,7 @@ angular.module('mean.dashboard', ['angular-md5'])
         }
 
         $scope.finishedOperation = function () {
-            angular.element('#btn_edit').disabled = true;
+            $scope.showEditFamilies(false);
             angular.element('#patientsPanel').collapse('hide');
         }
 
