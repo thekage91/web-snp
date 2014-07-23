@@ -1,7 +1,7 @@
 'use strict';
 
 
-angular.module('mean.dashboard', [])
+angular.module('mean.dashboard', ['angular-md5'])
 
     .controller('UploaderCtrl', ['$scope' , '$window' ,
         function ($scope, $window) {
