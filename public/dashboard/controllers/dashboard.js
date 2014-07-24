@@ -785,8 +785,6 @@ angular.module('mean.dashboard', ['angular-md5' , 'ngGrid'])
             }
         ];*/
 
-
-        console.log($rootScope.myData);
         $scope.parseForEdit($rootScope.myData);
         $scope.myData = $rootScope.myData;
         console.log($scope.myData);
@@ -829,8 +827,6 @@ angular.module('mean.dashboard', ['angular-md5' , 'ngGrid'])
                 {field: 'ESP6500_EA', width: 120, displayName: 'ESP6500_EA', enableCellEdit: true}
             ]
         };
-
-        console.log($rootScope.myData);
 
         $scope.saveOnServer = function(){
 
