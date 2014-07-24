@@ -354,24 +354,23 @@ Over the years, many methods have been developed for sequencing the DNA:
 
 Nowadays, thanks to technological progress we pushed further forward. It is possible to sequence \textbf{more than 100 million base pairs in about a week} (generating a very high amount of data).
 \linebreak
-This is called the \textbf{Next-Generation Sequencing}.
 
-\vspace{2mm}
+##
+
+\begin{figure}[ht!]
+	\centering
+	\includegraphics[width=110mm]{../Images/DataUse.png}
+	\label{overflow}
+	\caption{Memory use}
+	\end{figure}
+
+## Next-Generation Sequencing
 
 However, the higher the speed of sequencing, the more there is a problem:  \textbf{interpretation}. It often represents a real bottleneck; a single computer is not able to interpret a sequencing at the same speed of which it is presented to him.
 
 \vspace{2mm}
 
 \textbf{Solution}: \emph{cloud computing}.
-
-##
-
-\begin{figure}[ht!]
-	\centering
-	\includegraphics[width=110mm]{../Images/NowadaysSequencing.png}
-	\label{overflow}
-	\caption{Nowadays Sequencing}
-	\end{figure}
 
 ## 
 
@@ -400,6 +399,10 @@ However, the higher the speed of sequencing, the more there is a problem:  \text
 
 # Data Format
 
+## Data Format
+
+Should be as universal as possible to allow the use of sequencing also to other people.
+
 ## CSFASTA
 
 The sequencer that generates the data managed by our web-app provides the results of the sequencing using format \textbf{CSFASTA}
@@ -409,7 +412,8 @@ The sequencer that generates the data managed by our web-app provides the result
 ###>MCHU - Calmodulin - Human, rabbit, bovine, rat, and chicken
 ADQLTEEQIAEFKEAFSLFDKDGDGTITTKELGTVMRSLGQNPTEAELQD
 \linebreak MINEVDADGNGTID
-FPEFLTMMARKMKDTDSEEEIREAFRVFDKDGNGYISAAELRHVMTNLGEKLTDEEVDEMIREA
+FPEFLTMMARKMKDTDSEEEIREAFRVFD
+\linebreak KDGNGYISAAELRHVMTNLGEKLTDEEVDEMIREA
 DIDGDGQVNYEEFVQMMTAK
 
 # SNP Databases
