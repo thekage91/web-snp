@@ -238,6 +238,8 @@ Gene expression affected by this type of SNP is referred to as an \textbf{eSNP} 
 
 # How to found SNPs: DNA sequencing
 
+## Introduction 
+
 In order to understand, according to what already said, what a SNP can cause, we must first of all identify the SNP in the DNA of the subject under consideration.
 
 \vspace{1mm}
