@@ -30,7 +30,7 @@
         <input type="search" class="search-query form-control" placeholder="Patient's name" ng-model="patient" />
         <button hidden data-ng-show="false" id="btn_save" type="button" class="btn btn-success btn-xs ng-hide"  ng-click="saveResult()" />
         <span class="input-group-btn">
-          <button class="btn btn-danger" type="button" onClick="document.getElementById('uploadMain').style.display='block';">
+          <button class="btn btn-danger" type="button" onClick="document.getElementById('uploadMain').style.display='block';" ng-click="savePatient()">
             <span>OK</span>
           </button>
         </span>

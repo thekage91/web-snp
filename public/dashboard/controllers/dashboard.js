@@ -16,9 +16,10 @@ angular.module('mean.dashboard', ['angular-md5' , 'ngGrid'])
 
             var name;
             $scope.savePatient = function () {
-                if($scope.patient)
-                name = $scope.patient;
-                $rootScope.patient = name;
+                if($scope.patient){
+                    name = $scope.patient;
+                    $rootScope.patient = name;
+                }
                 console.log("Save patient triggered. Name : "+ name );
             };
 
