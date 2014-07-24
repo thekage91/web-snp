@@ -336,7 +336,7 @@ Because SNPs are expected to facilitate large-scale association genetics studies
 ## Most important DBs
 
 \begin{enumerate}
-	\item \textbf{dbSNP}, a SNP database from the \emph{National Center for Biotechnology Infor-mation (NCBI)}
+	\item \textbf{dbSNP}, a SNP database from the \emph{National Center for Biotechnology Information (NCBI)}
 	\item \textbf{SNPedia}, a wiki-style database supporting personal genome annotation, interpretation and analysis
 	\end{enumerate}
 
