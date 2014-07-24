@@ -21,7 +21,7 @@
     </div>
 
     <button id="btn_save" type="button" class="btn btn-success btn-xs top15"
-          ng-click="saveOnServer()">
+          ng-click="saveOnServer()" data-toggle="modal" data-target="#myModal">
       <span class="glyphicon glyphicon-upload"></span> Save on Server
     </button>
 
@@ -31,8 +31,48 @@
     </div>-->
   
   </div>
-
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">              
+      <div class="modal-body">
+        <div class="alert-message alert-message-info">
+          <h4>
+            Attention please!</h4>
+          <p>
+            Please leave time to the system to save your changes before running the query, otherwise the results could be only partially correct.<br>
+            Just a few minutes ...
+          </p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Got it!</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.alert-message
+{
+    margin: 20px 0;
+    padding: 20px;
+    border-left: 3px solid #eee;
+}
+.alert-message-info
+{
+    background-color: #f4f8fa;
+    border-color: #ff0000;
+}
+.alert-message-info h4
+{
+    color: #5bc0de;
+}
+</style>
+
+
 
 
 
