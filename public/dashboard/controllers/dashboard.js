@@ -8,7 +8,7 @@ function jsonConcat(o1, o2) {
 }
 
 
-angular.module('mean.dashboard', ['angular-md5'])
+angular.module('mean.dashboard', ['angular-md5' , 'ngGrid'])
 
     .controller('UploaderCtrl', ['$scope', '$rootScope', '$window', '$http', 'Model','Parse','Save','$q','$timeout',
         function ($scope, $rootScope, $window, $http,Model,Parse,Save,$q,$timeout) {
@@ -18,6 +18,7 @@ angular.module('mean.dashboard', ['angular-md5'])
             $scope.savePatient = function () {
                 if($scope.patient)
                 name = $scope.patient;
+                $rootScope.patient = name;
                 console.log("Save patient triggered. Name : "+ name );
             };
 
@@ -512,34 +513,34 @@ angular.module('mean.dashboard', ['angular-md5'])
 
         $scope.parseForEdit = function (dataParse) {
 
-            for(var json in dataParse){
+            for(var i = 0; i < dataParse.length; i++){
 
-                json['Genotype_quality'] = json['Genotype quality'];
-                delete json['Genotype quality'];
+                dataParse[i]['Genotype_quality'] = dataParse[i]['Genotype quality'];
+                delete dataParse[i]['Genotype quality'];
 
-                json['Reads_deeph'] = json['Reads deeph'];
-                delete json['Reads deeph'];
+                dataParse[i]['Reads_deeph'] = dataParse[i]['Reads deeph'];
+                delete dataParse[i]['Reads deeph'];
 
-                json['Ref_Alt_filtered_reads'] = json['Ref,Alt filtered reads'];
-                delete json['Ref,Alt filtered reads'];
+                dataParse[i]['Ref_Alt_filtered_reads'] = dataParse[i]['Ref,Alt filtered reads'];
+                delete dataParse[i]['Ref,Alt filtered reads'];
 
-                json['Genotypes_likelihood'] = json['Genotypes likelihood'];
-                delete json['Genotypes likelihood'];
+                dataParse[i]['Genotypes_likelihood'] = dataParse[i]['Genotypes likelihood'];
+                delete dataParse[i]['Genotypes likelihood'];
 
-                json['Haplotype_score'] = json['Haplotype score'];
-                delete json['Haplotype score'];
+                dataParse[i]['Haplotype_score'] = dataParse[i]['Haplotype score'];
+                delete dataParse[i]['Haplotype score'];
 
-                json['Strand_bias'] = json['Strand bias'];
-                delete json['Strand bias'];
+                dataParse[i]['Strand_bias'] = dataParse[i]['Strand bias'];
+                delete dataParse[i]['Strand bias'];
 
-                json['Freq_ref'] = json['Freq ref'];
-                delete json['Freq ref'];
+                dataParse[i]['Freq_ref'] = dataParse[i]['Freq ref'];
+                delete dataParse[i]['Freq ref'];
 
-                json['Freq_alt'] = json['Freq alt'];
-                delete json['Freq alt'];
+                dataParse[i]['Freq_alt'] = dataParse[i]['Freq alt'];
+                delete dataParse[i]['Freq alt'];
 
-                json['GERP'] = json['GERP++'];
-                delete json['GERP++'];
+                dataParse[i]['GERP'] = dataParse[i]['GERP++'];
+                delete dataParse[i]['GERP++'];
             }
 
             return dataParse;
@@ -547,34 +548,34 @@ angular.module('mean.dashboard', ['angular-md5'])
 
         $scope.parseAfterEdit = function (dataParse) {
 
-            for(var json in dataParse){
+            for(var i = 0; i < dataParse.length; i++){
 
-                json['Genotype quality'] = json['Genotype_quality'];
-                delete json['Genotype_quality'];
+                dataParse[i]['Genotype quality'] = dataParse[i]['Genotype_quality'];
+                delete dataParse[i]['Genotype_quality'];
 
-                json['Reads deeph'] = json['Reads_deeph'];
-                delete json['Reads_deeph'];
+                dataParse[i]['Reads deeph'] = dataParse[i]['Reads_deeph'];
+                delete dataParse[i]['Reads_deeph'];
 
-                json['Ref,Alt filtered reads'] = json['Ref_Alt_filtered_reads'];
-                delete json['Ref_Alt_filtered_reads'];
+                dataParse[i]['Ref,Alt filtered reads'] = dataParse[i]['Ref_Alt_filtered_reads'];
+                delete dataParse[i]['Ref_Alt_filtered_reads'];
 
-                json['Genotypes likelihood'] = json['Genotypes_likelihood'];
-                delete json['Genotypes_likelihood'];
+                dataParse[i]['Genotypes likelihood'] = dataParse[i]['Genotypes_likelihood'];
+                delete dataParse[i]['Genotypes_likelihood'];
 
-                json['Haplotype score'] = json['Haplotype_score'];
-                delete json['Haplotype_score'];
+                dataParse[i]['Haplotype score'] = dataParse[i]['Haplotype_score'];
+                delete dataParse[i]['Haplotype_score'];
 
-                json['Strand bias'] = json['Strand_bias'];
-                delete json['Strand_bias'];
+                dataParse[i]['Strand bias'] = dataParse[i]['Strand_bias'];
+                delete dataParse[i]['Strand_bias'];
 
-                json['Freq ref'] = json['Freq_ref'];
-                delete json['Freq_ref'];
+                dataParse[i]['Freq ref'] = dataParse[i]['Freq_ref'];
+                delete dataParse[i]['Freq_ref'];
 
-                json['Freq alt'] = json['Freq_alt'];
-                delete json['Freq_alt'];
+                dataParse[i]['Freq alt'] = dataParse[i]['Freq_alt'];
+                delete dataParse[i]['Freq_alt'];
 
-                json['GERP++'] = json['GERP'];
-                delete json['GERP'];
+                dataParse[i]['GERP++'] = dataParse[i]['GERP'];
+                delete dataParse[i]['GERP'];
             }
 
             return dataParse;
@@ -582,7 +583,8 @@ angular.module('mean.dashboard', ['angular-md5'])
 
         //$scope.myData = [{name: "Moroni", age: 50}, {name: "Moroni", age: 50}]
         
-        /*$scope.myData = [
+        /*
+        $scope.myData = [
             {
                 "chr": "chr1",
                 "start": "100152443",
@@ -830,10 +832,10 @@ angular.module('mean.dashboard', ['angular-md5'])
 
         console.log($rootScope.myData);
 
-        $scope.saveOnDB = function(){
+        $scope.saveOnServer = function(){
 
             $scope.parseAfterEdit($scope.myData);
-           name = $scope.patient
+           name = $rootScope.patient
             console.log("Patient name = " + name)
 
             var saveFunction = (Parse.saveInDbFromData);
