@@ -163,25 +163,27 @@
                 <div class="row input-group-btn search-panel">
                     <div id="firstCombobox" class="col-md-4">
                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                            <span id="refine_value_first">Choose Mutation...</span> <span class="caret"></span>
+                             <input id="refine_value_first" ng-model="chooseFilterMutation" disabled 
+                                  style="border: 0px"></input><span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a ng-click="valueRefine('nonsynonymous SNV')" onClick="changeLabel3('nonsynonymous SNV');">nonsynonymous SNV</a></li>
-                            <li><a ng-click="valueRefine('synonymous SNV')" onClick="changeLabel3('synonymous SNV');">synonymous SNV</a></li>
-                            <li><a ng-click="valueRefine('all')" onClick="changeLabel3('All');">all</a></li>
+                            <li><a ng-click="valueRefineMutation('nonsynonymous SNV')">nonsynonymous SNV</a></li>
+                            <li><a ng-click="valueRefineMutation('synonymous SNV')">synonymous SNV</a></li>
+                            <li><a ng-click="valueRefineMutation('All Mutation')">All Mutation</a></li>
                         </ul>
                     </div>
 
                     <div id="secondCombobox" class="col-md-4">
                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                            <span id="refine_value_second">Choose Region...</span> <span class="caret"></span>
+                             <input id="refine_value_first" ng-model="chooseFilterRegion" disabled 
+                                  style="border: 0px"></input><span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a ng-click="valueRefine('UTR5')" onClick="changeLabel4('UTR5');">UTR5</a></li>
-                            <li><a ng-click="valueRefine('UTR3')" onClick="changeLabel4('UTR3');">UTR3</a></li>
-                            <li><a ng-click="valueRefine('exonic')" onClick="changeLabel4('exonic');">exonic</a></li>
-                            <li><a ng-click="valueRefine('intronic')" onClick="changeLabel4('intronic');">intronic</a></li>
-                            <li><a ng-click="valueRefine('all')" onClick="changeLabel4('all');">all</a></li>
+                            <li><a ng-click="valueRefineRegion('UTR5')" >UTR5</a></li>
+                            <li><a ng-click="valueRefineRegion('UTR3')" >UTR3</a></li>
+                            <li><a ng-click="valueRefineRegion('exonic')" >exonic</a></li>
+                            <li><a ng-click="valueRefineRegion('intronic')" >intronic</a></li>
+                             <li><a ng-click="valueRefineRegion('All Region')" >All Region</a></li>
                         </ul>
                     </div>
                 </div>
