@@ -500,282 +500,327 @@ angular.module('mean.dashboard', ['angular-md5'])
     }])
 
 
-        .controller('SequencingEditCtrl', ['$scope', '$http', function ($scope, $http) {
+    .controller('SequencingEditCtrl', ['$scope', '$http', 'Parse', 'Save', function ($scope, $http, Parse, Save) {
 
-            $scope.parseForEdit = function (dataParse) {
+        $scope.parseForEdit = function (dataParse) {
 
+            dataParse.forEach(function(json){
 
-                for (var i = 0; i < dataParse.length; i++) {
+                json['Genotype_quality'] = json['Genotype quality'];
+                delete json['Genotype quality'];
 
-                    var temp = JSON.stringify(dataParse[i]);
-                    console.log("prima   " + dataParse[i])
+                json['Reads_deeph'] = json['Reads deeph'];
+                delete json['Reads deeph'];
 
-                    /*temp.replace("Genotype quality", "Genotype_quality");
-                     temp.replace("Reads deeph", "Reads_deeph");
-                     temp.replace("\"Ref,Alt filtered reads\":", "\"Ref_Alt_filtered_reads\":");
-                     temp.replace("\"Genotypes likelihood\":", "\"Genotypes_likelihood\":");
-                     temp.replace("\"Haplotype score\":", "\"Haplotype_score\":");
-                     temp.replace("\"Freq ref\":", "\"Freq_ref\":");
-                     temp.replace("\"Freq alt\":", "\"Freq_alt\":");
-                     temp.replace("\"Strand bias\":", "\"Strand_bias\":");
-                     temp.replace("\"GERP++\":", "\"GERP\":");
+                json['Ref_Alt_filtered_reads'] = json['Ref,Alt filtered reads'];
+                delete json['Ref,Alt filtered reads'];
 
-                     dataParse[i] = JSON.parse(temp);
-                     console.log("dopo   " + temp);*/
+                json['Genotypes_likelihood'] = json['Genotypes likelihood'];
+                delete json['Genotypes likelihood'];
 
-                    temp = $scope.camelize(temp);
-                    dataParse[i] = JSON.parse(temp);
-                    console.log("dopo   " + dataParse[i])
+                json['Haplotype_score'] = json['Haplotype score'];
+                delete json['Haplotype score'];
 
+                json['Strand_bias'] = json['Strand bias'];
+                delete json['Strand bias'];
 
-                }
+                json['Freq_ref'] = json['Freq ref'];
+                delete json['Freq ref'];
 
-                return dataParse;
+                json['Freq_alt'] = json['Freq alt'];
+                delete json['Freq alt'];
+            });
+
+            return dataParse;
+        }
+
+        $scope.parseAfterEdit = function (dataParse) {
+
+            dataParse.forEach(function(json){
+
+                json['Genotype quality'] = json['Genotype_quality'];
+                delete json['Genotype_quality'];
+
+                json['Reads deeph'] = json['Reads_deeph'];
+                delete json['Reads_deeph'];
+
+                json['Ref,Alt filtered reads'] = json['Ref_Alt_filtered_reads'];
+                delete json['Ref_Alt_filtered_reads'];
+
+                json['Genotypes likelihood'] = json['Genotypes_likelihood'];
+                delete json['Genotypes_likelihood'];
+
+                json['Haplotype score'] = json['Haplotype_score'];
+                delete json['Haplotype_score'];
+
+                json['Strand bias'] = json['Strand_bias'];
+                delete json['Strand_bias'];
+
+                json['Freq ref'] = json['Freq_ref'];
+                delete json['Freq_ref'];
+
+                json['Freq alt'] = json['Freq_alt'];
+                delete json['Freq_alt'];
+            });
+
+            return dataParse;
+        }
+
+        //$scope.myData = [{name: "Moroni", age: 50}, {name: "Moroni", age: 50}]
+        $scope.myData = [
+            {
+                "chr": "chr1",
+                "start": "100152443",
+                "end": "100152443",
+                "ref": "T",
+                "alt": "C",
+                "qual": "580.35",
+                "filter": "PASS",
+                "Genotype": "het",
+                "Genotype quality": "50",
+                "Reads deeph": "4 on 38",
+                "Ref,Alt filtered reads": "2,2",
+                "Genotypes likelihood": "66,0,50",
+                "Haplotype score": "1.3597",
+                "Strand bias": ".",
+                "dbSNP": "rs1338576",
+                "Freq ref": "0.5312",
+                "Freq alt": "0.4688",
+                "region": "intronic",
+                "genes": "PALMD",
+                "Mutation": ".",
+                "Annotation": ".",
+                "SIFT": ".",
+                "PolyPhen-2": ".",
+                "MutationTaster": ".",
+                "MutationAssessor": ".",
+                "GERP++": ".",
+                "PhyloP": ".",
+                "SiPhy": ".",
+                "ESP6500_ALL": "0.507763",
+                "ESP6500_AA": "0.379501",
+                "ESP6500_EA": "0.572749"
+            },
+            {
+                "chr": "chr1",
+                "start": "100316589",
+                "end": "100316589",
+                "ref": "A",
+                "alt": "G",
+                "qual": "590.84",
+                "filter": "PASS",
+                "Genotype": "homo_ref",
+                "Genotype quality": "9",
+                "Reads deeph": "3 on 37",
+                "Ref,Alt filtered reads": "3,0",
+                "Genotypes likelihood": "0,9,114",
+                "Haplotype score": "0.333",
+                "Strand bias": ".",
+                "dbSNP": "rs2307130",
+                "Freq ref": "0.5702",
+                "Freq alt": "0.4298",
+                "region": "splicing",
+                "genes": "AGL",
+                "Mutation": ".",
+                "Annotation": ".",
+                "SIFT": ".",
+                "PolyPhen-2": ".",
+                "MutationTaster": ".",
+                "MutationAssessor": ".",
+                "GERP++": ".",
+                "PhyloP": ".",
+                "SiPhy": ".",
+                "ESP6500_ALL": "0.415731",
+                "ESP6500_AA": "0.277349",
+                "ESP6500_EA": "0.486628"
+            },
+            {
+                "chr": "chr1",
+                "start": "100340225",
+                "end": "100340225",
+                "ref": "G",
+                "alt": "A",
+                "qual": "258.75",
+                "filter": "PASS",
+                "Genotype": "homo_alt",
+                "Genotype quality": "6",
+                "Reads deeph": "2 on 14",
+                "Ref,Alt filtered reads": "0,2",
+                "Genotypes likelihood": "75,6,0",
+                "Haplotype score": "0.7472",
+                "Strand bias": ".",
+                "dbSNP": "rs634880",
+                "Freq ref": "0.2723",
+                "Freq alt": "0.7277",
+                "region": "intronic",
+                "genes": "AGL",
+                "Mutation": ".",
+                "Annotation": ".",
+                "SIFT": ".",
+                "PolyPhen-2": ".",
+                "MutationTaster": ".",
+                "MutationAssessor": ".",
+                "GERP++": ".",
+                "PhyloP": ".",
+                "SiPhy": ".",
+                "ESP6500_ALL": "0.748308",
+                "ESP6500_AA": "0.836813",
+                "ESP6500_EA": "0.702954"
+            },
+            {
+                "chr": "chr1",
+                "start": "100343153",
+                "end": "100343153",
+                "ref": "A",
+                "alt": "G",
+                "qual": "46.9",
+                "filter": "PASS",
+                "Genotype": "homo_alt",
+                "Genotype quality": "6",
+                "Reads deeph": "2 on 3",
+                "Ref,Alt filtered reads": "0,2",
+                "Genotypes likelihood": "74,6,0",
+                "Haplotype score": "0",
+                "Strand bias": ".",
+                "dbSNP": "rs2291638",
+                "Freq ref": "0.6873",
+                "Freq alt": "0.3127",
+                "region": "intronic",
+                "genes": "AGL",
+                "Mutation": ".",
+                "Annotation": ".",
+                "SIFT": ".",
+                "PolyPhen-2": ".",
+                "MutationTaster": ".",
+                "MutationAssessor": ".",
+                "GERP++": ".",
+                "PhyloP": ".",
+                "SiPhy": ".",
+                "ESP6500_ALL": "0.28288",
+                "ESP6500_AA": "0.103041",
+                "ESP6500_EA": "0.375058"
+            },
+            {
+                "chr": "chr1",
+                "start": "100346741",
+                "end": "100346741",
+                "ref": "T",
+                "alt": "C",
+                "qual": "598.2",
+                "filter": "PASS",
+                "Genotype": "het",
+                "Genotype quality": "58",
+                "Reads deeph": "7 on 39",
+                "Ref,Alt filtered reads": "5,2",
+                "Genotypes likelihood": "58,0,166",
+                "Haplotype score": "0",
+                "Strand bias": ".",
+                "dbSNP": "rs3736296",
+                "Freq ref": "0.4394",
+                "Freq alt": "0.5606",
+                "region": "intronic",
+                "genes": "AGL",
+                "Mutation": ".",
+                "Annotation": ".",
+                "SIFT": ".",
+                "PolyPhen-2": ".",
+                "MutationTaster": ".",
+                "MutationAssessor": ".",
+                "GERP++": ".",
+                "PhyloP": ".",
+                "SiPhy": ".",
+                "ESP6500_ALL": "0.504152",
+                "ESP6500_AA": "0.437585",
+                "ESP6500_EA": "0.538256"
+            },
+            {
+                "chr": "chr1",
+                "start": "100353675",
+                "end": "100353675",
+                "ref": "G",
+                "alt": "A",
+                "qual": "826.34",
+                "filter": "PASS",
+                "Genotype": "het",
+                "Genotype quality": "45",
+                "Reads deeph": "10 on 63",
+                "Ref,Alt filtered reads": "8,2",
+                "Genotypes likelihood": "45,0,282",
+                "Haplotype score": "0.1664",
+                "Strand bias": ".",
+                "dbSNP": "rs555929",
+                "Freq ref": "0.3191",
+                "Freq alt": "0.6809",
+                "region": "intronic",
+                "genes": "AGL",
+                "Mutation": ".",
+                "Annotation": ".",
+                "SIFT": ".",
+                "PolyPhen-2": ".",
+                "MutationTaster": ".",
+                "MutationAssessor": ".",
+                "GERP++": ".",
+                "PhyloP": ".",
+                "SiPhy": ".",
+                "ESP6500_ALL": "0.654852",
+                "ESP6500_AA": "0.596686",
+                "ESP6500_EA": "0.684651"
             }
-
-            //$scope.myData = [{name: "Moroni", age: 50}, {name: "Moroni", age: 50}]
-            $scope.myData = [
-                {
-                    "chr": "chr1",
-                    "start": "100152443",
-                    "end": "100152443",
-                    "ref": "T",
-                    "alt": "C",
-                    "qual": "580.35",
-                    "filter": "PASS",
-                    "Genotype": "het",
-                    "Genotype_quality": "50",
-                    "Reads deeph": "4 on 38",
-                    "Ref,Alt filtered reads": "2,2",
-                    "Genotypes likelihood": "66,0,50",
-                    "Haplotype score": "1.3597",
-                    "Strand bias": ".",
-                    "dbSNP": "rs1338576",
-                    "Freq ref": "0.5312",
-                    "Freq alt": "0.4688",
-                    "region": "intronic",
-                    "genes": "PALMD",
-                    "Mutation": ".",
-                    "Annotation": ".",
-                    "SIFT": ".",
-                    "PolyPhen-2": ".",
-                    "MutationTaster": ".",
-                    "MutationAssessor": ".",
-                    "GERP++": ".",
-                    "PhyloP": ".",
-                    "SiPhy": ".",
-                    "ESP6500_ALL": "0.507763",
-                    "ESP6500_AA": "0.379501",
-                    "ESP6500_EA": "0.572749"
-                },
-                {
-                    "chr": "chr1",
-                    "start": "100316589",
-                    "end": "100316589",
-                    "ref": "A",
-                    "alt": "G",
-                    "qual": "590.84",
-                    "filter": "PASS",
-                    "Genotype": "homo_ref",
-                    "Genotype quality": "9",
-                    "Reads deeph": "3 on 37",
-                    "Ref,Alt filtered reads": "3,0",
-                    "Genotypes likelihood": "0,9,114",
-                    "Haplotype score": "0.333",
-                    "Strand bias": ".",
-                    "dbSNP": "rs2307130",
-                    "Freq ref": "0.5702",
-                    "Freq alt": "0.4298",
-                    "region": "splicing",
-                    "genes": "AGL",
-                    "Mutation": ".",
-                    "Annotation": ".",
-                    "SIFT": ".",
-                    "PolyPhen-2": ".",
-                    "MutationTaster": ".",
-                    "MutationAssessor": ".",
-                    "GERP++": ".",
-                    "PhyloP": ".",
-                    "SiPhy": ".",
-                    "ESP6500_ALL": "0.415731",
-                    "ESP6500_AA": "0.277349",
-                    "ESP6500_EA": "0.486628"
-                },
-                {
-                    "chr": "chr1",
-                    "start": "100340225",
-                    "end": "100340225",
-                    "ref": "G",
-                    "alt": "A",
-                    "qual": "258.75",
-                    "filter": "PASS",
-                    "Genotype": "homo_alt",
-                    "Genotype quality": "6",
-                    "Reads deeph": "2 on 14",
-                    "Ref,Alt filtered reads": "0,2",
-                    "Genotypes likelihood": "75,6,0",
-                    "Haplotype score": "0.7472",
-                    "Strand bias": ".",
-                    "dbSNP": "rs634880",
-                    "Freq ref": "0.2723",
-                    "Freq alt": "0.7277",
-                    "region": "intronic",
-                    "genes": "AGL",
-                    "Mutation": ".",
-                    "Annotation": ".",
-                    "SIFT": ".",
-                    "PolyPhen-2": ".",
-                    "MutationTaster": ".",
-                    "MutationAssessor": ".",
-                    "GERP++": ".",
-                    "PhyloP": ".",
-                    "SiPhy": ".",
-                    "ESP6500_ALL": "0.748308",
-                    "ESP6500_AA": "0.836813",
-                    "ESP6500_EA": "0.702954"
-                },
-                {
-                    "chr": "chr1",
-                    "start": "100343153",
-                    "end": "100343153",
-                    "ref": "A",
-                    "alt": "G",
-                    "qual": "46.9",
-                    "filter": "PASS",
-                    "Genotype": "homo_alt",
-                    "Genotype quality": "6",
-                    "Reads deeph": "2 on 3",
-                    "Ref,Alt filtered reads": "0,2",
-                    "Genotypes likelihood": "74,6,0",
-                    "Haplotype score": "0",
-                    "Strand bias": ".",
-                    "dbSNP": "rs2291638",
-                    "Freq ref": "0.6873",
-                    "Freq alt": "0.3127",
-                    "region": "intronic",
-                    "genes": "AGL",
-                    "Mutation": ".",
-                    "Annotation": ".",
-                    "SIFT": ".",
-                    "PolyPhen-2": ".",
-                    "MutationTaster": ".",
-                    "MutationAssessor": ".",
-                    "GERP++": ".",
-                    "PhyloP": ".",
-                    "SiPhy": ".",
-                    "ESP6500_ALL": "0.28288",
-                    "ESP6500_AA": "0.103041",
-                    "ESP6500_EA": "0.375058"
-                },
-                {
-                    "chr": "chr1",
-                    "start": "100346741",
-                    "end": "100346741",
-                    "ref": "T",
-                    "alt": "C",
-                    "qual": "598.2",
-                    "filter": "PASS",
-                    "Genotype": "het",
-                    "Genotype quality": "58",
-                    "Reads deeph": "7 on 39",
-                    "Ref,Alt filtered reads": "5,2",
-                    "Genotypes likelihood": "58,0,166",
-                    "Haplotype score": "0",
-                    "Strand bias": ".",
-                    "dbSNP": "rs3736296",
-                    "Freq ref": "0.4394",
-                    "Freq alt": "0.5606",
-                    "region": "intronic",
-                    "genes": "AGL",
-                    "Mutation": ".",
-                    "Annotation": ".",
-                    "SIFT": ".",
-                    "PolyPhen-2": ".",
-                    "MutationTaster": ".",
-                    "MutationAssessor": ".",
-                    "GERP++": ".",
-                    "PhyloP": ".",
-                    "SiPhy": ".",
-                    "ESP6500_ALL": "0.504152",
-                    "ESP6500_AA": "0.437585",
-                    "ESP6500_EA": "0.538256"
-                },
-                {
-                    "chr": "chr1",
-                    "start": "100353675",
-                    "end": "100353675",
-                    "ref": "G",
-                    "alt": "A",
-                    "qual": "826.34",
-                    "filter": "PASS",
-                    "Genotype": "het",
-                    "Genotype quality": "45",
-                    "Reads deeph": "10 on 63",
-                    "Ref,Alt filtered reads": "8,2",
-                    "Genotypes likelihood": "45,0,282",
-                    "Haplotype score": "0.1664",
-                    "Strand bias": ".",
-                    "dbSNP": "rs555929",
-                    "Freq ref": "0.3191",
-                    "Freq alt": "0.6809",
-                    "region": "intronic",
-                    "genes": "AGL",
-                    "Mutation": ".",
-                    "Annotation": ".",
-                    "SIFT": ".",
-                    "PolyPhen-2": ".",
-                    "MutationTaster": ".",
-                    "MutationAssessor": ".",
-                    "GERP++": ".",
-                    "PhyloP": ".",
-                    "SiPhy": ".",
-                    "ESP6500_ALL": "0.654852",
-                    "ESP6500_AA": "0.596686",
-                    "ESP6500_EA": "0.684651"
-                }
-            ];
+        ];
 
 
-            $scope.gridOptions = {
-                data: 'myData',
-                enableCellSelection: true,
-                enableRowSelection: false,
-                enableCellEdit: true,
-                columnDefs: [
-                    {field: 'chr', width: 120, displayName: 'chr', enableCellEdit: true},
-                    {field: 'start', width: 120, displayName: 'start', enableCellEdit: true},
-                    {field: 'end', width: 120, displayName: 'end', enableCellEdit: true},
-                    {field: 'ref', width: 120, displayName: 'ref', enableCellEdit: true},
-                    {field: 'alt', width: 120, displayName: 'alt', enableCellEdit: true},
-                    {field: 'qual', width: 120, displayName: 'qual', enableCellEdit: true},
-                    {field: 'filter', width: 120, displayName: 'filter', enableCellEdit: true},
-                    {field: 'Genotype', width: 120, displayName: 'Genotype', enableCellEdit: true},
-                    {field: 'Genotype_quality', width: 120, displayName: 'Genotype quality', enableCellEdit: true},
-                    {field: 'Reads_deeph', width: 120, displayName: 'Reads deeph', enableCellEdit: true},
-                    {field: 'Ref_Alt_filtered_reads', width: 120, displayName: 'Ref,Alt filtered reads', enableCellEdit: true},
-                    {field: 'Genotypes_likelihood', width: 120, displayName: 'Genotypes likelihood', enableCellEdit: true},
-                    {field: 'Haplotype_score', width: 120, displayName: 'Haplotype score', enableCellEdit: true},
-                    {field: 'Strand_bias', width: 120, displayName: 'Strand bias', enableCellEdit: true},
-                    {field: 'dbSNP', width: 120, displayName: 'dbSNP', enableCellEdit: true},
-                    {field: 'Freq_ref', width: 120, displayName: 'Freq ref', enableCellEdit: true},
-                    {field: 'region', width: 120, displayName: 'region', enableCellEdit: true},
-                    {field: 'genes', width: 120, displayName: 'genes', enableCellEdit: true},
-                    {field: 'Mutation', width: 120, displayName: 'Mutation', enableCellEdit: true},
-                    {field: 'Annotation', width: 120, displayName: 'Annotation', enableCellEdit: true},
-                    {field: 'SIFT', width: 120, displayName: 'SIFT', enableCellEdit: true},
-                    {field: 'PolyPhen-2', width: 120, displayName: 'PolyPhen-2', enableCellEdit: true},
-                    {field: 'MutationTaster', width: 120, displayName: 'MutationTaster', enableCellEdit: true},
-                    {field: 'MutationAssessor', width: 120, displayName: 'MutationAssessor', enableCellEdit: true},
-                    {field: 'GERP', width: 120, displayName: 'GERP++', enableCellEdit: true},
-                    {field: 'PhyloP', width: 120, displayName: 'PhyloP', enableCellEdit: true},
-                    {field: 'SiPhy', width: 120, displayName: 'SiPhy', enableCellEdit: true},
-                    {field: 'ESP6500_ALL', width: 120, displayName: 'ESP6500_ALL', enableCellEdit: true},
-                    {field: 'ESP6500_AA', width: 120, displayName: 'ESP6500_AA', enableCellEdit: true},
-                    {field: 'ESP6500_EA', width: 120, displayName: 'ESP6500_EA', enableCellEdit: true}
-                ]
-            };
+        $scope.parseForEdit($scope.myData);
 
-        }])
+        $scope.gridOptions = {
+            data: 'myData',
+            enableCellSelection: true,
+            enableRowSelection: false,
+            enableCellEdit: true,
+            columnDefs: [
+                {field: 'chr', width: 120, displayName: 'chr', enableCellEdit: true},
+                {field: 'start', width: 120, displayName: 'start', enableCellEdit: true},
+                {field: 'end', width: 120, displayName: 'end', enableCellEdit: true},
+                {field: 'ref', width: 120, displayName: 'ref', enableCellEdit: true},
+                {field: 'alt', width: 120, displayName: 'alt', enableCellEdit: true},
+                {field: 'qual', width: 120, displayName: 'qual', enableCellEdit: true},
+                {field: 'filter', width: 120, displayName: 'filter', enableCellEdit: true},
+                {field: 'Genotype', width: 120, displayName: 'Genotype', enableCellEdit: true},
+                {field: 'Genotype_quality', width: 120, displayName: 'Genotype quality', enableCellEdit: true},
+                {field: 'Reads_deeph', width: 120, displayName: 'Reads deeph', enableCellEdit: true},
+                {field: 'Ref_Alt_filtered_reads', width: 120, displayName: 'Ref,Alt filtered reads', enableCellEdit: true},
+                {field: 'Genotypes_likelihood', width: 120, displayName: 'Genotypes likelihood', enableCellEdit: true},
+                {field: 'Haplotype_score', width: 120, displayName: 'Haplotype score', enableCellEdit: true},
+                {field: 'Strand_bias', width: 120, displayName: 'Strand bias', enableCellEdit: true},
+                {field: 'dbSNP', width: 120, displayName: 'dbSNP', enableCellEdit: true},
+                {field: 'Freq_ref', width: 120, displayName: 'Freq ref', enableCellEdit: true},
+                {field: 'region', width: 120, displayName: 'region', enableCellEdit: true},
+                {field: 'genes', width: 120, displayName: 'genes', enableCellEdit: true},
+                {field: 'Mutation', width: 120, displayName: 'Mutation', enableCellEdit: true},
+                {field: 'Annotation', width: 120, displayName: 'Annotation', enableCellEdit: true},
+                {field: 'SIFT', width: 120, displayName: 'SIFT', enableCellEdit: true},
+                {field: 'PolyPhen-2', width: 120, displayName: 'PolyPhen-2', enableCellEdit: true},
+                {field: 'MutationTaster', width: 120, displayName: 'MutationTaster', enableCellEdit: true},
+                {field: 'MutationAssessor', width: 120, displayName: 'MutationAssessor', enableCellEdit: true},
+                {field: 'GERP', width: 120, displayName: 'GERP++', enableCellEdit: true},
+                {field: 'PhyloP', width: 120, displayName: 'PhyloP', enableCellEdit: true},
+                {field: 'SiPhy', width: 120, displayName: 'SiPhy', enableCellEdit: true},
+                {field: 'ESP6500_ALL', width: 120, displayName: 'ESP6500_ALL', enableCellEdit: true},
+                {field: 'ESP6500_AA', width: 120, displayName: 'ESP6500_AA', enableCellEdit: true},
+                {field: 'ESP6500_EA', width: 120, displayName: 'ESP6500_EA', enableCellEdit: true}
+            ]
+        };
+
+        $scope.saveOnDB = function(){
+
+            $scope.parseAfterEdit($scope.myData);
+           name = $scope.patient
+            console.log("Patient name = " + name)
+
+            var saveFunction = (Parse.saveInDbFromData);
+            saveFunction($scope.myData ,name); 
+        }
+
+    }])
 
 
         .controller('HistoryLoadCtrl' ['$scope' , '$http' , function ($scope, $http) {
