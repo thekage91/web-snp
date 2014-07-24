@@ -287,7 +287,7 @@ Griffith assumed the existence of a substance able to make the virulent strain o
 
 \vspace{1mm}
 
-Avery demostrated that this substance was DNA, but as? 
+Avery demostrated that this substance was DNA. How? 
 
 \begin{figure}[ht!]
 	\centering
@@ -324,6 +324,17 @@ Knowledge of the genome is therefore useful in any field of biology and medical.
 
 The advent of methods for DNA sequencing has significantly accelerated the search...
 
+
+# How to perform a DNA sequencing?
+
+## History of DNA Sequencing
+
+\begin{figure}[ht!]
+	\centering
+	\includegraphics[width=75mm]{../Images/DNASequencing_history.png}
+	\label{overflow}
+	\caption{History of DNA Sequencing}
+	\end{figure}
 
 ## Sequencing methods
 
@@ -397,7 +408,7 @@ The sequencer that generates the data managed by our web-app provides the result
 ADQLTEEQIAEFKEAFSLFDKDGDGTITTKELGTVMRSLGQNPTEAELQD
 \linebreak MINEVDADGNGTID
 FPEFLTMMARKMKDTDSEEEIREAFRVFDKDGNGYISAAELRHVMTNLGEKLTDEEVDEMIREA
-DIDGDGQVNYEEFVQMMTAK*
+DIDGDGQVNYEEFVQMMTAK
 
 # SNP Databases
 
