@@ -27,13 +27,13 @@ angular.module('mean.dashboard', ['angular-md5'])
                 $scope.jsonUpload = JSON.parse($window.output);
 
                 var saveFunction = (Parse.saveInDbFromData);
-                saveFunction($scope.jsonUpload,name).then(function () {
+                saveFunction($scope.jsonUpload,name); /*. then(function () {
                         console.log("OK");
                     }
                     , function (error) {
                         console.error("ERROR WHILE PARSING DATA: " + error)
                     });
-
+                */
 
             };
 

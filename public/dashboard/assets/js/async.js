@@ -1,272 +1,3 @@
-/**
- * Created by ugo on 7/21/14.
- */
-
-
-
-angular.module('ParseService', [])
-    // super simple service
-    // each function returns a promise object
-    .factory('Parse', function ($http, Model, Schema, $q,$timeout) {
-
-        function retrieveVariantDetail(data, variantSchema) {
-            var detail = (Schema.retrieveFromSchema)(data, variantSchema);
-            detail.altFilteredReads = data['Ref,Alt filtered reads'];
-            detail.ref = data['Ref,Alt filtered reads'];
-            return detail;
-        };
-
-        function retrievePathogenicity(data, pathogenicitySchema) {
-            var path = (Schema.retrieveFromSchema)(data, pathogenicitySchema);
-            path.GERpp = data['GERP++'];
-            path.SIFT = data['SIFT'];
-            path.polyPhen = data['PolyPhen-2'];
-            return path;
-        };
-
-
-
-        return {
-            saveInDbFromData: function (json, patientName) {
-
-                if(!json) console.log("JSON not passed correctly");
-                var returnValue = $q.defer();
-                var jsonWithIdToSave =  $q.defer();
-                var resultIDs = {};
-
-                var classes= ['variants','variantdetails','esps','genes','pathogenicities','dbsnps','patients'];
-                resultIDs.name = patientName;
-                resultIDs.ids = [];
-                for(var i=0;i<classes.length;i++)
-                {
-                    resultIDs.ids[classes[i]]= [];
-                }
-
-
-
-
-                var f1 = function (cb) {(Model.getAllSchemas)().then(
-                    function () {
-
-                        var patient = $q.defer();
-                        var schemas = (Schema.inizializeSchemasFromGET)(arguments[0]);
-                        console.info("Got schemas " );
-                        console.info(schemas);
-                        for (var key in json) if (json.hasOwnProperty(key))  break;
-                        var patientBeforeID = {name :patientName};
-
-                        $http.post('/api/Patient',patientBeforeID).success(
-                            function (res) {
-                            console.info(res);
-                            patientBeforeID._id = res.payload._id;
-                            console.log("Resolving patient");
-                            console.log(patientBeforeID)
-                            patient.resolve(patientBeforeID)}).error(
-                            function (err) {
-                                console.error("ERROR while saving patient: " + err);
-                                patient.reject(err);
-                            });
-                        var i;
-                        json[key].forEach(function (element) {
-                            i++;
-                            //build model classes
-                            var requests = [];
-                            var variant = (Schema.retrieveFromSchema)(element, schemas['Variant']);
-                            var detail = retrieveVariantDetail(element, schemas['VariantDetail']);
-                            var gene = (Schema.retrieveFromSchema)(element, schemas['Gene']);
-                            var dbsnp = (Schema.retrieveFromSchema)(element, schemas['DbSNP']);
-                            var pathogenicity = retrievePathogenicity(element, schemas['Pathogenicity']);
-                            var esp = (Schema.retrieveFromSchema)(element, schemas['Esp'], true);
-
-                            //TO REMOVE WHEN SOLVED INVALID PARSING
-                            esp.ESP6500_EA = '.';
-
-                            var models = [variant, detail, gene, dbsnp, pathogenicity, esp];
-                            var modelNames = ['Variant', 'VariantDetail', 'Gene', 'DbSNP', 'Pathogenicity', 'Esp'];
-
-                            for(var i=0;i<modelNames.length;i++) {
-                                requests[i] = $http.post('/api/'+modelNames[i],models[i]);
-                            }
-                            var onSuccess = function () {
-
-                                console.log(arguments);
-                                for (var i = 0; i < arguments[0].length; i++) {
-                                    if(arguments[0][i].data.payload._id === undefined) {
-                                        console.error("ERROR: arguments[0]["+i+'].data.payload._id undefined ');
-                                        console.error(arguments); }
-                                    models[i]._id = arguments[0][i].data.payload._id;
-                                }
-                                //build model relationships
-                                var i = 0;
-                                var temp = {};
-                                var relationRequest = [];
-
-                                temp = {variantDetails : detail._id};
-                                relationRequest[i++] = $http.post('/api/Variant/'+variant._id,temp);
-
-                                temp = {gene : gene._id};
-                                relationRequest[i++] = $http.post('/api/Variant/'+variant._id,temp);
-
-                                temp = {dbSNPs : dbsnp._id};
-                                relationRequest[i++] = $http.post('/api/Variant/'+variant._id,temp);
-
-                                temp = {pathogenicity : pathogenicity._id};
-                                relationRequest[i++] = $http.post('/api/Variant/'+variant._id,temp);
-
-                                temp = {esps : esp._id};
-                                relationRequest[i++] = $http.post('/api/Variant/'+variant._id,temp);
-
-                                temp = {patients : patient._id};
-                                relationRequest[i++] = $http.post('/api/Variant/'+variant._id,temp);
-
-
-                                temp = {variants : variant._id};
-                                relationRequest[i++] = $http.post('/api/Esp/'+esp._id,temp);
-                                relationRequest[i++] = $http.post('/api/DbSNP/'+dbsnp._id,temp);
-                                relationRequest[i++] = $http.post('/api/Gene/'+gene._id,temp);
-
-                                $http.get('/api/Patient/'+patient._id).success(function (data) {
-                                    console.log("Got: ",data.payload.variants);
-                                    console.log("Data che posterei: ",data.payload.variants.concat(variant._id));
-                                    $http({
-                                        method: 'POST',
-                                        url: '/api/Patient/'+patient._id,
-                                        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-                                        transformRequest: function(obj) {
-                                            var str = [];
-                                            for(var p in obj) if(obj.hasOwnProperty(p))
-                                                str.push(encodeURIComponent('variants') + "=" + encodeURIComponent(obj[p]));
-                                            console.log("La richiesta è così formulata: " + str.join("&"));
-                                            return str.join("&");
-                                        },
-                                        data: data.payload.variants.concat(variant._id)
-                                    }).success(function () {console.log("ALLZ OK")}).error(function(err) {
-                                        console.error("ERROR: " + JSON.stringify(err))
-                                    });
-                                })
-
-                                relationRequest[i++] = $http.post('/api/Patient/'+patient._id,temp);
-
-                                temp = {variant : variant._id};
-                                relationRequest[i++] = $http.post('/api/Pathogenicity/'+pathogenicity._id,temp);
-                                relationRequest[i++] = $http.post('/api/VariantDetail/'+detail._id,temp);
-
-                                $q.all(relationRequest).then(
-                                    function(doneData) {
-                                        console.info(' i = ' + i);
-                                        resultIDs.ids.variants.push(variant._id);
-                                        resultIDs.ids.pathogenicities.push(pathogenicity._id);
-                                        resultIDs.ids.dbsnps.push(dbsnp._id);
-                                        resultIDs.ids.esps.push(esp._id);
-                                        resultIDs.ids.genes.push(gene._id);
-                                        resultIDs.ids.variantdetails.push(detail._id);
-                                        resultIDs.ids.patient = patient;
-                                    if(i === (json[key].length - 1)) cb(null,resultIDs);
-
-                                    },function(err) {console.error("ERROR while saving relation: " + err)})
-
-
-
-                            };
-
-                            var then = function (patientLocal) { patient = patientLocal; $q.all(requests).then(onSuccess, function (err) {
-                                    console.error("Error: " + err);
-                                    returnValue.reject(err);
-                                }); };
-
-                            patient.promise.then(then);
-                        });
-
-
-
-                    } ,function(err) { console.error("Error: "+err); jsonWithIdToSave.reject(err);}); }
-
-                var f2 = function (cb) {jsonWithIdToSave.promise.then(
-                    function (data) {
-                     $timeout(function() {
-                          console.log("Now posting Upload ID");
-                          console.log(data);
-                          $http.post('api/upload',data).success(function() {  console.log("Post of upload went ok"); cb(null,data)} )
-                          },3000);
-
-                    },
-                    function(err) {
-                        console.error("Error: "+err); returnValue.reject(err);
-                    }); }
-
-                async.series([f1,f2],function () { console.info('FATTO'); })
-                ;
-            }
-
-
-
-
-
-        };
-    });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /*!
  * async
  * https://github.com/caolan/async
@@ -285,7 +16,7 @@ angular.module('ParseService', [])
 
     root = this;
     if (root != null) {
-        previous_async = root.async;
+      previous_async = root.async;
     }
 
     async.noConflict = function () {
@@ -375,8 +106,8 @@ angular.module('ParseService', [])
         async.nextTick = process.nextTick;
         if (typeof setImmediate !== 'undefined') {
             async.setImmediate = function (fn) {
-                // not a direct alias for IE10 compatibility
-                setImmediate(fn);
+              // not a direct alias for IE10 compatibility
+              setImmediate(fn);
             };
         }
         else {
@@ -394,16 +125,16 @@ angular.module('ParseService', [])
             iterator(x, only_once(done) );
         });
         function done(err) {
-            if (err) {
-                callback(err);
-                callback = function () {};
-            }
-            else {
-                completed += 1;
-                if (completed >= arr.length) {
-                    callback();
-                }
-            }
+          if (err) {
+              callback(err);
+              callback = function () {};
+          }
+          else {
+              completed += 1;
+              if (completed >= arr.length) {
+                  callback();
+              }
+          }
         }
     };
     async.forEach = async.each;
@@ -801,8 +532,8 @@ angular.module('ParseService', [])
     async.waterfall = function (tasks, callback) {
         callback = callback || function () {};
         if (!_isArray(tasks)) {
-            var err = new Error('First argument to waterfall must be an array of functions');
-            return callback(err);
+          var err = new Error('First argument to waterfall must be an array of functions');
+          return callback(err);
         }
         if (!tasks.length) {
             return callback();
@@ -1005,37 +736,37 @@ angular.module('ParseService', [])
             concurrency = 1;
         }
         function _insert(q, data, pos, callback) {
-            if (!q.started){
-                q.started = true;
-            }
-            if (!_isArray(data)) {
-                data = [data];
-            }
-            if(data.length == 0) {
-                // call drain immediately if there are no tasks
-                return async.setImmediate(function() {
-                    if (q.drain) {
-                        q.drain();
-                    }
-                });
-            }
-            _each(data, function(task) {
-                var item = {
-                    data: task,
-                    callback: typeof callback === 'function' ? callback : null
-                };
+          if (!q.started){
+            q.started = true;
+          }
+          if (!_isArray(data)) {
+              data = [data];
+          }
+          if(data.length == 0) {
+             // call drain immediately if there are no tasks
+             return async.setImmediate(function() {
+                 if (q.drain) {
+                     q.drain();
+                 }
+             });
+          }
+          _each(data, function(task) {
+              var item = {
+                  data: task,
+                  callback: typeof callback === 'function' ? callback : null
+              };
 
-                if (pos) {
-                    q.tasks.unshift(item);
-                } else {
-                    q.tasks.push(item);
-                }
+              if (pos) {
+                q.tasks.unshift(item);
+              } else {
+                q.tasks.push(item);
+              }
 
-                if (q.saturated && q.tasks.length === q.concurrency) {
-                    q.saturated();
-                }
-                async.setImmediate(q.process);
-            });
+              if (q.saturated && q.tasks.length === q.concurrency) {
+                  q.saturated();
+              }
+              async.setImmediate(q.process);
+          });
         }
 
         var workers = 0;
@@ -1048,14 +779,14 @@ angular.module('ParseService', [])
             started: false,
             paused: false,
             push: function (data, callback) {
-                _insert(q, data, false, callback);
+              _insert(q, data, false, callback);
             },
             kill: function () {
-                q.drain = null;
-                q.tasks = [];
+              q.drain = null;
+              q.tasks = [];
             },
             unshift: function (data, callback) {
-                _insert(q, data, true, callback);
+              _insert(q, data, true, callback);
             },
             process: function () {
                 if (!q.paused && workers < q.concurrency && q.tasks.length) {
@@ -1107,52 +838,52 @@ angular.module('ParseService', [])
     async.priorityQueue = function (worker, concurrency) {
 
         function _compareTasks(a, b){
-            return a.priority - b.priority;
+          return a.priority - b.priority;
         };
 
         function _binarySearch(sequence, item, compare) {
-            var beg = -1,
-                end = sequence.length - 1;
-            while (beg < end) {
-                var mid = beg + ((end - beg + 1) >>> 1);
-                if (compare(item, sequence[mid]) >= 0) {
-                    beg = mid;
-                } else {
-                    end = mid - 1;
-                }
+          var beg = -1,
+              end = sequence.length - 1;
+          while (beg < end) {
+            var mid = beg + ((end - beg + 1) >>> 1);
+            if (compare(item, sequence[mid]) >= 0) {
+              beg = mid;
+            } else {
+              end = mid - 1;
             }
-            return beg;
+          }
+          return beg;
         }
 
         function _insert(q, data, priority, callback) {
-            if (!q.started){
-                q.started = true;
-            }
-            if (!_isArray(data)) {
-                data = [data];
-            }
-            if(data.length == 0) {
-                // call drain immediately if there are no tasks
-                return async.setImmediate(function() {
-                    if (q.drain) {
-                        q.drain();
-                    }
-                });
-            }
-            _each(data, function(task) {
-                var item = {
-                    data: task,
-                    priority: priority,
-                    callback: typeof callback === 'function' ? callback : null
-                };
+          if (!q.started){
+            q.started = true;
+          }
+          if (!_isArray(data)) {
+              data = [data];
+          }
+          if(data.length == 0) {
+             // call drain immediately if there are no tasks
+             return async.setImmediate(function() {
+                 if (q.drain) {
+                     q.drain();
+                 }
+             });
+          }
+          _each(data, function(task) {
+              var item = {
+                  data: task,
+                  priority: priority,
+                  callback: typeof callback === 'function' ? callback : null
+              };
 
-                q.tasks.splice(_binarySearch(q.tasks, item, _compareTasks) + 1, 0, item);
+              q.tasks.splice(_binarySearch(q.tasks, item, _compareTasks) + 1, 0, item);
 
-                if (q.saturated && q.tasks.length === q.concurrency) {
-                    q.saturated();
-                }
-                async.setImmediate(q.process);
-            });
+              if (q.saturated && q.tasks.length === q.concurrency) {
+                  q.saturated();
+              }
+              async.setImmediate(q.process);
+          });
         }
 
         // Start with a normal queue
@@ -1160,7 +891,7 @@ angular.module('ParseService', [])
 
         // Override push to accept second parameter representing priority
         q.push = function (data, priority, callback) {
-            _insert(q, data, priority, callback);
+          _insert(q, data, priority, callback);
         };
 
         // Remove unshift function
@@ -1205,8 +936,8 @@ angular.module('ParseService', [])
                 }
 
                 var ts = typeof payload === 'number'
-                    ? tasks.splice(0, payload)
-                    : tasks.splice(0, tasks.length);
+                            ? tasks.splice(0, payload)
+                            : tasks.splice(0, tasks.length);
 
                 var ds = _map(ts, function (task) {
                     return task.data;
@@ -1260,8 +991,8 @@ angular.module('ParseService', [])
     async.log = _console_fn('log');
     async.dir = _console_fn('dir');
     /*async.info = _console_fn('info');
-     async.warn = _console_fn('warn');
-     async.error = _console_fn('error');*/
+    async.warn = _console_fn('warn');
+    async.error = _console_fn('error');*/
 
     async.memoize = function (fn, hasher) {
         var memo = {};
@@ -1288,7 +1019,7 @@ angular.module('ParseService', [])
                     var q = queues[key];
                     delete queues[key];
                     for (var i = 0, l = q.length; i < l; i++) {
-                        q[i].apply(null, arguments);
+                      q[i].apply(null, arguments);
                     }
                 }]));
             }
@@ -1299,9 +1030,9 @@ angular.module('ParseService', [])
     };
 
     async.unmemoize = function (fn) {
-        return function () {
-            return (fn.unmemoized || fn).apply(null, arguments);
-        };
+      return function () {
+        return (fn.unmemoized || fn).apply(null, arguments);
+      };
     };
 
     async.times = function (count, iterator, callback) {
@@ -1327,20 +1058,20 @@ angular.module('ParseService', [])
             var args = Array.prototype.slice.call(arguments);
             var callback = args.pop();
             async.reduce(fns, args, function (newargs, fn, cb) {
-                    fn.apply(that, newargs.concat([function () {
-                        var err = arguments[0];
-                        var nextargs = Array.prototype.slice.call(arguments, 1);
-                        cb(err, nextargs);
-                    }]))
-                },
-                function (err, results) {
-                    callback.apply(that, [err].concat(results));
-                });
+                fn.apply(that, newargs.concat([function () {
+                    var err = arguments[0];
+                    var nextargs = Array.prototype.slice.call(arguments, 1);
+                    cb(err, nextargs);
+                }]))
+            },
+            function (err, results) {
+                callback.apply(that, [err].concat(results));
+            });
         };
     };
 
     async.compose = function (/* functions... */) {
-        return async.seq.apply(null, Array.prototype.reverse.call(arguments));
+      return async.seq.apply(null, Array.prototype.reverse.call(arguments));
     };
 
     var _applyEach = function (eachfn, fns /*args...*/) {
@@ -1349,9 +1080,9 @@ angular.module('ParseService', [])
             var args = Array.prototype.slice.call(arguments);
             var callback = args.pop();
             return eachfn(fns, function (fn, cb) {
-                    fn.apply(that, args.concat([cb]));
-                },
-                callback);
+                fn.apply(that, args.concat([cb]));
+            },
+            callback);
         };
         if (arguments.length > 2) {
             var args = Array.prototype.slice.call(arguments, 2);
@@ -1393,4 +1124,3 @@ angular.module('ParseService', [])
     }
 
 }());
-
