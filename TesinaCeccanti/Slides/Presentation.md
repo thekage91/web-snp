@@ -346,7 +346,7 @@ Furthermore, there are various support database that allow, for example, to bind
 
 \begin{enumerate}
 	\item \textbf{OMIM} database describes the association between polymorphisms and diseases (e.g., gives diseases in text form)
-	\item \textbf{Human Gene Mutation Database} provides gene mutations causing or associ-ated with human inherited diseases and functional SNPs
+	\item \textbf{Human Gene Mutation Database} provides gene mutations causing or associated with human inherited diseases and functional SNPs
 	\item \textbf{GWAS Central} allows users to visually interrogate the actual summary-level association data in one or more genome-wide association studies
 	\item \ldots
 	\end{enumerate}
