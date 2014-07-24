@@ -10,8 +10,8 @@ function jsonConcat(o1, o2) {
 
 angular.module('mean.dashboard', ['angular-md5'])
 
-    .controller('UploaderCtrl', ['$scope', '$window', '$http', 'Model','Parse','Save','$q','$timeout',
-        function ($scope, $window, $http,Model,Parse,Save,$q,$timeout) {
+    .controller('UploaderCtrl', ['$scope', '$rootScope', '$window', '$http', 'Model','Parse','Save','$q','$timeout',
+        function ($scope, $rootScope, $window, $http,Model,Parse,Save,$q,$timeout) {
 
 
             var name;
@@ -21,12 +21,20 @@ angular.module('mean.dashboard', ['angular-md5'])
                 console.log("Save patient triggered. Name : "+ name );
             };
 
-            $scope.saveResult = function () {
-               name = $scope.patient
-                console.log("pATIENT nAME = " + name)
-                $scope.jsonUpload = JSON.parse($window.output);
+            $scope.parseResult = function () {
+               name = $rootScope.patient
+                console.log("Patient name = " + name)
+                $rootScope.myData = JSON.parse($window.output);
+                console.log($rootScope.myData);
+               for(var key in $rootScope.myData)
+                if ($rootScope.myData.hasOwnProperty(key))
+                break;
 
-                var saveFunction = (Parse.saveInDbFromData);
+
+                $rootScope.myData = $rootScope.myData[key];
+                //console.log($rootScope.myData);
+
+                /*var saveFunction = (Parse.saveInDbFromData);
                 saveFunction($scope.jsonUpload,name); /*. then(function () {
                         console.log("OK");
                     }
@@ -500,11 +508,11 @@ angular.module('mean.dashboard', ['angular-md5'])
     }])
 
 
-    .controller('SequencingEditCtrl', ['$scope', '$http', 'Parse', 'Save', function ($scope, $http, Parse, Save) {
+    .controller('SequencingEditCtrl', ['$scope', '$rootScope', '$rootScope', '$http', 'Parse', 'Save', function ($scope, $rootScope, $http, Parse, Save) {
 
         $scope.parseForEdit = function (dataParse) {
 
-            dataParse.forEach(function(json){
+            for(var json in dataParse){
 
                 json['Genotype_quality'] = json['Genotype quality'];
                 delete json['Genotype quality'];
@@ -529,14 +537,17 @@ angular.module('mean.dashboard', ['angular-md5'])
 
                 json['Freq_alt'] = json['Freq alt'];
                 delete json['Freq alt'];
-            });
+
+                json['GERP'] = json['GERP++'];
+                delete json['GERP++'];
+            }
 
             return dataParse;
         }
 
         $scope.parseAfterEdit = function (dataParse) {
 
-            dataParse.forEach(function(json){
+            for(var json in dataParse){
 
                 json['Genotype quality'] = json['Genotype_quality'];
                 delete json['Genotype_quality'];
@@ -561,13 +572,17 @@ angular.module('mean.dashboard', ['angular-md5'])
 
                 json['Freq alt'] = json['Freq_alt'];
                 delete json['Freq_alt'];
-            });
+
+                json['GERP++'] = json['GERP'];
+                delete json['GERP'];
+            }
 
             return dataParse;
         }
 
         //$scope.myData = [{name: "Moroni", age: 50}, {name: "Moroni", age: 50}]
-        $scope.myData = [
+        
+        /*$scope.myData = [
             {
                 "chr": "chr1",
                 "start": "100152443",
@@ -766,10 +781,13 @@ angular.module('mean.dashboard', ['angular-md5'])
                 "ESP6500_AA": "0.596686",
                 "ESP6500_EA": "0.684651"
             }
-        ];
+        ];*/
 
 
-        $scope.parseForEdit($scope.myData);
+        console.log($rootScope.myData);
+        $scope.parseForEdit($rootScope.myData);
+        $scope.myData = $rootScope.myData;
+        console.log($scope.myData);
 
         $scope.gridOptions = {
             data: 'myData',
@@ -810,6 +828,8 @@ angular.module('mean.dashboard', ['angular-md5'])
             ]
         };
 
+        console.log($rootScope.myData);
+
         $scope.saveOnDB = function(){
 
             $scope.parseAfterEdit($scope.myData);
@@ -823,85 +843,85 @@ angular.module('mean.dashboard', ['angular-md5'])
     }])
 
 
-        .controller('HistoryLoadCtrl' ['$scope' , '$http' , function ($scope, $http) {
+    .controller('HistoryLoadCtrl' ['$scope' , '$http' , function ($scope, $http) {
 
-            $http.get('/api/history')
-                .success(function (data) {
-                    $scope.sequencings = data.payload;
-                    console.log("[SUCCESS] Retrieve all sequencings");
-                })
-                .error(function (err) {
-                    console.log("[ERROR] Failed Retrieve all sequencings");
-                });
+        $http.get('/api/history')
+            .success(function (data) {
+                $scope.sequencings = data.payload;
+                console.log("[SUCCESS] Retrieve all sequencings");
+            })
+            .error(function (err) {
+                console.log("[ERROR] Failed Retrieve all sequencings");
+            });
 
-            $scope.removeSequencing = function (sequencing) {
+        $scope.removeSequencing = function (sequencing) {
 
-                for (item in $scope.sequencings) {
-                    var idsToRemove = item.item;
-                    for (itemDelete in idsToRemove) {
-                        for (idRemove in itemDelete.id) {
-                            $http.delete('/api/' + itemDelete.table + "/" + idRemove)
-                                .success(function (data) {
-                                })
-                                .error(function (err) {
-                                });
-                        }
+            for (item in $scope.sequencings) {
+                var idsToRemove = item.item;
+                for (itemDelete in idsToRemove) {
+                    for (idRemove in itemDelete.id) {
+                        $http.delete('/api/' + itemDelete.table + "/" + idRemove)
+                            .success(function (data) {
+                            })
+                            .error(function (err) {
+                            });
                     }
                 }
             }
-        }])
+        }
+    }])
 
 
-        .controller('ProfileCtrl', ['$scope' , 'md5', '$http' , function ($scope, md5, $http) {
+    .controller('ProfileCtrl', ['$scope' , 'md5', '$http' , function ($scope, md5, $http) {
 
-            //$scope.emailHash = md5.createHash($scope.user.email)
+        //$scope.emailHash = md5.createHash($scope.user.email)
 
-            $scope.emailHash = md5.createHash('thekage91@gmail.com')
-            console.log($scope.emailHash);
+        $scope.emailHash = md5.createHash('thekage91@gmail.com')
+        console.log($scope.emailHash);
 
-            $http.get('/api/user/' + $scope.global.user._id)
+        $http.get('/api/user/' + $scope.global.user._id)
+            .success(function (data) {
+                $scope._user = data.payload;
+                console.log("[SUCCESS] Retrive user " + $scope._user._id + " from database");
+            })
+            .error(function (err) {
+                console.log("[ERROR] Failed Retrive user " + $scope._user._id + " from database");
+            });
+
+        $scope.updateProfile = function (user) {
+
+            $http.post('/api/user/' + $scope.global.user._id, user)
                 .success(function (data) {
-                    $scope._user = data.payload;
-                    console.log("[SUCCESS] Retrive user " + $scope._user._id + " from database");
+                    console.log("[SUCCESS] Upload info of this user " + $scope.user._id);
                 })
-                .error(function (err) {
-                    console.log("[ERROR] Failed Retrive user " + $scope._user._id + " from database");
+                .error(function (data) {
+                    console.log("[ERROR] Error in upload info of this user " + $scope.user._id);
                 });
 
-            $scope.updateProfile = function (user) {
+        };
 
-                $http.post('/api/user/' + $scope.global.user._id, user)
-                    .success(function (data) {
-                        console.log("[SUCCESS] Upload info of this user " + $scope.user._id);
-                    })
-                    .error(function (data) {
-                        console.log("[ERROR] Error in upload info of this user " + $scope.user._id);
-                    });
+        $scope.cancelOperation = function () {
+            $scope.user = {};
+        }
 
-            };
+    }])
 
-            $scope.cancelOperation = function () {
-                $scope.user = {};
-            }
-
-        }])
-
-        .directive('gravatar', function () {
-            return {
-                restrict: 'AE',
-                replace: true,
-                scope: {
-                    name: '@',
-                    height: '@',
-                    width: '@',
-                    emailHash: '@'
-                },
-                link: function (scope, el, attr) {
-                    scope.defaultImage = 'https://www.mechanicpool.com/pictures/greypros.png';
-                },
-                template: '<img alt="{{ name }}" height="{{ height }}"  width="{{ width }}" src="https://secure.gravatar.com/avatar/{{ emailHash }}.jpg?s={{ width }}&d={{ defaultImage }}">'
-            };
-        })
+    .directive('gravatar', function () {
+        return {
+            restrict: 'AE',
+            replace: true,
+            scope: {
+                name: '@',
+                height: '@',
+                width: '@',
+                emailHash: '@'
+            },
+            link: function (scope, el, attr) {
+                scope.defaultImage = 'https://www.mechanicpool.com/pictures/greypros.png';
+            },
+            template: '<img alt="{{ name }}" height="{{ height }}"  width="{{ width }}" src="https://secure.gravatar.com/avatar/{{ emailHash }}.jpg?s={{ width }}&d={{ defaultImage }}">'
+        };
+    })
 
 
 
