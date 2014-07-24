@@ -238,11 +238,11 @@ Gene expression affected by this type of SNP is referred to as an \textbf{eSNP} 
 
 # How to found SNPs: DNA sequencing
 
-## DNA sequencing
+In order to understand, according to what already said, what a SNP can cause, we must first of all identify the SNP in the DNA of the subject under consideration.
 
-\vspace{5mm}
+\vspace{1mm}
 
-\emph{“DNA Sequencing is the process of determining the precise order of nucleotides within a DNA molecule. It includes any method or technology that is used to determine the order of the four bases — adenine, guanine, cytosine, and thymine — in a strand of DNA.”}
+There are many possible types of analysis that can be performed (DNA sequencing, capillary electrophoresis, mass spectrometry, electrochemical analysis, ...); in this essay we will look at the most common one: DNA Sequencing.
 
 ## History of DNA Sequencing
 
@@ -252,6 +252,78 @@ Gene expression affected by this type of SNP is referred to as an \textbf{eSNP} 
 	\label{overflow}
 	\caption{History of DNA Sequencing}
 	\end{figure}
+
+## Avery’s experiment
+
+The Avery experiment was based on the Griffith experiment.
+
+\vspace{1mm}
+
+Griffith used in his studies the \emph{Streptococcus pneumoniae}. 
+In particular, two of its strains:
+
+\begin{itemize}
+	\item the \textbf{S strain}, which can cause pneumonia in guinea pigs (virulent strain)
+	\item the \textbf{R strain} is not able to cause pneumonia in guinea pigs (avirulent strain)
+\end{itemize}
+
+
+## Griffith’s experiment
+
+Griffith in his experiments verified and demonstrated that:
+
+\vspace{1mm}
+
+\begin{enumerate}
+	\item Injection in mouse of the strain S caused disease and death and was possible to isolate S bacteria from the tissues of the animal
+	\item Injection in mouse of the strain R did not cause disease and was not possible to isolate R bacteria from the tissues of the animal
+	\item Injection in mouse of the strain S, killed after heat treatment, did not cause disease and was not isolatable from the tissues of the animal
+	\item Injection in mice of a mixture of bacteria, S killed after thermal treatment and R live bacteria was able to cause disease and death of the animal. From the tissues of mouse could isolate live S bacteria strain.
+\end{enumerate}
+
+## Griffith suppose and Avery demostrated
+
+Griffith assumed the existence of a substance able to make the virulent strain of bacteria R, but could not identify this substance.
+
+\vspace{1mm}
+
+Avery demostrated that this substance was DNA, but as? 
+
+\begin{figure}[ht!]
+	\centering
+	\includegraphics[width=75mm]{../Images/Avery_mouse.png}
+	\label{overflow}
+	\caption{Avery's experiment}
+	\end{figure}
+
+## History of DNA Sequencing
+
+\begin{figure}[ht!]
+	\centering
+	\includegraphics[width=75mm]{../Images/DNASequencing_history.png}
+	\label{overflow}
+	\caption{History of DNA Sequencing}
+	\end{figure}
+
+## DNA sequencing
+
+\vspace{5mm}
+
+\emph{“DNA Sequencing is the process of determining the precise order of nucleotides within a DNA molecule. It includes any method or technology that is used to determine the order of the four bases — adenine, guanine, cytosine, and thymine — in a strand of DNA.”}
+
+Knowledge of the genome is therefore useful in any field of biology and medical.
+
+\begin{itemize}
+	\item identify and diagnose hereditary diseases
+	\item development of medicines against infectious diseases 
+	\item large-scale sequencing of the human genome
+	\item sequencing of the genome of different plant and animal organisms.
+\end{itemize}
+
+\vspace{0.5mm}
+
+The advent of methods for DNA sequencing has significantly accelerated the search...
+
 
 ## Sequencing methods
 
