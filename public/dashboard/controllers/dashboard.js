@@ -303,6 +303,9 @@ angular.module('mean.dashboard', ['angular-md5'])
 
     .controller('ExecuteQueryCtrl', ['$scope', '$http', function ($scope, $http) {
         var element;
+        $scope.chooseFilterRegion = "";
+        $scope.chooseFilterMutation = "";
+
 
         var successInitialQuery = function (data) {
             $scope.elements = [];
@@ -349,6 +352,14 @@ angular.module('mean.dashboard', ['angular-md5'])
         $scope.elValue = function (x) {
             element = x;
         };
+
+        $scope.valueRefineMutation = function(x){
+            $scope.chooseFilterMutation = x;
+        }
+
+        $scope.valueRefineRegion = function(x){
+            $scope.chooseFilterRegion = x;
+        }
 
         $scope.submitBase = function () {
             var keyword = $scope.query.keyword;
