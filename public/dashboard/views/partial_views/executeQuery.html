@@ -7,6 +7,28 @@
   <hr>
 </div>
 
+<script type="text/javascript">
+   function changeLabel(value) {
+       var e = document.getElementById('search_concept');
+       e.innerHTML = value;
+   }
+
+   function changeLabel2(value) {
+       var e = document.getElementById('refine_value');
+       e.innerHTML = value;
+   }
+
+   function changeLabel3(value) {
+       var e = document.getElementById('refine_value_first');
+       e.innerHTML = value;
+   }
+
+   function changeLabel4(value) {
+       var e = document.getElementById('refine_value_second');
+       e.innerHTML = value;
+   }
+</script>
+
 <ul class="nav nav-tabs" ng-controller="ExecuteQueryCtrl">
       <li class="text-left"><a href="#basic" data-toggle="tab" ng-click="clear()">Basic SNPs Search</a></li>
       <li class="text-left"><a href="#complex" data-toggle="tab" ng-click="clear()">Range SNPs Search</a></li>
@@ -55,7 +77,7 @@
                 <ul class="dropdown-menu" role="menu">
                   <li><a ng-click="valueRefineMutation('nonsynonymous SNV')">nonsynonymous SNV</a></li>
                   <li><a ng-click="valueRefineMutation('synonymous SNV')">synonymous SNV</a></li>
-                  <li><a ng-click="valueRefineMutation('all')">all</a></li>
+                  <li><a ng-click="valueRefineMutation('All Mutation')">All Mutation</a></li>
                 </ul>
               </div>
 
@@ -68,7 +90,7 @@
                   <li><a ng-click="valueRefineRegion('UTR3')" >UTR3</a></li>
                   <li><a ng-click="valueRefineRegion('exonic')" >exonic</a></li>
                   <li><a ng-click="valueRefineRegion('intronic')" >intronic</a></li>
-                   <li><a ng-click="valueRefine('all')" >all</a></li>
+                   <li><a ng-click="valueRefine('All Region')" >All Region</a></li>
                 </ul>              
               </div>
             </div>

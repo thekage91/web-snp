@@ -354,11 +354,23 @@ angular.module('mean.dashboard', ['angular-md5'])
         };
 
         $scope.valueRefineMutation = function(x){
-            $scope.chooseFilterMutation = x;
+
+            if(x === "All Mutation"){
+               $scope.chooseFilterMutation = "";
+            }
+            else{
+                $scope.chooseFilterMutation = x;
+            }
         }
 
         $scope.valueRefineRegion = function(x){
-            $scope.chooseFilterRegion = x;
+
+            if(x === "All Region"){
+                $scope.chooseFilterRegion = "";                
+            }
+            else{
+                $scope.chooseFilterRegion = x;
+            }
         }
 
         $scope.submitBase = function () {
