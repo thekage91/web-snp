@@ -1,4 +1,4 @@
-<div class="col-lg-11" ng-show="global.user.roles.indexOf('admin') > -1">
+<div ng-show="global.user.roles.indexOf('admin') > -1">
 
 <div class="row">
   <h1 class="section-header">Sequencing Upload History</h1>  
@@ -6,12 +6,13 @@
   <hr>
 </div>
 
-<div class="row bot15" ng-controller="UploaderCtrl">
+<div class="row">
   <h4>These are all the uploads you have done:</h4>
   
-  <div class="row" style="height: 500px; overflow-y: auto; margin-top: 50px">
+  <!-- style="height: 500px; overflow-y: auto; margin-top: 50px" -->
+  <div class="row" >
 
-  <table class="table table-bordered" ng-show="!showEditFamily">
+  <table class="table table-bordered">
     <thead>
       <tr>
         <th>Name</th>

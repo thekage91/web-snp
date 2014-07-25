@@ -1,4 +1,4 @@
-<div class="col-lg-11" ng-controller="AuthorizerUserCtrl" ng-show="global.user.roles.indexOf('admin') > -1">
+<div ng-controller="AuthorizerUserCtrl" ng-show="global.user.roles.indexOf('admin') > -1">
 
 <div class="row">
   <h1 class="section-header">Authorize Users</h1>  
@@ -101,7 +101,8 @@
   </div>
 </div>
 
-<div class="row" style="height: 500px; overflow-y: auto; margin-top: 50px">
+<!-- style="height: 500px; overflow-y: auto; margin-top: 50px" -->
+<div class="row">
   <div id="searchResults" class="row">
 
       <table class="table table-bordered">

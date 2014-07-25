@@ -1,4 +1,4 @@
-<div id="main" ng-controller="FamilyCtrl" ng-show="global.user.roles.indexOf('admin') > -1">
+<div ng-controller="FamilyCtrl" ng-show="global.user.roles.indexOf('admin') > -1">
 
   <div class="row">
 
@@ -124,8 +124,8 @@
         </div>
       </div>
 
-      
-      <div class="row" style="height: 500px; overflow-y: auto; margin-top: 50px">
+      <!-- style="height: 500px; overflow-y: auto; margin-top: 50px" -->
+      <div class="row" >
           <div>
             <table class="table table-bordered" ng-show="showEditFamilies(!showEditFamily)">
               <thead>
