@@ -44,6 +44,19 @@
         <div class="navbar-default navbar-static-side " role="navigation" ng-controller="SidebarCtrl" data-ng-show="global.authenticated">
             <div class="sidebar-collapse">
                 <ul class="nav" id="side-menu">   
+                    <!--<li>
+                            <div class="col-md-4">
+                                <span gravatar name="{{ global.user.name }}" email-hash="{{ emailHash }}" width="50" height="50"></span>
+                            </div>
+
+                            <div class="col-md-8">
+                                <h5>{{ global.user.username }}</h5>
+                                <ul class="user-info">
+                                    <li ng-show="global.user.roles.indexOf('admin') > -1">Admin</li>
+                                    <li ng-show="global.user.roles.indexOf('admin') < 0">Licensed</li>
+                                </ul>
+                            </div>
+                    </li>-->
                     <li>
                         <a hidden id="home" ui-sref="dashboard.home"><i class="fa fa-home fa-fw"></i>Home</a>
                     </li>
@@ -56,7 +69,6 @@
                         <a hidden id="query" ui-sref="dashboard.executeQuery"><i class="fa fa-search fa-fw"></i>Execute Query</a>
                     </li>
 
-                    <!-- queste tre cose puo' farle solo l'admin -->
                     <li>
                         <a id="upload" ui-sref="dashboard.uploadSequencing"
                             ng-show="global.user.roles.indexOf('admin') > -1"><i class="fa fa-upload fa-fw"></i>Sequencing Upload</a>
