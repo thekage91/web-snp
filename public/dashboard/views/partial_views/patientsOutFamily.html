@@ -1,0 +1,46 @@
+
+<div class="row">
+	<h1 class="section-header">Patients Out Family</h1>
+	<hr>
+</div>
+
+<div class="row" ng-controller="PatientsCtrl">
+
+	<div id="custom-search-input" class="col-md-9 bot15">
+	    <div class="input-group col-md-4 pull-left">
+	      <input type="search" class="search-query form-control" placeholder="Type here" ng-model="searchPatients" />
+	      <span class="input-group-btn">
+	        <button class="btn btn-danger" type="button">
+	          <span class="glyphicon glyphicon-search"></span>
+	        </button>
+	      </span>
+	    </div>
+  	</div>
+
+  	<table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Details</th>
+          </tr>
+        </thead>
+        <tbody >
+          <tr ng-repeat="patient in patients | filter:searchPatients">
+            <td>{{ patient.name }}</td>
+            <td>
+            	<div class="controls-group">
+		            <button class="btn btn-success" type="button" ng-click="addToFamily(patient)">
+			          <span class="glyphicon glyphicon-plus"></span>
+			          Add to Family
+			        </button>
+			        <button class="btn btn-danger" type="button" ng-click="viewPatientDetail(patient)">
+			          <span class="glyphicon glyphicon-primary"></span>
+			          Details
+			        </button>
+			    </div>
+            </td>
+          </tr>
+        </tbody>
+    </table>
+
+</div>
