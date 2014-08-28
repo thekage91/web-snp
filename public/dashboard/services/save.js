@@ -1,14 +1,10 @@
-
 //Created by ugo on 7/21/14.
-
-
-
 
 
 angular.module('SaveService', [])
     // super simple service
     // each function returns a promise object
-    .factory('Save', function ($http, Model, Schema, $q,$resource) {
+    .factory('Save', function ($http, $rootScope, Model, Schema, $q, $resource) {
 
         saveForEachElemento = function (element, modelName) {
             var requests = [];
@@ -33,7 +29,7 @@ angular.module('SaveService', [])
             ;
         }
 
-        saveForEachElement =  function (allElementsOfAType, modelName) {
+        saveForEachElement = function (allElementsOfAType, modelName) {
             var arrayAttributes = [];
             var requests = [];
 
@@ -47,23 +43,22 @@ angular.module('SaveService', [])
                 $http.post('/api/' + modelName, singleElement).success(function (data) {
                     var id = data.payload._id;
                     for (var attribute in singleElement) {
-                    if (singleElement.hasOwnProperty(attribute)) {
-                        if (singleElement[attribute] instanceof Array) {
-                            singleElement[attribute].forEach(function (elOfArrayAttribute) {
-                                ;
-                                (temp = {})[attribute] = elOfArrayAttribute;
-                                arrayRequests.push($resource('/api/'+modelName+'/'+id));
-                                if (!(arrayRequests[id] instanceof Array))
-                                    arrayRequests[id] = []
-                                arrayRequests[id].push(temp);
-                                delete singleElement[attribute];
-                            })
-                        }
+                        if (singleElement.hasOwnProperty(attribute)) {
+                            if (singleElement[attribute] instanceof Array) {
+                                singleElement[attribute].forEach(function (elOfArrayAttribute) {
+                                    ;
+                                    (temp = {})[attribute] = elOfArrayAttribute;
+                                    arrayRequests.push($resource('/api/' + modelName + '/' + id));
+                                    if (!(arrayRequests[id] instanceof Array))
+                                        arrayRequests[id] = []
+                                    arrayRequests[id].push(temp);
+                                    delete singleElement[attribute];
+                                })
+                            }
                         }
                     }
 
                 })
-
 
 
                 console.log("Array Request:");
@@ -75,16 +70,16 @@ angular.module('SaveService', [])
                     arrayRequests[newId] = arrayRequests[key];
                     delete arrayRequests[key];
 
-                if(arrayRequests[newId])
+                    if (arrayRequests[newId])
                         arrayRequests[newId].forEach(function (value, index) {
-                            console.log('post /api/' + modelName + '/' + newId+'Dell oggetto');
+                            console.log('post /api/' + modelName + '/' + newId + 'Dell oggetto');
                             console.log(value);
-                            $http.post('/api/' + modelName + '/' + newId, value).catch( function(err) {
+                            $http.post('/api/' + modelName + '/' + newId, value).catch(function (err) {
                                 console.error('ERROR IN POST /api/' + modelName + '/' + newId + ': ' + JSON.stringify(err))
                             })
                         })
-                    })
-                }
+                })
+            }
 
             deferred.resolve(arrayRequests);
             deferred.all(requests).success()
@@ -96,59 +91,92 @@ angular.module('SaveService', [])
         }
 
 
+        return {
+            saveModel: function (element, data) {
+                return $http.post('/api/' + element, data)
+            },
 
+            saveParsedData: function (data) {
+                var ok = true;
+                var current;
+                for (element in data) {
 
-return {
-    saveModel: function (element, data) {
-        return $http.post('/api/' + element, data)
-    },
+                    if (data.hasOwnProperty(element)) {
+                        switch (element) {
+                            case 'variants':
+                                current = 'Variant';
+                                break;
+                            case 'details':
+                                current = 'VariantDetail';
+                                break;
+                            case 'pathogenicities':
+                                current = 'Pathogenicity';
+                                break;
+                            case 'dbsnps':
+                                current = 'DbSNP';
+                                break;
+                            case 'esps':
+                                current = 'Esp';
+                                break;
+                            case 'genes':
+                                current = 'Gene';
+                                break;
+                            case 'patient':
+                                current = 'Patient';
+                                break;
+                            default:
+                                console.log("ERROR: while parsing data. Not recognized object: " + element);
+                                break;
+                        }
 
-    saveParsedData : function (data) {
-        var ok = true;
-        var current;
-        for (element in data) {
-
-            if (data.hasOwnProperty(element)) {
-                switch (element) {
-                    case 'variants':
-                        current = 'Variant';
-                        break;
-                    case 'details':
-                        current = 'VariantDetail';
-                        break;
-                    case 'pathogenicities':
-                        current = 'Pathogenicity';
-                        break;
-                    case 'dbsnps':
-                        current = 'DbSNP';
-                        break;
-                    case 'esps':
-                        current = 'Esp';
-                        break;
-                    case 'genes':
-                        current = 'Gene';
-                        break;
-                    case 'patient':
-                        current = 'Patient';
-                        break;
-                    default:
-                        console.log("ERROR: while parsing data. Not recognized object: " + element);
-                        break;
+                        var saveResult = saveForEachElement(data[element], current);
+                        saveResult.then(function (err) {
+                            //console.log("response: " + JSON.stringify(err));
+                            ok = false
+                        })
+                    }
                 }
+                ;
+                return ok;
+            },
 
-                var saveResult = saveForEachElement(data[element], current);
-                saveResult.then(function (err) {
-                    //console.log("response: " + JSON.stringify(err));
-                    ok = false
-                })
+            saveForEachElement: saveForEachElement,
+
+            saveClassFromList: function (singleAttList, schemaName, schemaAttributes) {
+
+
+                var associatedAttributes = (Schema.retrieveFromSchema)(singleAttList, schemaAttributes);
+
+                return (Model.create)(schemaName, associatedAttributes);/*.then( function(data) {
+                    hashNameVariable[schemaName] = data.payload;*/
+
+          /*      var requests = [];
+                var dataFromPost = $q.defer();
+                var i=0;
+                for (var name in hashNameVariable) {
+                    if ((hashNameVariable.hasOwnProperty(name) ) && (name !== 'Patient')) {
+                        requests[i++] = name;
+                        console.log("NAME = " + name);
+                        var associatedAttributes = (Schema.retrieveFromSchema)(singleAttributesList, schemas[name]);
+
+                        dataFromPost.promise.then(function (data) {
+                            console.log('inserendo in campo '+name+' di hash questo: ')
+                            console.log(data);
+                            hashNameVariable[name] = data;
+                        });
+
+                        (Model.create)(name, associatedAttributes).success(function (data) {
+                            dataFromPost.resolve(data.payload);
+                        });
+
+                        //requests[i] = (Model.create)(nema,associatedAttributes);
+                    }
+
+                }
+*/
+
             }
+
         }
-        ;
-        return ok;
-    },
-
-    saveForEachElement: saveForEachElement
-
-}
-})
+    })
 ;

@@ -1,5 +1,12 @@
 'use strict';
 
+function jsonConcat(o1, o2) {
+    for (var key in o2) if(o2.hasOwnProperty(key)){
+        o1[key] = o2[key];
+    }
+    return o1;
+}
+
 
 angular.module('mean.dashboard', ['angular-md5'])
 
@@ -20,13 +27,13 @@ angular.module('mean.dashboard', ['angular-md5'])
                 $scope.jsonUpload = JSON.parse($window.output);
 
                 var saveFunction = (Parse.saveInDbFromData);
-                saveFunction($scope.jsonUpload,name).then(function () {
+                saveFunction($scope.jsonUpload,name); /*. then(function () {
                         console.log("OK");
                     }
                     , function (error) {
                         console.error("ERROR WHILE PARSING DATA: " + error)
                     });
-
+                */
 
             };
 
@@ -34,11 +41,11 @@ angular.module('mean.dashboard', ['angular-md5'])
         }])
 
 
-    .controller('AuthorizerUserCtrl', ['$scope' , '$http' , function ($scope, $http) {
+    .controller('AuthorizerUserCtrl', ['$scope' , '$http' , 'md5', function ($scope, $http, md5) {
 
         $scope.formData = {};
 
-        /* Quando LA pagina viene caricata, tutti gli utenti vengono mostrati
+        /* Quando la pagina viene caricata, tutti gli utenti vengono mostrati
          Questo viene realizzato attraverso una chiamata http all'api definita
          in /server/route/users.js
          Che restitusice un json con tutti gli utenti
@@ -48,11 +55,16 @@ angular.module('mean.dashboard', ['angular-md5'])
             .success(function (data) {
                 $scope.users = data.payload;
                 console.log("[DEBUG] Retrive this users " + data.payload);
+
+                $scope.users.forEach(function(user){
+                    user.emailHash = md5.createHash(user.email);
+                });
             })
             .error(function (data) {
                 console.log("[ERROR] Failed retrieve all users");
             });
 
+        
 
         $scope.authorizeUser = function (user) {
             console.log(user);
@@ -293,7 +305,7 @@ angular.module('mean.dashboard', ['angular-md5'])
         var element;
 
         var successInitialQuery = function (data) {
-            $scope.elements = new Array();
+            $scope.elements = [];
             console.log("QUERY SUCCEDED. RECEIVED:" + JSON.stringify(data));
 
             data.payload.forEach(function (payload) {
@@ -301,8 +313,15 @@ angular.module('mean.dashboard', ['angular-md5'])
 
                     $http.get('/api/variant/' + variant)
                         .success(function (data) {
-                            console.log('Got variant');
-                            $scope.elements.push(data.payload);
+                        console.log('Got variant');
+                        console.log(data);
+                        var o1 = data.payload;
+                        $http.get('/api/gene/' + o1.gene).success( function(data) {
+                            console.log('Got gene related to Variant');
+                            var o2 = data.payload;
+                            $scope.elements.push(jsonConcat(o1,o2))
+                        })
+
                         })
                         .error(function () {
                             console.log('[ERROR] Failed retrieving variant  ith ID: ' + variant);
@@ -312,7 +331,14 @@ angular.module('mean.dashboard', ['angular-md5'])
                     $http.get('/api/variant/' + payload.variant)
                         .success(function (data) {
                             console.log('Got variant');
-                            $scope.elements.push(data.payload);
+                            console.log(data);
+                            var o1 = data.payload;
+                            $http.get('/api/gene/' + o1.gene).success( function(data) {
+                                console.log('Got gene related to Variant');
+                                var o2 = data.payload;
+                                $scope.elements.push(jsonConcat(o1,o2))
+                            })
+
                         })
                         .error(function () {
                             console.log('[ERROR] Failed retrieving variant  ith ID: ' + variant);
@@ -341,7 +367,7 @@ angular.module('mean.dashboard', ['angular-md5'])
                     break;
 
                 case 'patient':
-                    $http.get('/api/patient/' + keyword)
+                    $http.get('/api/patient/finder/query?name=' + keyword)
                         .success(successInitialQuery)
                         .error(function (data) {
                             console.log('[ERROR] Failed retrieving gene with gene field: ' + keyword);
@@ -356,7 +382,7 @@ angular.module('mean.dashboard', ['angular-md5'])
                         });
                     break;
                 case 'freqAlt':
-                case 'dbsnp':
+                case 'dbSNP':
                     $http.get('/api/dbsnp/finder/query?' + element + '=' + keyword)
                         .success(successInitialQuery)
                         .error(function (data) {
@@ -381,15 +407,24 @@ angular.module('mean.dashboard', ['angular-md5'])
                 $scope.chr + '&start=' +
                 $scope.start + '&end=' + $scope.end)
                 .success(function (data) {
-                    console.log('Got variant: ' + JSON.stringify(data));
-                    $scope.elements = new Array();
-                    $scope.elements = data.payload;
-                    console.log('dovrei : ' + JSON.stringify($scope.elements));
-                })
-                .error(function (data) {
-                    console.log('[ERROR] Failed retrieving variant with thath field: ');
+                    $scope.elements = []
+                    console.info("Retrieved this variant from range query: ")
+                    console.info(data);
+                    data.payload.forEach(function (o1) {
+                      $http.get('/api/gene/' + o1.gene).success( function(data) {
+                                console.log('Got gene related to Variant');
+                                var o2 = data.payload;
+                                $scope.elements.push(jsonConcat(o1,o2))
+                            })
+
+                        })
+
+                }).error(function () {
+                    console.log('[ERROR] Failed retrieving variant  ith ID: ' + variant);
                 });
-        };
+
+
+            }
 
         var getVariantFromDetail = function (variant) {
 

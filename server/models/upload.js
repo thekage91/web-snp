@@ -4,7 +4,6 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
-    angoose = require("angoose"),
     Schema = mongoose.Schema,
     crypto = require('crypto');
 
@@ -12,52 +11,9 @@ function validatePresenceOf(x) {
     return true;
 }
 
-var idSchema = new Schema({
-    variants: [
-        {
-            type: Schema.Types.ObjectId,
-            required: true }
-    ],
-
-    variantdetails: [
-        {
-            type: Schema.Types.ObjectId,
-            required: true }
-    ],
-
-    genes: [
-        {
-            type: Schema.Types.ObjectId,
-            required: true }
-    ],
-
-    esps: [
-        {
-            type: Schema.Types.ObjectId,
-            required: true }
-    ],
-
-    pathogenicities: [
-        {
-            type: Schema.Types.ObjectId,
-            required: true }
-    ],
-
-    patients: [
-        {
-            type: Schema.Types.ObjectId,
-            required: true }
-    ],
-
-    dbsnps: [
-        {
-            type: Schema.Types.ObjectId,
-            required: true }
-    ] })
-
 /* Upload schema */
 var UploadSchema = new Schema({
-    name: {
+    patientName: {
         type: String,
         required: true,
         validate: [validatePresenceOf, 'Name cannot be blank']
@@ -67,9 +23,50 @@ var UploadSchema = new Schema({
         default: Date.now
     },
 
-    ids: [idSchema]
+    ids: {
+     variants: [
+    {
+        type: Schema.Types.ObjectId,
+        default: [] }
+],
 
-}, { versionKey: false });
+    variantdetails: [
+    {
+        type: Schema.Types.ObjectId,
+        default: [] }
+],
+
+    genes: [
+    {
+        type: Schema.Types.ObjectId,
+        default: [] }
+],
+
+    esps: [
+    {
+        type: Schema.Types.ObjectId,
+        default: [] }
+],
+
+    pathogenicities: [
+    {
+        type: Schema.Types.ObjectId,
+        default: [] }
+],
+
+    patients: [
+    {
+        type: Schema.Types.ObjectId,
+        default: [] }
+],
+
+    dbsnps: [
+    {
+        type: Schema.Types.ObjectId,
+        default: [] }
+]
+
+}  }, { versionKey: false });
 
 
 UploadSchema.statics.query = function query(q) {

@@ -97,7 +97,8 @@ var SequencingSchema = new Schema({
     //Relationship
     variants: [{
         type: Schema.ObjectId,
-        ref: 'Variant'
+        ref: 'Variant',
+        default: []
     }]
 },{ versionKey: false });
 

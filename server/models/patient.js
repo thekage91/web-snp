@@ -19,7 +19,8 @@ var PatientSchema = new Schema({
 	//Relationship
 	variants: [{
 		type: Schema.ObjectId,
-		ref: 'Variant'
+		ref: 'Variant',
+        default: []
 	}],
 
 	family: {
@@ -29,8 +30,8 @@ var PatientSchema = new Schema({
 
 } );   //,{ versionKey: false });
 
-PatientSchema.statics.findPatientSNPS = function findPatientSNPS() {
-    return this.find({'title':new RegExp(q.title || term, 'i')});
+PatientSchema.statics.query = function query(q) {
+    return this.find(q);
 };
 
 var model =  mongoose.model('Patient', PatientSchema);
