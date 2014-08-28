@@ -33,7 +33,6 @@ angular.module('ParseService', [])
             relationRequest[i++] = (Model.createRelationship)(variantid,'patients',patientid,'Variant');
 
             relationRequest[i++] = (Model.createRelationship)(espid,'variants',variantid,'Esp');
-            relationRequest[i++] = (Model.createRelationship)(espid,'patients',patientid,'Esp');
 
             relationRequest[i++] = (Model.createRelationship)(dbsnpid,'variants',variantid,'DbSNP');
 

@@ -44,23 +44,12 @@ module.exports = function (app, passport) {
                 console.log("error " + err);
             if (!element) {
                 console.error("/api/array cant find id: " + req.params.id);
-                return res.status(400).send('Id added. all ok')
+                return res.status(400).send('Cant find '+model+' element with ID: '+ idToAdd)
             }
-
-            if (model === 'Upload')
-                element.ids[field].push(idToAdd);
-            else {
-                if (element[field]) {
                     if (element[field] instanceof Array)
                         element[field].push(idToAdd);
                     else
                         element[field] = idToAdd;
-                }
-                else {
-                    console.error("cant find " + field + " of " + element);
-                    return res.status(400).send("cant find " + field + " of " + element);
-                }
-            }
 
             element.save(function (err) {
                 if (err) console.error("Error while saving ID!" + err);
