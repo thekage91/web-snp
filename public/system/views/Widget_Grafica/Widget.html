@@ -1,287 +1,293 @@
-<style>
-  body{
-    margin: 0;
-    overflow: hidden;
-  }
-  #menu {
-    position: absolute;
-    bottom: 20px;
-    width: 100%;
-    text-align: center;
-  }
-  #stats {  /* Align stats top-left */
-    position: absolute;
-    left: 0px;
-    top: 0px;
-  }
-  button {
-    color: rgba(127,255,255,0.75);
-    background: transparent;
-    outline: 1px solid rgba(127,255,255,0.75);
-    border: 0px;
-    padding: 5px 10px;
-    cursor: pointer;
-  }
-  button:hover {
-    background-color: rgba(0,255,255,0.5);
-  }
-  button:active {
-    color: #000000;
-    background-color: rgba(0,255,255,0.75);
-  }
-</style> 
+<!DOCTYPE html>
+<html>
+  <head> 
+    <title>What is a SNP?</title>
 
-<!-- JavaScript libraries -->
-<script src="libs/jquery.min.js"></script> 
-<script src="libs/three.min.js"></script>
-<script src="libs/Stats.min.js"></script>
-<script src="libs/dat.gui.min.js"></script>
-<script src="libs/TrackballControls.js"></script>
-<script src="libs/tween.min.js"></script>
-<script src="libs/OBJLoader.js"></script>
-<script type="text/javascript" src="libs/helvetiker_regular.typeface.js"></script> 
-<script type="text/javascript" src="libs/helvetiker_bold.typeface.js"></script> 
-<script type="text/javascript" src="libs/bitstream_vera_sans_mono_roman.typeface.js"></script>
-<script src="libs/keyframe.js"></script>
-<script src="libs/CurveExtras.js"></script>
-<script src="js/tween_animation.js"></script>
-
-<script src="adenine.js"></script>
-<script src="cytosine.js"></script>
-<script src="thymine.js"></script>
-<script src="guanine.js"></script>
-
-<body>
-  <div id="menu">
-    <button id="animation">Show Animation</button>
-    <button id="startMusic">Start music</button>
-    <button id="stopMusic">Stop music</button>
-  </div>
-  <!-- Javascript code --> 
-  <script>
-    //once everything is loaded, we run our Three.js stuff.
-    $(function () {
-
-      var stats = initStats();
-
-      // create a scene, that will hold all our elements such as objects, cameras and lights.
-      var scene = new THREE.Scene();
-
-      // create a camera, which defines where we're looking at.
-      var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
-
-      // create trackball controls
-      var trackballControls = new THREE.TrackballControls(camera);
-
-      // create a render and set the size
-      var webGLRenderer = new THREE.WebGLRenderer();
-      //webGLRenderer.setClearColor(new THREE.Color(0xeeeeee, 1.0));
-      webGLRenderer.setClearColor(new THREE.Color(0x303739, 1.0));
-      webGLRenderer.setSize(window.innerWidth, window.innerHeight);
-
-      // position and point the camera to the center of the scene
-      camera.position.set(300, 0, 400);
-      camera.lookAt(new THREE.Vector3(0, 0, 0));
-
-      // add the output of the renderer to the html element
-      $('body').append(webGLRenderer.domElement);
-
-
-
-      
-      //Function to create a couple of nitrogenous bases
-      function createCouple (bases) {
-        var couple = new THREE.Object3D();
-
-        var baseL;
-        var baseR;
-        var baseLeft = bases[0];
-        var baseRight = bases[1];
-
-        switch(baseLeft) { 
-  
-          case "adenine": 
-            baseL = createAdenine(basesLength, basesRadius);
-          break;
-
-          case "thymine": 
-            baseL = createThymine(basesLength, basesRadius);
-          break;
-          
-          case "cytosine": 
-            baseL = createCytosine(basesLength, basesRadius);
-          break;
-
-          case "guanine": 
-            baseL = createGuanine(basesLength, basesRadius);
-          break;
-
-          default: 
-            baseL = createGuanine(basesLength, basesRadius);
-        }
-
-        switch(baseRight) { 
-  
-          case "adenine": 
-            baseR = createAdenine(basesLength, basesRadius);
-          break;
-
-          case "thymine": 
-            baseR = createThymine(basesLength, basesRadius);
-          break;
-          
-          case "cytosine": 
-            baseR = createCytosine(basesLength, basesRadius);
-          break;
-
-          case "guanine": 
-            baseR = createGuanine(basesLength, basesRadius);
-          break;
-
-          default: 
-            baseR = createCytosine(basesLength, basesRadius);
-        }
-
-        baseL.rotation.z = Math.PI/2;
-        baseL.position.set(0, -basesLength + basesRadius/2, 0);
-        baseL.castShadow = true;
-        couple.add(baseL);
-
-        baseR.rotation.z = Math.PI/2;
-        baseR.position.set(0, 0, 0);
-        baseR.castShadow = true;
-        couple.add(baseR);
-
-        return couple;
+    <style>
+      body{
+        margin: 0;
+        overflow: hidden;
       }
+      #menu {
+        position: absolute;
+        bottom: 20px;
+        width: 100%;
+        text-align: center;
+      }
+      #stats {  /* Align stats top-left */
+        position: absolute;
+        left: 0px;
+        top: 0px;
+      }
+      button {
+        color: rgba(127,255,255,0.75);
+        background: transparent;
+        outline: 1px solid rgba(127,255,255,0.75);
+        border: 0px;
+        padding: 5px 10px;
+        cursor: pointer;
+      }
+      button:hover {
+        background-color: rgba(0,255,255,0.5);
+      }
+      button:active {
+        color: #000000;
+        background-color: rgba(0,255,255,0.75);
+      }
+    </style> 
+
+    <!-- JavaScript libraries -->
+    <script src="libs/jquery.min.js"></script> 
+    <script src="libs/three.min.js"></script>
+    <script src="libs/Stats.min.js"></script>
+    <script src="libs/dat.gui.min.js"></script>
+    <script src="libs/TrackballControls.js"></script>
+    <script src="libs/tween.min.js"></script>
+    <script src="libs/OBJLoader.js"></script>
+    <script type="text/javascript" src="libs/helvetiker_regular.typeface.js"></script> 
+    <script type="text/javascript" src="libs/helvetiker_bold.typeface.js"></script> 
+    <script type="text/javascript" src="libs/bitstream_vera_sans_mono_roman.typeface.js"></script>
+    <script src="libs/keyframe.js"></script>
+    <script src="libs/CurveExtras.js"></script>
+    <script src="js/tween_animation.js"></script>
+
+    <script src="adenine.js"></script>
+    <script src="cytosine.js"></script>
+    <script src="thymine.js"></script>
+    <script src="guanine.js"></script>
+  
+  </head>
+
+  <body>
+    <div id="menu">
+      <button id="animation">Show Animation</button>
+      <button id="startMusic">Start music</button>
+      <button id="stopMusic">Stop music</button>
+    </div>
+    <!-- Javascript code --> 
+    <script>
+      //once everything is loaded, we run our Three.js stuff.
+      $(function () {
+
+        var stats = initStats();
+
+        // create a scene, that will hold all our elements such as objects, cameras and lights.
+        var scene = new THREE.Scene();
+
+        // create a camera, which defines where we're looking at.
+        var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+        // create trackball controls
+        var trackballControls = new THREE.TrackballControls(camera);
+
+        // create a render and set the size
+        var webGLRenderer = new THREE.WebGLRenderer();
+        webGLRenderer.setClearColor(new THREE.Color(0x303739, 1.0));
+        webGLRenderer.setSize(window.innerWidth, window.innerHeight);
+
+        // position and point the camera to the center of the scene
+        camera.position.set(300, 0, 400);
+        camera.lookAt(new THREE.Vector3(0, 0, 0));
+
+        // add the output of the renderer to the html element
+        $('body').append(webGLRenderer.domElement);
 
 
 
-      //Function to create the supercoil
-      function createSupercoil(numberOfElements, couplesList) {
-        var supercoil = new THREE.Object3D();
+          
+        //Function to create a couple of nitrogenous bases
+        function createCouple (bases) {
+          var couple = new THREE.Object3D();
 
-        //positionsObj represents the array of pairs where the nitrogenous bases will go after the animation
-        positionsObj = [];
+          var baseL;
+          var baseR;
+          var baseLeft = bases[0];
+          var baseRight = bases[1];
 
-        var previous = createCouple(couplesList[0]);
+          switch(baseLeft) { 
+      
+            case "adenine": 
+              baseL = createAdenine(basesLength, basesRadius);
+            break;
 
-        positionsObj.push(previous);
-        supercoil.add(previous);
+            case "thymine": 
+              baseL = createThymine(basesLength, basesRadius);
+            break;
+              
+            case "cytosine": 
+              baseL = createCytosine(basesLength, basesRadius);
+            break;
 
-        for (var i = 1; i < numberOfElements; i++) {
-          var currentCouple = createCouple(couplesList[i]);
+            case "guanine": 
+              baseL = createGuanine(basesLength, basesRadius);
+            break;
 
-          currentCouple.position.x += basesRadius*4;
-          currentCouple.rotation.x = Math.PI*1/6;
+            default: 
+              baseL = createGuanine(basesLength, basesRadius);
+          }
 
-          previous.add(currentCouple);
+          switch(baseRight) { 
+      
+            case "adenine": 
+              baseR = createAdenine(basesLength, basesRadius);
+            break;
 
-          previous = currentCouple;
+            case "thymine": 
+              baseR = createThymine(basesLength, basesRadius);
+            break;
+              
+            case "cytosine": 
+              baseR = createCytosine(basesLength, basesRadius);
+            break;
+
+            case "guanine": 
+              baseR = createGuanine(basesLength, basesRadius);
+            break;
+
+            default: 
+              baseR = createCytosine(basesLength, basesRadius);
+          }
+
+          baseL.rotation.z = Math.PI/2;
+          baseL.position.set(0, -basesLength + basesRadius/2, 0);
+          baseL.castShadow = true;
+          couple.add(baseL);
+
+          baseR.rotation.z = Math.PI/2;
+          baseR.position.set(0, 0, 0);
+          baseR.castShadow = true;
+          couple.add(baseR);
+
+          return couple;
+        }
+
+
+
+        //Function to create the supercoil
+        function createSupercoil(numberOfElements, couplesList) {
+          var supercoil = new THREE.Object3D();
+
+          //positionsObj represents the array of pairs where the nitrogenous bases will go after the animation
+          positionsObj = [];
+
+          var previous = createCouple(couplesList[0]);
+
           positionsObj.push(previous);
+          supercoil.add(previous);
+
+          for (var i = 1; i < numberOfElements; i++) {
+            var currentCouple = createCouple(couplesList[i]);
+
+            currentCouple.position.x += basesRadius*4;
+            currentCouple.rotation.x = Math.PI*1/6;
+
+            previous.add(currentCouple);
+
+            previous = currentCouple;
+            positionsObj.push(previous);
+          }
+
+          return supercoil;
         }
 
-        return supercoil;
-      }
+
+
+        function addGeometry(geometry, color) {
+          //3D shape
+          tubeMesh = THREE.SceneUtils.createMultiMaterialObject( geometry, [
+            new THREE.MeshPhongMaterial({
+              color: color,
+              transparent: true,
+              side: THREE.DoubleSide,
+              shininess: 100,
+              metal: true
+            }),
+            new THREE.MeshPhongMaterial({
+              color: 0xed3403,
+              opacity: 0.3,
+              transparent: true,
+              shininess: 100,
+              metal: true
+          })]);
+
+          return tubeMesh;
+        }
 
 
 
-      function addGeometry(geometry, color) {
-        //3D shape
-        tubeMesh = THREE.SceneUtils.createMultiMaterialObject( geometry, [
-          new THREE.MeshPhongMaterial({
-            color: color,
-            transparent: true,
-            side: THREE.DoubleSide,
-            shininess: 100,
-            metal: true
-          }),
-          new THREE.MeshPhongMaterial({
-            color: 0xed3403,
-            opacity: 0.3,
-            transparent: true,
-            shininess: 100,
-            metal: true
-        })]);
+        function initStats() {
+          var stats = new Stats();
+          stats.setMode(0); // 0: fps, 1: ms
+          $('body').append(stats.domElement);
+          return stats;
+        }
 
-        return tubeMesh;
-      }
+          
+
+        //ANIMATIONS
+        var animator = null;
+        var duration = 5; //sec
+        var loopAnimation = true;
 
 
 
-      function initStats() {
-        var stats = new Stats();
-        stats.setMode(0); // 0: fps, 1: ms
-        $('body').append(stats.domElement);
-        return stats;
-      }
+        function movingCamera(duration){
+          var target = new THREE.Vector3(600,0,200);
 
-      
+          var movingRight = new TWEEN.Tween( camera.position )
+              .to( { x: target.x }, duration*2 )
 
-      //ANIMATIONS
-      var animator = null;
-      var duration = 5; //sec
-      var loopAnimation = true;
+          new TWEEN.Tween( camera.position )
+              .to( { z: target.z }, duration )           
+              .easing( TWEEN.Easing.Quadratic.In )
+              .chain(movingRight)
+              .start();
 
-
-
-      function movingCamera(duration){
-        var target = new THREE.Vector3(600,0,200);
-
-        var movingRight = new TWEEN.Tween( camera.position )
-            .to( { x: target.x }, duration*2 )
-
-        new TWEEN.Tween( camera.position )
-            .to( { z: target.z }, duration )           
-            .easing( TWEEN.Easing.Quadratic.In )
-            .chain(movingRight)
-            .start();
-
-        setTimeout(function(){  new TWEEN.Tween( camera.position )
-                                .to({ x: target.x/2 }, duration*2)
-                                .easing( TWEEN.Easing.Quadratic.In )
-                                .start(); 
-                                 step = 0;} , duration*3);
-       
-      }
+          setTimeout(function(){  new TWEEN.Tween( camera.position )
+                                  .to({ x: target.x/2 }, duration*2)
+                                  .easing( TWEEN.Easing.Quadratic.In )
+                                  .start(); 
+                                  step = 0;} , duration*3);
+           
+        }
 
 
 
-      function movingCameraBefore(duration){
-        var target = new THREE.Vector3(-100,0,200);
+        function movingCameraBefore(duration){
+          var target = new THREE.Vector3(-100,0,200);
 
-        var movingLeft = new TWEEN.Tween( camera.position )
-            .to( { x: target.x }, duration*2 )
+          var movingLeft = new TWEEN.Tween( camera.position )
+              .to( { x: target.x }, duration*2 )
 
-        new TWEEN.Tween( camera.position )
-            .to( { z: target.z }, duration )           
-            .easing( TWEEN.Easing.Quadratic.In )
-            .chain(movingLeft)
-            .start();
-       
-      }
-
-
-
-      function movingCameraAfter(duration){
-        var target = new THREE.Vector3(300,0,400);
-
-        var movingLeft = new TWEEN.Tween( camera.position )
-            .to( { x: target.x }, duration*2 )
-
-        new TWEEN.Tween( camera.position )
-            .to( { z: target.z }, duration )           
-            .easing( TWEEN.Easing.Quadratic.In )
-            .chain(movingLeft)
-            .start();
-
-        step = 0.01;       
-      }
+          new TWEEN.Tween( camera.position )
+              .to( { z: target.z }, duration )           
+              .easing( TWEEN.Easing.Quadratic.In )
+              .chain(movingLeft)
+              .start();
+           
+        }
 
 
 
-      //Function that creates an array of random object3d to scatter the nitrogenous bases once you click the button animate
-      function randomizePositionObject(){
+        function movingCameraAfter(duration){
+          var target = new THREE.Vector3(300,0,400);
+
+          var movingLeft = new TWEEN.Tween( camera.position )
+              .to( { x: target.x }, duration*2 )
+
+          new TWEEN.Tween( camera.position )
+              .to( { z: target.z }, duration )           
+              .easing( TWEEN.Easing.Quadratic.In )
+              .chain(movingLeft)
+              .start();
+
+          step = 0.01;       
+        }
+
+
+
+        //Function that creates an array of random object3d to scatter the nitrogenous bases once you click the button animate
+        function randomizePositionObject(){
           var randomObjPositions = [];
           var randomObj = new THREE.Object3D();
 
@@ -292,238 +298,240 @@
             randomObj.position.set(x,y,z);
             randomObjPositions.push(randomObj);
           }
+
           return randomObjPositions;
-      }
-
-
-
-      function transform(objects, targets, duration) {
-        TWEEN.removeAll();
-
-        for ( var i = 0; i < objects.length; i ++ ) {
-
-          var object = objects[ i ];
-          var target = targets[ i ];
-
-          new TWEEN.Tween( object.position )
-            .to( { x: target.position.x, y: target.position.y, z: target.position.z }, duration )
-            .easing( TWEEN.Easing.Exponential.InOut )
-            .start();
-
-          new TWEEN.Tween( object.rotation )
-            .to( { x: target.rotation.x, y: target.rotation.y, z: target.rotation.z }, duration )
-            .easing( TWEEN.Easing.Exponential.InOut )
-            .start();
         }
-      }
 
 
 
-      function animateSNP(oldCouple, duration){        
-        var target = new THREE.Vector3(oldCouple.children[0].position.x, oldCouple.children[0].position.y, 80);
+        function transform(objects, targets, duration) {
+          TWEEN.removeAll();
 
-        positionTween(oldCouple.children[0], duration, target).start();
-        positionTween(oldCouple.children[1], duration, target).start();        
-      }      
+          for ( var i = 0; i < objects.length; i ++ ) {
 
+            var object = objects[ i ];
+            var target = targets[ i ];
 
+            new TWEEN.Tween( object.position )
+              .to( { x: target.position.x, y: target.position.y, z: target.position.z }, duration )
+              .easing( TWEEN.Easing.Exponential.InOut )
+              .start();
 
-      function newBasesEnter(oldCouple, duration) {
-        //oldCouple.children[0] is the first nitrogenous base
-        //oldCouple.children[1] is the second nitrogenous base
-        //oldCouple.children[2] sono tutte quelle che vengono dopo
-
-        var objOldPos = new THREE.Object3D();        
-        new_couple = createCouple(["guanine","cytosine"]);
-
-        new_couple.position.x = 800;
-        new_couple.position.y = 800;
-        new_couple.position.z = 800;
-        
-        objOldPos.position.set(300 , 0 , oldCouple.children[0].position.z);
-        scene.add(new_couple);
-        transform([new_couple], [objOldPos], 1000);
-
-        return new_couple;
-      }
-
-
-
-      function exchangeBase(newCouple, oldCouple, duration){
-        console.log(newCouple.children[0].position , " " , oldCouple.children[0].position)
-        console.log(newCouple.children[1].position , " " , oldCouple.children[1].position)
-
-        var targetOld1 = oldCouple.children[0].position.x;
-        var targetOld2 = oldCouple.children[1].position.x;
-        var targetNew1 = newCouple.children[0].position.x;
-        var targetNew2 = newCouple.children[1].position.x;
-
-        positionXTween(oldCouple.children[0], duration, 58.2).start();
-        positionXTween(newCouple.children[0], duration, -58.2).start();
-        positionXTween(oldCouple.children[1], duration, 58.2).start();
-        positionXTween(newCouple.children[1], duration, -58.2).start();
-
-        var target = new THREE.Vector3(oldCouple.children[0].position.x, oldCouple.children[0].position.y, -80);
-
-        setTimeout(function(){positionTween(newCouple.children[0], duration, target).start();}, duration*2);
-        setTimeout(function(){positionTween(newCouple.children[1], duration, target).start();}, duration*2);
-        setTimeout(function(){positionXTween(oldCouple.children[0], duration, 5000).start();}, duration*2);
-        setTimeout(function(){positionXTween(oldCouple.children[1], duration, 5000).start();}, duration*2);
-
-        globalStructure.add(new_couple);
-      }
-
-
-
-      function insertNewCouple(newCouple, oldCouple, duration){
-        var target = new THREE.Vector3(oldCouple.children[0].position.x, oldCouple.children[0].position.y, oldCouple.children[0].position.z);
-
-        positionTween(oldCouple.children[0], duration, target).start();
-        positionTween(oldCouple.children[1], duration, target).start();
-      }
-
-
-
-      function animateScene(duration){
-        var targetPos = randomizePositionObject();
-        var subjectPos = positionsObj;
-        var oldCouple = positionsObj[12];
-        var newCouple;
-
-        document.getElementById("animation").style.visibility="hidden";
-
-        startMusic();
-
-        movingCameraBefore(4000);
-
-        setTimeout(function(){movingCamera(4000)}, 4000);
-        
-        setTimeout(function(){animateSNP(oldCouple, 2000)}, 26000);
-
-        setTimeout(function(){newCouple = newBasesEnter(oldCouple, 2000); }, 28000);
-
-        setTimeout(function(){exchangeBase(newCouple, oldCouple, 1000)}, 30000);
-
-        setTimeout(function(){movingCameraAfter(4000);}, 34000);
-      }
-
-
-
-      function startMusic() {
-        if (audio == null) {
-        audio = document.createElement('audio');
-        var source = document.createElement('source');
-        source.src = '../../assets/audios/Esplorando _il_corpo_umano_sigla.wav';
-        audio.appendChild(source);
-        audio.play();
+            new TWEEN.Tween( object.rotation )
+              .to( { x: target.rotation.x, y: target.rotation.y, z: target.rotation.z }, duration )
+              .easing( TWEEN.Easing.Exponential.InOut )
+              .start();
+          }
         }
-      }
 
 
 
-      function stopMusic() {
-        audio.pause();
-        audio = null;
-      }
+        function animateSNP(oldCouple, duration){        
+          var target = new THREE.Vector3(oldCouple.children[0].position.x, oldCouple.children[0].position.y, 80);
+
+          positionTween(oldCouple.children[0], duration, target).start();
+          positionTween(oldCouple.children[1], duration, target).start();        
+        }      
 
 
 
-      function animate() {
-        stats.update();
-        trackballControls.update();
+        function newBasesEnter(oldCouple, duration) {
+          //oldCouple.children[0] is the first nitrogenous base
+          //oldCouple.children[1] is the second nitrogenous base
+          //oldCouple.children[2] sono tutte quelle che vengono dopo
 
-        camera.lookAt(new THREE.Vector3(camera.position.x , camera.position.y , camera.position.z));
+          var objOldPos = new THREE.Object3D();        
+          new_couple = createCouple(["guanine","cytosine"]);
 
-        globalStructure.rotation.x += step;
+          new_couple.position.x = 800;
+          new_couple.position.y = 800;
+          new_couple.position.z = 800;
+            
+          objOldPos.position.set(300 , 0 , oldCouple.children[0].position.z);
+          scene.add(new_couple);
+          transform([new_couple], [objOldPos], 1000);
 
-        KF.update();
-        TWEEN.update();
-        
-        //render using requestAnimationFrame
-        requestAnimationFrame(animate);
-        webGLRenderer.render(scene, camera);
-      }
+          return new_couple;
+        }
 
 
 
-      //VARIABLES
-      var basesLength = 50;
-      var basesRadius = 5;
-      var segments = 400;
-      var tubeRadius = 4;
-      var radiusSegments = 12;
-      var tubeMesh1;
-      var tubeMesh2;
-      var button;
-      var step = 0;
-      var couplesList;
-      var axisHelper = new THREE.AxisHelper(3);
-      var ambientLightScene = new THREE.AmbientLight( 0xffffff ); // soft white light
-      var spotLightScene = new THREE.SpotLight( 0xffffff ); // soft white light
-      var directionalLight = new THREE.DirectionalLight( 0xffffff );
-      var audio;
-      
-      button = document.getElementById('animation');
+        function exchangeBase(newCouple, oldCouple, duration){
+          console.log(newCouple.children[0].position , " " , oldCouple.children[0].position)
+          console.log(newCouple.children[1].position , " " , oldCouple.children[1].position)
 
-      button.addEventListener('click', function (event) {
-        animateScene(2000);
-      }, false);
+          var targetOld1 = oldCouple.children[0].position.x;
+          var targetOld2 = oldCouple.children[1].position.x;
+          var targetNew1 = newCouple.children[0].position.x;
+          var targetNew2 = newCouple.children[1].position.x;
 
-      button = document.getElementById('startMusic');
+          positionXTween(oldCouple.children[0], duration, 58.2).start();
+          positionXTween(newCouple.children[0], duration, -58.2).start();
+          positionXTween(oldCouple.children[1], duration, 58.2).start();
+          positionXTween(newCouple.children[1], duration, -58.2).start();
 
-      button.addEventListener('click', function (event) {
-        startMusic();
-      }, false);
+          var target = new THREE.Vector3(oldCouple.children[0].position.x, oldCouple.children[0].position.y, -80);
 
-      button = document.getElementById('stopMusic');
+          setTimeout(function(){positionTween(newCouple.children[0], duration, target).start();}, duration*2);
+          setTimeout(function(){positionTween(newCouple.children[1], duration, target).start();}, duration*2);
+          setTimeout(function(){positionXTween(oldCouple.children[0], duration, 5000).start();}, duration*2);
+          setTimeout(function(){positionXTween(oldCouple.children[1], duration, 5000).start();}, duration*2);
 
-      button.addEventListener('click', function (event) {
-        stopMusic();
-      }, false);
+          globalStructure.add(new_couple);
+        }
 
-      //Basis Creation
-      couplesList = [["adenine","thymine"],["guanine","cytosine"],["guanine","cytosine"],["adenine","thymine"],["adenine","thymine"],["adenine","thymine"],["guanine","cytosine"],["guanine","cytosine"],["guanine","cytosine"],["guanine","cytosine"],["guanine","cytosine"],["guanine","cytosine"],["adenine","thymine"],["guanine","cytosine"],["adenine","thymine"],["adenine","thymine"],["adenine","thymine"],["guanine","cytosine"],["adenine","thymine"],["adenine","thymine"],["guanine","cytosine"],["guanine","cytosine"],["adenine","thymine"],["guanine","cytosine"],["guanine","cytosine"],["adenine","thymine"],["adenine","thymine"],["adenine","thymine"],["adenine","thymine"],["guanine","cytosine"],["adenine","thymine"]];
 
-      DNA = createSupercoil(31, couplesList);
- 
-      //DNA Strands Creation
-      globalStructure = new THREE.Object3D();
 
-      extrudePath = new THREE.Curves.HelixCurve();
+        function insertNewCouple(newCouple, oldCouple, duration){
+          var target = new THREE.Vector3(oldCouple.children[0].position.x, oldCouple.children[0].position.y, oldCouple.children[0].position.z);
 
-      tube = new THREE.TubeGeometry(extrudePath, segments, tubeRadius, radiusSegments, false, false);
+          positionTween(oldCouple.children[0], duration, target).start();
+          positionTween(oldCouple.children[1], duration, target).start();
+        }
 
-      tubeMesh1 = addGeometry(tube, 0xff3200);
-      tubeMesh1.scale.set(2, 2, 2);
-      tubeMesh1.rotation.y = Math.PI/2;
-      tubeMesh1.rotation.z = -Math.PI/2;
-      tubeMesh1.position.x += -tubeRadius;
 
-      tubeMesh2 = addGeometry(tube, 0x007bff);
-      tubeMesh2.scale.set(2, 2, 2);
-      tubeMesh2.rotation.y = Math.PI/2;
-      tubeMesh2.rotation.z = Math.PI/2;
-      tubeMesh2.position.x += -tubeRadius;
-      
-      DNA.position.x += basesRadius/2;
 
-      globalStructure.add(DNA);
-      globalStructure.add(tubeMesh1);
-      globalStructure.add(tubeMesh2);
+        function animateScene(duration){
+          var targetPos = randomizePositionObject();
+          var subjectPos = positionsObj;
+          var oldCouple = positionsObj[12];
+          var newCouple;
 
-      spotLightScene.target = globalStructure;
-      spotLightScene.intensity = 2;
-      spotLightScene.position.set(0,50,500);
+          document.getElementById("animation").style.visibility="hidden";
 
-      directionalLight.intensity = 1;
-      directionalLight.position.set(0,50,500);
-      directionalLight.target = globalStructure;
+          startMusic();
 
-      scene.add(directionalLight)
-      scene.add(globalStructure);
-      scene.add(axisHelper);
+          movingCameraBefore(4000);
 
-      animate();      
-    });
-  </script>
-</body>
+          setTimeout(function(){movingCamera(4000)}, 4000);
+            
+          setTimeout(function(){animateSNP(oldCouple, 2000)}, 26000);
+
+          setTimeout(function(){newCouple = newBasesEnter(oldCouple, 2000); }, 28000);
+
+          setTimeout(function(){exchangeBase(newCouple, oldCouple, 1000)}, 30000);
+
+          setTimeout(function(){movingCameraAfter(4000);}, 34000);
+        }
+
+
+
+        function startMusic() {
+          if (audio == null) {
+            audio = document.createElement('audio');
+            var source = document.createElement('source');
+            source.src = '../../assets/audios/Esplorando _il_corpo_umano_sigla.wav';
+            audio.appendChild(source);
+            audio.play();
+            }
+        }
+
+
+
+        function stopMusic() {
+          audio.pause();
+          audio = null;
+        }
+
+
+
+        function animate() {
+          stats.update();
+          trackballControls.update();
+
+          camera.lookAt(new THREE.Vector3(camera.position.x , camera.position.y , camera.position.z));
+
+          globalStructure.rotation.x += step;
+
+          KF.update();
+          TWEEN.update();
+            
+          //render using requestAnimationFrame
+          requestAnimationFrame(animate);
+          webGLRenderer.render(scene, camera);
+        }
+
+
+
+        //VARIABLES
+        var basesLength = 50;
+        var basesRadius = 5;
+        var segments = 400;
+        var tubeRadius = 4;
+        var radiusSegments = 12;
+        var tubeMesh1;
+        var tubeMesh2;
+        var button;
+        var step = 0;
+        var couplesList;
+        var axisHelper = new THREE.AxisHelper(3);
+        var ambientLightScene = new THREE.AmbientLight( 0xffffff ); // soft white light
+        var spotLightScene = new THREE.SpotLight( 0xffffff ); // soft white light
+        var directionalLight = new THREE.DirectionalLight( 0xffffff );
+        var audio;
+          
+        button = document.getElementById('animation');
+
+        button.addEventListener('click', function (event) {
+          animateScene(2000);
+        }, false);
+
+        button = document.getElementById('startMusic');
+
+        button.addEventListener('click', function (event) {
+          startMusic();
+        }, false);
+
+        button = document.getElementById('stopMusic');
+
+        button.addEventListener('click', function (event) {
+          stopMusic();
+        }, false);
+
+        //Basis Creation
+        couplesList = [["adenine","thymine"],["guanine","cytosine"],["guanine","cytosine"],["adenine","thymine"],["adenine","thymine"],["adenine","thymine"],["guanine","cytosine"],["guanine","cytosine"],["guanine","cytosine"],["guanine","cytosine"],["guanine","cytosine"],["guanine","cytosine"],["adenine","thymine"],["guanine","cytosine"],["adenine","thymine"],["adenine","thymine"],["adenine","thymine"],["guanine","cytosine"],["adenine","thymine"],["adenine","thymine"],["guanine","cytosine"],["guanine","cytosine"],["adenine","thymine"],["guanine","cytosine"],["guanine","cytosine"],["adenine","thymine"],["adenine","thymine"],["adenine","thymine"],["adenine","thymine"],["guanine","cytosine"],["adenine","thymine"]];
+
+        DNA = createSupercoil(31, couplesList);
+     
+        //DNA Strands Creation
+        globalStructure = new THREE.Object3D();
+
+        extrudePath = new THREE.Curves.HelixCurve();
+
+        tube = new THREE.TubeGeometry(extrudePath, segments, tubeRadius, radiusSegments, false, false);
+
+        tubeMesh1 = addGeometry(tube, 0xff3200);
+        tubeMesh1.scale.set(2, 2, 2);
+        tubeMesh1.rotation.y = Math.PI/2;
+        tubeMesh1.rotation.z = -Math.PI/2;
+        tubeMesh1.position.x += -tubeRadius;
+
+        tubeMesh2 = addGeometry(tube, 0x007bff);
+        tubeMesh2.scale.set(2, 2, 2);
+        tubeMesh2.rotation.y = Math.PI/2;
+        tubeMesh2.rotation.z = Math.PI/2;
+        tubeMesh2.position.x += -tubeRadius;
+          
+        DNA.position.x += basesRadius/2;
+
+        globalStructure.add(DNA);
+        globalStructure.add(tubeMesh1);
+        globalStructure.add(tubeMesh2);
+
+        spotLightScene.target = globalStructure;
+        spotLightScene.intensity = 2;
+        spotLightScene.position.set(0,50,500);
+
+        directionalLight.intensity = 1;
+        directionalLight.position.set(0,50,500);
+        directionalLight.target = globalStructure;
+
+        scene.add(directionalLight)
+        scene.add(globalStructure);
+        scene.add(axisHelper);
+
+        animate();      
+      });
+    </script>
+  </body>
+</html>
