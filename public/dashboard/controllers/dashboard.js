@@ -10,30 +10,24 @@ function jsonConcat(o1, o2) {
 
 angular.module('mean.dashboard', ['angular-md5'])
 
-    .controller('UploaderCtrl', ['$scope', '$window', '$http', 'Model','Parse','Save','$q','$timeout',
-        function ($scope, $window, $http,Model,Parse,Save,$q,$timeout) {
+    .controller('UploaderCtrl', ['$scope', '$window', '$http', 'Model','Parse','Save','Filter','$q','$timeout',
+        function ($scope, $window, $http,Model,Parse,Save,Filter,$q,$timeout) {
 
 
             var name;
-            $scope.savePatient = function () {
-                if($scope.patient)
-                name = $scope.patient;
-                console.log("Save patient triggered. Name : "+ name );
-            };
 
             $scope.saveResult = function () {
-               name = $scope.patient
-                console.log("pATIENT nAME = " + name)
+                name = $scope.patient;
+                console.log("Patient name = " + name);
                 $scope.jsonUpload = JSON.parse($window.output);
+                for (var key in $scope.jsonUpload) if ($scope.jsonUpload.hasOwnProperty(key))  break;
 
-                var saveFunction = (Parse.saveInDbFromData);
-                saveFunction($scope.jsonUpload,name); /*. then(function () {
-                        console.log("OK");
-                    }
-                    , function (error) {
-                        console.error("ERROR WHILE PARSING DATA: " + error)
-                    });
-                */
+                Filter.createDistinctValues($scope.jsonUpload[key],['Mutation','region']);
+
+                //console.log( Filter.getDistinctValues('Genotype') + '\ntype = ' + typeof Filter.getDistinctValues('region') + '\n' + Filter.getDistinctValues('region'));
+
+               /* var saveFunction = (Parse.saveInDbFromData);
+                saveFunction($scope.jsonUpload,name);*/
 
             };
 
@@ -301,12 +295,24 @@ angular.module('mean.dashboard', ['angular-md5'])
     }])
 
 
-    .controller('ExecuteQueryCtrl', ['$scope', '$http', function ($scope, $http) {
+    .controller('ExecuteQueryCtrl', ['$scope', '$http', 'Filter' ,function ($scope, $http,Filter) {
         var element;
         $scope.chooseFilterRegion = "";
         $scope.chooseFilterMutation = "";
 
+        $scope.filtro = {};
 
+        //init filters
+        (function () {
+            $scope.filtro.region = Filter.getDistinctValues('region');
+            $scope.filtro.Mutation = Filter.getDistinctValues('Mutation');
+        })();
+
+        $scope.updateFilter =  function() {
+            for(var key in $scope.check) if($scope.check.hasOwnProperty(key) && $scope.check[key]) {
+                $scope.chosenFilters.region += key;
+            }
+        }
         var successInitialQuery = function (data) {
             $scope.elements = [];
             console.log("QUERY SUCCEDED. RECEIVED:" + JSON.stringify(data));
@@ -488,14 +494,6 @@ angular.module('mean.dashboard', ['angular-md5'])
                 });
 
         };
-
-
-        $scope.clear = function () {
-            console.log("CLEAR CALLED");
-            $scope.elements = {};
-            console.log("ORA ELEMENTI:" + JSON.stringify($scope.elements));
-        }
-
 
     }])
 
