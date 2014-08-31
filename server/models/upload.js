@@ -13,54 +13,50 @@ function validatePresenceOf(x) {
 
 /* Upload schema */
 var UploadSchema = new Schema({
-    patientName: {
-        type: String,
-        required: true,
-        validate: [validatePresenceOf, 'Name cannot be blank']
-    },
+
     date: {
         type: Date,
         default: Date.now
     },
 
     ids: {
-     variants: [
+     Variant: [
     {
         type: Schema.Types.ObjectId,
         default: [] }
 ],
 
-    variantdetails: [
+    VariantDetail: [
     {
         type: Schema.Types.ObjectId,
         default: [] }
 ],
 
-    genes: [
+    Gene: [
     {
         type: Schema.Types.ObjectId,
         default: [] }
 ],
 
-    esps: [
+    Esp: [
     {
         type: Schema.Types.ObjectId,
         default: [] }
 ],
 
-    pathogenicities: [
+    Pathogenicity: [
     {
         type: Schema.Types.ObjectId,
         default: [] }
 ],
 
-    patients: [
+    Patient: [
     {
         type: Schema.Types.ObjectId,
         default: [] }
 ],
 
-    dbsnps: [
+    DbSNP: [
     {
         type: Schema.Types.ObjectId,
         default: [] }
@@ -74,6 +70,3 @@ UploadSchema.statics.query = function query(q) {
 };
 
 
-var model = mongoose.model('Upload', UploadSchema);
-model.attr = {'Upload': ['name', 'date', 'ids']};
-module.exports = model;

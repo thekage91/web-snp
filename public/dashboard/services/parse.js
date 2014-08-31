@@ -70,7 +70,7 @@ angular.module('ParseService', [])
 
                         //initializing patient
                         var patientBeforeID = {name :patientName};
-                        var resolvePatient = (Model.resolveDeferredFromDataPOST)
+                        var resolvePatient = (Model.resolveDeferredFromDataPOST);
 
                         patientResolved = resolvePatient('patient',patientBeforeID, patientResolved);
 
@@ -104,11 +104,14 @@ angular.module('ParseService', [])
                                         console.log("Relationships created maybe. Please check");
                                         console.log(data);
                                     });
-                                    /*
-                                    (IdAccumulator.accumulateIDfromAll)(savedElements,patient).then( function (data) {
-                                    console.log("ok done.");
-                                    console.log(data);
-                                    }) */
+
+                                   (IdAccumulator.accumulateIDfromAll)(patient, savedElements).then(function (data) {
+                                            console.log("ok done.");
+                                            console.log(data);
+                                        })
+
+
+
 
 
                                 }) ;

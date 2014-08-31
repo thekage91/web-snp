@@ -7,7 +7,6 @@
 mongoose = require('mongoose');
 
 var User = mongoose.model('User');
-var Upload = mongoose.model('Upload');
 
 
 User.findOne({ 'name': 'root' }, 'name occupation', function (err, user) {
@@ -25,12 +24,6 @@ User.findOne({ 'name': 'root' }, 'name occupation', function (err, user) {
         admin.save( function (err) { console.log("internal error "+err)  }); 
   }
   } );
-
-var up = {patientName : 'ciao', ids: { variants : ['53d12a177e49a4243789fd97']} };
-var boh = new Upload(up)
-boh.save( function (err) { console.log("Error with upload "+err)  });
-
-
 
 function printArgs( x ) {
     var STRIP_COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/mg;

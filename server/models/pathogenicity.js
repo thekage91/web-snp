@@ -55,7 +55,7 @@ var PathogenicitySchema = new Schema({
     //Relationship
     variant: {
         type: Schema.ObjectId,
-        ref: 'Variant',
+        ref: 'Variant'
     } 
     
 },{ versionKey: false });

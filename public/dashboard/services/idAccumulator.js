@@ -16,42 +16,22 @@ angular.module('idAccumulatorService', [])
 
         return {
 
-            accumulateIDfromAll : function(elements,patient) {
-                var collection;
-                var accumulateRequests = [];
+            accumulateIDfromAll : function(patient,hashWithElements) {
+
+                var accumulateRequests = [],i=0;
                 var currentData;
 
-                for (el in elements) if(elements.hasOwnProperty(el))  {
-                        currentData = elements[el];
-                        switch (el) {
-                            case 'Variant':
-                                collection = 'variants';
-                                break;
-                            case 'VariantDetail':
-                                collection = 'variantdetails';
-                                break;
-                            case 'Pathogenicity':
-                                collection = 'pathogenicities';
-                                break;
-                            case 'DbSNP':
-                                collection = 'dbsnps';
-                                break;
-                            case 'Esp':
-                                collection = 'esps';
-                                break;
-                            case 'Gene':
-                                collection = 'genes';
-                                break;
-                            default:
-                                console.log("ERROR: while parsing data. Not recognized object: " + el);
-                                return;
-                                break;
-                        //accumulateRequests.push(accumulate(patient,collection,el._id)());
+                var obj = {};
+                obj.model = 'Upload';
 
-                        }
-                    console.log("accumulating for collection: " + collection + " id: " + currentData._id);
-                    accumulateRequests.push($http.post('api/idAcc/'+patient.name,{ modelClass : collection, id : currentData._id}))
+                for(var key in hashWithElements)
+                if(hashWithElements.hasOwnProperty(key)) {
+                    console.log('accumulando ID elemento: ' + key);
+                    console.log('accumulando ID id: ' + hashWithElements[key]._id);
 
+                    obj.field = key;
+                    obj.id = hashWithElements[key]._id;
+                    accumulateRequests[i++] =  $http.post('/api/array/'+patient._id, obj);
                 }
 
                 return $q.all(accumulateRequests);

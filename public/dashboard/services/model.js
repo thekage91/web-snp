@@ -7,8 +7,8 @@ angular.module('ModelService', [])
     // each function returns a promise object
     .factory('Model', function($http,$q) {
 
-        var   create  =  function(element,todoData) {
-            return $http.post('/api/'+element, todoData);
+        var   create  =  function(element,data) {
+            return $http.post('/api/'+element, data);
         }
 
 

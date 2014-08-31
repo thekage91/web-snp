@@ -3,7 +3,6 @@
 var express = require('express');
 var mers = require('mers');
 var mongoose = require('mongoose');
-var Upload = mongoose.model('Upload');
 
 String.prototype.capitalize = function () {
     return this.charAt(0).toUpperCase() + this.slice(1);
@@ -16,6 +15,34 @@ String.prototype.camelize = function () {
         return index == 0 ? match.toLowerCase() : match.toUpperCase();
     });
 }
+
+function parseNameSpace(s , o, value)
+{
+    var w = o, a;
+
+    //reutrn if parsing not necessary or not a method
+    if ( s.indexOf('.') == -1 )
+    {
+        w[s] = value;
+        return w;
+    }
+
+    //make array for looping through
+    a = s.split('.');
+
+    //run though members / methods
+    for (var i = 0,l = a.length; i < l; i++)
+    {
+        if(w[a[i]] === "undefined") w[a[i]] = {};
+        w = w[a[i]];
+    }
+
+    //return object if it is valid, or return false
+    w = value;
+    return o;
+}
+
+
 
 module.exports = function (app, passport) {
     var rest = mers({uri: 'mongodb://localhost/mean-dev'});
@@ -34,10 +61,13 @@ module.exports = function (app, passport) {
 
     app.post('/api/array/:id', function (req, res, next) {
         var id = req.params.id;
-        console.log(JSON.stringify(req.body));
+        //console.log(JSON.stringify(req.body));
         var field = req.body.field;
         var idToAdd = req.body.id;
         var model = req.body.model;
+
+        var isAccumulatingIDs = false;
+        if(model == 'Upload') { model = 'Patient'; isAccumulatingIDs = true;}
 
         mongoose.model(model).findById(id, function (err, element) {
             if (err)
@@ -46,6 +76,9 @@ module.exports = function (app, passport) {
                 console.error("/api/array cant find id: " + req.params.id);
                 return res.status(400).send('Cant find '+model+' element with ID: '+ idToAdd)
             }
+            //Dealing with Upload means modifying ids
+            if(isAccumulatingIDs) element = element.upload.ids;
+
                     if (element[field] instanceof Array)
                         element[field].push(idToAdd);
                     else
@@ -59,28 +92,6 @@ module.exports = function (app, passport) {
         });
     });
 
-    app.post('/api/idAcc/:patient', function (req, res, next) {
-        Upload.findOne({ patientName: req.params.patient}, function (err, doc) {
-            // doc may be null if no document matched
-            // doc is a Document
-            var el = req.body.modelClass;
-            var id = req.body.id;
-            if (err)
-                return res.status(400).send(err);
-            if (!doc)
-                return res.status(412).send('IDs from patients ' + req.params.patient + 'Not found');
-
-            console.log(JSON.stringify(req.body));
-            doc.ids[req.body.modelClass].push(req.body.id);
-            doc.save(function (err) {
-                if (err) console.error("Error while saving ID!" + err)
-            });
-
-            return res.status(200).send(req.body.modelClass + ' of ' + req.params.patient + ' succesfully updated with ID: ' + req.body.id);
-        });
-        //return res.status(400).send('Request not recognized');
-
-    });
     app.use('/api', rest.rest());
 };
 
