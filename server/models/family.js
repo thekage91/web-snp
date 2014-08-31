@@ -20,7 +20,8 @@ var FamilySchema = new Schema({
     //Relationship
     patients: [{
     	type: Schema.ObjectId,
-    	ref: 'Patient'
+    	ref: 'Patient',
+        default: []
     }]
 
 },{ versionKey: false });

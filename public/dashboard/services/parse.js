@@ -7,195 +7,119 @@
 angular.module('ParseService', [])
     // super simple service
     // each function returns a promise object
-    .factory('Parse', function ($http, Model, Schema, $q,$timeout) {
+    .factory('Parse', function ($http, Model, Schema,IdAccumulator,Save,$q,$timeout) {
 
-        function retrieveVariantDetail(data, variantSchema) {
-            var detail = (Schema.retrieveFromSchema)(data, variantSchema);
-            detail.altFilteredReads = data['Ref,Alt filtered reads'];
-            detail.ref = data['Ref,Alt filtered reads'];
-            return detail;
+
+        var buildAssociations = function (hashWithNames) {
+            //build model relationships
+            var i = 0;
+            var temp = {};
+            var relationRequest = [];
+            var variantid = hashWithNames.Variant._id;
+            var espid = hashWithNames.Esp._id;
+            var detailid = hashWithNames.VariantDetail._id;
+            var patientid = hashWithNames.Patient._id;
+            var pathid = hashWithNames.Pathogenicity._id;
+            var geneid = hashWithNames.Gene._id;
+            var dbsnpid = hashWithNames.DbSNP._id;
+
+
+
+            relationRequest[i++] = (Model.createRelationship)(variantid,'variantDetails',detailid,'Variant');
+            relationRequest[i++] = (Model.createRelationship)(variantid,'gene',geneid,'Variant');
+            relationRequest[i++] = (Model.createRelationship)(variantid,'dbSNPs',dbsnpid,'Variant');
+            relationRequest[i++] = (Model.createRelationship)(variantid,'pathogenicity',pathid,'Variant');
+            relationRequest[i++] = (Model.createRelationship)(variantid,'esps',espid,'Variant');
+            relationRequest[i++] = (Model.createRelationship)(variantid,'patients',patientid,'Variant');
+
+            relationRequest[i++] = (Model.createRelationship)(espid,'variants',variantid,'Esp');
+
+            relationRequest[i++] = (Model.createRelationship)(dbsnpid,'variants',variantid,'DbSNP');
+
+            relationRequest[i++] = (Model.createRelationship)(geneid,'variants',variantid,'Gene');
+
+            relationRequest[i++] = (Model.createRelationship)(patientid,'variants',variantid,'Patient');
+
+            relationRequest[i++] = (Model.createRelationship)(pathid,'variant',variantid,'Pathogenicity');
+
+            relationRequest[i++] = (Model.createRelationship)(detailid,'variant',variantid,'VariantDetail');
+
+            return  $q.all(relationRequest);
         };
-
-        function retrievePathogenicity(data, pathogenicitySchema) {
-            var path = (Schema.retrieveFromSchema)(data, pathogenicitySchema);
-            path.GERpp = data['GERP++'];
-            path.SIFT = data['SIFT'];
-            path.polyPhen = data['PolyPhen-2'];
-            return path;
-        };
-
-
 
         return {
             saveInDbFromData: function (json, patientName) {
 
-                if(!json) console.log("JSON not passed correctly");
-                var returnValue = $q.defer();
-                var jsonWithIdToSave =  $q.defer();
-                var resultIDs = {};
+                if(!json)  { console.error("JSON not passed correctly"); return; }
 
-                var classes= ['variants','variantdetails','esps','genes','pathogenicities','dbsnps','patients'];
-                resultIDs.name = patientName;
-                resultIDs.ids = [];
-                for(var i=0;i<classes.length;i++)
-                {
-                    resultIDs.ids[classes[i]]= [];
-                }
-
-
-
-
-                var f1 = function (cb) {(Model.getAllSchemas)().then(
+                //inizialize for a patient IDs
+                (Model.create)('Upload',{patientName: patientName});
+                (Model.getAllSchemas)().then(
                     function () {
 
-                        var patient = $q.defer();
+                        var patientResolved = $q.defer();
+                        console.error(arguments[0]);
                         var schemas = (Schema.inizializeSchemasFromGET)(arguments[0]);
-                        console.info("Got schemas " );
-                        console.info(schemas);
+                        console.log("Got Schemas");
+                        console.log(schemas);
+
+                        var requests = [];
+
+                        //accessing array in which resides data
                         for (var key in json) if (json.hasOwnProperty(key))  break;
+
+                        //initializing patient
                         var patientBeforeID = {name :patientName};
+                        var resolvePatient = (Model.resolveDeferredFromDataPOST);
 
-                        $http.post('/api/Patient',patientBeforeID).success(
-                            function (res) {
-                            console.info(res);
-                            patientBeforeID._id = res.payload._id;
-                            console.log("Resolving patient");
-                            console.log(patientBeforeID)
-                            patient.resolve(patientBeforeID)}).error(
-                            function (err) {
-                                console.error("ERROR while saving patient: " + err);
-                                patient.reject(err);
-                            });
-                        var i;
-                        json[key].forEach(function (element) {
-                            i++;
-                            //build model classes
-                            var requests = [];
-                            var variant = (Schema.retrieveFromSchema)(element, schemas['Variant']);
-                            var detail = retrieveVariantDetail(element, schemas['VariantDetail']);
-                            var gene = (Schema.retrieveFromSchema)(element, schemas['Gene']);
-                            var dbsnp = (Schema.retrieveFromSchema)(element, schemas['DbSNP']);
-                            var pathogenicity = retrievePathogenicity(element, schemas['Pathogenicity']);
-                            var esp = (Schema.retrieveFromSchema)(element, schemas['Esp'], true);
+                        patientResolved = resolvePatient('patient',patientBeforeID, patientResolved);
 
-                            //TO REMOVE WHEN SOLVED INVALID PARSING
-                            esp.ESP6500_EA = '.';
+                        patientResolved.then( function (patient) {
+                            json[key].forEach(function (singleAttributesList) {
 
-                            var models = [variant, detail, gene, dbsnp, pathogenicity, esp];
-                            var modelNames = ['Variant', 'VariantDetail', 'Gene', 'DbSNP', 'Pathogenicity', 'Esp'];
+                                //Save Model Classes for ID
+                                var requests = {};
+                                var savedElements = {};
 
-                            for(var i=0;i<modelNames.length;i++) {
-                                requests[i] = $http.post('/api/'+modelNames[i],models[i]);
-                            }
-                            var onSuccess = function () {
-
-                                console.log(arguments);
-                                for (var i = 0; i < arguments[0].length; i++) {
-                                    if(arguments[0][i].data.payload._id === undefined) {
-                                        console.error("ERROR: arguments[0]["+i+'].data.payload._id undefined ');
-                                        console.error(arguments); }
-                                    models[i]._id = arguments[0][i].data.payload._id;
+                                for(var key in schemas) {
+                                    if(schemas.hasOwnProperty(key)) {
+                                        requests[key] = (Save.saveClassFromList)(singleAttributesList,key,schemas[key]);
+                                    }
                                 }
-                                //build model relationships
-                                var i = 0;
-                                var temp = {};
-                                var relationRequest = [];
 
-                                temp = {variantDetails : detail._id};
-                                relationRequest[i++] = $http.post('/api/Variant/'+variant._id,temp);
+                                $q.all(requests).then(function (data) {
+                                /*   console.log("now i should have IDS");
+                                   console.log(data);*/
 
-                                temp = {gene : gene._id};
-                                relationRequest[i++] = $http.post('/api/Variant/'+variant._id,temp);
+                                    for(var key in data) {
+                                        if(data.hasOwnProperty(key)) {
+                                            savedElements[key] = data[key].data.payload;
+                                        }
+                                    }
 
-                                temp = {dbSNPs : dbsnp._id};
-                                relationRequest[i++] = $http.post('/api/Variant/'+variant._id,temp);
-
-                                temp = {pathogenicity : pathogenicity._id};
-                                relationRequest[i++] = $http.post('/api/Variant/'+variant._id,temp);
-
-                                temp = {esps : esp._id};
-                                relationRequest[i++] = $http.post('/api/Variant/'+variant._id,temp);
-
-                                temp = {patients : patient._id};
-                                relationRequest[i++] = $http.post('/api/Variant/'+variant._id,temp);
-
-
-                                temp = {variants : variant._id};
-                                relationRequest[i++] = $http.post('/api/Esp/'+esp._id,temp);
-                                relationRequest[i++] = $http.post('/api/DbSNP/'+dbsnp._id,temp);
-                                relationRequest[i++] = $http.post('/api/Gene/'+gene._id,temp);
-
-                                $http.get('/api/Patient/'+patient._id).success(function (data) {
-                                    console.log("Got: ",data.payload.variants);
-                                    console.log("Data che posterei: ",data.payload.variants.concat(variant._id));
-                                    $http({
-                                        method: 'POST',
-                                        url: '/api/Patient/'+patient._id,
-                                        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-                                        transformRequest: function(obj) {
-                                            var str = [];
-                                            for(var p in obj) if(obj.hasOwnProperty(p))
-                                                str.push(encodeURIComponent('variants') + "=" + encodeURIComponent(obj[p]));
-                                            console.log("La richiesta è così formulata: " + str.join("&"));
-                                            return str.join("&");
-                                        },
-                                        data: data.payload.variants.concat(variant._id)
-                                    }).success(function () {console.log("ALLZ OK")}).error(function(err) {
-                                        console.error("ERROR: " + JSON.stringify(err))
+                                    console.log("final data: ");
+                                    console.log(savedElements);
+                                    savedElements.Patient = patient;
+                                    buildAssociations(savedElements).then ( function (data) {
+                                        console.log("Relationships created maybe. Please check");
+                                        console.log(data);
                                     });
-                                })
 
-                                relationRequest[i++] = $http.post('/api/Patient/'+patient._id,temp);
-
-                                temp = {variant : variant._id};
-                                relationRequest[i++] = $http.post('/api/Pathogenicity/'+pathogenicity._id,temp);
-                                relationRequest[i++] = $http.post('/api/VariantDetail/'+detail._id,temp);
-
-                                $q.all(relationRequest).then(
-                                    function(doneData) {
-                                        console.info(' i = ' + i);
-                                        resultIDs.ids.variants.push(variant._id);
-                                        resultIDs.ids.pathogenicities.push(pathogenicity._id);
-                                        resultIDs.ids.dbsnps.push(dbsnp._id);
-                                        resultIDs.ids.esps.push(esp._id);
-                                        resultIDs.ids.genes.push(gene._id);
-                                        resultIDs.ids.variantdetails.push(detail._id);
-                                        resultIDs.ids.patient = patient;
-                                    if(i === (json[key].length - 1)) cb(null,resultIDs);
-
-                                    },function(err) {console.error("ERROR while saving relation: " + err)})
+                                   (IdAccumulator.accumulateIDfromAll)(patient, savedElements).then(function (data) {
+                                            console.log("ok done.");
+                                            console.log(data);
+                                        })
 
 
 
-                            };
-
-                            var then = function (patientLocal) { patient = patientLocal; $q.all(requests).then(onSuccess, function (err) {
-                                    console.error("Error: " + err);
-                                    returnValue.reject(err);
-                                }); };
-
-                            patient.promise.then(then);
-                        });
 
 
+                                }) ;
+                            });
 
-                    } ,function(err) { console.error("Error: "+err); jsonWithIdToSave.reject(err);}); }
+                        })
 
-                var f2 = function (cb) {jsonWithIdToSave.promise.then(
-                    function (data) {
-                     $timeout(function() {
-                          console.log("Now posting Upload ID");
-                          console.log(data);
-                          $http.post('api/upload',data).success(function() {  console.log("Post of upload went ok"); cb(null,data)} )
-                          },3000);
-
-                    },
-                    function(err) {
-                        console.error("Error: "+err); returnValue.reject(err);
-                    }); }
-
-                async.series([f1,f2],function () { console.info('FATTO'); })
-                ;
+                    } ,function(err) { console.error("Error: "+err); });
             }
 
 
@@ -276,6 +200,8 @@ angular.module('ParseService', [])
  */
 /*jshint onevar: false, indent:4 */
 /*global setImmediate: false, setTimeout: false, console: false */
+/*
+
 (function () {
 
     var async = {};
@@ -1259,9 +1185,11 @@ angular.module('ParseService', [])
     };
     async.log = _console_fn('log');
     async.dir = _console_fn('dir');
-    /*async.info = _console_fn('info');
+    */
+/*async.info = _console_fn('info');
      async.warn = _console_fn('warn');
-     async.error = _console_fn('error');*/
+     async.error = _console_fn('error');*//*
+
 
     async.memoize = function (fn, hasher) {
         var memo = {};
@@ -1320,7 +1248,9 @@ angular.module('ParseService', [])
         return async.mapSeries(counter, iterator, callback);
     };
 
-    async.seq = function (/* functions... */) {
+    async.seq = function (*/
+/* functions... *//*
+) {
         var fns = arguments;
         return function () {
             var that = this;
@@ -1339,11 +1269,15 @@ angular.module('ParseService', [])
         };
     };
 
-    async.compose = function (/* functions... */) {
+    async.compose = function (*/
+/* functions... *//*
+) {
         return async.seq.apply(null, Array.prototype.reverse.call(arguments));
     };
 
-    var _applyEach = function (eachfn, fns /*args...*/) {
+    var _applyEach = function (eachfn, fns */
+/*args...*//*
+) {
         var go = function () {
             var that = this;
             var args = Array.prototype.slice.call(arguments);
@@ -1394,3 +1328,4 @@ angular.module('ParseService', [])
 
 }());
 
+*/

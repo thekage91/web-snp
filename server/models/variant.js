@@ -50,22 +50,26 @@ var VariantSchema = new Schema({
     
     patients: [{ 
         type: Schema.Types.ObjectId,
-        ref: 'Patient'
+        ref: 'Patient',
+        default: []
     }],
     
     dbSNPs: [{ 
         type: Schema.Types.ObjectId,
-        ref: 'DbSNP'
+        ref: 'DbSNP',
+        default: []
     }],
     
     esps: [{ 
         type: Schema.Types.ObjectId,
-        ref: 'Esp'
+        ref: 'Esp',
+        default: []
     }],
 
     variantDetails: [{
         type: Schema.Types.ObjectId,
-        ref: 'VariantDetail'
+        ref: 'VariantDetail',
+        default: []
     }]
 
 },{ versionKey: false });
