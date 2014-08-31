@@ -53,7 +53,6 @@ angular.module('ParseService', [])
                 if(!json)  { console.error("JSON not passed correctly"); return; }
 
                 //inizialize for a patient IDs
-                (Model.create)('Upload',{patientName: patientName});
                 (Model.getAllSchemas)().then(
                     function () {
 
