@@ -1,67 +1,62 @@
-<!DOCTYPE html>
-<html>
- <head> 
-  <title>Widget</title> 
-  <style>
-    body{
-      margin: 0;
-      overflow: hidden;
-    }
-    #menu {
-        position: absolute;
-        bottom: 20px;
-        width: 100%;
-        text-align: center;
-      }
-    #stats {  /* Align stats top-left */
-      position: absolute;
-      left: 0px;
-      top: 0px;
-    }
-    button {
-        color: rgba(127,255,255,0.75);
-        background: transparent;
-        outline: 1px solid rgba(127,255,255,0.75);
-        border: 0px;
-        padding: 5px 10px;
-        cursor: pointer;
-      }
-      button:hover {
-        background-color: rgba(0,255,255,0.5);
-      }
-      button:active {
-        color: #000000;
-        background-color: rgba(0,255,255,0.75);
-      }
-  </style> 
+<style>
+  body{
+    margin: 0;
+    overflow: hidden;
+  }
+  #menu {
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+    text-align: center;
+  }
+  #stats {  /* Align stats top-left */
+    position: absolute;
+    left: 0px;
+    top: 0px;
+  }
+  button {
+    color: rgba(127,255,255,0.75);
+    background: transparent;
+    outline: 1px solid rgba(127,255,255,0.75);
+    border: 0px;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  button:hover {
+    background-color: rgba(0,255,255,0.5);
+  }
+  button:active {
+    color: #000000;
+    background-color: rgba(0,255,255,0.75);
+  }
+</style> 
 
-  <!-- JavaScript libraries -->
-  <script src="libs/jquery.min.js"></script> 
-  <script src="libs/three.min.js"></script>
-  <script src="libs/Stats.min.js"></script>
-  <script src="libs/dat.gui.min.js"></script>
-  <script src="libs/TrackballControls.js"></script>
-  <script src="libs/tween.min.js"></script>
-  <script src="libs/OBJLoader.js"></script>
-  <script type="text/javascript" src="libs/helvetiker_regular.typeface.js"></script> 
-  <script type="text/javascript" src="libs/helvetiker_bold.typeface.js"></script> 
-  <script type="text/javascript" src="libs/bitstream_vera_sans_mono_roman.typeface.js"></script>
-  <script src="libs/keyframe.js"></script>
-  <script src="libs/CurveExtras.js"></script>
-  <script src="js/tween_animation.js"></script>
+<!-- JavaScript libraries -->
+<script src="libs/jquery.min.js"></script> 
+<script src="libs/three.min.js"></script>
+<script src="libs/Stats.min.js"></script>
+<script src="libs/dat.gui.min.js"></script>
+<script src="libs/TrackballControls.js"></script>
+<script src="libs/tween.min.js"></script>
+<script src="libs/OBJLoader.js"></script>
+<script type="text/javascript" src="libs/helvetiker_regular.typeface.js"></script> 
+<script type="text/javascript" src="libs/helvetiker_bold.typeface.js"></script> 
+<script type="text/javascript" src="libs/bitstream_vera_sans_mono_roman.typeface.js"></script>
+<script src="libs/keyframe.js"></script>
+<script src="libs/CurveExtras.js"></script>
+<script src="js/tween_animation.js"></script>
 
-  <script src="adenine.js"></script>
-  <script src="cytosine.js"></script>
-  <script src="thymine.js"></script>
-  <script src="guanine.js"></script>
-  </head>
+<script src="adenine.js"></script>
+<script src="cytosine.js"></script>
+<script src="thymine.js"></script>
+<script src="guanine.js"></script>
 
-  <body>
-    <div id="menu">
-      <button id="animation">Show Animation</button>
-      <button id="startMusic">Start music</button>
-      <button id="stopMusic">Stop music</button>
-    </div>
+<body>
+  <div id="menu">
+    <button id="animation">Show Animation</button>
+    <button id="startMusic">Start music</button>
+    <button id="stopMusic">Stop music</button>
+  </div>
   <!-- Javascript code --> 
   <script>
     //once everything is loaded, we run our Three.js stuff.
@@ -90,6 +85,7 @@
 
       // add the output of the renderer to the html element
       $('body').append(webGLRenderer.domElement);
+
 
 
       
@@ -396,6 +392,8 @@
 
         document.getElementById("animation").style.visibility="hidden";
 
+        startMusic();
+
         movingCameraBefore(4000);
 
         setTimeout(function(){movingCamera(4000)}, 4000);
@@ -427,19 +425,6 @@
         audio.pause();
         audio = null;
       }
-
-
-
-      /*function highLightBase(couple, duration){
-        var spotLight = new THREE.SpotLight( 0xffffff );
-        spotLight.target = couple;
-        spotLight.intensity = 100;
-        
-        spotLight.position.set(couple.position.x , couple.position.y , couple.position.z);
-        couple.add(spotLight);
-
-        flashTween(spotLight, duration, 10).start();
-      }*/
 
 
 
@@ -541,6 +526,4 @@
       animate();      
     });
   </script>
- </body>
-
-</html>
+</body>
