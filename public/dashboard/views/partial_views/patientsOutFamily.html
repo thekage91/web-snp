@@ -1,21 +1,29 @@
-
 <div class="row">
-	<h1 class="section-header">Patients with no Family</h1>
+	<h1 class="section-header">Patients without a family</h1>
 	<hr>
 </div>
 
 <div class="row" ng-controller="PatientsCtrl">
 
-	<div id="custom-search-input" class="col-md-9 bot15">
-	    <div class="input-group col-md-4 pull-left">
-	      <input type="search" class="search-query form-control" placeholder="Type here" ng-model="searchPatients" />
-	      <span class="input-group-btn">
-	        <button class="btn btn-danger" type="button">
-	          <span class="glyphicon glyphicon-search"></span>
+	<div id="custom-search-input" class="col-md-12 bot10">
+	  	<div class="col-md-6">
+		    <div class="input-group col-md-8 pull-left">
+		      <input type="search" class="search-query form-control" placeholder="Type here" ng-model="searchPatients" />
+		      <span class="input-group-btn">
+		        <button class="btn btn-danger" type="button">
+		          <span class="glyphicon glyphicon-search"></span>
+		        </button>
+		      </span>
+		    </div>
+		</div>
+	  	
+	  	<div class="controls-group col-md-5 pull-right">
+	        <button type="button" class="btn btn-secondary btn-sm" ui-sref="dashboard.families">
+	            <span class="fa fa-backward fa-fw">&nbsp;</span>Back to families
 	        </button>
-	      </span>
 	    </div>
   	</div>
+
 
   	<table class="table table-bordered">
         <thead>
