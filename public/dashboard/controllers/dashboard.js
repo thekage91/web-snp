@@ -22,7 +22,7 @@ angular.module('mean.dashboard', ['angular-md5'])
                 $scope.jsonUpload = JSON.parse($window.output);
                 for (var key in $scope.jsonUpload) if ($scope.jsonUpload.hasOwnProperty(key))  break;
 
-                Filter.createDistinctValues($scope.jsonUpload[key],['Mutation','region']);
+                Filter.updateDistinctValues($scope.jsonUpload[key],['Mutation','region']);
 
                 //console.log( Filter.getDistinctValues('Genotype') + '\ntype = ' + typeof Filter.getDistinctValues('region') + '\n' + Filter.getDistinctValues('region'));
 
