@@ -11,23 +11,19 @@ angular.module('ModelService', [])
             return $http.post('/api/'+element, data);
         }
 
-
-
         return {
             getAll : function(element) {
                 return $http.get('/api/'+element);
             },
             create : create,
+            update: function (element,id,data) {
+                return $http.post('/api/'+element+'/'+id, data);
+            },
             delete : function(element,id) {
                 return $http.delete('/api/'+element +'/'+ id);
             },
             getSchema : function (element) {
                 return $http.get('/api/model/'+element);
-            },
-            getAnId : function () {
-                var resu;
-                return $http.get('/api/id',{cache : 'false'}).success( function (res) { resu = res});
-                return resu[0];
             },
             getAllSchemas : function () {
 

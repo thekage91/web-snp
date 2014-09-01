@@ -15,14 +15,16 @@
 
 </script>
 
-<ul class="nav nav-tabs" ng-controller="ExecuteQueryCtrl">
-      <li class="text-left"><a href="#basic" data-toggle="tab" ng-click="clear()">Basic SNPs Search</a></li>
-      <li class="text-left"><a href="#complex" data-toggle="tab" ng-click="clear()">Range SNPs Search</a></li>
+<ul class="nav nav-tabs">
+      <li class="text-left"><a href="#basic" data-toggle="tab" >Basic SNPs Search</a></li>
+      <li class="text-left"><a href="#complex" data-toggle="tab" >Range SNPs Search</a></li>
 
     </ul>
 
-    <!-- First tab -->
+
     <div id="myTabContent" class="tab-content" ng-controller="ExecuteQueryCtrl">
+
+    <!-- First tab -->
       <div class="tab-pane active in" id="basic">
         <div class="row bot15">
                 <div id="custom-search-input">
@@ -34,7 +36,6 @@
                         <span id="search_concept">Search by...</span> <span class="caret"></span>
                       </button>
                       <ul class="dropdown-menu" role="menu">
-                        <li><a href="#patient" ng-click="elValue('patient')" onClick="changeLabel('Patient')">Patient</a></li>
                         <li><a href="#gene" ng-click="elValue('gene')" onClick="changeLabel('Gene')">Gene</a></li>
                         <li><a href="#genotype"  ng-click="elValue('genotype')" onClick="changeLabel('Genotype')">Genotype</a></li>
                        <li><a href="#freqAlt"  ng-click="elValue('freqAlt')" onClick="changeLabel('Freq alt')">Freq alt</a></li>
@@ -53,32 +54,24 @@
               </div>
             </div>
 
+          <div class="row input-group-btn search-panel">
 
-            <div class="row input-group-btn search-panel">
-              <div id="firstCombobox" class="col-md-4">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                  <input id="refine_value_first" ng-model="chooseFilterMutation" disabled 
-                          style="border: 0px"></input> <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" role="menu">
-                  <li><a ng-click="valueRefineMutation('nonsynonymous SNV')">nonsynonymous SNV</a></li>
-                  <li><a ng-click="valueRefineMutation('synonymous SNV')">synonymous SNV</a></li>
-                  <li><a ng-click="valueRefineMutation('All Mutation')">All Mutation</a></li>
-                </ul>
-              </div>
+                <div class="btn-group">
+                    <h5 style="float : left; padding: 0px 10px 0px 0px" >Filter by region  </h5>
+                    <label class="btn btn-primary" ng-repeat="item in filtro.region"  ng-model="check[item]" btn-checkbox>{{item}}</label>
+                </div>
+          </div>
 
-              <div id="secondCombobox" class="col-md-4">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                  <input id="refine_value_first" ng-model="chooseFilterRegion" disabled 
-                          style="border: 0px"></input> <span class="caret"></span>                </button>
-                <ul class="dropdown-menu" role="menu">
-                  <li><a ng-click="valueRefineRegion('UTR5')" >UTR5</a></li>
-                  <li><a ng-click="valueRefineRegion('UTR3')" >UTR3</a></li>
-                  <li><a ng-click="valueRefineRegion('exonic')" >exonic</a></li>
-                  <li><a ng-click="valueRefineRegion('intronic')" >intronic</a></li>
-                   <li><a ng-click="valueRefine('All Region')" >All Region</a></li>
-                </ul>              
-              </div>
+          <!-- per andare a capo --> <div/>
+
+          <div class="row input-group-btn search-panel">
+                    <div class="btn-group">
+                        <h5 style="float : left; padding: 0px 10px 0px 0px">Filter by mutation  </h5>
+                        <label class="btn btn-primary" ng-repeat="item in filtro.Mutation"  ng-model="check[item]" btn-checkbox>{{item}}</label>
+                    </div>
+
+
+
             </div>
 
 
@@ -103,7 +96,7 @@
                 </tr>
               </thead>
               <tbody>
-                  <tr ng-repeat="el in elements | filter:chooseFilterMutation | filter:chooseFilterRegion"> 
+                  <tr ng-repeat="el in elements | filter: chosenFilters">
                   <td>{{el.chr}}</td>
                   <td>{{el.start}}</td>
                   <td>{{el.end}}</td>
@@ -127,7 +120,8 @@
           </div>
         </div>
       </div>
-      <!-- First tab end -->
+
+    <!-- First tab end -->
 
 
 
@@ -235,4 +229,3 @@
       <!-- Second tab end -->
 
   </div>
-</div>
