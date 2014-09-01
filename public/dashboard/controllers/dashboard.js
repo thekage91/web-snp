@@ -23,7 +23,6 @@ angular.module('mean.dashboard', ['angular-md5'])
                 for (var key in $scope.jsonUpload) if ($scope.jsonUpload.hasOwnProperty(key))  break;
 
                 Filter.updateDistinctValues($scope.jsonUpload[key],['Mutation','region']);
-
                 //console.log( Filter.getDistinctValues('Genotype') + '\ntype = ' + typeof Filter.getDistinctValues('region') + '\n' + Filter.getDistinctValues('region'));
 
                /* var saveFunction = (Parse.saveInDbFromData);
@@ -304,8 +303,8 @@ angular.module('mean.dashboard', ['angular-md5'])
 
         //init filters
         (function () {
-            $scope.filtro.region = Filter.getDistinctValues('region');
-            $scope.filtro.Mutation = Filter.getDistinctValues('Mutation');
+            Filter.getDistinctValues('region').then( function(data) { $scope.filtro.region = data});
+            Filter.getDistinctValues('Mutation').then( function(data) { $scope.filtro.Mutation = data});
         })();
 
         $scope.updateFilter =  function() {

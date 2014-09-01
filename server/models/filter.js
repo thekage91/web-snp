@@ -12,9 +12,8 @@ var mongoose = require('mongoose'),
 
 /* Filter schema */
 var FilterSchema = new Schema({
-    filter: {
-        type: Schema.Types.Mixed,
-        default: []
+    distinctWords: {
+        type: Schema.Types.Mixed
     }
 },{ versionKey: false });
 
@@ -24,5 +23,5 @@ FilterSchema.statics.query = function query(q) {
 
 
 var model = mongoose.model('Filter', FilterSchema);
-model.attr = {'Filter':['filter']} ;
+model.attr = {'Filter':['distinctWords']} ;
 module.exports = model;
