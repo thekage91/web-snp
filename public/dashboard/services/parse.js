@@ -52,6 +52,7 @@ angular.module('ParseService', [])
 
                 if(!json)  { console.error("JSON not passed correctly"); return; }
 
+
                 //inizialize for a patient IDs
                 (Model.getAllSchemas)().then(
                     function () {
@@ -66,6 +67,7 @@ angular.module('ParseService', [])
 
                         //accessing array in which resides data
                         for (var key in json) if (json.hasOwnProperty(key))  break;
+                        //console.log(json[key].length+" ")
 
                         //initializing patient
                         var patientBeforeID = {name :patientName};
