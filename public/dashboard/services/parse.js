@@ -23,6 +23,10 @@ angular.module('ParseService', [])
             var geneid = hashWithNames.Gene._id;
             var dbsnpid = hashWithNames.DbSNP._id;
 
+            var all = [variantid,espid,detailid,patientid,pathid,geneid,dbsnpid];
+            for( var i = 0; i < all.length; i++)
+                if(!all[i])
+                  console.error("ERROR: ID undefined! element n°:" + i);
 
 
             relationRequest[i++] = (Model.createRelationship)(variantid,'variantDetails',detailid,'Variant');
@@ -102,7 +106,8 @@ angular.module('ParseService', [])
                                     buildAssociations(savedElements).then ( function (data) {
                                         console.log("Relationships created succesfully.");
                                         //console.log(data);
-                                    });
+                                    },function (error) {
+                                    console.error('Failed creating relationships' + error)});
 
                                    /*(IdAccumulator.accumulateIDfromAll)(patient, savedElements).then(function (data) {
                                             console.log("ok done.");

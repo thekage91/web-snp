@@ -17,25 +17,46 @@ angular.module('SchemaService', [])
 
         function filterAndReturn (data, schema, noModify) {
 
-            var count = 0;
-            var res = {};
-            var camelized;
-            for (var el in data) {
-                if (!noModify) camelized = camelize(el); else camelized = el;
+            var count = 0,res = {},camelized,found;
+
+          /*  for (var el in data) {
+                found = false;
+
+
                 for (var i = 0; i <= schema.length; i++)
                     if (camelized === schema[i]) {
                         count++;
+                        found = true;
                         res[camelized] = data[el];
-                        //delete data[el];
+                        delete data[el];
                     }
-            }
+                //If the schema's element is not found
+                if(!found) res[camelized] = '.';
+            }*/
 
-            if ( (count !== schema.length)
+            schema.forEach( function (schemaEl) {
+                found = false;
+                for (var dataEl in data) {
+                    if (!noModify) camelized = camelize(dataEl); else camelized = dataEl;
+                    //console.log('data element camelized : ' + camelized);
+                    if (camelized === schemaEl) {
+                        found = true;
+                        res[camelized] = data[dataEl];
+                        delete data[dataEl];
+                    }
+                }
+                if(!found) res[schemaEl] = '.';
+            });
+           /* console.log('risultato con schema ' + schema+ 'e con data');
+            console.info(data);
+            console.log(res);*/
+
+            /*if ( (count !== schema.length)
                 && (!( (count+3 === schema.length ) && ( schema.length === 7) ))
                 ) {
                 console.warn("WARNING: got: " +count+" of "+schema.length+" elements of "+ schema + " list: ")
                 console.warn(data);
-            }
+            }*/
             return res;
         };
 
@@ -46,6 +67,13 @@ angular.module('SchemaService', [])
                 return index == 0 ? match.toLowerCase() : match.toUpperCase();
             });
             return temp.replace(/[^\w\s]/gi, '');
+        };
+
+        camelizeold = function (x) {
+            return x.replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, function (match, index) {
+                if (+match === 0) return ""; // or if (/\s+/.test(match)) for white spaces
+                return index == 0 ? match.toLowerCase() : match.toUpperCase();
+            });
         };
 
         return {
