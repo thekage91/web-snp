@@ -10,7 +10,7 @@ angular.module('FilterService', [])
         function getOrInitDistinctWords() {
             var deferred = $q.defer();
             Model.getAll('Filter').then(function (response) {
-                console.warn(response);
+                //console.warn(response);
                 var data = response.data.payload;
                 if (data.length <= 0)
                     Model.create('Filter',{distinctWords : { 0:0}}).then(function (response) {
@@ -41,22 +41,23 @@ angular.module('FilterService', [])
                             if (distinctWords[singleColumn].indexOf(word) < 0) {
                                 distinctWords[singleColumn].push(word);
                                 modified = true;
-                                console.log('post modifica' + JSON.stringify(distinctWords)+ '\ne pure'+ JSON.stringify(distinctWords[singleColumn]) );
+                                //console.log('post modifica' + JSON.stringify(distinctWords)+ '\ne pure'+ JSON.stringify(distinctWords[singleColumn]) );
                             }
                         })
                     });
                         if (modified) Model.update('Filter', id,{distinctWords: distinctWords }).then(function (resp) {
-                        console.log("Filter Updated with new words. response: ");
-                        console.log(resp); })
+                       // console.log("Filter Updated with new words. response: ");
+                        //console.log(resp);
+                      })
                 });
 
             },
 
-            getDistinctValues: function(column) {
+            getDistinctValues: function (column) {
                 var deferred = $q.defer();
                 getOrInitDistinctWords().then( function (data) {
-                    console.log("risposta da getOrInit")
-                    console.log(data);
+                    // console.log("risposta da getOrInit")
+                    //  console.log(data);
                     data.distinctWords[column] = data.distinctWords[column] || [];
                     deferred.resolve(data.distinctWords[column]);
                 }, function(err) { deferred.reject(err)});

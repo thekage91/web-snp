@@ -58,16 +58,14 @@ angular.module('ParseService', [])
                     function () {
 
                         var patientResolved = $q.defer();
-                        console.error(arguments[0]);
+                        //console.error(arguments[0]);
                         var schemas = (Schema.inizializeSchemasFromGET)(arguments[0]);
-                        console.log("Got Schemas");
-                        console.log(schemas);
-
-                        var requests = [];
+                        //console.log("Got Schemas");
+                        //console.log(schemas);
 
                         //accessing array in which resides data
                         for (var key in json) if (json.hasOwnProperty(key))  break;
-                        //console.log(json[key].length+" ")
+                        console.log(json[key].length+" rows in file.");
 
                         //initializing patient
                         var patientBeforeID = {name :patientName};
@@ -98,22 +96,18 @@ angular.module('ParseService', [])
                                         }
                                     }
 
-                                    console.log("final data: ");
-                                    console.log(savedElements);
+                                    //console.log("final data: ");
+                                    //console.log(savedElements);
                                     savedElements.Patient = patient;
                                     buildAssociations(savedElements).then ( function (data) {
-                                        console.log("Relationships created maybe. Please check");
-                                        console.log(data);
+                                        console.log("Relationships created succesfully.");
+                                        //console.log(data);
                                     });
 
-                                   (IdAccumulator.accumulateIDfromAll)(patient, savedElements).then(function (data) {
+                                   /*(IdAccumulator.accumulateIDfromAll)(patient, savedElements).then(function (data) {
                                             console.log("ok done.");
                                             console.log(data);
-                                        })
-
-
-
-
+                                        })*/
 
                                 }) ;
                             });

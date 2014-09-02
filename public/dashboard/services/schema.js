@@ -23,11 +23,7 @@ angular.module('SchemaService', [])
 
         function filterAndReturn (data, schema, noModify) {
 
-
             var count = 0;
-
-
-
             var res = {};
             var camelized;
             for (var el in data) {
@@ -36,14 +32,16 @@ angular.module('SchemaService', [])
                     if (camelized === schema[i]) {
                         count++;
                         res[camelized] = data[el];
-                        delete data[el];
+                        //delete data[el];
                     }
             }
 
-            if (count ==! schema.length) {
-                console.warn("WARNING: Did not got all elements of schema: " + schema + " list: ")
+            if ( (count !== schema.length)
+                && (!( (count+2 === schema.length ) && ( schema.length === 9) ))
+                && (!( (count+3 === schema.length ) && ( schema.length === 7) ))
+                ) {
+                console.warn("WARNING: got: " +count+" of "+schema.length+" elements of "+ schema + " list: ")
                 console.warn(data);
-
             }
             return res;
         };

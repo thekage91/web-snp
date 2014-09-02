@@ -20,6 +20,7 @@ angular.module('mean.dashboard', ['angular-md5'])
                 name = $scope.patient;
                 console.log("Patient name = " + name);
                 $scope.jsonUpload = JSON.parse($window.output);
+                console.log($scope.jsonUpload);
                 for (var key in $scope.jsonUpload) if ($scope.jsonUpload.hasOwnProperty(key))  break;
 
                 Filter.updateDistinctValues($scope.jsonUpload[key],['Mutation','region']);
