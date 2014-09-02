@@ -31,12 +31,7 @@ var VariantDetailSchema = new Schema({
         required: true,
         validate: [validatePresenceOf, 'readsDepth cannot be blank']
     },
-    ref: {
-        type: String,
-        required: true,
-        validate: [validatePresenceOf, 'ref cannot be blank']
-    },
-    altFilteredReads: {
+    refAltFilteredReads: {
         type: String,
         required: true,
         validate: [validatePresenceOf, 'altFilteredReads cannot be blank']
@@ -76,5 +71,5 @@ VariantDetailSchema.statics.query = function query(q) {
 };
 
 var model = mongoose.model('VariantDetail', VariantDetailSchema);
-model.attr = {'VariantDetail': ['qual' ,'genotype' ,'genotypeQuality' ,'readsDeeph' ,'ref' ,'altFilteredReads' ,'genotypesLikelihood' ,'haplotypeScore' ,'strandBias' ]} ;
+model.attr = {'VariantDetail': ['qual' ,'genotype' ,'genotypeQuality' ,'readsDeeph' ,'refAltFilteredReads' ,'genotypesLikelihood' ,'haplotypeScore' ,'strandBias' ]} ;
 module.exports = model;
