@@ -36,7 +36,7 @@
                         <span id="search_concept">Search by...</span> <span class="caret"></span>
                       </button>
                       <ul class="dropdown-menu" role="menu">
-                        <li><a href="#gene" ng-click="query.element = 'gene'" onClick="changeLabel('Gene')">Gene</a></li>
+                        <li><a href="#gene" ng-click="query.element = 'genes'" onClick="changeLabel('Genes')">Genes</a></li>
                        <li><a href="#freqAlt"  ng-click="query.element = 'freqAlt'" onClick="changeLabel('Freq alt')">Freq alt</a></li>
                         <li><a href="#dbsnp"  ng-click="query.element = 'dbSNP' " onClick="changeLabel('dbSNP')">dbSNP</a></li>
                       </ul>
@@ -76,9 +76,10 @@
 
         <!--  style="height: 500px; overflow-y: auto; margin-top: 50px" -->
         <div class="row">
-            <h4>Results:</h4>
-        <h4 ng-hide="elements.length"> No Results! </h4>
-          <div ng-show="elements && elements.length">
+            <h4 ng-show="elements.length && $scope.query.ok " >Results:</h4>
+            <h4 ng-hide="elements.length || !($scope.query.ok)"> No Results! </h4>
+            <div ng-show="elements && elements.length">
+
             <table class="table table-striped table-fixed-header">
               <thead>
                 <tr>
@@ -136,13 +137,13 @@
                       <div class="input-group col-md-12">
                         <div class="input-group">
                           <div class="input-group-btn search-panel">
-                            <input type="text" ng-model="chr" class="form-control" name="x" placeholder="chr">
+                            <input type="text" ng-model="query.chr" class="form-control" name="x" placeholder="chr">
                           </div>
                           <div class="input-group-btn search-panel">
-                            <input type="text" ng-model="start" class="form-control" name="x" placeholder="start">
+                            <input type="text" ng-model="query.start" class="form-control" name="x" placeholder="start">
                           </div>
                           <div class="input-group-btn search-panel">
-                            <input type="text" ng-model="end" class="form-control" name="x" placeholder="end">
+                            <input type="text" ng-model="query.end" class="form-control" name="x" placeholder="end">
                           </div>
                         <span class="input-group-btn">
                             <button class="btn btn-danger" type="button" ng-click="submitByRegion()">
@@ -155,32 +156,26 @@
                     </div>
 
                 <div class="row input-group-btn search-panel">
-                    <div id="firstCombobox" class="col-md-4">
-                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                            <span id="refine_value_first">Choose Mutation...</span> <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a ng-click="valueRefine('nonsynonymous SNV')" onClick="changeLabel3('nonsynonymous SNV');">nonsynonymous SNV</a></li>
-                            <li><a ng-click="valueRefine('synonymous SNV')" onClick="changeLabel3('synonymous SNV');">synonymous SNV</a></li>
-                            <li><a ng-click="valueRefine('all')" onClick="changeLabel3('All');">all</a></li>
-                        </ul>
-                    </div>
 
-                    <div id="secondCombobox" class="col-md-4">
-                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                            <span id="refine_value_second">Choose Region...</span> <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a ng-click="valueRefine('UTR5')" onClick="changeLabel4('UTR5');">UTR5</a></li>
-                            <li><a ng-click="valueRefine('UTR3')" onClick="changeLabel4('UTR3');">UTR3</a></li>
-                            <li><a ng-click="valueRefine('exonic')" onClick="changeLabel4('exonic');">exonic</a></li>
-                            <li><a ng-click="valueRefine('intronic')" onClick="changeLabel4('intronic');">intronic</a></li>
-                            <li><a ng-click="valueRefine('all')" onClick="changeLabel4('all');">all</a></li>
-                        </ul>
+                    <div class="btn-group">
+                        <h5 style="float : left; padding: 0px 10px 0px 0px" >Filter by region  </h5>
+                        <label class="btn btn-primary" ng-repeat="item in filtro.region"  ng-model="check[item]" btn-checkbox>{{item}}</label>
                     </div>
                 </div>
+
+                <!-- per andare a capo --> <div/>
+
+                <div class="row input-group-btn search-panel">
+                    <div class="btn-group">
+                        <h5 style="float : left; padding: 0px 10px 0px 0px">Filter by mutation  </h5>
+                        <label class="btn btn-primary" ng-repeat="item in filtro.Mutation"  ng-model="check[item]" btn-checkbox>{{item}}</label>
+                    </div>
+
+
+
+                </div>
                    <div class="row">
-            <h4>Results:</h4>
+            <h4 ng-show="elements.length && $scope.query.ok " >Results:</h4>
         <h4 ng-hide="elements.length"> No Results! </h4>
           <div ng-show="elements && elements.length">
             <table class="table table-striped  ">

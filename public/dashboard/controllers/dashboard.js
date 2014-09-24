@@ -1,11 +1,5 @@
 'use strict';
 
-function jsonConcat(o1, o2) {
-    for (var key in o2) if(o2.hasOwnProperty(key)){
-        o1[key] = o2[key];
-    }
-    return o1;
-}
 
 
 angular.module('mean.dashboard', ['angular-md5'])
@@ -311,6 +305,7 @@ angular.module('mean.dashboard', ['angular-md5'])
     .controller('ExecuteQueryCtrl', ['$scope', '$http', 'Filter','Query' ,function ($scope, $http,Filter,Query) {
 
         $scope.filtro = {};
+        //$scope.query.ok = false;
 
         //init filters
         (function () {
@@ -327,38 +322,32 @@ angular.module('mean.dashboard', ['angular-md5'])
 
 
         $scope.submitBase = function () {
+            $scope.query.ok = true;
+
             var keyword = $scope.query.keyword;
             var element = $scope.query.element;
+            $scope.elements = [];
 
 
-            Query.submitQuery(element,keryword).success();
-
-
+            Query.submitQueryByElement(element,keyword).then( function (data) {
+                $scope.elements.push(data);
+            });
 
 
         };
 
         $scope.submitByRegion = function () {
-            $http.get('/api/variant/finder/query?chr=' +
-                $scope.chr + '&start=' +
-                $scope.start + '&end=' + $scope.end)
-                .success(function (data) {
-                    $scope.elements = []
-                    console.info("Retrieved this variant from range query: ")
-                    console.info(data);
-                    data.payload.forEach(function (o1) {
-                      $http.get('/api/gene/' + o1.gene).success( function(data) {
-                                console.log('Got gene related to Variant');
-                                var o2 = data.payload;
-                                $scope.elements.push(jsonConcat(o1,o2))
-                            })
+            $scope.query.ok = true;
 
-                        })
+            var chr = $scope.query.chr;
+            var start = $scope.query.start;
+            var end = $scope.query.end;
 
-                }).error(function () {
-                    console.log('[ERROR] Failed retrieving variant  ith ID: ' + variant);
-                });
+            $scope.elements = [];
 
+            Query.submitByRegion(chr,start,end).then( function (data) {
+                $scope.elements.push(data);
+            });
 
             }
 

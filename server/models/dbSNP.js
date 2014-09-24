@@ -19,7 +19,7 @@ var DbSNPSchema = new Schema({
         validate: [validatePresenceOf, 'DbSNP cannot be blank']
     },
     freqAlt: {
-        type: Number,
+        type: String,
         required: true,
         validate: [validatePresenceOf, 'freqAlt cannot be blank']
     },
