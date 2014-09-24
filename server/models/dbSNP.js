@@ -19,12 +19,12 @@ var DbSNPSchema = new Schema({
         validate: [validatePresenceOf, 'DbSNP cannot be blank']
     },
     freqAlt: {
-        type: String,
+        type: Number,
         required: true,
         validate: [validatePresenceOf, 'freqAlt cannot be blank']
     },
     freqRef: {
-        type: String,
+        type: Number,
         required: true,
         validate: [validatePresenceOf, 'freqRef cannot be blank']
     },
@@ -42,6 +42,13 @@ DbSNPSchema.statics.query = function query(q) {
     return this.find(q);
 };
 
-var model = mongoose.model('DbSNP', DbSNPSchema);
-model.attr = {'DbSNP':['dbSNP','freqAlt','freqRef']} ;
-module.exports = model;
+DbSNPSchema.statics.freqRange = function freqRange( gt,lt) {
+    return this.find({ "freqAlt": { $gt: gt, $lt: lt }});
+};
+
+
+        var model = mongoose.model('DbSNP', DbSNPSchema);
+        model.attr = {'DbSNP':['dbSNP','freqAlt','freqRef']} ;
+        module.exports = model;
+
+
