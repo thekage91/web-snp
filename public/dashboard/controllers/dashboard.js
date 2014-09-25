@@ -2,6 +2,14 @@
 
 
 
+function jsonConcat(o1, o2) {
+    for (var key in o2) if (o2.hasOwnProperty(key)) {
+        o1[key] = o2[key];
+    }
+    return o1;
+}
+
+
 angular.module('mean.dashboard', ['angular-md5'])
 
     .controller('UploaderCtrl', ['$scope', '$window', '$http', 'Model','Parse','Save','Filter','$q','$timeout',
@@ -305,7 +313,7 @@ angular.module('mean.dashboard', ['angular-md5'])
     .controller('ExecuteQueryCtrl', ['$scope', '$http', 'Filter','Query' ,function ($scope, $http,Filter,Query) {
 
         $scope.filtro = {};
-        //$scope.query.ok = false;
+        $scope.check = {};
 
         //init filters
         (function () {
@@ -321,7 +329,7 @@ angular.module('mean.dashboard', ['angular-md5'])
 
 
 
-        $scope.submitBase = function () {
+        $scope.submitBaseNew = function () {
             $scope.query.ok = true;
 
             var keyword = $scope.query.keyword;
@@ -330,13 +338,14 @@ angular.module('mean.dashboard', ['angular-md5'])
 
 
             Query.submitQueryByElement(element,keyword).then( function (data) {
+                console.info(data);
                 $scope.elements.push(data);
             });
 
 
         };
 
-        $scope.submitByRegion = function () {
+        $scope.submitByRegionNew = function () {
             $scope.query.ok = true;
 
             var chr = $scope.query.chr;
@@ -351,28 +360,98 @@ angular.module('mean.dashboard', ['angular-md5'])
 
             }
 
-        var getVariantFromDetail = function (variant) {
 
-            $http.get('/api/variant/' + variant)
-                .success(function (data) {
-                    data.payload.patients.forEach(getPatientFromVariant);
-                })
-                .error(function (data) {
-                    console.log('[ERROR] Failed retrieving Variant: ' + variant);
+        var successInitialQuery = function (data) {
+            $scope.elements = [];
+            console.log("QUERY SUCCEDED. RECEIVED:" + JSON.stringify(data));
+
+            data.payload.forEach(function (payload) {
+                if (payload.variants) payload.variants.forEach(function (variant) {
+
+                    $http.get('/api/variant/' + variant)
+                        .success(function (data) {
+                            console.log('Got variant');
+                            console.log(data);
+                            var o1 = data.payload;
+                            $http.get('/api/gene/' + o1.gene).success( function(data) {
+                                console.log('Got gene related to Variant');
+                                var o2 = data.payload;
+                                $scope.elements.push(jsonConcat(o1,o2))
+                            })
+
+                        })
+                        .error(function () {
+                            console.log('[ERROR] Failed retrieving variant  ith ID: ' + variant);
+                        });
                 });
+                else
+                    $http.get('/api/variant/' + payload.variant)
+                        .success(function (data) {
+                            console.log('Got variant');
+                            console.log(data);
+                            var o1 = data.payload;
+                            $http.get('/api/gene/' + o1.gene).success( function(data) {
+                                console.log('Got gene related to Variant');
+                                var o2 = data.payload;
+                                $scope.elements.push(jsonConcat(o1,o2))
+                            })
+
+                        })
+                        .error(function () {
+                            console.log('[ERROR] Failed retrieving variant  ith ID: ' + variant);
+                        });
+            });
+        };
+
+        $scope.submitBase = function () {
+            var keyword = $scope.query.keyword;
+            var element = $scope.query.element;
+
+            switch (element) {
+
+                case 'genes':
+                    $http.get('/api/gene/finder/query?' + element + '=' + keyword)
+                        .success(successInitialQuery)
+                        .error(function (data) {
+                            console.log('[ERROR] Failed retrieving gene with ' + element + ' field: ' + keyword);
+                        });
+                    break;
+
+                case 'freqAlt':
+                case 'dbSNP':
+                    $http.get('/api/dbsnp/finder/query?' + element + '=' + keyword)
+                        .success(successInitialQuery)
+                        .error(function (data) {
+                            console.log('[ERROR] Failed retrieving gene with ' + element + ' field: ' + keyword);
+                        });
+                    break;
+            }
+        };
+
+        $scope.submitByRegion = function () {
+            $http.get('/api/variant/finder/query?chr=' +
+                $scope.query.chr + '&start=' +
+                $scope.query.start + '&end=' + $scope.query.end)
+                .success(function (data) {
+                    $scope.elements = []
+                    console.info("Retrieved this variant from range query: ")
+                    console.info(data);
+                    data.payload.forEach(function (o1) {
+                        $http.get('/api/gene/' + o1.gene).success( function(data) {
+                            console.log('Got gene related to Variant');
+                            var o2 = data.payload;
+                            $scope.elements.push(jsonConcat(o1,o2))
+                        })
+
+                    })
+
+                }).error(function () {
+                    console.log('[ERROR] Failed retrieving variant  ith ID: ' + variant);
+                });
+
+
         }
 
-        var getPatientFromVariant = function (patient) {
-
-            $http.get('/api/patient/finder/query?name=' + patient)
-                .success(function (data) {
-                    $scope.patients.push(data.payload);
-                    console.log('Pushed ' + JSON.stringify(data) + ' in scope.patients');
-                })
-                .error(function (data) {
-                    console.log('[ERROR] Failed retrieving patient: ' + patient);
-                });
-        }
 
 
 
