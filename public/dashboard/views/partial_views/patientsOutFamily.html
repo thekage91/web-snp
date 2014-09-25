@@ -1,54 +1,62 @@
-<div class="row">
-	<h1 class="section-header">Patients without a family</h1>
-	<hr>
-</div>
+<div ng-controller="FamilyCtrl" ng-show="global.user.roles.indexOf('admin') > -1">
 
-<div class="row" ng-controller="PatientsCtrl">
+	<div class="row">
+		<h1 class="section-header">Patients without a family</h1>
+		<hr>
+	</div>
 
-	<div id="custom-search-input" class="col-md-12 bot10">
-	  	<div class="col-md-6">
-		    <div class="input-group col-md-8 pull-left">
-		      <input type="search" class="search-query form-control" placeholder="Type here" ng-model="searchPatients" />
-		      <span class="input-group-btn">
-		        <button class="btn btn-danger" type="button">
-		          <span class="glyphicon glyphicon-search"></span>
-		        </button>
-		      </span>
-		    </div>
-		</div>
-	  	
-	  	<div class="controls-group col-md-5 pull-right">
-	        <button type="button" class="btn btn-secondary btn-sm" ui-sref="dashboard.families">
-	            <span class="fa fa-backward fa-fw">&nbsp;</span>Back to families
-	        </button>
-	    </div>
-  	</div>
+	<div class="row" ng-controller="FamilyCtrl">
 
-
-  	<table class="table table-bordered">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Details</th>
-          </tr>
-        </thead>
-        <tbody >
-          <tr ng-repeat="patient in patients | filter:searchPatients">
-            <td>{{ patient.name }}</td>
-            <td>
-            	<div class="controls-group">
-		            <button class="btn btn-success" type="button" ng-click="addToFamily(patient)">
-			          <span class="glyphicon glyphicon-plus"></span>
-			          Add to Family
+		<div id="custom-search-input" class="col-md-12 bot10">
+		  	<!--<div class="col-md-6">
+			    <div class="input-group col-md-8 pull-left">
+			      <input type="search" class="search-query form-control" placeholder="Type here" ng-model="searchPatients" />
+			      <span class="input-group-btn">
+			        <button class="btn btn-danger" type="button">
+			          <span class="glyphicon glyphicon-search"></span>
 			        </button>
-			        <button class="btn btn-danger" type="button" ng-click="viewPatientDetail(patient)">
-			          <span class="glyphicon glyphicon-primary"></span>
-			          Details
-			        </button>
+			      </span>
 			    </div>
-            </td>
-          </tr>
-        </tbody>
-    </table>
+			</div>-->
+
+			<div class="col-md-6">
+				<div>            
+		            <table>
+		              <tbody>
+		                <tr ng-repeat="family in families | filter:searchFamily "> 
+		                    <td>
+		                      <div class="control-group pull-right" ng-show="!showConfirm">
+		                        <div class="controls" id="controlsBtn">
+		                          <button type="button" class="btn btn-primary btn-sm" 
+		                                  data-toggle="collapse" data-parent="#controlsBtn" href="#patientsPanel"
+		                                  ng-click="showPatients(family)">
+		                            <div ><span class="glyphicon glyphicon-eye-open"></span> Show </div>
+		                          </button>
+		                        </div>
+		                      </div>
+		                    </td>
+		                </tr>
+		              </tbody>
+		            </table>
+		        </div>
+			</div>
+		  	
+		  	<div class="controls-group col-md-5 pull-right">
+		        <button type="button" class="btn btn-secondary btn-sm" ui-sref="dashboard.families">
+		            <span class="fa fa-backward fa-fw">&nbsp;</span>Back to families
+		        </button>
+		    </div>
+	  	</div>
+
+
+		<div style="margin-top: 50px">      
+            <li class="list-group-item" ng-repeat="patient in outPatients">
+              <div class="row">
+                  <div class="pull-left">{{ patient.name }}</div>
+              </div>
+            </li>
+        </div>
+
+	</div>
 
 </div>
