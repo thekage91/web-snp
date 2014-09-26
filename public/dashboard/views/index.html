@@ -66,12 +66,12 @@
                     </li>
 
                     <li>
-                        <a hidden id="query" ui-sref="dashboard.executeQuery"><i class="fa fa-search fa-fw"></i>Execute Query</a>
+                        <a id="upload" ui-sref="dashboard.uploadSequencing"
+                            ng-show="global.user.roles.indexOf('admin') > -1"><i class="fa fa-upload fa-fw"></i>Sequencing Upload</a>
                     </li>
 
                     <li>
-                        <a id="upload" ui-sref="dashboard.uploadSequencing"
-                            ng-show="global.user.roles.indexOf('admin') > -1"><i class="fa fa-upload fa-fw"></i>Sequencing Upload</a>
+                        <a hidden id="query" ui-sref="dashboard.executeQuery"><i class="fa fa-search fa-fw"></i>Execute Query</a>
                     </li>
 
                     <!--<li>
