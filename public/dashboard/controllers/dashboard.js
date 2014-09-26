@@ -298,7 +298,7 @@ angular.module('mean.dashboard', ['angular-md5'])
     }])
 
 
-    .controller('ExecuteQueryCtrl', ['$scope', '$http', 'Filter', 'Query' , function ($scope, $http, Filter, Query) {
+    .controller('ExecuteQueryCtrl', ['$scope', '$http', 'Filter', 'Query', function ($scope, $http, Filter, Query) {
 
         $scope.filtro = {};
         $scope.isChecked = {};
@@ -306,12 +306,6 @@ angular.module('mean.dashboard', ['angular-md5'])
         $scope.resultsFilter = {};
 
         var filterElements = ['region', 'Mutation'];
-
-        //init filters
-        /* (function () {
-         Filter.getDistinctValues('region').then( function(data) { $scope.filtro.region = data});
-         Filter.getDistinctValues('Mutation').then( function(data) { $scope.filtro.Mutation = data});
-         })();*/
 
         //init filters values for checkobox and showing result
         (function () {
@@ -453,17 +447,16 @@ angular.module('mean.dashboard', ['angular-md5'])
 
 
 
-        $scope.updateResultFilter = function (item, element) {
+        $scope.updateResultFilter = function (word, field) {
+            var fieldArrayWithWords = $scope.resultsFilter[field];
 
-            if(item !== 'all') $scope.isChecked.all = false;
-
-            if (!($scope.isChecked[item]))
-                $scope.resultsFilter[element].push(item);
+            if(word !== 'all') $scope.isChecked.all = false;
+            if (!($scope.isChecked[word]))
+                fieldArrayWithWords.push(word);
             else {
-                var index = $scope.resultsFilter[element].indexOf(item);
-                if (index > -1) {
-                    $scope.resultsFilter[element].splice(index, 1);
-                     console.info($scope.resultsFilter[element].length)}
+                var index = $scope.resultsFilter[field].indexOf(word);
+                if (index > -1)
+                    fieldArrayWithWords.splice(index, 1);
             }
         }
 
@@ -476,10 +469,13 @@ angular.module('mean.dashboard', ['angular-md5'])
 
             if ($scope.isChecked.all) return true;
             var conditions = [];
+
             filterElements.forEach( function (element) {
-                if(($scope.resultsFilter[element].indexOf(item[element]) > -1) ||
-                   ($scope.resultsFilter[element].indexOf(item[element.toLowerCase()]) > -1) ||
-                   ($scope.resultsFilter[element].length < 1))
+                var fieldArrayWithWords = $scope.resultsFilter[element];
+
+                if((fieldArrayWithWords.indexOf(item[element]) > -1) ||
+                   (fieldArrayWithWords.indexOf(item[element.toLowerCase()]) > -1) ||
+                   (fieldArrayWithWords.length < 1))
                 conditions.push(true);
                 else
                 conditions.push(false);
