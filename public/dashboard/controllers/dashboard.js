@@ -1,7 +1,6 @@
 'use strict';
 
 
-
 function jsonConcat(o1, o2) {
     for (var key in o2) if (o2.hasOwnProperty(key)) {
         o1[key] = o2[key];
@@ -9,11 +8,14 @@ function jsonConcat(o1, o2) {
     return o1;
 }
 
+String.prototype.capitalize = function() {
+    return this.charAt(0).toUpperCase() + this.slice(1);
+}
 
 angular.module('mean.dashboard', ['angular-md5'])
 
-    .controller('UploaderCtrl', ['$scope', '$window', '$http', 'Model','Parse','Save','Filter','$q','$timeout',
-        function ($scope, $window, $http,Model,Parse,Save,Filter,$q,$timeout) {
+    .controller('UploaderCtrl', ['$scope', '$window', '$http', 'Model', 'Parse', 'Save', 'Filter', '$q', '$timeout',
+        function ($scope, $window, $http, Model, Parse, Save, Filter, $q, $timeout) {
 
 
             var name;
@@ -25,11 +27,11 @@ angular.module('mean.dashboard', ['angular-md5'])
                 console.log($scope.jsonUpload);
                 for (var key in $scope.jsonUpload) if ($scope.jsonUpload.hasOwnProperty(key))  break;
 
-                Filter.updateDistinctValues($scope.jsonUpload[key],['Mutation','region']);
+                Filter.updateDistinctValues($scope.jsonUpload[key], ['Mutation', 'region']);
                 //console.log( Filter.getDistinctValues('Genotype') + '\ntype = ' + typeof Filter.getDistinctValues('region') + '\n' + Filter.getDistinctValues('region'));
 
                 var saveFunction = (Parse.saveInDbFromData);
-                saveFunction($scope.jsonUpload,name);
+                saveFunction($scope.jsonUpload, name);
 
             };
 
@@ -52,7 +54,7 @@ angular.module('mean.dashboard', ['angular-md5'])
                 $scope.users = data.payload;
                 console.log("[DEBUG] Retrive this users " + data.payload);
 
-                $scope.users.forEach(function(user){
+                $scope.users.forEach(function (user) {
                     user.emailHash = md5.createHash(user.email);
                 });
             })
@@ -60,7 +62,6 @@ angular.module('mean.dashboard', ['angular-md5'])
                 console.log("[ERROR] Failed retrieve all users");
             });
 
-        
 
         $scope.authorizeUser = function (user) {
             console.log(user);
@@ -265,10 +266,10 @@ angular.module('mean.dashboard', ['angular-md5'])
             var idFamily = $scope.familySelected._id;
             var newPatients = [];
 
-            $scope.inPatients.forEach(function(item){
-                newPatients.push(item._id);                
+            $scope.inPatients.forEach(function (item) {
+                newPatients.push(item._id);
             })
-                        
+
             newPatients.push(patient._id);
 
             var jsonToSend = {'patients': newPatients};
@@ -297,36 +298,36 @@ angular.module('mean.dashboard', ['angular-md5'])
     }])
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-    .controller('ExecuteQueryCtrl', ['$scope', '$http', 'Filter','Query' ,function ($scope, $http,Filter,Query) {
+    .controller('ExecuteQueryCtrl', ['$scope', '$http', 'Filter', 'Query' , function ($scope, $http, Filter, Query) {
 
         $scope.filtro = {};
-        $scope.check = {};
+        $scope.isChecked = {};
+        $scope.isChecked.all = true;
+        $scope.resultsFilter = {};
+
+        var filterElements = ['region', 'Mutation'];
 
         //init filters
+        /* (function () {
+         Filter.getDistinctValues('region').then( function(data) { $scope.filtro.region = data});
+         Filter.getDistinctValues('Mutation').then( function(data) { $scope.filtro.Mutation = data});
+         })();*/
+
+        //init filters values for checkobox and showing result
         (function () {
-            Filter.getDistinctValues('region').then( function(data) { $scope.filtro.region = data});
-            Filter.getDistinctValues('Mutation').then( function(data) { $scope.filtro.Mutation = data});
+            filterElements.forEach(function (element) {
+                Filter.getDistinctValues(element).then(function (data) {
+                    $scope.filtro[element] = data;
+                });
+                $scope.resultsFilter[element] = [];
+            })
         })();
 
-        $scope.updateFilter =  function() {
-            for(var key in $scope.check) if($scope.check.hasOwnProperty(key) && $scope.check[key]) {
+       /* $scope.updateFilter = function () {
+            for (var key in $scope.check) if ($scope.check.hasOwnProperty(key) && $scope.check[key]) {
                 $scope.chosenFilters.region += key;
             }
-        };
-
+        };*/
 
 
         $scope.submitBaseNew = function () {
@@ -337,14 +338,13 @@ angular.module('mean.dashboard', ['angular-md5'])
             $scope.elements = [];
 
 
-            Query.submitQueryByElement(element,keyword).then( function (data) {
+            Query.submitQueryByElement(element, keyword).then(function (data) {
                 console.info(data);
                 $scope.elements.push(data);
             });
 
 
         };
-
         $scope.submitByRegionNew = function () {
             $scope.query.ok = true;
 
@@ -354,51 +354,49 @@ angular.module('mean.dashboard', ['angular-md5'])
 
             $scope.elements = [];
 
-            Query.submitByRegion(chr,start,end).then( function (data) {
+            Query.submitByRegion(chr, start, end).then(function (data) {
                 $scope.elements.push(data);
             });
 
-            }
-
-
+        }
         var successInitialQuery = function (data) {
             $scope.elements = [];
-            console.log("QUERY SUCCEDED. RECEIVED:" + JSON.stringify(data));
+            //console.log("QUERY SUCCEDED. RECEIVED:" + JSON.stringify(data));
 
             data.payload.forEach(function (payload) {
                 if (payload.variants) payload.variants.forEach(function (variant) {
 
                     $http.get('/api/variant/' + variant)
                         .success(function (data) {
-                            console.log('Got variant');
-                            console.log(data);
+                            //console.log('Got variant');
+                            //console.log(data);
                             var o1 = data.payload;
-                            $http.get('/api/gene/' + o1.gene).success( function(data) {
-                                console.log('Got gene related to Variant');
+                            $http.get('/api/gene/' + o1.gene).success(function (data) {
+                                //console.log('Got gene related to Variant');
                                 var o2 = data.payload;
-                                $scope.elements.push(jsonConcat(o1,o2))
+                                $scope.elements.push(jsonConcat(o1, o2))
                             })
 
                         })
                         .error(function () {
-                            console.log('[ERROR] Failed retrieving variant  ith ID: ' + variant);
+                            //console.log('[ERROR] Failed retrieving variant  ith ID: ' + variant);
                         });
                 });
                 else
                     $http.get('/api/variant/' + payload.variant)
                         .success(function (data) {
-                            console.log('Got variant');
-                            console.log(data);
+                            //console.log('Got variant');
+                            //console.log(data);
                             var o1 = data.payload;
-                            $http.get('/api/gene/' + o1.gene).success( function(data) {
-                                console.log('Got gene related to Variant');
+                            $http.get('/api/gene/' + o1.gene).success(function (data) {
+                                //console.log('Got gene related to Variant');
                                 var o2 = data.payload;
-                                $scope.elements.push(jsonConcat(o1,o2))
+                                $scope.elements.push(jsonConcat(o1, o2))
                             })
 
                         })
                         .error(function () {
-                            console.log('[ERROR] Failed retrieving variant  ith ID: ' + variant);
+                            //console.log('[ERROR] Failed retrieving variant  ith ID: ' + variant);
                         });
             });
         };
@@ -413,7 +411,7 @@ angular.module('mean.dashboard', ['angular-md5'])
                     $http.get('/api/gene/finder/query?' + element + '=' + keyword)
                         .success(successInitialQuery)
                         .error(function (data) {
-                            console.log('[ERROR] Failed retrieving gene with ' + element + ' field: ' + keyword);
+                            //console.log('[ERROR] Failed retrieving gene with ' + element + ' field: ' + keyword);
                         });
                     break;
 
@@ -422,7 +420,7 @@ angular.module('mean.dashboard', ['angular-md5'])
                     $http.get('/api/dbsnp/finder/query?' + element + '=' + keyword)
                         .success(successInitialQuery)
                         .error(function (data) {
-                            console.log('[ERROR] Failed retrieving gene with ' + element + ' field: ' + keyword);
+                            //console.log('[ERROR] Failed retrieving gene with ' + element + ' field: ' + keyword);
                         });
                     break;
             }
@@ -434,19 +432,19 @@ angular.module('mean.dashboard', ['angular-md5'])
                 $scope.query.start + '&end=' + $scope.query.end)
                 .success(function (data) {
                     $scope.elements = []
-                    console.info("Retrieved this variant from range query: ")
-                    console.info(data);
+                    //console.info("Retrieved this variant from range query: ")
+                    //console.info(data);
                     data.payload.forEach(function (o1) {
-                        $http.get('/api/gene/' + o1.gene).success( function(data) {
-                            console.log('Got gene related to Variant');
+                        $http.get('/api/gene/' + o1.gene).success(function (data) {
+                            //console.log('Got gene related to Variant');
                             var o2 = data.payload;
-                            $scope.elements.push(jsonConcat(o1,o2))
+                            $scope.elements.push(jsonConcat(o1, o2))
                         })
 
                     })
 
                 }).error(function () {
-                    console.log('[ERROR] Failed retrieving variant  ith ID: ' + variant);
+                    //console.log('[ERROR] Failed retrieving variant  ith ID: ' + variant);
                 });
 
 
@@ -455,20 +453,42 @@ angular.module('mean.dashboard', ['angular-md5'])
 
 
 
+        $scope.updateResultFilter = function (item, element) {
+
+            if(item !== 'all') $scope.isChecked.all = false;
+
+            if (!($scope.isChecked[item]))
+                $scope.resultsFilter[element].push(item);
+            else {
+                var index = $scope.resultsFilter[element].indexOf(item);
+                if (index > -1) {
+                    $scope.resultsFilter[element].splice(index, 1);
+                     console.info($scope.resultsFilter[element].length)}
+            }
+        }
+
+
+
+
+
+
+        $scope.filterNotExclusive = function (item) {
+
+            if ($scope.isChecked.all) return true;
+            var conditions = [];
+            filterElements.forEach( function (element) {
+                if(($scope.resultsFilter[element].indexOf(item[element]) > -1) ||
+                   ($scope.resultsFilter[element].indexOf(item[element.toLowerCase()]) > -1) ||
+                   ($scope.resultsFilter[element].length < 1))
+                conditions.push(true);
+                else
+                conditions.push(false);
+            });
+
+            return conditions.reduce( function(prev, cur) { return prev && cur });
+        }
+
     }])
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -483,7 +503,7 @@ angular.module('mean.dashboard', ['angular-md5'])
 
         $scope.parseForEdit = function (dataParse) {
 
-            dataParse.forEach(function(json){
+            dataParse.forEach(function (json) {
 
                 json['Genotype_quality'] = json['Genotype quality'];
                 delete json['Genotype quality'];
@@ -515,7 +535,7 @@ angular.module('mean.dashboard', ['angular-md5'])
 
         $scope.parseAfterEdit = function (dataParse) {
 
-            dataParse.forEach(function(json){
+            dataParse.forEach(function (json) {
 
                 json['Genotype quality'] = json['Genotype_quality'];
                 delete json['Genotype_quality'];
@@ -789,102 +809,102 @@ angular.module('mean.dashboard', ['angular-md5'])
             ]
         };
 
-        $scope.saveOnDB = function(){
+        $scope.saveOnDB = function () {
 
             $scope.parseAfterEdit($scope.myData);
-           name = $scope.patient
+            name = $scope.patient
             console.log("Patient name = " + name)
 
             var saveFunction = (Parse.saveInDbFromData);
-            saveFunction($scope.myData ,name); 
+            saveFunction($scope.myData, name);
         }
 
     }])
 
 
-        .controller('HistoryLoadCtrl' ['$scope' , '$http' , function ($scope, $http) {
+    .controller('HistoryLoadCtrl' ['$scope' , '$http' , function ($scope, $http) {
 
-            $http.get('/api/history')
-                .success(function (data) {
-                    $scope.sequencings = data.payload;
-                    console.log("[SUCCESS] Retrieve all sequencings");
-                })
-                .error(function (err) {
-                    console.log("[ERROR] Failed Retrieve all sequencings");
-                });
+        $http.get('/api/history')
+            .success(function (data) {
+                $scope.sequencings = data.payload;
+                console.log("[SUCCESS] Retrieve all sequencings");
+            })
+            .error(function (err) {
+                console.log("[ERROR] Failed Retrieve all sequencings");
+            });
 
-            $scope.removeSequencing = function (sequencing) {
+        $scope.removeSequencing = function (sequencing) {
 
-                for (item in $scope.sequencings) {
-                    var idsToRemove = item.item;
-                    for (itemDelete in idsToRemove) {
-                        for (idRemove in itemDelete.id) {
-                            $http.delete('/api/' + itemDelete.table + "/" + idRemove)
-                                .success(function (data) {
-                                })
-                                .error(function (err) {
-                                });
-                        }
+            for (item in $scope.sequencings) {
+                var idsToRemove = item.item;
+                for (itemDelete in idsToRemove) {
+                    for (idRemove in itemDelete.id) {
+                        $http.delete('/api/' + itemDelete.table + "/" + idRemove)
+                            .success(function (data) {
+                            })
+                            .error(function (err) {
+                            });
                     }
                 }
             }
-        }])
+        }
+    }])
 
 
-        .controller('ProfileCtrl', ['$scope' , 'md5', '$http' , function ($scope, md5, $http) {
+    .controller('ProfileCtrl', ['$scope' , 'md5', '$http' , function ($scope, md5, $http) {
 
-            //$scope.emailHash = md5.createHash($scope.user.email)
+        //$scope.emailHash = md5.createHash($scope.user.email)
 
-            $scope.emailHash = md5.createHash('thekage91@gmail.com')
-            console.log($scope.emailHash);
+        $scope.emailHash = md5.createHash('thekage91@gmail.com')
+        console.log($scope.emailHash);
 
-            $http.get('/api/user/' + $scope.global.user._id)
+        $http.get('/api/user/' + $scope.global.user._id)
+            .success(function (data) {
+                $scope._user = data.payload;
+                console.log("[SUCCESS] Retrive user " + $scope._user._id + " from database");
+            })
+            .error(function (err) {
+                console.log("[ERROR] Failed Retrive user " + $scope._user._id + " from database");
+            });
+
+        $scope.updateProfile = function (user) {
+
+            $http.post('/api/user/' + $scope.global.user._id, user)
                 .success(function (data) {
-                    $scope._user = data.payload;
-                    console.log("[SUCCESS] Retrive user " + $scope._user._id + " from database");
+                    console.log("[SUCCESS] Upload info of this user " + $scope.user._id);
                 })
-                .error(function (err) {
-                    console.log("[ERROR] Failed Retrive user " + $scope._user._id + " from database");
+                .error(function (data) {
+                    console.log("[ERROR] Error in upload info of this user " + $scope.user._id);
                 });
 
-            $scope.updateProfile = function (user) {
+        };
 
-                $http.post('/api/user/' + $scope.global.user._id, user)
-                    .success(function (data) {
-                        console.log("[SUCCESS] Upload info of this user " + $scope.user._id);
-                    })
-                    .error(function (data) {
-                        console.log("[ERROR] Error in upload info of this user " + $scope.user._id);
-                    });
+        $scope.cancelOperation = function () {
+            $scope.user = {};
+        }
 
-            };
+    }])
 
-            $scope.cancelOperation = function () {
-                $scope.user = {};
-            }
+    .controller('PatientsCtrl', ['$scope' , '$http' , function ($scope, $http) {
 
-        }])
+    }])
 
-.controller('PatientsCtrl', ['$scope' , '$http' , function($scope, $http){
-    
-}])
-
-.directive('gravatar', function () {
-    return {
-        restrict: 'AE',
-        replace: true,
-        scope: {
-            name: '@',
-            height: '@',
-            width: '@',
-            emailHash: '@'
-        },
-        link: function (scope, el, attr) {
-            scope.defaultImage = 'https://www.mechanicpool.com/pictures/greypros.png';
-        },
-        template: '<img alt="{{ name }}" height="{{ height }}"  width="{{ width }}" src="https://secure.gravatar.com/avatar/{{ emailHash }}.jpg?s={{ width }}&d={{ defaultImage }}">'
-    };
-})
+    .directive('gravatar', function () {
+        return {
+            restrict: 'AE',
+            replace: true,
+            scope: {
+                name: '@',
+                height: '@',
+                width: '@',
+                emailHash: '@'
+            },
+            link: function (scope, el, attr) {
+                scope.defaultImage = 'https://www.mechanicpool.com/pictures/greypros.png';
+            },
+            template: '<img alt="{{ name }}" height="{{ height }}"  width="{{ width }}" src="https://secure.gravatar.com/avatar/{{ emailHash }}.jpg?s={{ width }}&d={{ defaultImage }}">'
+        };
+    })
 
 
 

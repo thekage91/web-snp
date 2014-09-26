@@ -57,7 +57,7 @@
 
                 <div class="btn-group">
                     <h5 style="float : left; padding: 0px 10px 0px 0px" >Filter by region  </h5>
-                    <label class="btn btn-primary" ng-repeat="item in filtro.region"  ng-model="check[item]" btn-checkbox>{{item}}</label>
+                    <label class="btn btn-primary" ng-repeat="item in filtro.region"  ng-click="updateResultFilter(item,'region')" ng-model="isChecked[item]" btn-checkbox>{{item}}</label>
                 </div>
           </div>
 
@@ -66,11 +66,8 @@
           <div class="row input-group-btn search-panel">
                     <div class="btn-group">
                         <h5 style="float : left; padding: 0px 10px 0px 0px">Filter by mutation  </h5>
-                        <label class="btn btn-primary" ng-repeat="item in filtro.Mutation"  ng-model="check[item]" btn-checkbox>{{item}}</label>
+                        <label class="btn btn-primary" ng-repeat="item in filtro.Mutation" ng-click="updateResultFilter(item,'Mutation')" ng-model="isChecked[item]" btn-checkbox>{{item}}</label>
                     </div>
-
-
-
             </div>
 
 
@@ -96,7 +93,7 @@
                 </tr>
               </thead>
               <tbody>
-                  <tr ng-repeat="el in elements">
+                  <tr ng-repeat="el in elements | filter:filterNotExclusive">
                   <td>{{el.chr}}</td>
                   <td>{{el.start}}</td>
                   <td>{{el.end}}</td>
@@ -154,12 +151,11 @@
                         </div>
                       </div>
                     </div>
-
                 <div class="row input-group-btn search-panel">
 
                     <div class="btn-group">
                         <h5 style="float : left; padding: 0px 10px 0px 0px" >Filter by region  </h5>
-                        <label class="btn btn-primary" ng-repeat="item in filtro.region"  ng-model="check[item]" btn-checkbox>{{item}}</label>
+                        <label class="btn btn-primary" ng-repeat="item in filtro.region"  ng-click="updateResultFilter(item,'region')" ng-model="isChecked[item]" btn-checkbox>{{item}}</label>
                     </div>
                 </div>
 
@@ -168,12 +164,11 @@
                 <div class="row input-group-btn search-panel">
                     <div class="btn-group">
                         <h5 style="float : left; padding: 0px 10px 0px 0px">Filter by mutation  </h5>
-                        <label class="btn btn-primary" ng-repeat="item in filtro.Mutation"  ng-model="check[item]" btn-checkbox>{{item}}</label>
+                        <label class="btn btn-primary" ng-repeat="item in filtro.Mutation" ng-click="updateResultFilter(item,'Mutation')" ng-model="isChecked[item]" btn-checkbox>{{item}}</label>
                     </div>
-
-
-
                 </div>
+
+
                    <div class="row">
             <h4 ng-show="elements.length && $scope.query.ok " >Results:</h4>
         <h4 ng-hide="elements.length"> No Results! </h4>
@@ -193,7 +188,7 @@
                 </tr>
               </thead>
               <tbody>
-                  <tr ng-repeat="el in elements | filter:chooseFilterMutation | filter:chooseFilterRegion">
+                  <tr ng-repeat="el in elements | filter:filterNotExclusive">
                       <td>{{el.chr}}</td>
                       <td>{{el.start}}</td>
                       <td>{{el.end}}</td>
