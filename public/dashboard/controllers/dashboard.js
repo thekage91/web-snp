@@ -323,8 +323,9 @@ angular.module('mean.dashboard', ['angular-md5'])
             }
         };*/
 
+/*
 
-        $scope.submitBaseNew = function () {
+        $scope.submitBase = function () {
             $scope.query.ok = true;
 
             var keyword = $scope.query.keyword;
@@ -339,7 +340,9 @@ angular.module('mean.dashboard', ['angular-md5'])
 
 
         };
-        $scope.submitByRegionNew = function () {
+
+
+        $scope.submitQueryByRegion = function () {
             $scope.query.ok = true;
 
             var chr = $scope.query.chr;
@@ -348,11 +351,15 @@ angular.module('mean.dashboard', ['angular-md5'])
 
             $scope.elements = [];
 
-            Query.submitByRegion(chr, start, end).then(function (data) {
+            Query.submitQueryByRegion(chr, start, end).then(function (data) {
                 $scope.elements.push(data);
             });
 
         }
+*/
+
+
+
         var successInitialQuery = function (data) {
             $scope.elements = [];
             //console.log("QUERY SUCCEDED. RECEIVED:" + JSON.stringify(data));
@@ -443,9 +450,6 @@ angular.module('mean.dashboard', ['angular-md5'])
 
 
         }
-
-
-
 
         $scope.updateResultFilter = function (word, field) {
             var fieldArrayWithWords = $scope.resultsFilter[field];

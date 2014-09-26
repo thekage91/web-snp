@@ -18,7 +18,7 @@ angular.module('QueryService', [])
         var retrieveRelationships = function (data) {
              var promises = [];
             var deferred;
-
+            console.info(data.payload);
              data.payload.forEach(function (payload) {
 
                 if (payload.variants) payload.variants.forEach(function (variant) {
@@ -74,7 +74,11 @@ angular.module('QueryService', [])
                 case 'genes':
                     $http.get('/api/gene/finder/query?' + element + '=' + keyword)
                         .success(function (data) {
-                            console.log("QUERY SUCCEDED. RECEIVED:" + JSON.stringify(data));
+                            console.log("Query:" + element + '=' + keyword);
+
+
+
+
                             retrieveRelationships(data).then(function (data) {
                                 res.resolve(data)});
                         })
@@ -103,7 +107,7 @@ angular.module('QueryService', [])
             return res.promise;
         },
 
-            submitByRegion :  function (chr,start,end) {
+            submitQueryByRegion :  function (chr,start,end) {
                 var res = $q.defer();
                 $http.get('/api/variant/finder/query?chr=' +
                     chr + '&start=' +

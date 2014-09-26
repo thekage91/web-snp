@@ -1,0 +1,220 @@
+<div>
+
+<h1 hidden id="iddi">{{global.user._id}}</h1>
+
+<div class="row">
+    <h1 class="section-header">Execute Query</h1>
+    <hr>
+</div>
+
+<script type="text/javascript">
+    function changeLabel(value) {
+        var e = document.getElementById('search_concept');
+        e.innerHTML = value;
+    }
+
+</script>
+
+<ul class="nav nav-tabs">
+    <li class="text-left"><a href="#basic" data-toggle="tab" >Basic SNPs Search</a></li>
+    <li class="text-left"><a href="#complex" data-toggle="tab" >Range SNPs Search</a></li>
+
+</ul>
+
+
+<div id="myTabContent" class="tab-content" ng-controller="ExecuteQueryCtrl">
+
+    <!-- First tab -->
+    <div class="tab-pane active in" id="basic">
+        <div class="row bot15">
+            <div id="custom-search-input">
+                <h4>Choose what to search and then insert keywords:</h4>
+                <div class="input-group col-md-6">
+                    <div class="input-group">
+                        <div class="input-group-btn search-panel">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                <span id="search_concept">Search by...</span> <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="#gene" ng-click="query.element = 'genes'" onClick="changeLabel('Genes')">Genes</a></li>
+                                <li><a href="#freqAlt"  ng-click="query.element = 'freqAlt'" onClick="changeLabel('Freq alt')">Freq alt</a></li>
+                                <li><a href="#dbsnp"  ng-click="query.element = 'dbSNP' " onClick="changeLabel('dbSNP')">dbSNP</a></li>
+                            </ul>
+                        </div>
+                        <input type="hidden" name="search_param" value="all" id="search_param" />
+                        <input id = "key" ng-model="query.keyword" type="search" class="search-query form-control" placeholder="Type Here" />
+                    <span class="input-group-btn">
+                      <button class="btn btn-danger" type="button" ng-click="submitBase()">
+                          <span class="glyphicon glyphicon-search"></span>
+                      </button>
+                    </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row input-group-btn search-panel">
+
+            <div class="btn-group">
+                <h5 style="float : left; padding: 0px 10px 0px 0px" >Filter by region  </h5>
+                <label class="btn btn-primary" ng-repeat="item in filtro.region"  ng-click="updateResultFilter(item,'region')" ng-model="isChecked[item]" btn-checkbox>{{item}}</label>
+            </div>
+        </div>
+
+        <!-- per andare a capo --> <div/>
+
+        <div class="row input-group-btn search-panel">
+            <div class="btn-group">
+                <h5 style="float : left; padding: 0px 10px 0px 0px">Filter by mutation  </h5>
+                <label class="btn btn-primary" ng-repeat="item in filtro.Mutation" ng-click="updateResultFilter(item,'Mutation')" ng-model="isChecked[item]" btn-checkbox>{{item}}</label>
+            </div>
+        </div>
+
+
+        <!--  style="height: 500px; overflow-y: auto; margin-top: 50px" -->
+        <div class="row">
+            <h4 ng-show="elements.length && $scope.query.ok " >Results:</h4>
+            <h4 ng-hide="elements.length || !($scope.query.ok)"> No Results! </h4>
+            <div ng-show="elements && elements.length">
+
+                <table class="table table-striped table-fixed-header">
+                    <thead>
+                    <tr>
+                        <th>Chr</th>
+                        <th>Start</th>
+                        <th>End</th>
+                        <th>Ref</th>
+                        <th>Alt</th>
+                        <th>Genes</th>
+                        <th>Region</th>
+                        <th>Mutation</th>
+
+                        <!--<th style="width: 75px;"></th>-->
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="el in elements | filter:filterNotExclusive">
+                        <td>{{el.chr}}</td>
+                        <td>{{el.start}}</td>
+                        <td>{{el.end}}</td>
+                        <td>{{el.ref}}</td>
+                        <td>{{el.alt}}</td>
+                        <td>{{el.genes}}</td>
+                        <td>{{el.region}}</td>
+                        <td>{{el.mutation}}</td>
+
+
+                        <!--<td>
+                          <button type="button" class="btn btn-primary btn-sm" data-ng-hide="user.isLicensed"
+                          data-toggle="modal" data-target="#myModalLicensed">
+                          <span class="glyphicon glyphicon-eye-open"></span> View
+                          </button>
+                        <br/>
+                        </td>-->
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- First tab end -->
+
+
+
+    <!-- Second tab -->
+    <div class="tab-pane fade" id="complex">
+        <div class="tab-pane active in" id="basic">
+
+            <div>
+                <div class="tab-pane" id="region">
+                    <div class="row bot15">
+                        <div id="custom-search-input">
+                            <h4>Insert required fields:</h4>
+                            <div class="input-group col-md-12">
+                                <div class="input-group">
+                                    <div class="input-group-btn search-panel">
+                                        <input type="text" ng-model="query.chr" class="form-control" name="x" placeholder="chr">
+                                    </div>
+                                    <div class="input-group-btn search-panel">
+                                        <input type="text" ng-model="query.start" class="form-control" name="x" placeholder="start">
+                                    </div>
+                                    <div class="input-group-btn search-panel">
+                                        <input type="text" ng-model="query.end" class="form-control" name="x" placeholder="end">
+                                    </div>
+                        <span class="input-group-btn">
+                            <button class="btn btn-danger" type="button" ng-click="submitQueryByRegion()">
+                                <span class="glyphicon glyphicon-search"></span>
+                            </button>
+                          </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row input-group-btn search-panel">
+
+                        <div class="btn-group">
+                            <h5 style="float : left; padding: 0px 10px 0px 0px" >Filter by region  </h5>
+                            <label class="btn btn-primary" ng-repeat="item in filtro.region"  ng-click="updateResultFilter(item,'region')" ng-model="isChecked[item]" btn-checkbox>{{item}}</label>
+                        </div>
+                    </div>
+
+                    <!-- per andare a capo --> <div/>
+
+                    <div class="row input-group-btn search-panel">
+                        <div class="btn-group">
+                            <h5 style="float : left; padding: 0px 10px 0px 0px">Filter by mutation  </h5>
+                            <label class="btn btn-primary" ng-repeat="item in filtro.Mutation" ng-click="updateResultFilter(item,'Mutation')" ng-model="isChecked[item]" btn-checkbox>{{item}}</label>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <h4 ng-show="elements.length && $scope.query.ok " >Results:</h4>
+                        <h4 ng-hide="elements.length"> No Results! </h4>
+                        <div ng-show="elements && elements.length">
+                            <table class="table table-striped  ">
+                                <thead>
+                                <tr>
+                                    <th>Chr</th>
+                                    <th>Start</th>
+                                    <th>End</th>
+                                    <th>Ref</th>
+                                    <th>Alt</th>
+                                    <th>Genes</th>
+                                    <th>Region</th>
+                                    <th>Mutation</th>
+                                    <!--<th style="width: 75px;"></th>-->
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="el in elements | filter:filterNotExclusive">
+                                    <td>{{el.chr}}</td>
+                                    <td>{{el.start}}</td>
+                                    <td>{{el.end}}</td>
+                                    <td>{{el.ref}}</td>
+                                    <td>{{el.alt}}</td>
+                                    <td>{{el.genes}}</td>
+                                    <td>{{el.region}}</td>
+                                    <td>{{el.mutation}}</td>
+                                    <!--<td>
+                                        <button type="button" class="btn btn-primary btn-sm" data-ng-hide="user.isLicensed"
+                                        data-toggle="modal" data-target="#myModalLicensed">
+                                        <span class="glyphicon glyphicon-eye-open"></span> View
+                                        </button>
+                                    <br/>
+                                </td>-->
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Second tab end -->
+
+</div>
