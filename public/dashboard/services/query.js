@@ -1,11 +1,9 @@
 /**
  * Created by ugo on 9/22/14.
  */
-angular.module('QueryService', [])
-    // super simple service
+angular.module('QueryService', [])// super simple service
     // each function returns a promise object
     .factory('Query', function ($http, $q) {
-
 
         function jsonConcat(o1, o2) {
             for (var key in o2) if (o2.hasOwnProperty(key)) {
@@ -14,129 +12,98 @@ angular.module('QueryService', [])
             return o1;
         }
 
-
-        var retrieveRelationships = function (data) {
-             var promises = [];
-            var deferred;
-            console.info(data.payload);
-             data.payload.forEach(function (payload) {
-
-                if (payload.variants) payload.variants.forEach(function (variant) {
-                    $http.get('/api/variant/' + variant)
-                        .success(function (data) {
-                            console.log('Got variant1');
-                            console.log(data);
-                            var o1 = data.payload;
-                            $http.get('/api/gene/' + o1.gene).success(function (data) {
-                                deferred = $q.defer();
-                                console.log('Got gene related to Variant');
-                                var o2 = data.payload;
-                                deferred.resolve(jsonConcat(o1, o2));
-                                promises.push(deferred.promise);
-                                console.info("promises length: " + promises.length);
-                            })
-
-                        })
-                        .error(function (data) {
-                            console.log('[ERROR] Failed retrieving variant  ith ID: ' + variant);
-                        });
-                });
-                else
-                    $http.get('/api/variant/' + payload.variant)
-                        .success(function (data) {
-                            console.log('Got variant');
-                            console.log(data);
-                            var o1 = data.payload;
-                            $http.get('/api/gene/' + o1.gene).success(function (data) {
-                                deferred = $q.defer();
-                                console.log('Got gene related to Variant');
-                                var o2 = data.payload;
-                                deferred.resolve(jsonConcat(o1, o2));
-                                promises.push(deferred.promise);
-                                console.info("promises length: " + promises.length);
-                            })
-
-                        })
-                        .error(function (data) {
-                            console.log('[ERROR] Failed retrieving variant  ith ID: ' + variant);
-                        });
+        var getGeneAndConcat = function (obj1) {
+            var deferredResult = $q.defer();
+            $http.get('/api/gene/' + obj1.gene).success(function (responseWithGene) {
+                var gene = responseWithGene.payload;
+                deferredResult.resolve(jsonConcat(obj1, gene));
+            }).error(function (err) {
+                deferredResult.reject(err)
             });
+            return deferredResult.promise;
+        }
+
+        var loadVariants = function (response) {
+            var promises = [];
+            var rows = response.data.payload;
+            rows.forEach(function (row) {
+                var variantsIDArray = [];
+                if (!(row.variants))
+                    variantsIDArray.push(row.variant); else
+                    variantsIDArray = row.variants;
+                variantsIDArray.forEach(function (variantID) {
+                    promises.push($http.get('/api/variant/' + variantID));
+
+                });
+
+            })
             return $q.all(promises);
-        };
+        }
 
+        return { submitQueryByElement: function (field, keyword) {
 
-        return { submitQueryByElement: function (element, keyword) {
+            var modelToQuery;
+            var promises = [];
+            var deferredResult = $q.defer();
 
-            var res = $q.defer();
-
-            switch (element) {
-
+            switch (field) {
                 case 'genes':
-                    $http.get('/api/gene/finder/query?' + element + '=' + keyword)
-                        .success(function (data) {
-                            console.log("Query:" + element + '=' + keyword);
-
-
-
-
-                            retrieveRelationships(data).then(function (data) {
-                                res.resolve(data)});
-                        })
-                        .error(function (data) {
-                            console.error('[ERROR] Failed retrieving gene with ' + element + ' field: ' + keyword);
-                            res.reject(data);
-                        });
+                    modelToQuery = 'gene';
                     break;
-
-                /*case 'freqAlt':
+                case 'freqAlt':
                 case 'dbSNP':
-                    console.log("query: " + element + '=' + keyword);
-                    $http.get('/api/dbsnp/finder/query?' + element + '=' + keyword)
-                        .success(function (data) {
-                            console.log("QUERY SUCCEDED. RECEIVED:" + JSON.stringify(data));
-                            res = retrieveRelationships(data);
-                        })
-                        .error(function (data) {
-                            console.error('[ERROR] Failed retrieving gene with ' + element + ' field: ' + keyword);
-                            res.reject(data);
-
-                        });
+                    modelToQuery = 'dbSNP';
                     break;
-*/
+                default:
+                    console.error("[ERROR] I don't know what to query for " + field);
+                    return;
             }
-            return res.promise;
-        },
-
-            submitQueryByRegion :  function (chr,start,end) {
-                var res = $q.defer();
-                $http.get('/api/variant/finder/query?chr=' +
-                    chr + '&start=' +
-                    start + '&end=' + end)
-                    .success(function (data) {
-                        console.info("Retrieved this variant from range query: ")
-                        console.info(data);
-                        data.payload.forEach(function (o1) {
-                            $http.get('/api/gene/' + o1.gene).success( function(data) {
-                                console.log('Got gene related to Variant');
-                                var o2 = data.payload;
-                                res.resolve(jsonConcat(o1,o2));
-                            })
-
+            $http.get('/api/' + modelToQuery + '/finder/query?' + field + '=' + keyword).then(function (respWithRows) {
+                    //console.info(loadVariants(respWithRows));
+                    loadVariants(respWithRows).then(function (arrayWithVariants) {
+                        arrayWithVariants.forEach(function (response) {
+                            var singleVariant = response.data.payload;
+                            promises.push(getGeneAndConcat(singleVariant));
+                            console.info(promises);
                         })
-
-                    }).error(function (data) {
-                        console.log('[ERROR] Failed retrieving variant  ith ID: ' + variant);
-                        res.reject(data);
-                    });
-
-                return res.promise;
-            }
-
-
+                        deferredResult.resolve($q.all(promises));
+                    })
+                });
+            return deferredResult.promise;
         }
 
 
 
 
+
+            /*,
+
+             submitQueryByRegion :  function (chr,start,end) {
+             var res = $q.defer();
+             $http.get('/api/variant/finder/query?chr=' +
+             chr + '&start=' +
+             start + '&end=' + end)
+             .success(function (data) {
+             console.info("Retrieved this variant from range query: ")
+             console.info(data);
+             data.payload.forEach(function (o1) {
+             $http.get('/api/gene/' + o1.gene).success( function(data) {
+             console.log('Got gene related to Variant');
+             var o2 = data.payload;
+             res.resolve(jsonConcat(o1,o2));
+             })
+
+             })
+
+             }).error(function (data) {
+             console.log('[ERROR] Failed retrieving variant  ith ID: ' + variant);
+             res.reject(data);
+             });
+
+             return res.promise;
+             }
+             */
+
+        }
 
     });

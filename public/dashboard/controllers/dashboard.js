@@ -317,14 +317,6 @@ angular.module('mean.dashboard', ['angular-md5'])
             })
         })();
 
-       /* $scope.updateFilter = function () {
-            for (var key in $scope.check) if ($scope.check.hasOwnProperty(key) && $scope.check[key]) {
-                $scope.chosenFilters.region += key;
-            }
-        };*/
-
-/*
-
         $scope.submitBase = function () {
             $scope.query.ok = true;
 
@@ -333,9 +325,8 @@ angular.module('mean.dashboard', ['angular-md5'])
             $scope.elements = [];
 
 
-            Query.submitQueryByElement(element, keyword).then(function (data) {
-                console.info(data);
-                $scope.elements.push(data);
+             Query.submitQueryByElement(element, keyword).then(function (data) {
+                $scope.elements = data;
             });
 
 
@@ -351,105 +342,12 @@ angular.module('mean.dashboard', ['angular-md5'])
 
             $scope.elements = [];
 
-            Query.submitQueryByRegion(chr, start, end).then(function (data) {
+           Query.submitQueryByRegion(chr, start, end).then(function (data) {
                 $scope.elements.push(data);
             });
 
         }
-*/
 
-
-
-        var successInitialQuery = function (data) {
-            $scope.elements = [];
-            //console.log("QUERY SUCCEDED. RECEIVED:" + JSON.stringify(data));
-
-            data.payload.forEach(function (payload) {
-                if (payload.variants) payload.variants.forEach(function (variant) {
-
-                    $http.get('/api/variant/' + variant)
-                        .success(function (data) {
-                            //console.log('Got variant');
-                            //console.log(data);
-                            var o1 = data.payload;
-                            $http.get('/api/gene/' + o1.gene).success(function (data) {
-                                //console.log('Got gene related to Variant');
-                                var o2 = data.payload;
-                                $scope.elements.push(jsonConcat(o1, o2))
-                            })
-
-                        })
-                        .error(function () {
-                            //console.log('[ERROR] Failed retrieving variant  ith ID: ' + variant);
-                        });
-                });
-                else
-                    $http.get('/api/variant/' + payload.variant)
-                        .success(function (data) {
-                            //console.log('Got variant');
-                            //console.log(data);
-                            var o1 = data.payload;
-                            $http.get('/api/gene/' + o1.gene).success(function (data) {
-                                //console.log('Got gene related to Variant');
-                                var o2 = data.payload;
-                                $scope.elements.push(jsonConcat(o1, o2))
-                            })
-
-                        })
-                        .error(function () {
-                            //console.log('[ERROR] Failed retrieving variant  ith ID: ' + variant);
-                        });
-            });
-        };
-
-        $scope.submitBase = function () {
-            var keyword = $scope.query.keyword;
-            var element = $scope.query.element;
-
-            switch (element) {
-
-                case 'genes':
-                    $http.get('/api/gene/finder/query?' + element + '=' + keyword)
-                        .success(successInitialQuery)
-                        .error(function (data) {
-                            //console.log('[ERROR] Failed retrieving gene with ' + element + ' field: ' + keyword);
-                        });
-                    break;
-
-                case 'freqAlt':
-                case 'dbSNP':
-                    $http.get('/api/dbsnp/finder/query?' + element + '=' + keyword)
-                        .success(successInitialQuery)
-                        .error(function (data) {
-                            //console.log('[ERROR] Failed retrieving gene with ' + element + ' field: ' + keyword);
-                        });
-                    break;
-            }
-        };
-
-        $scope.submitByRegion = function () {
-            $http.get('/api/variant/finder/query?chr=' +
-                $scope.query.chr + '&start=' +
-                $scope.query.start + '&end=' + $scope.query.end)
-                .success(function (data) {
-                    $scope.elements = []
-                    //console.info("Retrieved this variant from range query: ")
-                    //console.info(data);
-                    data.payload.forEach(function (o1) {
-                        $http.get('/api/gene/' + o1.gene).success(function (data) {
-                            //console.log('Got gene related to Variant');
-                            var o2 = data.payload;
-                            $scope.elements.push(jsonConcat(o1, o2))
-                        })
-
-                    })
-
-                }).error(function () {
-                    //console.log('[ERROR] Failed retrieving variant  ith ID: ' + variant);
-                });
-
-
-        }
 
         $scope.updateResultFilter = function (word, field) {
             var fieldArrayWithWords = $scope.resultsFilter[field];
@@ -463,9 +361,6 @@ angular.module('mean.dashboard', ['angular-md5'])
                     fieldArrayWithWords.splice(index, 1);
             }
         }
-
-
-
 
 
 

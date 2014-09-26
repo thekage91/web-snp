@@ -12,7 +12,6 @@
             var e = document.getElementById('search_concept');
             e.innerHTML = value;
         }
-
     </script>
 
     <ul class="nav nav-tabs">
@@ -62,41 +61,38 @@
 
         <!-- Second tab options-->
         <div class="tab-pane fade" id="complex">
+            <div class="row bot15">
+                <div id="custom-search-input">
+                    <h4>Insert required fields:</h4>
 
-                <div class="row bot15">
-                    <div id="custom-search-input">
-                        <h4>Insert required fields:</h4>
-
-                        <div class="input-group col-md-12">
-                            <div class="input-group">
-                                <div class="input-group-btn search-panel">
-                                    <input type="text" ng-model="query.chr" class="form-control" name="x"
-                                           placeholder="chr">
-                                </div>
-                                <div class="input-group-btn search-panel">
-                                    <input type="text" ng-model="query.start" class="form-control" name="x"
-                                           placeholder="start">
-                                </div>
-                                <div class="input-group-btn search-panel">
-                                    <input type="text" ng-model="query.end" class="form-control" name="x"
-                                           placeholder="end">
-                                </div>
+                    <div class="input-group col-md-12">
+                        <div class="input-group">
+                            <div class="input-group-btn search-panel">
+                                <input type="text" ng-model="query.chr" class="form-control" name="x"
+                                       placeholder="chr">
+                            </div>
+                            <div class="input-group-btn search-panel">
+                                <input type="text" ng-model="query.start" class="form-control" name="x"
+                                       placeholder="start">
+                            </div>
+                            <div class="input-group-btn search-panel">
+                                <input type="text" ng-model="query.end" class="form-control" name="x"
+                                       placeholder="end">
+                            </div>
                         <span class="input-group-btn">
                             <button class="btn btn-danger" type="button" ng-click="submitByRegion()">
                                 <span class="glyphicon glyphicon-search"></span>
                             </button>
                           </span>
-                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-
+        </div>
         <!-- Second tab options END-->
 
 
         <div class="row input-group-btn search-panel">
-
             <div class="btn-group">
                 <h5 style="float : left; padding: 0px 10px 0px 0px">Filter by region </h5>
                 <label class="btn btn-primary" ng-repeat="item in filtro.region"
@@ -136,6 +132,7 @@
                         <th>Genes</th>
                         <th>Region</th>
                         <th>Mutation</th>
+                        <th>Genotype</th>
 
                         <!--<th style="width: 75px;"></th>-->
                     </tr>
@@ -150,6 +147,7 @@
                         <td>{{el.genes}}</td>
                         <td>{{el.region}}</td>
                         <td>{{el.mutation}}</td>
+                        <td>{{el.genotype}}</td>
 
 
                         <!--<td>
