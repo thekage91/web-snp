@@ -19,7 +19,7 @@ var DbSNPSchema = new Schema({
         validate: [validatePresenceOf, 'DbSNP cannot be blank']
     },
     freqAlt: {
-        type: String,
+        type: Number,
         required: true,
         validate: [validatePresenceOf, 'freqAlt cannot be blank']
     },
@@ -42,8 +42,8 @@ DbSNPSchema.statics.query = function query(q) {
     return this.find(q);
 };
 
-DbSNPSchema.statics.freqRange = function freqRange( gt,lt) {
-    return this.find({ "freqAlt": { $gt: gt, $lt: lt }});
+DbSNPSchema.statics.freqRange = function freqRange( q) {
+    return this.find({ freqAlt: { $gt: q.gt, $lt: q.lt }});
 };
 
 

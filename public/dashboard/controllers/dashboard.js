@@ -363,7 +363,6 @@ angular.module('mean.dashboard', ['angular-md5'])
         }
 
 
-
         $scope.filterNotExclusive = function (item) {
 
             if ($scope.isChecked.all) return true;

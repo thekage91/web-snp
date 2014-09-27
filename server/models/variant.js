@@ -16,12 +16,12 @@ var VariantSchema = new Schema({
         validate: [validatePresenceOf, 'CHR cannot be blank']
     }, 
     start: {
-        type: String,
+        type: Number,
         required: true,
         validate: [validatePresenceOf, 'start cannot be blank']
     },
     end: {
-        type: String,
+        type: Number,
         required: true,
         validate: [validatePresenceOf, 'End cannot be blank']
     },
@@ -76,6 +76,11 @@ var VariantSchema = new Schema({
 
 VariantSchema.statics.query = function query(q) {
     return this.find(q);
+};
+
+
+VariantSchema.statics.rangeQuery = function rangeQuery( q) {
+    return this.find({chr: q.chr, start: { $gte: q.start}, end:{ $lte: q.end }});
 };
 
 
