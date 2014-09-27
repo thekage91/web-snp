@@ -42,8 +42,12 @@ DbSNPSchema.statics.query = function query(q) {
     return this.find(q);
 };
 
-DbSNPSchema.statics.freqRange = function freqRange( q) {
-    return this.find({ freqAlt: { $gt: q.gt, $lt: q.lt }});
+DbSNPSchema.statics.freqAltRange = function freqAltRange( q) {
+    return this.find({ freqAlt: { $gte: q.gt, $lte: q.lt }});
+};
+
+DbSNPSchema.statics.freqRefRange = function freqRefRange( q) {
+    return this.find({ freqRef: { $gte: q.gt, $lte: q.lt }});
 };
 
 

@@ -45,12 +45,16 @@ angular.module('QueryService', [])// super simple service
             var modelToQuery;
             var promises = [];
             var deferredResult = $q.defer();
+            var isRangeQuery = false;
+            var firstQuery;
 
             switch (field) {
                 case 'genes':
                     modelToQuery = 'gene';
                     break;
                 case 'freqAlt':
+                case 'freqRef':
+                    isRangeQuery = true;
                 case 'dbSNP':
                     modelToQuery = 'dbSNP';
                     break;
@@ -58,7 +62,13 @@ angular.module('QueryService', [])// super simple service
                     console.error("[ERROR] I don't know what to query for " + field);
                     return;
             }
-            $http.get('/api/' + modelToQuery + '/finder/query?' + field + '=' + keyword).then(function (respWithRows) {
+            if(isRangeQuery) {
+                var queryString = '/api/' + modelToQuery + '/finder/'+field+'Range?' + field + '=' + keyword
+                firstQuery = $http.get('/api/' + modelToQuery + '/finder/query?' + field + '=' + keyword);
+            }
+
+            else firstQuery = $http.get('/api/' + modelToQuery + '/finder/query?' + field + '=' + keyword);
+            .then(function (respWithRows) {
                     loadVariants(respWithRows).then(function (arrayWithVariants) {
                         arrayWithVariants.forEach(function (response) {
                             var singleVariant = response.data.payload;
@@ -75,7 +85,7 @@ angular.module('QueryService', [])// super simple service
              var promises = [];
              var arrayWithVariants;
 
-             $http.get('/api/variant/finder/query?chr='+chr+'&start='+start + '&end=' + end)
+             $http.get('/api/variant/finder/rangeQuery?chr='+chr+'&start='+start + '&end=' + end)
              .then(function (response) {
                      console.log(response);
                      arrayWithVariants = response.data.payload;
