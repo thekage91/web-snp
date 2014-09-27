@@ -68,7 +68,8 @@ angular.module('QueryService', [])// super simple service
             }
 
             else firstQuery = $http.get('/api/' + modelToQuery + '/finder/query?' + field + '=' + keyword);
-            .then(function (respWithRows) {
+
+            firstQuery.then.then(function (respWithRows) {
                     loadVariants(respWithRows).then(function (arrayWithVariants) {
                         arrayWithVariants.forEach(function (response) {
                             var singleVariant = response.data.payload;

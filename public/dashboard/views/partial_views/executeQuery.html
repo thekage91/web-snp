@@ -39,14 +39,15 @@
                                     <li><a href="#gene" ng-click="query.element = 'genes'"
                                            onClick="changeLabel('Genes')">Genes</a></li>
                                     <li><a href="#freqAlt" ng-click="query.element = 'freqAlt'"
-                                           onClick="changeLabel('Freq alt')">Freq alt</a></li>
+                                           onClick="changeLabel('Freq alt');">Freq alt</a></li>
                                     <li><a href="#dbsnp" ng-click="query.element = 'dbSNP' "
                                            onClick="changeLabel('dbSNP')">dbSNP</a></li>
                                 </ul>
                             </div>
                             <input type="hidden" name="search_param" value="all" id="search_param"/>
                             <input id="key" ng-model="query.keyword" type="search" class="search-query form-control"
-                                   placeholder="Type Here"/>
+                                   placeholder="Type Here" popover="Insert two number as a Range. i.e: 0.218 0.980"
+                                   popover-trigger="{{{true: 'mouseenter', false: 'never'}[query.element === 'freqAlt']}}" class="form-control"/>
                     <span class="input-group-btn">
                       <button class="btn btn-danger" type="button" ng-click="submitBase()">
                           <span class="glyphicon glyphicon-search"></span>

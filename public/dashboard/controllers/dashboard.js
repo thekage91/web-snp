@@ -1,13 +1,6 @@
 'use strict';
 
 
-function jsonConcat(o1, o2) {
-    for (var key in o2) if (o2.hasOwnProperty(key)) {
-        o1[key] = o2[key];
-    }
-    return o1;
-}
-
 String.prototype.capitalize = function() {
     return this.charAt(0).toUpperCase() + this.slice(1);
 }
@@ -298,7 +291,7 @@ angular.module('mean.dashboard', ['angular-md5'])
     }])
 
 
-    .controller('ExecuteQueryCtrl', ['$scope', '$http', 'Filter', 'Query', function ($scope, $http, Filter, Query) {
+    .controller('ExecuteQueryCtrl', ['$scope', '$http','$timeout','Filter', 'Query', function ($scope, $http,$timeout, Filter, Query) {
 
         $scope.filtro = {};
         $scope.isChecked = {};
@@ -362,6 +355,11 @@ angular.module('mean.dashboard', ['angular-md5'])
             }
         }
 
+        $scope.fireCustomEvent = function() {
+            $timeout(function () {
+                $('#key').trigger('customEvent');
+            }, 0);
+        }
 
         $scope.filterNotExclusive = function (item) {
 
