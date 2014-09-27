@@ -333,7 +333,7 @@ angular.module('mean.dashboard', ['angular-md5'])
         };
 
 
-        $scope.submitQueryByRegion = function () {
+        $scope.submitByRegion = function () {
             $scope.query.ok = true;
 
             var chr = $scope.query.chr;
@@ -342,8 +342,8 @@ angular.module('mean.dashboard', ['angular-md5'])
 
             $scope.elements = [];
 
-           Query.submitQueryByRegion(chr, start, end).then(function (data) {
-                $scope.elements.push(data);
+           Query.submitByRegion(chr, start, end).then(function (data) {
+               $scope.elements = data;
             });
 
         }

@@ -59,50 +59,33 @@ angular.module('QueryService', [])// super simple service
                     return;
             }
             $http.get('/api/' + modelToQuery + '/finder/query?' + field + '=' + keyword).then(function (respWithRows) {
-                    //console.info(loadVariants(respWithRows));
                     loadVariants(respWithRows).then(function (arrayWithVariants) {
                         arrayWithVariants.forEach(function (response) {
                             var singleVariant = response.data.payload;
                             promises.push(getGeneAndConcat(singleVariant));
-                            console.info(promises);
                         })
                         deferredResult.resolve($q.all(promises));
                     })
                 });
             return deferredResult.promise;
-        }
+        },
 
+             submitByRegion :  function (chr,start,end) {
+             var deferredResult = $q.defer();
+             var promises = [];
+             var arrayWithVariants;
 
-
-
-
-            /*,
-
-             submitQueryByRegion :  function (chr,start,end) {
-             var res = $q.defer();
-             $http.get('/api/variant/finder/query?chr=' +
-             chr + '&start=' +
-             start + '&end=' + end)
-             .success(function (data) {
-             console.info("Retrieved this variant from range query: ")
-             console.info(data);
-             data.payload.forEach(function (o1) {
-             $http.get('/api/gene/' + o1.gene).success( function(data) {
-             console.log('Got gene related to Variant');
-             var o2 = data.payload;
-             res.resolve(jsonConcat(o1,o2));
-             })
-
-             })
-
-             }).error(function (data) {
-             console.log('[ERROR] Failed retrieving variant  ith ID: ' + variant);
-             res.reject(data);
-             });
-
-             return res.promise;
+             $http.get('/api/variant/finder/query?chr='+chr+'&start='+start + '&end=' + end)
+             .then(function (response) {
+                     console.log(response);
+                     arrayWithVariants = response.data.payload;
+                         arrayWithVariants.forEach(function (singleVariant) {
+                             promises.push(getGeneAndConcat(singleVariant));
+                         });
+                         deferredResult.resolve($q.all(promises));
+                 })
+                 return deferredResult.promise;
              }
-             */
 
         }
 
