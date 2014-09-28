@@ -7,23 +7,30 @@ angular.module('FilterService', [])
     // each function returns a promise object
     .factory('Filter', function ($http, $q,$rootScope,$timeout, Model) {
 
+        var resolving = false;
+        var filterDistinctWord = $q.defer();
+
         function getOrInitDistinctWords() {
-            var deferred = $q.defer();
-            Model.getAll('Filter').then(function (response) {
-                //console.warn(response);
-                var data = response.data.payload;
-                if (data.length <= 0)
-                    Model.create('Filter',{distinctWords : { 0:0}}).then(function (response) {
+            if(!resolving) {
+                resolving = true;
+                Model.getAll('Filter').then(function (response) {
+                    //console.warn(response);
+                    var data = response.data.payload;
+                    if (data.length <= 0)
+                        Model.create('Filter', {distinctWords: { 0: 0}}).then(function (response) {
+                            //console.log('creato filtro');
+                            filterDistinctWord.resolve(response.data.payload);
+                        });
+                    else
+                        filterDistinctWord.resolve(data[0]);
+                    //console.log(data);
+                }, function (error) {
+                    deferred.reject(error)
+                });
 
-                        deferred.resolve(response.data.payload);
-                    });
-                else
-                    deferred.resolve(data[0]);
-                //console.log(data);
-            }, function(error) { deferred.reject(error)});
-            return deferred.promise;
+            }
+            return filterDistinctWord.promise;
         }
-
 
         return {
             updateDistinctValues: function (attributesArray, columnArray) {
@@ -46,7 +53,7 @@ angular.module('FilterService', [])
                         })
                     });
                         if (modified) Model.update('Filter', id,{distinctWords: distinctWords }).then(function (resp) {
-                       // console.log("Filter Updated with new words. response: ");
+                        //console.log("Filter Updated with new words. response: ");
                         //console.log(resp);
                       })
                 });
@@ -56,8 +63,8 @@ angular.module('FilterService', [])
             getDistinctValues: function (column) {
                 var deferred = $q.defer();
                 getOrInitDistinctWords().then( function (data) {
-                    // console.log("risposta da getOrInit")
-                    //  console.log(data);
+                    //console.log("risposta da getOrInit");
+                    //console.log(data);
                     data.distinctWords[column] = data.distinctWords[column] || [];
                     deferred.resolve(data.distinctWords[column]);
                 }, function(err) { deferred.reject(err)});

@@ -305,6 +305,7 @@ angular.module('mean.dashboard', ['angular-md5'])
             filterElements.forEach(function (element) {
                 Filter.getDistinctValues(element).then(function (data) {
                     $scope.filtro[element] = data;
+                    console.log("Got filter elements");
                 });
                 $scope.resultsFilter[element] = [];
             })
@@ -353,12 +354,6 @@ angular.module('mean.dashboard', ['angular-md5'])
                 if (index > -1)
                     fieldArrayWithWords.splice(index, 1);
             }
-        }
-
-        $scope.fireCustomEvent = function() {
-            $timeout(function () {
-                $('#key').trigger('customEvent');
-            }, 0);
         }
 
         $scope.filterNotExclusive = function (item) {

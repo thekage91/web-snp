@@ -63,13 +63,15 @@ angular.module('QueryService', [])// super simple service
                     return;
             }
             if(isRangeQuery) {
-                var queryString = '/api/' + modelToQuery + '/finder/'+field+'Range?' + field + '=' + keyword
-                firstQuery = $http.get('/api/' + modelToQuery + '/finder/query?' + field + '=' + keyword);
+                var numberArray = keyword.trim().replace(/\s+/g, ' ').split(" ",2);
+                if(numberArray[0] < numberArray[1]) numberArray.reverse();
+                var queryString = '/api/' + modelToQuery + '/finder/'+field+'Range?gt=' + numberArray[0] + '&lt=' + numberArray[1];
+                firstQuery = $http.get(queryString);
             }
 
             else firstQuery = $http.get('/api/' + modelToQuery + '/finder/query?' + field + '=' + keyword);
 
-            firstQuery.then.then(function (respWithRows) {
+            firstQuery.then(function (respWithRows) {
                     loadVariants(respWithRows).then(function (arrayWithVariants) {
                         arrayWithVariants.forEach(function (response) {
                             var singleVariant = response.data.payload;
