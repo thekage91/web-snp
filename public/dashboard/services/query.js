@@ -64,8 +64,9 @@ angular.module('QueryService', [])// super simple service
             }
             if(isRangeQuery) {
                 var numberArray = keyword.trim().replace(/\s+/g, ' ').split(" ",2);
-                if(numberArray[0] < numberArray[1]) numberArray.reverse();
+                if(numberArray[0] > numberArray[1]) numberArray.reverse();
                 var queryString = '/api/' + modelToQuery + '/finder/'+field+'Range?gt=' + numberArray[0] + '&lt=' + numberArray[1];
+                console.log("query: " + queryString);
                 firstQuery = $http.get(queryString);
             }
 
