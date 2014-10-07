@@ -740,9 +740,8 @@ angular.module('mean.dashboard', ['angular-md5'])
 
     .controller('ProfileCtrl', ['$scope' , 'md5', '$http' , function ($scope, md5, $http) {
 
-        //$scope.emailHash = md5.createHash($scope.user.email)
+        $scope.emailHash = md5.createHash($scope.global.user._id)
 
-        $scope.emailHash = md5.createHash('thekage91@gmail.com')
         console.log($scope.emailHash);
 
         $http.get('/api/user/' + $scope.global.user._id)
