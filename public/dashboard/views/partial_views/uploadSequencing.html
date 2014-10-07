@@ -42,7 +42,7 @@
   <h4>Drag and drop into the box below your sequencing file to start uploading it:</h4>
 
   <!-- style="margin-bottom: 50px; margin-top: 50px" -->
-  <div id="drop" >Drop an XLS or XML (2003) file here...</div>
+  <div id="drop" >Drop an XLS (Excel 97-2003) file here...</div>
   
   <!--   <span class="glyphicon glyphicon-upload"></span> Show result
   </button> -->
@@ -187,6 +187,8 @@ function process_wb(wb) {
   document.getElementById('dialog').style.display = 'none';
   document.getElementById('ui-id-1').innerHTML = "Done!";
   document.getElementById('btn_save').disabled = "enable";
+
+  window.location.replace('/#!/done');
 
   if(typeof console !== 'undefined') console.log("output", new Date());
 }
