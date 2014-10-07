@@ -23,12 +23,12 @@
                   </tr>
                   <tr>
                     <td>First Name:</td>
-                    <td><input id="firstNameField" type="text" value="{{_user.firstName}}"
+                    <td><input id="firstNameField" type="text" value="{{_user.firstName}}" placeholder="{{_user.firstName}}"
                                 ng-model="user.firstName"></td>
                   </tr>
                   <tr>
                     <td>Last Name:</td>
-                    <td><input id="lastNameField" type="text" value="{{_user.lastName}}"
+                    <td><input id="lastNameField" type="text" value="{{_user.lastName}}" placeholder="{{_user.lastName}}"
                                 ng-model="user.lastName" /></td>
                   </tr>
                   <tr>
@@ -37,12 +37,12 @@
                   </tr>
                   <tr>
                     <td>Address:</td>
-                    <td><input id="addressField" type="text" value="{{_user.address}}"
+                    <td><input id="addressField" type="text" value="{{_user.address}}" placeholder="{{_user.address}}"
                                 ng-model="user.address"></td>
                   </tr>
                   <tr>
                     <td>Phone:</td>
-                    <td><input id="phoneField" type="text" value="{{_user.phone}}"
+                    <td><input id="phoneField" type="text" value="{{_user.phone}}" placeholder="{{_user.phone}}"
                                 ng-model="user.phone"></td>
                   </tr>
                 </tbody>
@@ -68,11 +68,11 @@
                 <tbody>
                   <tr>
                     <td>New Password:</td>
-                    <td><input type="password" value="**********" ng-model="user.password"></td>
+                    <td><input type="password" value="**********" placeholder="**********" ng-model="user.password"></td>
                   </tr>
                   <tr>
                     <td>Repeat New Password:</td>
-                    <td><input type="password" value="**********" ng-model="user.confirmPassword"></td>
+                    <td><input type="password" value="**********" placeholder="**********" ng-model="user.confirmPassword"></td>
                   </tr>
                 </tbody>
               </table>
