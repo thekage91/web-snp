@@ -78,6 +78,8 @@ angular.module('mean.dashboard', ['angular-md5'])
                         $scope.registerError = error;
                     }
                 });
+
+            location.reload();
         };
 
 
