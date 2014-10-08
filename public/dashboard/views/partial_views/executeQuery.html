@@ -169,7 +169,7 @@
                     </thead>
                     <tbody>
                     <tr ng-repeat="el in elements | filter:filterNotExclusive">
-                        <td><button type="button" class="btn btn-primary btn-sm" ng-click="...">
+                        <td><button type="button" class="btn btn-primary btn-sm" ui-sref="dashboard.sequencingDetails">
                                 <div ><span class="glyphicon glyphicon-eye-open"></span> View </div>
                             </button></td>
                         <td>{{el.chr}}</td>
