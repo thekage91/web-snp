@@ -46,7 +46,7 @@ module.exports = function (app, passport) {
             element.save(function (err) {
                 if (err) console.error("Error while saving ID!" + err);
             });
-            return res.status(200).send('element.save() called.');
+            return res.status(200).send('element.save() called. Model = ' + model + '; field = ' + field + '; idToAdd = ' + idToAdd);
 
         });
     });

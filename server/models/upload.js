@@ -49,13 +49,6 @@ var UploadSchema = new Schema({
         type: Schema.Types.ObjectId,
         default: [] }
 ],
-
-    Patient: [
-    {
-        type: Schema.Types.ObjectId,
-        default: [] }
-],
-
     DbSNP: [
     {
         type: Schema.Types.ObjectId,

@@ -119,8 +119,9 @@ angular.module('ParseService', [])
                                     },function (error) {
                                     console.error('Failed creating relationships' + error)});
 
-                                    (IdAccumulator.accumulateIDfromAll)(patient, savedElements, upload).then(function (data) {
+                                    (IdAccumulator.accumulateIDfromAll)(savedElements, upload).then(function (data) {
                                         console.log("Done accumulating");
+                                        console.log(data);
                                     })
 
 

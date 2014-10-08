@@ -378,14 +378,6 @@ angular.module('mean.dashboard', ['angular-md5'])
     }])
 
 
-
-
-
-
-
-
-
-
     .controller('SequencingEditCtrl', ['$scope', '$http', 'Parse', 'Save', function ($scope, $http, Parse, Save) {
 
         $scope.parseForEdit = function (dataParse) {
