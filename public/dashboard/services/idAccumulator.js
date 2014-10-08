@@ -8,32 +8,25 @@ angular.module('idAccumulatorService', [])
 
 
 
-
-    .factory('IdAccumulator', function($http,$q) {
+    .factory('IdAccumulator', function($http,$q,Model) {
         function accumulate(patient,collection,id) {
             return $http.post('api/idAcc/'+patient,{ modelClass : collection, id : id})
         };
 
         return {
 
-            accumulateIDfromAll : function(patient,hashWithElements) {
-
+            accumulateIDfromAll : function(patient,hashWithElements,upload) {
+                //console.log(hashWithElements);
                 var accumulateRequests = [],i=0;
-                var currentData;
-
                 var obj = {};
                 obj.model = 'Upload';
-
-                for(var key in hashWithElements)
-                if(hashWithElements.hasOwnProperty(key)) {
-                    console.log('accumulando ID elemento: ' + key);
-                    console.log('accumulando ID id: ' + hashWithElements[key]._id);
-
-                    obj.field = key;
-                    obj.id = hashWithElements[key]._id;
-                    accumulateRequests[i++] =  $http.post('/api/array/'+patient._id, obj);
-                }
-
+                    Object.keys(hashWithElements).forEach(function (key) {
+                        obj.field = key;
+                        obj.id = hashWithElements[key]._id;
+                        console.log("obj: "); console.log(obj);
+                        console.log("upload id: "+upload._id);
+                        accumulateRequests[i++] =  $http.post('/api/array/'+upload._id, obj);
+                    });
                 return $q.all(accumulateRequests);
             } ,
             accumulate: accumulate

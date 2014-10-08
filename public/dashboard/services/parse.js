@@ -53,7 +53,6 @@ angular.module('ParseService', [])
 
         return {
             saveInDbFromData: function (json, patientName) {
-
                 if(!json)  { console.error("JSON not passed correctly"); return; }
 
 
@@ -62,7 +61,9 @@ angular.module('ParseService', [])
                     function () {
 
                         var patientResolved = $q.defer();
+                        var historyResolved = $q.defer();
                         //console.error(arguments[0]);
+                        var resolve = (Model.resolveDeferredFromDataPOST);
                         var schemas = (Schema.inizializeSchemasFromGET)(arguments[0]);
                         //console.log("Got Schemas");
                         //console.log(schemas);
@@ -73,11 +74,20 @@ angular.module('ParseService', [])
 
                         //initializing patient
                         var patientBeforeID = {name :patientName};
-                        var resolvePatient = (Model.resolveDeferredFromDataPOST);
 
-                        patientResolved = resolvePatient('patient',patientBeforeID, patientResolved);
+                        patientResolved = resolve('patient',patientBeforeID, patientResolved);
+                        historyResolved = resolve('upload',"", historyResolved);
 
-                        patientResolved.then( function (patient) {
+
+                        $q.all([patientResolved,historyResolved]).then( function (res) {
+                           var patient = res[0];
+                           var upload = res[1];
+                            (Model.createRelationship)(patient._id,'uploads',upload._id,'Patient');
+
+                            console.log(res);
+                            console.info(patient);
+                            console.info(upload);
+
                             json[key].forEach(function (singleAttributesList) {
 
                                 //Save Model Classes for ID
@@ -109,10 +119,10 @@ angular.module('ParseService', [])
                                     },function (error) {
                                     console.error('Failed creating relationships' + error)});
 
-                                   /*(IdAccumulator.accumulateIDfromAll)(patient, savedElements).then(function (data) {
-                                            console.log("ok done.");
-                                            console.log(data);
-                                        })*/
+                                    (IdAccumulator.accumulateIDfromAll)(patient, savedElements, upload).then(function (data) {
+                                        console.log("Done accumulating");
+                                    })
+
 
                                 }) ;
                             });

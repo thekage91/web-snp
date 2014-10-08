@@ -4,46 +4,6 @@ var express = require('express');
 var mers = require('mers');
 var mongoose = require('mongoose');
 
-String.prototype.capitalize = function () {
-    return this.charAt(0).toUpperCase() + this.slice(1);
-}
-
-String.prototype.camelize = function () {
-
-    return this.replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, function (match, index) {
-        if (+match === 0) return ""; // or if (/\s+/.test(match)) for white spaces
-        return index == 0 ? match.toLowerCase() : match.toUpperCase();
-    });
-}
-
-function parseNameSpace(s , o, value)
-{
-    var w = o, a;
-
-    //reutrn if parsing not necessary or not a method
-    if ( s.indexOf('.') == -1 )
-    {
-        w[s] = value;
-        return w;
-    }
-
-    //make array for looping through
-    a = s.split('.');
-
-    //run though members / methods
-    for (var i = 0,l = a.length; i < l; i++)
-    {
-        if(w[a[i]] === "undefined") w[a[i]] = {};
-        w = w[a[i]];
-    }
-
-    //return object if it is valid, or return false
-    w = value;
-    return o;
-}
-
-
-
 module.exports = function (app, passport) {
     var rest = mers({uri: 'mongodb://localhost/mean-dev'});
 
@@ -55,9 +15,6 @@ module.exports = function (app, passport) {
 
         res.json(model.attr);
     });
-    app.get('/api/id/:kill', function (req, res, next) {
-        res.json(mongoose.Types.ObjectId());
-    });
 
     app.post('/api/array/:id', function (req, res, next) {
         var id = req.params.id;
@@ -67,17 +24,19 @@ module.exports = function (app, passport) {
         var model = req.body.model;
 
         var isAccumulatingIDs = false;
-        if(model == 'Upload') { model = 'Patient'; isAccumulatingIDs = true;}
+        if(model == 'Upload') isAccumulatingIDs = true;
 
         mongoose.model(model).findById(id, function (err, element) {
-            if (err)
+            if (err) {
                 console.log("error " + err);
+                return res.status(400).send('Cant find ' + model + ' element with ID: ' + idToAdd)
+            }
             if (!element) {
                 console.error("/api/array cant find id: " + req.params.id);
                 return res.status(400).send('Cant find '+model+' element with ID: '+ idToAdd)
             }
             //Dealing with Upload means modifying ids
-            if(isAccumulatingIDs) element = element.upload.ids;
+            if(isAccumulatingIDs) element = element.ids;
 
                     if (element[field] instanceof Array)
                         element[field].push(idToAdd);
@@ -87,7 +46,7 @@ module.exports = function (app, passport) {
             element.save(function (err) {
                 if (err) console.error("Error while saving ID!" + err);
             });
-            return res.status(200).send('Id added. all ok');
+            return res.status(200).send('element.save() called.');
 
         });
     });

@@ -69,4 +69,7 @@ UploadSchema.statics.query = function query(q) {
     return this.find(q);
 };
 
+var model =  mongoose.model('Upload', UploadSchema);
+module.exports = model;
+
 

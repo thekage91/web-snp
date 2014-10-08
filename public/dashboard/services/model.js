@@ -35,16 +35,7 @@ angular.module('ModelService', [])
             return $q.all(requests);
 
             },
-            getANumberOfIds : function (num) {
-                var requests = [];
-
-                for(var i=0;i<num; i++)
-                    requests[i] = $http.get('/api/id/'+Math.random(),{cache : 'false'});
-
-                return $q.all(requests);
-            }
-            ,
-            resolveDeferredFromDataPOST : function (pathElement,data, deferred) {
+            resolveDeferredFromDataPOST : function (pathElement,data,deferred) {
                 (create(pathElement, data)).success(
                 function (res) {
                     console.log("Resolving deferred from "+pathElement+" with " + JSON.stringify(res.payload)) ;

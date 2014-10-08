@@ -17,58 +17,13 @@ var PatientSchema = new Schema({
         validate: [validatePresenceOf, 'Name cannot be blank']
          },
 
-        upload: {
+        //Relationship
 
-            date: {
-                type: Date,
-                default: Date.now
-            },
+        uploads: [{
+            type: Schema.ObjectId,
+            ref: 'Upload'
+        }],
 
-            ids: {
-                Variant: [
-                    {
-                        type: Schema.Types.ObjectId,
-                        default: [] }
-                ],
-
-                VariantDetail: [
-                    {
-                        type: Schema.Types.ObjectId,
-                        default: [] }
-                ],
-
-                Gene: [
-                    {
-                        type: Schema.Types.ObjectId,
-                        default: [] }
-                ],
-
-                Esp: [
-                    {
-                        type: Schema.Types.ObjectId,
-                        default: [] }
-                ],
-
-                Pathogenicity: [
-                    {
-                        type: Schema.Types.ObjectId,
-                        default: [] }
-                ],
-
-                Patient: [
-                    {
-                        type: Schema.Types.ObjectId,
-                        default: [] }
-                ],
-
-                DbSNP: [
-                    {
-                        type: Schema.Types.ObjectId,
-                        default: [] }
-                ]
-
-            }  },
-	//Relationship
 	variants: [{
 		type: Schema.ObjectId,
 		ref: 'Variant',
