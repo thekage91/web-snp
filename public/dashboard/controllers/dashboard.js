@@ -703,7 +703,7 @@ angular.module('mean.dashboard', ['angular-md5'])
 
     .controller('HistoryLoadCtrl' ['$scope' , '$http' , function ($scope, $http) {
 
-        $http.get('/api/history')
+        $http.get('/api/upload')
             .success(function (data) {
                 $scope.sequencings = data.payload;
                 console.log("[SUCCESS] Retrieve all sequencings");

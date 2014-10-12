@@ -4,6 +4,12 @@ var express = require('express');
 var mers = require('mers');
 var mongoose = require('mongoose');
 
+
+function checkArgs( args) {
+    for(var i=args.length,j=0; j<i; j++)
+        if(!args(i)) return i;
+    return -1;
+}
 module.exports = function (app, passport) {
     var rest = mers({uri: 'mongodb://localhost/mean-dev'});
 
@@ -22,7 +28,8 @@ module.exports = function (app, passport) {
         var field = req.body.field;
         var idToAdd = req.body.id;
         var model = req.body.model;
-
+        if(checkArgs([id,field,idToAdd,model]) > -1)
+            return res.status(400).send('Argument n°' + i + " is null!");
         var isAccumulatingIDs = false;
         if(model == 'Upload') isAccumulatingIDs = true;
 

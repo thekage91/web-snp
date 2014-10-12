@@ -26,6 +26,22 @@ angular.module('idAccumulatorService', [])
                         accumulateRequests.push($http.post('/api/array/'+upload._id, obj));
                     });
                 return $q.all(accumulateRequests);
+            },
+
+            deleteAllIDs : function (uploadID) {
+                var requests = [];
+                $http.get('api/upload/' + uploadID).success( function (res) {
+                    var ids = res.payload.ids;
+                    console.log(ids);
+                    //(value, key, list)
+                    _.each(ids, function (element,idArray)
+                    {
+                        _.each(idArray, function(singleID){
+                           requests.push($http.delete('api/'+element+'/'+singleID));
+                        });
+                    })
+                return $q.all(requests);
+                })
             }
         }
     });
