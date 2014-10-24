@@ -20,20 +20,35 @@
 
         var i = 0;
 
-        function duplicate() {
-            var original = document.getElementById('_inputs0');
+        function duplicate(value) {
+            var original = document.getElementById('_inputs0');                   
             var clone = original.cloneNode(true); // "deep" clone
             i++; // there can only be one element with an ID
             clone.id = "_inputs" + i;
-            clone.onclick = duplicate; // event handlers are not cloned
-            original.parentNode.appendChild(clone);
+            //clone.onclick = duplicate; // event handlers are not cloned
+
+            var t = document.createTextNode(value);
+
+            var _inputs = document.getElementById('_inputs');
+            //_inputs.parentNode.appendChild(t);    
+
+            var el_span = document.createElement('span');
+            //el_span.style.display = "block";
+            //el_span.setAttribute('style', 'display: block');
+            el_span.setAttribute('style', 'float: left');
+            //el_span.style.left;
+
+            _inputs.parentNode.appendChild(el_span);
+            el_span.appendChild(t);
+
+                        
+            _inputs.parentNode.appendChild(clone);
         }
     </script>
 
     <ul class="nav nav-tabs">
         <li class="text-left"><a href="#basic" data-toggle="tab">Basic SNPs Search</a></li>
         <li class="text-left"><a href="#complex" data-toggle="tab">Range SNPs Search</a></li>
-
     </ul>
 
     <div id="myTabContent" class="tab-content">
@@ -44,6 +59,7 @@
                 <div id="custom-search-input">
                     <h4>Choose what to search and then insert keywords:</h4>
 
+                    <div id="_inputs">
                     <div id="_inputs0" class="col-md-7">
                         <div class="input-group col-md-10">
                             <div class="input-group">
@@ -73,20 +89,21 @@
                             </div>
                         </div>
                     </div>
+                    </div>
 
                     <div id="addConditionsButtons" class="input-group col-md-2">
 
                         <h5 style="float : right; padding: 0px 10px 0px 30px">Add condition: </h5>
 
                         <span class="input-group-btn">
-                            <button class="btn btn-secondary" type="button" onClick="duplicate();">
+                            <button class="btn btn-secondary" type="button" onClick="duplicate('AND');">
                                 <b>AND</b>
                                 <span class="glyphicon glyphicon-chevron-up"></span>
                             </button>
                         </span>
 
                         <span class="input-group-btn" style="padding: 0px 0px 0px 10px">
-                            <button class="btn btn-secondary" type="button" onClick="duplicate();">
+                            <button class="btn btn-secondary" type="button" onClick="duplicate('OR');">
                                 <b>OR</b>
                                 <span class="glyphicon glyphicon-chevron-down"></span>
                             </button>
