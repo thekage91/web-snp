@@ -30,19 +30,19 @@
             var t = document.createTextNode(value);
 
             var _inputs = document.getElementById('_inputs');
-            //_inputs.parentNode.appendChild(t);    
 
-            var el_span = document.createElement('span');
-            //el_span.style.display = "block";
-            //el_span.setAttribute('style', 'display: block');
-            el_span.setAttribute('style', 'float: left');
-            //el_span.style.left;
+            var linebreak = document.createElement('br');
+            _inputs.appendChild(linebreak);
 
-            _inputs.parentNode.appendChild(el_span);
-            el_span.appendChild(t);
+            _inputs.appendChild(t);
 
-                        
-            _inputs.parentNode.appendChild(clone);
+            var linebreak = document.createElement('br');
+            _inputs.appendChild(linebreak);
+
+            _inputs.appendChild(clone);
+
+            var linebreak = document.createElement('br');
+            _inputs.appendChild(linebreak);
         }
     </script>
 
@@ -89,6 +89,9 @@
                             </div>
                         </div>
                     </div>
+
+                    <br></br>
+
                     </div>
 
                     <div id="addConditionsButtons" class="input-group col-md-2">
