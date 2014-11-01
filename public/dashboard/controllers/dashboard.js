@@ -379,7 +379,7 @@ angular.module('mean.dashboard', ['angular-md5'])
         }
 
         $scope.addQueryBox = function (conditionType) {
-            $scope.queries.push( { prova: 'prova'});
+            $scope.queries.push( { cond: conditionType});
         }
 
     }])

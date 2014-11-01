@@ -1,4 +1,4 @@
-<div ng-controller="ExecuteQueryCtrl">
+<div ng-controller="ExecuteQueryCtrl" xmlns="http://www.w3.org/1999/html">
 
 <h1 hidden id="iddi">{{global.user._id}}</h1>
 
@@ -27,6 +27,22 @@
         clone.id = "_inputs" + i;
         clone.onclick = duplicate; // event handlers are not cloned
         original.parentNode.appendChild(clone);
+
+
+        var _inputs = document.getElementById('_inputs');
+
+        var linebreak = document.createElement('br');
+        _inputs.appendChild(linebreak);
+
+        _inputs.appendChild(t);
+
+        var linebreak = document.createElement('br');
+        _inputs.appendChild(linebreak);
+
+        _inputs.appendChild(clone);
+
+        var linebreak = document.createElement('br');
+        _inputs.appendChild(linebreak);
     }
 </script>
 
@@ -45,6 +61,7 @@
                 <h4>Choose what to search and then insert keywords:</h4>
 
                     <div class="col-md-7" ng-repeat="query in queries" ng-init="query.element = 'init'">
+                        <br ng-show="query.cond"> {{query.cond}} <br ng-show="query.cond">
                         <div class="input-group col-md-10">
                             <div class="input-group">
                                 <div class="input-group-btn search-panel">
@@ -96,6 +113,7 @@
 
                 </div>
             </div>
+
         </div>
         <!-- First tab options END -->
 
