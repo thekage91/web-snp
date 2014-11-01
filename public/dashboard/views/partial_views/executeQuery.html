@@ -44,13 +44,13 @@
             <div id="custom-search-input" ng-init="queries = [{}]">
                 <h4>Choose what to search and then insert keywords:</h4>
 
-                    <div class="col-md-7" ng-repeat="query in queries">
+                    <div class="col-md-7" ng-repeat="query in queries" ng-init="query.element = 'init'">
                         <div class="input-group col-md-10">
                             <div class="input-group">
                                 <div class="input-group-btn search-panel">
                                     <button type="button" class="btn btn-default dropdown-toggle"
                                             data-toggle="dropdown">
-                                        <span id="search_concept">Search by...</span> <span class="caret"></span>
+                                        <span id="search_concept">{{nameMap[query.element]}}</span> <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu" role="menu">
                                         <li><a href="#gene" ng-click="query.element = 'genes'"
@@ -58,7 +58,7 @@
                                         <li><a href="#freqAlt" ng-click="query.element = 'freqAlt'"
                                                ng-model="label.value">Freq alt</a></li>
                                         <li><a href="#dbsnp" ng-click="query.element = 'dbSNP' "
-                                               onClick="changeLabel('dbSNP')">dbSNP</a></li>
+                                               >dbSNP</a></li>
                                     </ul>
                                 </div>
                                 <input type="hidden" name="search_param" value="all" id="search_param"/>

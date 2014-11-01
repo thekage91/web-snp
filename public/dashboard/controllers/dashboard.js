@@ -300,6 +300,7 @@ angular.module('mean.dashboard', ['angular-md5'])
         $scope.isChecked.all = true;
         $scope.resultsFilter = {};
 
+        $scope.nameMap = { genes: 'Genes', freqAlt: 'Freq Alt',dbSNP:'dbSNP',init: 'Search By...'};
         var filterElements = ['region', 'Mutation'];
 
         //init filters values for checkobox and showing result
