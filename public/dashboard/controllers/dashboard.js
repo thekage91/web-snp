@@ -377,17 +377,13 @@ angular.module('mean.dashboard', ['angular-md5'])
             return conditions.reduce( function(prev, cur) { return prev && cur });
         }
 
+        $scope.addQueryBox = function (conditionType) {
+            $scope.queries.push( { prova: 'prova'});
+        }
+
     }])
 
-
-
-
-
-
-
-
-
-
+    .controller('InputQuery')
     .controller('SequencingEditCtrl', ['$scope', '$http', 'Parse', 'Save', function ($scope, $http, Parse, Save) {
 
         $scope.parseForEdit = function (dataParse) {

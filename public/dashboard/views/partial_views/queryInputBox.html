@@ -1,0 +1,29 @@
+<div id="_inputs0" class="col-md-7">
+    <div class="input-group col-md-10">
+        <div class="input-group">
+            <div class="input-group-btn search-panel">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    <span id="search_concept">Search by...</span> <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="#gene" ng-click="query.element = 'genes'"
+                           onClick="changeLabel('Genes')">Genes</a></li>
+                    <li><a href="#freqAlt" ng-click="query.element = 'freqAlt'"
+                           onClick="changeLabel('Freq alt')">Freq alt</a></li>
+                    <li><a href="#dbsnp" ng-click="query.element = 'dbSNP' "
+                           onClick="changeLabel('dbSNP')">dbSNP</a></li>
+                </ul>
+            </div>
+            <input type="hidden" name="search_param" value="all" id="search_param"/>
+            <input id="key" ng-model="query.keyword" type="search" class="search-query form-control"
+                   placeholder="Type Here" popover="Insert two number as a Range. i.e: 0.218 0.980"
+                   popover-trigger="{{{true: 'mouseenter', false: 'never'}[query.element === 'freqAlt']}}" class="form-control"/>
+                                <span class="input-group-btn">
+                                  <button class="btn btn-danger" type="button" ng-click="submitBase()">
+                                      <span class="glyphicon glyphicon-search"></span>
+                                  </button>
+                                </span>
+
+        </div>
+    </div>
+</div>
