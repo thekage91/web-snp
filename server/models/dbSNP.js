@@ -4,7 +4,6 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
-    angoose = require("angoose"),
     Schema = mongoose.Schema,
     crypto = require('crypto');
     

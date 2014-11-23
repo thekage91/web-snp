@@ -1,97 +1,95 @@
-<div ng-controller="ExecuteQueryCtrl">
+<div ng-controller="ExecuteQueryCtrl" xmlns="http://www.w3.org/1999/html">
 
-    <h1 hidden id="iddi">{{global.user._id}}</h1>
+<h1 hidden id="iddi">{{global.user._id}}</h1>
 
-    <div class="row">
-        <h1 class="section-header">Execute Query</h1>
-        <hr>
-    </div>
+<div class="row">
+    <h1 class="section-header">Execute Query</h1>
+    <hr>
+</div>
 
-    <script type="text/javascript">
-        function changeLabel(value) {
-            var e = document.getElementById('search_concept');
-            e.innerHTML = value;
-        }
+<script type="text/javascript">
+    function changeLabel(value) {
+        var e = document.getElementById('search_concept');
+        e.innerHTML = value;
+    }
 
-        function changePatientLabel(value) {
-            var e = document.getElementById('_patient');
-            e.innerHTML = value;
-        }
+    function changePatientLabel(value) {
+        var e = document.getElementById('_patient');
+        e.innerHTML = value;
+    }
 
-        var i = 0;
+    var i = 0;
 
-        function duplicate(value) {
-            var original = document.getElementById('_inputs0');                   
-            var clone = original.cloneNode(true); // "deep" clone
-            i++; // there can only be one element with an ID
-            clone.id = "_inputs" + i;
-            //clone.onclick = duplicate; // event handlers are not cloned
+    function duplicate() {
+        var original = document.getElementById('_inputs0');
+        var clone = original.cloneNode(true); // "deep" clone
+        i++; // there can only be one element with an ID
+        clone.id = "_inputs" + i;
+        clone.onclick = duplicate; // event handlers are not cloned
+        original.parentNode.appendChild(clone);
 
-            var t = document.createTextNode(value);
 
-            var _inputs = document.getElementById('_inputs');
+        var _inputs = document.getElementById('_inputs');
 
-            var linebreak = document.createElement('br');
-            _inputs.appendChild(linebreak);
+        var linebreak = document.createElement('br');
+        _inputs.appendChild(linebreak);
 
-            _inputs.appendChild(t);
+        _inputs.appendChild(t);
 
-            var linebreak = document.createElement('br');
-            _inputs.appendChild(linebreak);
+        var linebreak = document.createElement('br');
+        _inputs.appendChild(linebreak);
 
-            _inputs.appendChild(clone);
+        _inputs.appendChild(clone);
 
-            var linebreak = document.createElement('br');
-            _inputs.appendChild(linebreak);
-        }
-    </script>
+        var linebreak = document.createElement('br');
+        _inputs.appendChild(linebreak);
+    }
+</script>
 
-    <ul class="nav nav-tabs">
-        <li class="text-left"><a href="#basic" data-toggle="tab">Basic SNPs Search</a></li>
-        <li class="text-left"><a href="#complex" data-toggle="tab">Range SNPs Search</a></li>
-    </ul>
+<ul class="nav nav-tabs">
+    <li class="text-left"><a href="#basic" data-toggle="tab">Basic SNPs Search</a></li>
+    <li class="text-left"><a href="#complex" data-toggle="tab">Range SNPs Search</a></li>
 
-    <div id="myTabContent" class="tab-content">
+</ul>
 
-        <!-- First tab options-->
-        <div class="tab-pane active in" id="basic">
-            <div class="row bot15">
-                <div id="custom-search-input">
-                    <h4>Choose what to search and then insert keywords:</h4>
+<div id="myTabContent" class="tab-content">
 
-                    <div id="_inputs">
-                    <div id="_inputs0" class="col-md-7">
+    <!-- First tab options-->
+    <div class="tab-pane active in" id="basic">
+        <div class="row bot15">
+            <div id="custom-search-input" ng-init="queries = [{}]">
+                <h4>Choose what to search and then insert keywords:</h4>
+
+                    <div class="col-md-7" ng-repeat="query in queries" ng-init="query.element = 'init'">
+                        <br ng-show="query.cond"> {{query.cond}} <br ng-show="query.cond">
                         <div class="input-group col-md-10">
                             <div class="input-group">
                                 <div class="input-group-btn search-panel">
-                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                                        <span id="search_concept">Search by...</span> <span class="caret"></span>
+                                    <button type="button" class="btn btn-default dropdown-toggle"
+                                            data-toggle="dropdown">
+                                        <span id="search_concept">{{nameMap[query.element]}}</span> <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu" role="menu">
                                         <li><a href="#gene" ng-click="query.element = 'genes'"
-                                               onClick="changeLabel('Genes')">Genes</a></li>
+                                               ng-model="label.value">Genes</a></li>
                                         <li><a href="#freqAlt" ng-click="query.element = 'freqAlt'"
-                                               onClick="changeLabel('Freq alt')">Freq alt</a></li>
+                                               ng-model="label.value">Freq alt</a></li>
                                         <li><a href="#dbsnp" ng-click="query.element = 'dbSNP' "
-                                               onClick="changeLabel('dbSNP')">dbSNP</a></li>
+                                               >dbSNP</a></li>
                                     </ul>
                                 </div>
                                 <input type="hidden" name="search_param" value="all" id="search_param"/>
                                 <input id="key" ng-model="query.keyword" type="search" class="search-query form-control"
                                        placeholder="Type Here" popover="Insert two number as a Range. i.e: 0.218 0.980"
-                                       popover-trigger="{{{true: 'mouseenter', false: 'never'}[query.element === 'freqAlt']}}" class="form-control"/>
+                                       popover-trigger="{{{true: 'mouseenter', false: 'never'}[query.element === 'freqAlt']}}"
+                                       class="form-control"/>
                                 <span class="input-group-btn">
                                   <button class="btn btn-danger" type="button" ng-click="submitBase()">
                                       <span class="glyphicon glyphicon-search"></span>
                                   </button>
-                                </span>                                
-                                
+                                </span>
                             </div>
                         </div>
-                    </div>
-
-                    <br></br>
-
                     </div>
 
                     <div id="addConditionsButtons" class="input-group col-md-2">
@@ -99,14 +97,14 @@
                         <h5 style="float : right; padding: 0px 10px 0px 30px">Add condition: </h5>
 
                         <span class="input-group-btn">
-                            <button class="btn btn-secondary" type="button" onClick="duplicate('AND');">
+                            <button class="btn btn-secondary" type="button" ng-click="addQueryBox('AND');">
                                 <b>AND</b>
                                 <span class="glyphicon glyphicon-chevron-up"></span>
                             </button>
                         </span>
 
                         <span class="input-group-btn" style="padding: 0px 0px 0px 10px">
-                            <button class="btn btn-secondary" type="button" onClick="duplicate('OR');">
+                            <button class="btn btn-secondary" type="button" ng-click="addQueryBox('OR');">
                                 <b>OR</b>
                                 <span class="glyphicon glyphicon-chevron-down"></span>
                             </button>
@@ -115,6 +113,7 @@
 
                 </div>
             </div>
+
         </div>
         <!-- First tab options END -->
 
@@ -178,22 +177,22 @@
         <div class="input-group col-md-6">
             <div class="input-group">
                 <h5 style="float : left; padding: 0px 10px 0px 0px">Filter by patient </h5>
+
                 <div class="input-group-btn search-panel" style="float: left">
                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                         <span id="_patient">Choose...</span> <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" role="menu">
                         <li><a href="#..." ng-click="query.element = '...'"
-                                onClick="changePatientLabel('Patient 1')">Patient 1</a></li>
+                               onClick="changePatientLabel('Patient 1')">Patient 1</a></li>
                         <li><a href="#..." ng-click="query.element = '...'"
-                                onClick="changePatientLabel('Patient 2')">Patient 2</a></li>
+                               onClick="changePatientLabel('Patient 2')">Patient 2</a></li>
                         <li><a href="#..." ng-click="query.element = '...' "
-                                onClick="changePatientLabel('Patient 3')">Patient 3</a></li>
+                               onClick="changePatientLabel('Patient 3')">Patient 3</a></li>
                     </ul>
                 </div>
             </div>
         </div>
-
 
 
         <!--  style="height: 500px; overflow-y: auto; margin-top: 50px" -->
@@ -222,9 +221,11 @@
                     </thead>
                     <tbody>
                     <tr ng-repeat="el in elements | filter:filterNotExclusive">
-                        <td><button type="button" class="btn btn-primary btn-sm" ui-sref="dashboard.sequencingDetails">
-                                <div ><span class="glyphicon glyphicon-eye-open"></span> View </div>
-                            </button></td>
+                        <td>
+                            <button type="button" class="btn btn-primary btn-sm" ui-sref="dashboard.sequencingDetails">
+                                <div><span class="glyphicon glyphicon-eye-open"></span> View</div>
+                            </button>
+                        </td>
                         <td>{{el.chr}}</td>
                         <td>{{el.start}}</td>
                         <td>{{el.end}}</td>
