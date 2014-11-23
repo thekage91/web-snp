@@ -78,6 +78,8 @@ angular.module('mean.dashboard', ['angular-md5'])
                         $scope.registerError = error;
                     }
                 });
+
+            location.reload();
         };
 
 
@@ -298,6 +300,7 @@ angular.module('mean.dashboard', ['angular-md5'])
         $scope.isChecked.all = true;
         $scope.resultsFilter = {};
 
+        $scope.nameMap = { genes: 'Genes', freqAlt: 'Freq Alt',dbSNP:'dbSNP',init: 'Search By...'};
         var filterElements = ['region', 'Mutation'];
 
         //init filters values for checkobox and showing result
@@ -375,9 +378,13 @@ angular.module('mean.dashboard', ['angular-md5'])
             return conditions.reduce( function(prev, cur) { return prev && cur });
         }
 
+        $scope.addQueryBox = function (conditionType) {
+            $scope.queries.push( { cond: conditionType});
+        }
+
     }])
 
-
+    .controller('InputQuery')
     .controller('SequencingEditCtrl', ['$scope', '$http', 'Parse', 'Save', function ($scope, $http, Parse, Save) {
 
         $scope.parseForEdit = function (dataParse) {
@@ -703,7 +710,7 @@ angular.module('mean.dashboard', ['angular-md5'])
 
     .controller('HistoryLoadCtrl' ['$scope' , '$http' , function ($scope, $http) {
 
-        $http.get('/api/upload')
+        $http.get('/api/history')
             .success(function (data) {
                 $scope.sequencings = data.payload;
                 console.log("[SUCCESS] Retrieve all sequencings");
